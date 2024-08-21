@@ -1,0 +1,99 @@
+MIT License
+Copyright (c) 2024 Daniel Gunther
+
+For the full license text, see the LICENSE.txt file in the docs directory.
+If LICENSE.txt is not included, this version of the source code is provided in breach of this license.
+
+******************************************************
+
+Here, we define the syntax and semantics of the language.
+The structure of this document will be the following:
+    #. Classification
+        - what it is 
+            => example syntax
+
+1. Supported Types (denoted [type] when discussed later on)
+    - integers: optimally an i64, but will change based on cpu architecture 
+        => int [declaration]
+    - floating point numbers: most likely an f64 
+        => float [declaration]
+    - characters: support for utf-8 encoding of ASCII characters
+        => char [declaration]
+    - booleans: encoded as "true" and "false"
+        => bool [declaration]
+    - void: primarily used for functions without a return type
+        => void [declaration]
+
+2. Variable declaration and definition
+    => [type] [identifier]; 
+       (denoted [v_decl])
+    => [type] [identifier] = [expression];
+       (denoted [v_defn])
+
+3. Functions 
+    - function header encodes a return type (if none is provided, it is considered void)
+    - function body includes a series of expressions and a return statement
+        => [type] [function_name] ([v_decl], [v_decl], ... , [v_decl]) {
+            [function_body]
+            [return_statement]
+        }
+
+4. Loops
+    - for: iterates over a declared incrementor
+        => for (int [v_decl]; [incrementor] < [desired_max]; [incrementor] += [increment_value]) {
+            [loop_body]
+        }
+    - while: iterates until a condition is false 
+        => while ([condition]) {
+            [loop_body]
+        }
+
+5. Classes
+    - class: allows user to couple data and functions into a coherent and isolated body
+        => class [class_name] {
+
+            [constructor];
+            [destructor];
+
+            [v_decl];
+            [v_decl];
+            ...;
+            [v_decl];
+
+            [func_decl];
+            [func_decl];
+            ...;
+            [func_decl];
+        }
+
+    - class instantiation as objects
+        => [class_type] [identifier] = [constructor]([args[]]);
+    
+    -accessing class data 
+        => [class_name].[member_name];
+            - (not optimal, so may change later)
+    
+    - accessing class methods
+        => [class_name].[func_name](args[]);
+
+6. Graphs
+    - graph: the built in data structure central to the uniqueness of our language
+        => graph<[type]> [graph_name];
+
+        - adding nodes
+            => [graph_name].insert([node]);
+
+        - deleting nodes
+            => [graph_name].remove([node]);
+
+        - adding edges
+            => [graph_name].connect([node], [node]);
+
+        - removing edges    
+            => [graph_name].disconnect([node], [node]);
+
+        - depth first traversal
+            => [graph_name].dfs();
+        
+        - breadth first traversal  
+            => [graph_name].bfs();

@@ -1,0 +1,12 @@
+MIT License
+Copyright (c) 2024 Daniel Gunther
+
+For the full license text, see the LICENSE.txt file in the docs directory.
+If LICENSE.txt is not included, this version of the source code is provided in breach of this license.
+
+******************************************************
+
+This illustrates how to build the docker container and run the generated image to work on the language in a consistent environment for collaborators.
+
+=> docker build -t pyroxene .
+=> docker run pyroxene
