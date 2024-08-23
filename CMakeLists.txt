@@ -31,6 +31,25 @@ endif()
 add_subdirectory(include)
 add_subdirectory(src)
 
-add_executable(driver src/driver.cpp src/parser.cpp src/lexer.cpp src/ast.cpp src/codegen.cpp src/type_checker.cpp src/utility.cpp)
+option(BUILD_DEBUG_DRIVER "Build the debug test driver instead of the main driver" ON) # MAKE A CMD LINE ARG LATER!!!
 
-target_link_libraries(driver ${LLVM_LIBS})
+if(BUILD_DEBUG_DRIVER)
+    add_executable(driver 
+        unit_tests/unit_test_driver.cpp
+        unit_tests/lexer_tests/lexer_tests.cpp
+        src/lexer.cpp src/parser.cpp src/ast.cpp src/codegen.cpp src/type_checker.cpp src/utility.cpp
+    )
+    target_link_libraries(driver ${LLVM_LIBS})
+else()
+    add_executable(driver 
+        src/driver.cpp 
+        src/parser.cpp 
+        src/lexer.cpp 
+        src/ast.cpp 
+        src/codegen.cpp 
+        src/type_checker.cpp 
+        src/utility.cpp
+    )
+    target_link_libraries(driver ${LLVM_LIBS})
+endif()
+
