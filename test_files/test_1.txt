@@ -10,3 +10,17 @@ int;
 bool;
 char;
 my_name;
+for;
+while;
+int my_var = 22;
+float my_var_2 = 33.3;
+// float my_var_3 = 66.6.6;
+string my_string = "Daniel";
+char my_char = 'a';
+
+{int my_int = 65;}
+(char my_char_2 = '@');
+
+class my_class {}
+graph my_graph {}
+my_graph.djikstras();
