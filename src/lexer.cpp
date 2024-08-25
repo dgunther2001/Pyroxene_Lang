@@ -81,7 +81,7 @@ namespace lexer {
         // if we see an opening brace, return the respective token
         if (previous_character == '[') {
             previous_character = input->get();
-            return tok_close_arr;
+            return tok_open_arr;
         }
 
         // if we see a closing brace, return the respective token
@@ -95,6 +95,12 @@ namespace lexer {
             previous_character = input->get();
             return tok_dot;
         }
+
+        // if we see a comma, return the respective token
+        if (previous_character == ',') {
+            previous_character = input->get();
+            return tok_comma;
+        } 
 
         // if we see the EOF, return an EOF token
         if (previous_character == EOF) { 
@@ -110,6 +116,26 @@ namespace lexer {
                 } while (previous_character != '\n' && previous_character != EOF);
             }
 
+            // dealing with multiline comments
+            if (previous_character == '*') {  // if we see a '*' character
+                previous_character = input->get(); //consume the '*'
+
+                while (true) { // enter a loop that consumes tokens until we reach a multiline comment terminus
+                    if (previous_character == '*') { // look for a '*' character
+                        previous_character = input->get(); // consume the '*'
+                        if (previous_character == '/') { // if the '*' is followed by a '/', then the comment is terminated
+                            previous_character = input->get(); // consume the '/'
+                            return get_token(); // call the the function recursively on the next character in the input stream
+                        }
+                    } else if (previous_character == '\n') { // if we see a newline character, increment the line count
+                        line_count++;
+                    } else if (previous_character == EOF) { // if we reach the EOF before the comment is terminated, throw an error
+                        utility::lexer_error("Unterminated multiline comment", line_count);
+                    }
+                    previous_character = input->get(); // otherwise, just consume the character and proceed to the next one
+                }
+            }
+
             // if the system identifies the EOF, return the EOF token
             if (previous_character == EOF) {
                 return tok_eof;
@@ -121,7 +147,7 @@ namespace lexer {
             }
 
             previous_character = input->get(); // consume the newline and return a comment
-            return tok_comment;
+            return get_token(); // recurses to call the get token function on the next character 
         }
 
         /*

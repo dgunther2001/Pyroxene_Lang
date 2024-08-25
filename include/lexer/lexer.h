@@ -18,7 +18,6 @@ namespace lexer {
 
     enum Token_Type { // defines all of the types of tokens (in negative to avoid ASCII collissions)
         tok_eof = -1,
-        tok_comment = -2,
         tok_dot = -3,
         tok_true = -5,
         tok_false = -6,
@@ -39,6 +38,7 @@ namespace lexer {
         tok_close_brack = -74,
         tok_open_arr = -75,
         tok_close_arr = -76,
+        tok_comma = -77,
         tok_for = -80,
         tok_while = -90,
         tok_assignment = -100,

@@ -63,9 +63,6 @@ static void print_individual_token(int token) {
         case lexer::tok_char_val:
             std::cout << "Token character value: "<< lexer::char_value << "\n";
             break;
-        case lexer::tok_comment:
-            std::cout << "Token comment\n";
-            break;
         case lexer::tok_open_paren:
             std::cout << "Token open parenthesis\n";
             break;
@@ -83,6 +80,9 @@ static void print_individual_token(int token) {
             break;
         case lexer::tok_close_arr:
             std::cout << "Token close brace\n";
+            break;
+        case lexer::tok_comma:
+            std::cout << "Token comma\n";
             break;
         case lexer::tok_class:
             std::cout << "Token class\n";
