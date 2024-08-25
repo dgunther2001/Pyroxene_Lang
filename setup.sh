@@ -25,6 +25,7 @@ if ! command -v docker &> /dev/null; then
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "To install docker, go to https://www.docker.com/products/docker-desktop/ and install docker desktop"
         exit 1
+    fi
 else
     echo "Docker is already installed. Proceeding with alias setup"
 fi
