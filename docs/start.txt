@@ -6,10 +6,20 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 ******************************************************
 
-To toggle on and off debug mode: 
+How to run the language without adding aliases to your shell configuration file
+    => go into project root directory
+    => for debug mode, type:
+        chmod u+x run_debug_driver.sh
+        ./run_debug_driver.sh /path/to/your/pyroxene/file
+    => for the regular language driver, type:
+        chmod u+x run_driver.sh
+        ./run_driver.sh /path/to/your/pyroxene/file
 
-=> go into project root directory
-=> for debug mode, type:
-    ./run_debug_driver.sh /path/to/your/pyroxene/file
-=> for the regular language driver, type:
-    ./run_driver.sh /path/to/your/pyroxene/file
+Add aliases to your shell configuration
+    => go into project root directory
+    => add permissions to shell scripts
+        chmod u+x run_debug_driver.sh run_driver.sh setup.sh
+    => run regular language driver
+        pyroxene /path/to/your/pyroxene/file
+    => run in debug mode
+        pyroxene-debug /path/to/your/pyroxene/file
