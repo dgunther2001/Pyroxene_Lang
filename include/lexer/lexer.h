@@ -14,9 +14,9 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace lexer {
 
-    extern int line_count;
+    extern int line_count; // holds a line count variable for debug messages
 
-    enum Token_Type {
+    enum Token_Type { // defines all of the types of tokens (in negative to avoid ASCII collissions)
         tok_eof = -1,
         tok_comment = -2,
         tok_dot = -3,
@@ -37,6 +37,8 @@ namespace lexer {
         tok_close_paren = -72,
         tok_open_brack = -73,
         tok_close_brack = -74,
+        tok_open_arr = -75,
+        tok_close_arr = -76,
         tok_for = -80,
         tok_while = -90,
         tok_assignment = -100,
@@ -44,6 +46,7 @@ namespace lexer {
         tok_graph = -120,
     };
 
+    // various variables that encode user defined variables that hold the value of the token as well
     extern std::string identifier;
     extern int integer_value;
     extern float float_value;
@@ -52,7 +55,7 @@ namespace lexer {
     extern std::string string_value;
     extern std::istream* input;
 
-    extern int get_token();
+    extern int get_token(); // primary lexer function
 
 }
 

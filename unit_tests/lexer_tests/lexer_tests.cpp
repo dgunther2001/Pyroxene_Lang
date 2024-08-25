@@ -78,6 +78,12 @@ static void print_individual_token(int token) {
         case lexer::tok_close_brack:
             std::cout << "Token close bracket\n";
             break;
+        case lexer::tok_open_arr:
+            std::cout << "Token open brace\n";
+            break;
+        case lexer::tok_close_arr:
+            std::cout << "Token close brace\n";
+            break;
         case lexer::tok_class:
             std::cout << "Token class\n";
             break;
