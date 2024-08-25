@@ -4,4 +4,4 @@ To get started using the language (not fully usable yet), refer to /docs/start.t
 To get into my head and see my problem solving approach throughout, please refer to other <br />
 files in the /docs directory, as well as the myriad of inline comments throughout my source code. <br />
 Thank you for checking this project out, and feel free to make suggestions and use the project <br />
-so long as you abide by the license agreeement.
+so long as you abide by the license agreement.
