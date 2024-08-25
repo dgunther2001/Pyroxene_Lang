@@ -9,13 +9,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 To toggle on and off debug mode: 
 
 => go into project root directory
-=> enter the root CMakeLists.txt file
-=> find the following line:
-    option(BUILD_DEBUG_DRIVER "Build the debug test driver instead of the main driver" ON)
-=> toggle ON for debug driver and OFF for no debug driver
-
-
-This illustrates how to build the docker container and run the generated image to work on the language in a consistent environment for collaborators.
-
-=> docker build -t pyroxene .
-=> docker run pyroxene
+=> for debug mode, type:
+    ./run_debug_driver.sh /path/to/your/pyroxene/file
+=> for the regular language driver, type:
+    ./run_driver.sh /path/to/your/pyroxene/file

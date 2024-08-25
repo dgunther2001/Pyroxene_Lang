@@ -27,8 +27,14 @@ WORKDIR /
 
 COPY . .
 
+ARG DEBUG_MODE
+
+ARG FILE_PATH
+
 RUN mkdir build && cd build && \
-    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" .. && \
+    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" -DBUILD_DEBUG_DRIVER=${DEBUG_MODE} .. && \
     make
 
-CMD ["./build/driver", "/test_files/test_1.txt"]
+ENTRYPOINT ["./build/driver"]
+
+CMD ["./test_files/test_1.txt"]

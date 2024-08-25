@@ -14,13 +14,13 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #include "../include/utility/utility.h"
 
 #include <iostream>
+#include <fstream>
 
 
 int main(int argc, char** argv) {
 
     std::cout << "My LLVM Driver is Working\n";
 
-    /* use later once input stream is generated
     std::fstream file;
     if (argc > 1) {
         file.open(argv[1]);
@@ -28,13 +28,12 @@ int main(int argc, char** argv) {
             fprintf(stderr, "File not found.\n");
             return 0;
         }
-        input = &file;
+        lexer::input = &file;
     } else {
         fprintf(stderr, ">> "); // prime the inital token
-        input = &std::cin;
+        lexer::input = &std::cin;
     }
 
-    */
 
     return 0;
 }

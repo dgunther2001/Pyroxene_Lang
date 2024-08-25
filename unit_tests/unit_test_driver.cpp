@@ -15,15 +15,15 @@ int main(int argc, char **argv) {
             fprintf(stderr, "File not found.\n");
             return 0;
         }
-        input = &file;
+        lexer::input = &file;
     } else {
         fprintf(stderr, ">> "); 
-        input = &std::cin;
+        lexer::input = &std::cin;
     }
 
     while (true) {
-        int token = get_token();
-        if (token == tok_eof) {
+        int token = lexer::get_token();
+        if (token == lexer::tok_eof) {
             break;
         }
         print_individual_token(token);
