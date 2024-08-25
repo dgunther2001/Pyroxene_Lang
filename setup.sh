@@ -10,12 +10,21 @@
 
 if ! command -v docker &> /dev/null; then
     echo "Docker is not installed on your system."
-
-    # Prompt user to install Docker
-    echo "Please install Docker to continue. You can install Docker by following the instructions at:"
-    echo "https://docs.docker.com/get-docker/"
-    echo "Please install Docker and then rerun this script."
-    exit 1
+    
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        echo "To install docker, run the following commands:"
+        echo "sudo apt-get update"
+        echo "sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common"
+        echo "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg"
+        echo "echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null"
+        echo "sudo apt-get update"
+        echo "sudo apt-get install -y docker-ce docker-ce-cli containerd.io"
+        echo "sudo systemctl start docker"
+        echo "sudo systemctl enable docker"
+        exit 1
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "To install docker, go to https://www.docker.com/products/docker-desktop/ and install docker desktop"
+        exit 1
 else
     echo "Docker is already installed. Proceeding with alias setup"
 fi
