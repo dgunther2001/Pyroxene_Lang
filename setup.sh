@@ -8,6 +8,18 @@
 
 #!/usr/bin/env bash
 
+if ! command -v docker &> /dev/null; then
+    echo "Docker is not installed on your system."
+
+    # Prompt user to install Docker
+    echo "Please install Docker to continue. You can install Docker by following the instructions at:"
+    echo "https://docs.docker.com/get-docker/"
+    echo "Please install Docker and then rerun this script."
+    exit 1
+else
+    echo "Docker is already installed. Proceeding with alias setup"
+fi
+
 ALIAS_NAME="pyroxene"
 DEBUG_ALIAS_NAME="pyroxene-debug"
 PYROX_PATH="$(pwd)/run_driver.sh"
