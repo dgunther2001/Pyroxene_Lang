@@ -14,7 +14,6 @@ High Level Methodology:
 
 1. Defining our context free grammar:
     <statement> -> <expression> | <var_decl> | <var_defn> | <assignment> | <function> | <for_loop> | <while_loop> | <class_decl> | <graph_decl>
-    <expression> -> <expression> <operator> <expression> ";"
     <var_decl> -> <type> <identifier> ";"
     <var_defn> -> <type> <identifier> "=" <expression> ";"
     <assignment> -> <identifier> "=" <expression> ";"
@@ -24,5 +23,13 @@ High Level Methodology:
     <class_decl> -> "class" <identifier> "{" <var_decl>* <function>* "}"
     <graph_decl> -> "graph" <type> <identifier> "()" ";"
     <type> -> "int" | "bool" | "float" | "char" | "string" | "bool"
+    <expression> -> <identifier> | <int_literal> | <float_literal> | <char_literal> | <string_literal> | <bool_literal> |
+                    <expression> <operator> <expression> ";" | "(" <expression> ")" | <func_call> 
+    <func_call> -> <identifier> "(" <expression>* ")"
     <identifier> -> [A-Za-z_][A-Za-z0-9_]*
     <operator> -> "+" | "-" | "*" | "/"
+    <int_literal> -> [0-9]*
+    <float_literal> -> [0-9]* "." [0-9]*
+    <char_literal> -> "'" [\x00-\x7F] "'"
+    <string_literal -> """ [\x00-\x7F]* """
+    <bool_literal> -> true | false
