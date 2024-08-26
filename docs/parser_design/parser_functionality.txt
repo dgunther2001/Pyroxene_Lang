@@ -1,0 +1,28 @@
+MIT License
+Copyright (c) 2024 Daniel Gunther
+
+For the full license text, see the LICENSE.txt file in the docs directory.
+If LICENSE.txt is not included, this version of the source code is provided in breach of this license.
+
+******************************************************
+
+Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function
+High Level Methodology: 
+    => 1. define a context-free grammar that encapsulates how expressions and non-expression tokens are evaluated in our language.
+    => 2. define each of our AST nodes in our ast.h file based on that context free grammar.
+    => 3. figure out how to go from our lexed tokens into an AST that represents our entire program.
+
+1. Defining our context free grammar:
+    <statement> -> <expression> | <var_decl> | <var_defn> | <assignment> | <function> | <for_loop> | <while_loop> | <class_decl> | <graph_decl>
+    <expression> -> <expression> <operator> <expression> ";"
+    <var_decl> -> <type> <identifier> ";"
+    <var_defn> -> <type> <identifier> "=" <expression> ";"
+    <assignment> -> <identifier> "=" <expression> ";"
+    <function> -> <type> <identifier> "(" <var_decl>* ")" "{" <statement>* "}"
+    <for_loop> -> "for" "(" <var_defn> ";" <expression> ";" <expression> ")" "{" <statement>* "}"
+    <while_loop> -> "while" "(" <expression> ")" "{" <statement>* "}"
+    <class_decl> -> "class" <identifier> "{" <var_decl>* <function>* "}"
+    <graph_decl> -> "graph" <type> <identifier> "()" ";"
+    <type> -> "int" | "bool" | "float" | "char" | "string" | "bool"
+    <identifier> -> [A-Za-z_][A-Za-z0-9_]*
+    <operator> -> "+" | "-" | "*" | "/"
