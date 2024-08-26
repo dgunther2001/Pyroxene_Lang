@@ -6,30 +6,35 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 ******************************************************
 
-How to run the language without adding aliases to your shell configuration file
-    => go into project root directory
-    => for debug mode, type:
-        chmod u+x run_debug_driver.sh
-        ./run_debug_driver.sh /path/to/your/pyroxene/file
-    => for the regular language driver, type:
-        chmod u+x run_driver.sh
-        ./run_driver.sh /path/to/your/pyroxene/file
+If you run MacOS or any Flavor of Linux (Bash and Zsh Shells):
 
-Add aliases to your shell configuration
-    => go into project root directory
-    => add permissions to shell scripts
-        chmod u+x run_debug_driver.sh run_driver.sh setup.sh
-    => run setup file and allow alias creation (if it asks you to install Docker, refer below based on your OS, or install Docker Desktop)
-        ./setup.sh
-    => reload shell settings to allow alias to be used
-        - in zsh
-            => source ~/.zshrc
-        - in bash
-            => source ~/.bashrc
-    => run regular language driver
-        pyroxene /path/to/your/pyroxene/file
-    => run in debug mode
-        pyroxene-debug /path/to/your/pyroxene/file
+    How to run the language without adding aliases to your shell configuration file
+        => go into project root directory
+        => for debug mode, type:
+            chmod u+x run_debug_driver.sh
+            ./run_debug_driver.sh /path/to/your/pyroxene/file
+        => for the regular language driver, type:
+            chmod u+x run_driver.sh
+            ./run_driver.sh /path/to/your/pyroxene/file
+
+    Add aliases to your shell configuration
+        => go into project root directory
+        => add permissions to shell scripts
+            chmod u+x run_debug_driver.sh run_driver.sh setup.sh
+        => run setup file and allow alias creation (if it asks you to install Docker, refer below based on your OS, or install Docker Desktop)
+            ./setup.sh
+        => reload shell settings to allow alias to be used
+            - in zsh
+                => source ~/.zshrc
+            - in bash
+                => source ~/.bashrc
+        => run regular language driver
+            pyroxene /path/to/your/pyroxene/file
+        => run in debug mode
+            pyroxene-debug /path/to/your/pyroxene/file
+
+If you run on Windows using Powershell or Cmd.exe:
+    (INSERT WINDOWS INSTRUCTIONS AND TEST IN AWS VM)
 
 Installing Docker in Ubuntu:
     => sudo apt-get update

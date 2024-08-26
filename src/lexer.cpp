@@ -107,9 +107,31 @@ namespace lexer {
             return tok_eof; 
         }
 
-        // identify comments and ignore them
+        // defining operators
+        if (previous_character == '+') {
+            previous_character = input->get();
+            return tok_plus;
+        }
+
+        if (previous_character == '-') {
+            previous_character = input->get();
+            return tok_minus;
+        }
+
+        if (previous_character == '*') {
+            previous_character = input->get();
+            return tok_mult;
+        }
+
+
+        // identify comments and ignore them (also identify division)
         if (previous_character == '/') { // if the current character is a '/'...
             previous_character = input->get(); // advance to the next character in input
+            if (isspace(previous_character)) {
+                previous_character = input->get();
+                return tok_div;
+            }
+
             if (previous_character == '/') { // if we see a second '/'...
                 do { // while the current character is not the end of file, or a newline...
                     previous_character = input->get(); // advance the current character and consume it

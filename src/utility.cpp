@@ -12,7 +12,8 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 namespace utility {
 
     void lexer_error(const std::string& message, int line) {
-        std::cout << "Error: " << message << " on line " << line << std::endl;
+        std::cout <<"\033[1;31m";
+        std::cout << "Lexer error: " << message << " on line " << line << std::endl;
         std::abort();
     }
 
