@@ -230,6 +230,10 @@ namespace lexer {
                 return tok_graph;
             }
 
+            if (identifier == "return") {
+                return tok_return;
+            }
+
             return tok_identifier;
             
         }

@@ -48,6 +48,7 @@ namespace lexer {
         tok_assignment = -100,
         tok_class = -110,
         tok_graph = -120,
+        tok_return = -130
     };
 
     // various variables that encode user defined variables that hold the value of the token as well

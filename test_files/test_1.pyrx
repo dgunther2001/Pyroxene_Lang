@@ -28,8 +28,10 @@ my_graph.djikstras();
 
 //char my_char_4 = 'a;
 
-string my_String_5 = "dan;
+//string my_String_5 = "dan;
 
 //float my_var_3 = 66.6.6;
 
 int;
+
+return 500000;

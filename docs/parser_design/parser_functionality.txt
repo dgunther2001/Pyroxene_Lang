@@ -17,7 +17,7 @@ High Level Methodology:
     <var_decl> -> <type> <identifier> ";"
     <var_defn> -> <type> <identifier> "=" <expression> ";"
     <assignment> -> <identifier> "=" <expression> ";"
-    <function> -> <type> <identifier> "(" <var_decl>* ")" "{" <statement>* "}"
+    <function> -> <type> <identifier> "(" <var_decl>* ")" "{" <statement>* <return> "}"
     <for_loop> -> "for" "(" <var_defn> ";" <expression> ";" <expression> ")" "{" <statement>* "}"
     <while_loop> -> "while" "(" <expression> ")" "{" <statement>* "}"
     <class_decl> -> "class" <identifier> "{" <var_decl>* <function>* "}"
@@ -25,7 +25,8 @@ High Level Methodology:
     <type> -> "int" | "bool" | "float" | "char" | "string" | "bool"
     <expression> -> <identifier> | <int_literal> | <float_literal> | <char_literal> | <string_literal> | <bool_literal> |
                     <expression> <operator> <expression> ";" | "(" <expression> ")" | <func_call> 
-    <func_call> -> <identifier> "(" <expression>* ")"
+    <func_call> -> <identifier> "(" <expression>* ")" ";"
+    <return > -> "return" <expression> ";"
     <identifier> -> [A-Za-z_][A-Za-z0-9_]*
     <operator> -> "+" | "-" | "*" | "/"
     <int_literal> -> [0-9]*
