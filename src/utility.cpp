@@ -11,9 +11,28 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace utility {
 
+    
+    void driver_extension_error(const std::string& message, const std::string& file_name) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Driver error: " << message << file_name << " please add a .pyrx extension.\n";
+        std::abort();
+    }
+
+    void driver_args_error(const int num_args) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n"
+    }
+    
+
     void lexer_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
-        std::cout << "Lexer error: " << message << " on line " << line << std::endl;
+        std::cout << "Lexer error: " << message << " on line " << line << "\n";
+        std::abort();
+    }
+
+    void parser_error(const std::string& message, int line) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Lexer error: " << message << " on line " << line << "\n";
         std::abort();
     }
 

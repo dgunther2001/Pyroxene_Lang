@@ -1,14 +1,22 @@
 #include "lexer_tests/lexer_tests.cpp"
+#include "../include/utility/utility.h"
 #include <iostream>
 #include <fstream>
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 
+    std::cout << "Debug mode\n";
 
-
-    std::cout << "In debug mode\n"; 
+    if (argc != 2) {
+        utility::driver_args_error(argc);
+    }
 
     std::fstream file;
+    std::string file_name = argv[1];
+    
+    if (file_name.find(".pyrx") == std::string::npos) {
+        utility::driver_extension_error("Incorrect file extension on ", file_name);
+    }
     if (argc > 1) {
         file.open(argv[1]);
         if (!file) {
@@ -17,7 +25,7 @@ int main(int argc, char **argv) {
         }
         lexer::input = &file;
     } else {
-        fprintf(stderr, ">> "); 
+        fprintf(stderr, ">> "); // prime the inital token
         lexer::input = &std::cin;
     }
 

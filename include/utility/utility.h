@@ -14,7 +14,10 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace utility {
 
+    extern void driver_extension_error(const std::string& message, const std::string& file_name);
+    extern void driver_args_error(const int num_args);
     extern void lexer_error(const std::string& message, int line);
+    extern void parser_error(const std::string& message, int line);
 
 }
 

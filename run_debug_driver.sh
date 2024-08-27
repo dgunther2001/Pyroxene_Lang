@@ -17,5 +17,6 @@ elif [ $# -eq 1 ]; then
     docker build --build-arg DEBUG_MODE=ON -t $IMAGE_NAME .
     docker run --rm -it $IMAGE_NAME ${FILE_PATH} # CHECK THIS CHANGE
 else
-    echo "Too many arguments passed."
+    RED='\033[1;31m'
+    echo "${RED}Too many arguments passed. Expected 1 .pyrx file${NC}"
 fi
