@@ -21,108 +21,114 @@ If LICENSE.txt is not included, this version of the source code is provided in b
         4. Literal expressions (int; float; char; string; bool) DONE
         5. Function calls
 */
+typedef enum {
+    int_type = -1,
+    float_type = -2,
+    char_type = -3,
+    string_type = -4,
+    bool_type = -5
+} types;
+
 class top_level_expr {
 public:
     virtual ~top_level_expr() = default;
-
-    virtual const std::string& get_expr_type() const;
-    virtual llvm::Value* codegen() = 0;
+    //virtual llvm::Value* codegen() = 0;
 };
 
 class binary_expr : public top_level_expr {
 private: 
     char op;
     std::unique_ptr<top_level_expr> left, right;
-    std::string type;
+    types type;
 
 public:
-    binary_expr(char op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, const std::string& type) :
+    binary_expr(char op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, types type) :
         op(op),
         left(std::move(left)),
         right(std::move(right)),
         type(type)
         {}
 
-    const std::string& get_expr_type() const {return type;}
-    virtual llvm::Value* codegen();
+    const types get_expr_type() const {return type;}
+    //llvm::Value* codegen() override;
 };
 
 class identifier_expr : public top_level_expr {
 private:
     std::string identifier_name;
-    std::string type;
+    types type;
 
 public:
-    identifier_expr(const std::string& identifier_name, const std::string& type) :
+    identifier_expr(const std::string& identifier_name, types type) :
         identifier_name(identifier_name),
         type(type)
         {}
     const std::string& get_identifier_name() const {return identifier_name;}
-    const std::string& get_expr_type() const {return type;}
-    virtual llvm::Value* codegen();
+    const types get_expr_type() const {return type;}
+    //llvm::Value* codegen() override;
 
 };
 
 class integer_expression : public top_level_expr {
 private:
     int held_value;
-    std::string type = "int";
+    types type = int_type;
 
 public:
     integer_expression(int held_value) : held_value(held_value) {}
     const int get_value() const {return held_value;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class float_expression : public top_level_expr {
 private:
     float held_value;
-    std::string type = "float";
+    types type = float_type;
 
 public:
     float_expression(float held_value) : held_value(held_value) {}
     const float get_value() const {return held_value;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class char_expression : public top_level_expr {
 private:
     char held_value;
-    std::string type = "char";
+    types type = char_type;
 
 public:
     char_expression(char held_value) : held_value(held_value) {}
     const char get_value() const {return held_value;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class string_expression : public top_level_expr {
 private:
     std::string held_value;
-    std::string type = "string";
+    types type = string_type;
 
 public:
     string_expression(std::string held_value) : held_value(held_value) {}
     const std::string& get_value() const {return held_value;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class bool_expression : public top_level_expr {
 private:
     bool held_value;
-    std::string type = "bool";
+    types type = bool_type;
 
 public:
     bool_expression(bool held_value) : held_value(held_value) {}
     const bool get_value() const {return held_value;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class func_call_expr : public top_level_expr {
 // TODO
 
 public:
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 
@@ -136,52 +142,52 @@ public:
 */
 class variable_declaration : top_level_expr {
 private:
-    std::string type;
+    types type;
     std::string identifier_name;
 
 public:
-    variable_declaration(const std::string& type, const std::string& identifier_name) :
-        type(type),
+    variable_declaration(types var_type, const std::string& identifier_name) :
+        type(var_type),
         identifier_name(identifier_name)
         {}
-    const std::string& get_type() const {return type;} 
+    const types get_expr_type() const {return type;} 
     const std::string& get_name() const {return identifier_name;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class variable_definition : top_level_expr {
 private:
-    std::string type;
+    types type;
     std::string identifier_name;
     std::unique_ptr<top_level_expr> assigned_value;
 
 public:
-    variable_definition(const std::string& type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
-        type(type),
+    variable_definition(types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
+        type(var_type),
         identifier_name(identifier_name),
         assigned_value(std::move(assigned_value))
         {}
     
-    const std::string& get_type() const {return type;} 
+    const types get_expr_type() const {return type;} 
     const std::string& get_name() const {return identifier_name;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 class variable_assignment : top_level_expr {
 private:
-    std::string type; // maybe remove as i want to do type resolution later
+    types type; // maybe remove as i want to do type resolution later
     std::string identifier_name;
     std::unique_ptr<top_level_expr> assigned_value;
 
 public:
-    variable_assignment(const std::string& type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
-        type(type),
+    variable_assignment(types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
+        type(var_type),
         identifier_name(identifier_name),
         assigned_value(std::move(assigned_value))
         {}
-    const std::string& get_type() const {return type;} 
+    const types get_expr_type() const {return type;} 
     const std::string& get_name() const {return identifier_name;}
-    virtual llvm::Value* codegen();
+    //llvm::Value* codegen() override;
 };
 
 #endif
