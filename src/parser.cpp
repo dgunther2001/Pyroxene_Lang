@@ -23,25 +23,25 @@ namespace parser {
     }
     */
    
-    /*
-    std::unique_ptr<top_level_expr> parse_var_decl() {
-        types type;
+    
+    std::unique_ptr<ast::top_level_expr> parse_var_decl() {
+        ast::types type;
         std::string identifier;
         switch (current_token) {
             case lexer::tok_int:
-                type = int_type;
+                type = ast::int_type;
                 break;
             case lexer::tok_float:
-                type = float_type;
+                type = ast::float_type;
                 break;
             case lexer::tok_char:
-                type = char_type;
+                type = ast::char_type;
                 break;
             case lexer::tok_string:
-                type = string_type;
+                type = ast::string_type;
                 break;
             case lexer::tok_bool:
-                type = bool_type;
+                type = ast::bool_type;
                 break;
             default:
                 utility::parser_error("Invalid type specified", lexer::line_count); 
@@ -53,39 +53,39 @@ namespace parser {
 
         get_next_token();
 
-        auto ast_node = std::make_unique<variable_declaration>(type, identifier);
+        auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
         return std::move(ast_node);
 
     }
-    */
+    
     
 
-    std::unique_ptr<top_level_expr> parse_int_expr() {
-        auto ast_node = std::make_unique<integer_expression>(lexer::integer_value);
+    std::unique_ptr<ast::top_level_expr> parse_int_expr() {
+        auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);
         get_next_token();
         return std::move(ast_node);
     }
 
-    std::unique_ptr<top_level_expr> parse_float_expr() {
-        auto ast_node = std::make_unique<float_expression>(lexer::float_value);
+    std::unique_ptr<ast::top_level_expr> parse_float_expr() {
+        auto ast_node = std::make_unique<ast::float_expression>(lexer::float_value);
         get_next_token();
         return std::move(ast_node);
     }
 
-    std::unique_ptr<top_level_expr> parse_char_expr() {
-        auto ast_node = std::make_unique<char_expression>(lexer::char_value);
+    std::unique_ptr<ast::top_level_expr> parse_char_expr() {
+        auto ast_node = std::make_unique<ast::char_expression>(lexer::char_value);
         get_next_token();
         return std::move(ast_node);
     }
 
-    std::unique_ptr<top_level_expr> parse_string_expr() {
-        auto ast_node = std::make_unique<string_expression>(lexer::string_value);
+    std::unique_ptr<ast::top_level_expr> parse_string_expr() {
+        auto ast_node = std::make_unique<ast::string_expression>(lexer::string_value);
         get_next_token();
         return std::move(ast_node);
     }
 
-    std::unique_ptr<top_level_expr> parse_bool_expr() {
-        auto ast_node = std::make_unique<bool_expression>(lexer::bool_value);
+    std::unique_ptr<ast::top_level_expr> parse_bool_expr() {
+        auto ast_node = std::make_unique<ast::bool_expression>(lexer::bool_value);
         get_next_token();
         return std::move(ast_node);
     }
