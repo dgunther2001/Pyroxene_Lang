@@ -33,7 +33,7 @@ fi
 if (! grep -q "alias $ALIAS_NAME=" "$SHELL_CONFIG_FILE"); then # looks for the alias "pyroxene" in the shell configuration file
     CONSENT="N"
     read -p "Do you consent to modifying the shell config file to add aliases for 'pyroxene' and 'pyroxene_debug'? [y/N] " CONSENT
-    CONSENT=${CONSENT,,}
+    CONSENT=$(echo "$CONSENT" | tr '[:upper:]' '[:lower:]')
     if [[ "$CONSENT" != "y" ]]; then
         echo "Aliases not created, please use drivers described in /docs/start to run default shell commands"
         exit 1

@@ -8,14 +8,14 @@
 
 #!/usr/bin/env bash
 
-IMAGE_NAME="pyroxene"
+IMAGE_NAME="pyroxene_debug"
 
 if [ $# -eq 0 ]; then 
     echo "Not enough arguments passed."
 elif [ $# -eq 1 ]; then 
     FILE_PATH="$1"
     docker build --build-arg DEBUG_MODE=ON -t $IMAGE_NAME .
-    docker run --rm $IMAGE_NAME ${FILE_PATH}
+    docker run --rm -it $IMAGE_NAME ${FILE_PATH} # CHECK THIS CHANGE
 else
     echo "Too many arguments passed."
 fi
