@@ -20,9 +20,10 @@ namespace parser {
 
     int get_next_token();
 
-    std::unique_ptr<ast::top_level_expr>  parse_expression();
+    std::unique_ptr<ast::top_level_expr> parse_expression();
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl();
+    std::unique_ptr<ast::top_level_expr> parse_var_defn();
 
     std::unique_ptr<ast::top_level_expr> parse_int_expr();
     std::unique_ptr<ast::top_level_expr> parse_float_expr();
