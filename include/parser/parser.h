@@ -24,6 +24,7 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl();
     std::unique_ptr<ast::top_level_expr> parse_var_defn();
+    std::unique_ptr<ast::top_level_expr> parse_var_assign();
 
     std::unique_ptr<ast::top_level_expr> parse_int_expr();
     std::unique_ptr<ast::top_level_expr> parse_float_expr();

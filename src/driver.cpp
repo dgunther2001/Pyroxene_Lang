@@ -45,7 +45,7 @@ int main(int argc, char** argv) {
         lexer::input = &std::cin;
     }
 
-    lexer::get_token();
+    parser::get_next_token();
 
     utility::primary_driver_loop();
 

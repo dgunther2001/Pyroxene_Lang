@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         lexer::input = &std::cin;
     }
 
-    
+    /*
     while (true) {
         int token = lexer::get_token();
         if (token == lexer::tok_eof) {
@@ -39,9 +39,10 @@ int main(int argc, char** argv) {
         }
         print_individual_token(token);
     }
+    */
     
     
-    lexer::get_token();
+    parser::get_next_token();
 
     utility::primary_driver_loop();
 

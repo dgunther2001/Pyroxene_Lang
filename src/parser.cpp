@@ -7,7 +7,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 */
 
 #include "../include/parser/parser.h"
-
+#include "../unit_tests/parser_tests/parser_tests.cpp"
 namespace parser {
     int current_token;
 
@@ -102,35 +102,74 @@ namespace parser {
         get_next_token();
         return std::move(ast_node);
     }
+
     
-    
+    std::unique_ptr<ast::top_level_expr> parse_var_assign() {
+        std::string identifier = lexer::identifier;
+
+        get_next_token();
+
+        auto assigned_expr = parse_expression();
+
+        get_next_token();
+
+        auto ast_node = std::make_unique<ast::variable_assignment>(ast::int_type /* change later!!! */, identifier, std::move(assigned_expr));
+
+        return std::move(ast_node);
+    }
+
 
     std::unique_ptr<ast::top_level_expr> parse_int_expr() {
         auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);
+        
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
         get_next_token();
         return std::move(ast_node);
     }
 
     std::unique_ptr<ast::top_level_expr> parse_float_expr() {
         auto ast_node = std::make_unique<ast::float_expression>(lexer::float_value);
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
         get_next_token();
         return std::move(ast_node);
     }
 
     std::unique_ptr<ast::top_level_expr> parse_char_expr() {
         auto ast_node = std::make_unique<ast::char_expression>(lexer::char_value);
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
         get_next_token();
         return std::move(ast_node);
     }
 
     std::unique_ptr<ast::top_level_expr> parse_string_expr() {
         auto ast_node = std::make_unique<ast::string_expression>(lexer::string_value);
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
         get_next_token();
         return std::move(ast_node);
     }
 
     std::unique_ptr<ast::top_level_expr> parse_bool_expr() {
         auto ast_node = std::make_unique<ast::bool_expression>(lexer::bool_value);
+
+        #if (DEBUG_MODE == 1) 
+            ast_node->debug_output();
+        #endif
+
         get_next_token();
         return std::move(ast_node);
     }

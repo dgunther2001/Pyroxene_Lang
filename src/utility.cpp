@@ -42,26 +42,32 @@ namespace utility {
         while (true) {
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
-                    break;
+                    return;
                 case ';':
-                    lexer::get_token(); // ignore semicolons and get the next token...
+                    parser::get_next_token(); // ignore semicolons and get the next token...
                     break; 
                 case lexer::tok_int_val: 
+                    parser::get_next_token();
                     parser::parse_int_expr();
                     break;
                 case lexer::tok_float_val: 
+                    parser::get_next_token();
                     parser::parse_float_expr();
                     break;
                 case lexer::tok_char_val: 
+                    parser::get_next_token();
                     parser::parse_char_expr();
                     break;
                 case lexer::tok_string_val: 
+                    parser::get_next_token();
                     parser::parse_string_expr();
                     break;
                 case lexer::tok_true:
+                    parser::get_next_token();
                     parser::parse_bool_expr();
                     break;
                 case lexer::tok_false:
+                    parser::get_next_token();
                     parser::parse_bool_expr();
                     break; 
                 default:
