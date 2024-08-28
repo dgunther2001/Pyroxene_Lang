@@ -31,9 +31,10 @@ endif()
 add_subdirectory(include)
 add_subdirectory(src)
 
-option(BUILD_DEBUG_DRIVER "Build the debug test driver instead of the main driver" ON) # MAKE A CMD LINE ARG LATER!!!
+option(BUILD_DEBUG_DRIVER "Build the debug test driver instead of the main driver" OFF) # MAKE A CMD LINE ARG LATER!!!
 
 if(BUILD_DEBUG_DRIVER)
+    add_definitions(-DDEBUG_MODE=1)
     add_executable(driver 
         unit_tests/unit_test_driver.cpp
         unit_tests/lexer_tests/lexer_tests.cpp
@@ -41,6 +42,7 @@ if(BUILD_DEBUG_DRIVER)
     )
     target_link_libraries(driver ${LLVM_LIBS})
 else()
+    add_definitions(-DDEBUG_MODE=0)
     add_executable(driver 
         src/driver.cpp 
         src/parser.cpp 

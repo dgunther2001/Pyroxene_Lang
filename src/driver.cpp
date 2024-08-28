@@ -16,6 +16,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #include <iostream>
 #include <fstream>
 
+#define DEBUG 0
 
 int main(int argc, char** argv) {
 
@@ -43,6 +44,10 @@ int main(int argc, char** argv) {
         fprintf(stderr, ">> "); // prime the inital token
         lexer::input = &std::cin;
     }
+
+    lexer::get_token();
+
+    utility::primary_driver_loop();
 
     return 0;
 }

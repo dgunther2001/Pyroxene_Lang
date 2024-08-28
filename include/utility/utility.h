@@ -11,6 +11,8 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 #include <string>
 #include <iostream>
+#include "../parser/parser.h"
+#include "../lexer/lexer.h"
 
 namespace utility {
 
@@ -18,6 +20,8 @@ namespace utility {
     extern void driver_args_error(const int num_args);
     extern void lexer_error(const std::string& message, int line);
     extern void parser_error(const std::string& message, int line);
+
+    extern void primary_driver_loop();
 
 }
 

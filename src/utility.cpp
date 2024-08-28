@@ -20,7 +20,7 @@ namespace utility {
 
     void driver_args_error(const int num_args) {
         std::cout <<"\033[1;31m";
-        std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n"
+        std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n";
     }
     
 
@@ -34,6 +34,42 @@ namespace utility {
         std::cout <<"\033[1;31m";
         std::cout << "Lexer error: " << message << " on line " << line << "\n";
         std::abort();
+    }
+
+
+
+    void primary_driver_loop() {
+        while (true) {
+            switch(parser::current_token) {
+                case lexer::tok_eof: // if its the end of the file, exit the loop
+                    break;
+                case ';':
+                    lexer::get_token(); // ignore semicolons and get the next token...
+                    break; 
+                case lexer::tok_int_val: 
+                    parser::parse_int_expr();
+                    break;
+                case lexer::tok_float_val: 
+                    parser::parse_float_expr();
+                    break;
+                case lexer::tok_char_val: 
+                    parser::parse_char_expr();
+                    break;
+                case lexer::tok_string_val: 
+                    parser::parse_string_expr();
+                    break;
+                case lexer::tok_true:
+                    parser::parse_bool_expr();
+                    break;
+                case lexer::tok_false:
+                    parser::parse_bool_expr();
+                    break; 
+                default:
+                    //parser::parse_; 
+                    return;
+                    //break;
+            }
+        }
     }
 
 }

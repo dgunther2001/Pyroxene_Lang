@@ -6,6 +6,11 @@ For the full license text, see the LICENSE.txt file in the docs directory.
 If LICENSE.txt is not included, this version of the source code is provided in breach of this license.
 */
 
+
+// MUST DO
+    // 1. actually fill in parse_expression()
+    // 2. figure out types in var_assignment
+
 #ifndef AST_H
 #define AST_H
 
@@ -13,6 +18,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #include <memory>
 #include <string>
 #include <vector>
+
 
 /*
     Expression AST Nodes needed:
@@ -37,6 +43,7 @@ namespace ast {
     class top_level_expr {
     public:
         virtual ~top_level_expr() = default;
+        //virtual void debug_output();
         //virtual llvm::Value* codegen() = 0;
     };
 
@@ -66,6 +73,7 @@ namespace ast {
             {}
 
         const types get_expr_type() const {return type;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -81,6 +89,7 @@ namespace ast {
             {}
         const std::string& get_identifier_name() const {return identifier_name;}
         const types get_expr_type() const {return type;}
+        void debug_output();
         //llvm::Value* codegen() override;
 
     };
@@ -93,6 +102,7 @@ namespace ast {
     public:
         integer_expression(int held_value) : held_value(held_value) {}
         const int get_value() const {return held_value;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -104,6 +114,7 @@ namespace ast {
     public:
         float_expression(float held_value) : held_value(held_value) {}
         const float get_value() const {return held_value;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -115,6 +126,7 @@ namespace ast {
     public:
         char_expression(char held_value) : held_value(held_value) {}
         const char get_value() const {return held_value;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -126,6 +138,7 @@ namespace ast {
     public:
         string_expression(std::string held_value) : held_value(held_value) {}
         const std::string& get_value() const {return held_value;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -137,15 +150,18 @@ namespace ast {
     public:
         bool_expression(bool held_value) : held_value(held_value) {}
         const bool get_value() const {return held_value;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
+    /*
     class func_call_expr : public top_level_expr {
     // TODO
 
     public:
         //llvm::Value* codegen() override;
     };
+    */
 
 
 
@@ -168,6 +184,7 @@ namespace ast {
             {}
         const types get_expr_type() const {return type;} 
         const std::string& get_name() const {return identifier_name;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
@@ -186,10 +203,11 @@ namespace ast {
         
         const types get_expr_type() const {return type;} 
         const std::string& get_name() const {return identifier_name;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
-    class variable_assignment : top_level_expr {
+    class variable_assignment : public top_level_expr {
     private:
         types type; // maybe remove as i want to do type resolution later
         std::string identifier_name;
@@ -203,6 +221,7 @@ namespace ast {
             {}
         const types get_expr_type() const {return type;} 
         const std::string& get_name() const {return identifier_name;}
+        void debug_output();
         //llvm::Value* codegen() override;
     };
 
