@@ -108,6 +108,9 @@ static void print_individual_token(int token) {
         case lexer::tok_return:
             std::cout << "Token return\n";
             break;
+        case lexer::tok_def:
+            std::cout << "Token def\n";
+            break;
         default: 
             std::cout << "Unknown Token\n";
             break;

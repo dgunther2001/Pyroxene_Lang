@@ -234,6 +234,10 @@ namespace lexer {
                 return tok_return;
             }
 
+            if (identifier == "def") {
+                return tok_def;
+            }
+
             return tok_identifier;
             
         }

@@ -6,7 +6,7 @@
 
 //******************************************************
 
-int;
+int l;
 bool;
 char;
 my_name;
@@ -35,3 +35,5 @@ my_graph.djikstras();
 int;
 
 return 500000;
+
+def int my_func();

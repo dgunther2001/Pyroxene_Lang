@@ -25,6 +25,7 @@ namespace lexer {
         tok_float = -20,
         tok_bool = -30,
         tok_char = -40,
+        tok_def = -41,
         tok_string = -50,
         tok_int_val = -55,
         tok_float_val = -56,
