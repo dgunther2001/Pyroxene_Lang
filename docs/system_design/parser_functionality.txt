@@ -17,7 +17,7 @@ High Level Methodology:
     <var_decl> -> <type> <identifier> ";"
     <var_defn> -> <type> <identifier> "=" <expression> ";"
     <assignment> -> <identifier> "=" <expression> ";"
-    <function> -> <type> <identifier> "(" <var_decl>* ")" "{" <statement>* <return> "}"
+    <function> -> "def" <type> <identifier> "(" <var_decl>* ")" "{" <statement>* <return> "}"
     <for_loop> -> "for" "(" <var_defn> ";" <expression> ";" <expression> ")" "{" <statement>* "}"
     <while_loop> -> "while" "(" <expression> ")" "{" <statement>* "}"
     <class_decl> -> "class" <identifier> "{" <var_decl>* <function>* "}"
