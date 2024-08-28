@@ -45,6 +45,10 @@ namespace ast {
         virtual ~top_level_expr() = default;
         //virtual void debug_output();
         //virtual llvm::Value* codegen() = 0;
+
+        virtual ast::types get_expr_type() { // PLACEHOLDER
+            return ast::types::int_type;
+        }
     };
 
     class func_defn {

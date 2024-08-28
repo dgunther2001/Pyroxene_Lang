@@ -36,40 +36,49 @@ namespace utility {
         std::abort();
     }
 
+    void output_current_token() {
+        std::cout << parser::current_token << "\n";
+    }
+
 
 
     void primary_driver_loop() {
         while (true) {
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
+                    
+                    #if (DEBUG_MODE == 1)
+                        std::cout << "Variable Map:\n";
+                        for (auto const& [key, value] : parser::var_map) {
+                            std::cout << key << " : " << ast::get_type_as_string(value) << "\n";
+                        }
+                    #endif
+                    
                     return;
-                case ';':
+                case lexer::tok_semicolon:
                     parser::get_next_token(); // ignore semicolons and get the next token...
                     break; 
                 case lexer::tok_int_val: 
-                    parser::get_next_token();
                     parser::parse_int_expr();
                     break;
                 case lexer::tok_float_val: 
-                    parser::get_next_token();
                     parser::parse_float_expr();
                     break;
                 case lexer::tok_char_val: 
-                    parser::get_next_token();
                     parser::parse_char_expr();
                     break;
                 case lexer::tok_string_val: 
-                    parser::get_next_token();
                     parser::parse_string_expr();
                     break;
                 case lexer::tok_true:
-                    parser::get_next_token();
                     parser::parse_bool_expr();
                     break;
                 case lexer::tok_false:
-                    parser::get_next_token();
                     parser::parse_bool_expr();
                     break; 
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
+                    parser::parse_var_decl_defn();
+                    break;
                 default:
                     //parser::parse_; 
                     return;

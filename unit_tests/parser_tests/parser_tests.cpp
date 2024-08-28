@@ -40,11 +40,11 @@ void ast::bool_expression::debug_output() {
 }
 
 void ast::variable_declaration::debug_output() {
-    
+     std::cout << "Variable declaration of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
 }
 
 void ast::variable_definition::debug_output() {
-    
+
 }
 
 void ast::variable_assignment::debug_output() {
