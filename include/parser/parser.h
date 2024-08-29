@@ -24,6 +24,8 @@ namespace parser {
 
     extern std::vector<std::string> defined_vars;
 
+    extern std::map<lexer::Token_Type, int> operator_precedence;
+
     int get_next_token();
 
     std::unique_ptr<ast::top_level_expr> parse_expression();

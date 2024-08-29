@@ -54,6 +54,8 @@ int main(int argc, char** argv) {
     #else
         parser::get_next_token();
 
+        utility::initialize_operator_precendence();
+
         utility::primary_driver_loop();
 
         file.close();

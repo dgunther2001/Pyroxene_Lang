@@ -15,6 +15,8 @@ namespace parser {
 
     std::vector<std::string> defined_vars;
 
+    std::map<lexer::Token_Type, int> operator_precedence;
+
     int get_next_token() {
         return current_token = lexer::get_token();
     }

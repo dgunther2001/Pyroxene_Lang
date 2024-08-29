@@ -40,7 +40,12 @@ namespace utility {
         std::cout << parser::current_token << "\n";
     }
 
-
+    void initialize_operator_precendence() {
+        parser::operator_precedence.insert({lexer::tok_plus, 100});
+        parser::operator_precedence.insert({lexer::tok_minus, 200});
+        parser::operator_precedence.insert({lexer::tok_mult, 300});
+        parser::operator_precedence.insert({lexer::tok_div, 400});
+    }
 
     void primary_driver_loop() {
         while (true) {

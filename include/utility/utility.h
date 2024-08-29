@@ -22,6 +22,7 @@ namespace utility {
     extern void lexer_error(const std::string& message, int line);
     extern void parser_error(const std::string& message, int line);
     extern void output_current_token();
+    extern void initialize_operator_precendence();
 
     extern void primary_driver_loop();
 
