@@ -16,17 +16,16 @@ namespace parser {
     int get_next_token() {
         return current_token = lexer::get_token();
     }
-
-    std::unique_ptr<ast::top_level_expr> parse_expression() { // TEMPORARY PLACEHOLDER (ESSENTIALLY RETURN NOTHING)
-        auto ast_node = std::make_unique<ast::top_level_expr>();
-        return std::move(ast_node);
+    
+    std::unique_ptr<ast::top_level_expr> parse_expression() {
+        // where can i start => simply parsing single operands
+        if (lexer::cur_tok_int_val) return std::move(parse_int_expr());
+        if (lexer::cur_tok_float_val) return std::move(parse_float_expr());
+        if (lexer::cur_tok_char_val) return std::move(parse_char_expr());
+        if (lexer::cur_tok_string_val) return std::move(parse_string_expr());
+        if (lexer::cur_tok_bool_val) return std::move(parse_bool_expr());
     }
-
-    /*
-    std::unique_ptr<top_level_expr>  parse_expression() {
-
-    }
-    */
+    
    
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
         ast::types type;
@@ -49,7 +48,7 @@ namespace parser {
                 break;
             default:
                 utility::parser_error("Invalid type specified", lexer::line_count); 
-        }     
+        }    
 
         get_next_token(); // consume the type
 
@@ -80,13 +79,25 @@ namespace parser {
     }
 
     std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier) {
+
         var_map.insert({identifier, type});
 
         get_next_token();
 
         auto assigned_expr = parse_expression();
 
+        /*
+        if (assigned_expr->get_expr_type() != type) {
+            utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
+        }
+        */
+        
+
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
 
         get_next_token();
         return std::move(ast_node);
@@ -96,17 +107,33 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_var_assign() {
         std::string identifier = lexer::identifier;
 
-        get_next_token();
+        
+        if (var_map.find(identifier) == var_map.end()) {
+            utility::parser_error("Variable not yet declared", lexer::line_count);
+        }
+
+        get_next_token(); // consumes the identifier
+
+
+        if (current_token != lexer::tok_assignment) {
+            utility::parser_error("Expected an assignment", lexer::line_count);
+        }
+
+        get_next_token(); // consume the '='
+
 
         auto assigned_expr = parse_expression();
 
-        // ADD TYPE CHECKING MECHANISM HERE
-
+        
         if (assigned_expr->get_expr_type() != var_map[identifier]) {
             utility::parser_error("Invalid assignment", lexer::line_count);
         }
 
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
 
         return std::move(ast_node);
     }

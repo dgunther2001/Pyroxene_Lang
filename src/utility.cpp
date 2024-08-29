@@ -32,7 +32,7 @@ namespace utility {
 
     void parser_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
-        std::cout << "Lexer error: " << message << " on line " << line << "\n";
+        std::cout << "Parser error: " << message << " on line " << line << "\n";
         std::abort();
     }
 
@@ -79,10 +79,12 @@ namespace utility {
                 case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
                     parser::parse_var_decl_defn();
                     break;
+                case lexer::tok_identifier:
+                    parser::parse_var_assign();
+                    break;
                 default:
-                    //parser::parse_; 
-                    return;
-                    //break;
+                    parser::parse_expression();
+                    break;
             }
         }
     }

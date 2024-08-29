@@ -61,6 +61,12 @@ namespace lexer {
     extern std::string string_value;
     extern std::istream* input;
 
+    extern bool cur_tok_int_val;
+    extern bool cur_tok_float_val;
+    extern bool cur_tok_char_val;
+    extern bool cur_tok_string_val;
+    extern bool cur_tok_bool_val;
+
     extern int get_token(); // primary lexer function
 
 }

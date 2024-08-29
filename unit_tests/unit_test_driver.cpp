@@ -4,6 +4,8 @@
 #include <iostream>
 #include <fstream>
 
+#define DEBUG_OPTION 0
+
 
 int main(int argc, char** argv) {
 
@@ -30,21 +32,32 @@ int main(int argc, char** argv) {
         fprintf(stderr, ">> "); // prime the inital token
         lexer::input = &std::cin;
     }
-
-    /*
-    while (true) {
-        int token = lexer::get_token();
-        if (token == lexer::tok_eof) {
-            break;
+    
+    #if (DEBUG_OPTION == 1)
+        while (true) {
+            int token = lexer::get_token();
+            if (token == lexer::tok_eof) {
+                break;
+            }
+            print_individual_token(token);
         }
-        print_individual_token(token);
-    }
-    */
+    #elif (DEBUG_OPTION == 2)
+        while (true) {
+            int token = lexer::get_token();
+            if (token == lexer::tok_eof) {
+                break;
+            }
+            std::cout << "[" << lexer::cur_tok_int_val << ", " << lexer::cur_tok_float_val << ", " << lexer::cur_tok_char_val << ", " <<
+                lexer::cur_tok_string_val << ", " << lexer::cur_tok_bool_val << "]\n";
+        }
     
-    
-    parser::get_next_token();
+    #else
+        parser::get_next_token();
 
-    utility::primary_driver_loop();
+        utility::primary_driver_loop();
+
+        file.close();
+    #endif
 
 
     return 0;

@@ -25,6 +25,12 @@ namespace lexer {
     std::string string_value; // holds string values
     std::istream* input; // a pointer to the eactual input stream
 
+    bool cur_tok_int_val = false;
+    bool cur_tok_float_val = false;
+    bool cur_tok_char_val = false;
+    bool cur_tok_string_val = false;
+    bool cur_tok_bool_val = false;
+
     /*
         Objective: look at the current character in the input stream and advance until a full token has been identified
         Return: returns an integer value corresponding to values in the enum Token_Type
@@ -32,6 +38,12 @@ namespace lexer {
     */
     int get_token() {
         static int previous_character = ' ';  // initializes the previous character to an empty character to avoid undefined behaviour
+
+        cur_tok_int_val = false;
+        cur_tok_float_val = false;
+        cur_tok_char_val = false;
+        cur_tok_string_val = false;
+        cur_tok_bool_val = false;
 
         /*
             Objective: ignore whitespace 
@@ -215,10 +227,12 @@ namespace lexer {
             }
 
             if (identifier == "true") {
+                cur_tok_bool_val = true;
                 return tok_true;
             }
 
             if (identifier == "false") {
+                cur_tok_bool_val = true;
                 return tok_false;
             }
 
@@ -269,10 +283,12 @@ namespace lexer {
 
             if (is_float == true) { // if we have identified a float...
                 float_value = strtod(temp_num.c_str(), nullptr); // convert the storage buffer into a float and return an fp token
+                cur_tok_float_val = true;
                 return tok_float_val;
             }
 
             integer_value = std::stoi(temp_num); // otherwise, convert the storage buffer to an int, and return an int token
+            cur_tok_int_val = true;
             return tok_int_val;
 
         }
@@ -288,6 +304,7 @@ namespace lexer {
 
                 if (previous_character == '"') { // if the current character is '"' consumer it, and return a string value token
                     previous_character = input->get();
+                    cur_tok_string_val = true;
                     return tok_string_val;
                 }
 
@@ -328,6 +345,7 @@ namespace lexer {
 
             previous_character = input->get(); // consume the closing '''
 
+            cur_tok_char_val = true;
             return tok_char_val; // return a character value token
         }
 

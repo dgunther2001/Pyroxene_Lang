@@ -11,6 +11,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 #include <memory>
 #include <map>
+#include <typeinfo>
 #include "../ast/ast.h"
 #include "../lexer/lexer.h"
 #include "../utility/utility.h"
