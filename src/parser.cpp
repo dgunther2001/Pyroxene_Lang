@@ -13,6 +13,8 @@ namespace parser {
 
     std::map<std::string, ast::types> var_map;
 
+    std::vector<std::string> defined_vars;
+
     int get_next_token() {
         return current_token = lexer::get_token();
     }
@@ -24,6 +26,11 @@ namespace parser {
         if (lexer::cur_tok_char_val) return std::move(parse_char_expr());
         if (lexer::cur_tok_string_val) return std::move(parse_string_expr());
         if (lexer::cur_tok_bool_val) return std::move(parse_bool_expr());
+
+        // parsing something when it is passed as an identifier
+        if (current_token == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
+
+
     }
     
    
@@ -62,6 +69,7 @@ namespace parser {
             return std::move(parse_var_decl(type, identifier));
         } else {
             utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+            return nullptr;
         }
     }
     
@@ -82,15 +90,16 @@ namespace parser {
 
         var_map.insert({identifier, type});
 
+
         get_next_token();
 
         auto assigned_expr = parse_expression();
 
-        /*
+        
         if (assigned_expr->get_expr_type() != type) {
             utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
         }
-        */
+        
         
 
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
@@ -100,6 +109,9 @@ namespace parser {
         #endif
 
         get_next_token();
+
+        defined_vars.emplace_back(identifier);
+
         return std::move(ast_node);
     }
 
@@ -135,9 +147,37 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
+        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
+            defined_vars.emplace_back(identifier);
+        }
+
         return std::move(ast_node);
     }
 
+    std::unique_ptr<ast::top_level_expr> parse_identifier_expr() {
+
+        std::string identifier = lexer::identifier;
+
+        // deal with case where it is declared, but not defined ******IMPORTANT
+
+        if (var_map.find(identifier) == var_map.end()) {
+            utility::parser_error("Variable not yet defined", lexer::line_count);
+        }
+
+        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
+            utility::parser_error("Variable not yet initialize", lexer::line_count);
+        }
+
+        auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
+        get_next_token();
+
+        return std::move(ast_node);
+    }
 
     std::unique_ptr<ast::top_level_expr> parse_int_expr() {
         auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);

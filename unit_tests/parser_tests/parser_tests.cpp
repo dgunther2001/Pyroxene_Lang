@@ -16,27 +16,27 @@ void ast::binary_expr::debug_output() {
 }
 
 void ast::identifier_expr::debug_output() {
-    
+     std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
 }
 
 void ast::integer_expression::debug_output() {
-    std::cout << "Expression of type: int" << "\n"; 
+    std::cout << "Literal expression of type: int" << "\n"; 
 }
 
 void ast::float_expression::debug_output() {
-     std::cout << "Expression of type: float" << "\n"; 
+     std::cout << "Literal expression of type: float" << "\n"; 
 }
 
 void ast::char_expression::debug_output() {
-     std::cout << "Expression of type: char" << "\n"; 
+     std::cout << "Literal expression of type: char" << "\n"; 
 }
 
 void ast::string_expression::debug_output() {
-     std::cout << "Expression of type: string" << "\n"; 
+     std::cout << "Literal expression of type: string" << "\n"; 
 }
 
 void ast::bool_expression::debug_output() {
-     std::cout << "Expression of type: bool" << "\n"; 
+     std::cout << "Literal expression of type: bool" << "\n"; 
 }
 
 void ast::variable_declaration::debug_output() {

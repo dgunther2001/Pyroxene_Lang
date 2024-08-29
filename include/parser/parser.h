@@ -11,7 +11,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 #include <memory>
 #include <map>
-#include <typeinfo>
+#include <vector>
 #include "../ast/ast.h"
 #include "../lexer/lexer.h"
 #include "../utility/utility.h"
@@ -22,6 +22,8 @@ namespace parser {
 
     extern std::map<std::string, ast::types> var_map;
 
+    extern std::vector<std::string> defined_vars;
+
     int get_next_token();
 
     std::unique_ptr<ast::top_level_expr> parse_expression();
@@ -31,6 +33,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier);
     std::unique_ptr<ast::top_level_expr> parse_var_assign();
 
+    std::unique_ptr<ast::top_level_expr> parse_identifier_expr();
     std::unique_ptr<ast::top_level_expr> parse_int_expr();
     std::unique_ptr<ast::top_level_expr> parse_float_expr();
     std::unique_ptr<ast::top_level_expr> parse_char_expr();
