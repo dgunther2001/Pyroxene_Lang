@@ -37,4 +37,4 @@ RUN mkdir build && cd build && \
 
 ENTRYPOINT ["./build/driver"]
 
-CMD ["./test_files/test_1.txt"]
+CMD ["./test_files/test_1.pyrx"]
