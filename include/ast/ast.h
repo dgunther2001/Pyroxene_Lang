@@ -15,6 +15,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #define AST_H
 
 #include "llvm/IR/Value.h"
+#include "../lexer/lexer.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -64,12 +65,12 @@ namespace ast {
 
     class binary_expr : public top_level_expr {
     private: 
-        char op;
+        lexer::Token_Type op;
         std::unique_ptr<top_level_expr> left, right;
         types type;
 
     public:
-        binary_expr(char op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, types type) :
+        binary_expr(lexer::Token_Type op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, types type) :
             op(op),
             left(std::move(left)),
             right(std::move(right)),

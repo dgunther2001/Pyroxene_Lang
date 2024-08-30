@@ -20,15 +20,22 @@ namespace parser {
 
     extern int current_token;
 
+    extern lexer::Token_Type current_token_as_token;
+
     extern std::map<std::string, ast::types> var_map;
 
     extern std::vector<std::string> defined_vars;
 
     extern std::map<lexer::Token_Type, int> operator_precedence;
 
+   // extern std::unique_ptr<ast::top_level_expr> tokenize_expr_vector();
+
     int get_next_token();
 
+
     std::unique_ptr<ast::top_level_expr> parse_expression();
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok);
+    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> token_stream);
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn();
     std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier);

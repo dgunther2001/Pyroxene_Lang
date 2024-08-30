@@ -47,7 +47,11 @@ int main(int argc, char** argv) {
 
     parser::get_next_token();
 
+    utility::initialize_operator_precendence();
+
     utility::primary_driver_loop();
+
+    file.close();
 
     return 0;
 }

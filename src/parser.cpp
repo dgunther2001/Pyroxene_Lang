@@ -11,6 +11,8 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 namespace parser {
     int current_token;
 
+    lexer::Token_Type current_token_as_token;
+
     std::map<std::string, ast::types> var_map;
 
     std::vector<std::string> defined_vars;
@@ -18,23 +20,103 @@ namespace parser {
     std::map<lexer::Token_Type, int> operator_precedence;
 
     int get_next_token() {
-        return current_token = lexer::get_token();
+        current_token = lexer::get_token();
+        current_token_as_token = static_cast<lexer::Token_Type>(current_token);
+
+        return current_token;
+    }
+
+    /*
+    std::unique_ptr<ast::top_level_expr> tokenize_expr_vector() {
+        std::vector<lexer::Token_Type> single_nested_expr_tokens;
+        while (current_token != lexer::tok_semicolon) { // while it is an expression...
+            single_nested_expr_tokens.emplace_back(current_token);
+            get_next_token();
+        }
+
+        return std::move(parse_binary_expr(single_nested_expr_tokens));
+        // need to somehow store identifiers and raw values as well...
+    }
+    */
+
+    std::unique_ptr<ast::top_level_expr> parse_expression() {
+        lexer::Token_Type first_tok = current_token_as_token; // stores the expression
+
+        std::vector<lexer::Token_Type> single_nested_expr_tokens;
+        single_nested_expr_tokens.emplace_back(current_token_as_token);
+
+        get_next_token(); // consume the token
+
+        if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
+            while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
+                single_nested_expr_tokens.emplace_back(current_token_as_token);
+                get_next_token();
+            }
+
+            return std::move(parse_binary_expr(single_nested_expr_tokens));
+        }
+
+        else {
+            return std::move(parse_primary_expression(first_tok));
+        }
+
+
+        // add parsing of function calls
     }
     
-    std::unique_ptr<ast::top_level_expr> parse_expression() {
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok) {
+        // now i need to implement a lookahead function that stores a bunch of tokens in a theoretically infinitely chained expression and call the respective functions on them
+        // how to do this => store tokens in an array like data structure where i can find operators of higher precedence, and then 
+
         // where can i start => simply parsing single operands
-        if (lexer::cur_tok_int_val) return std::move(parse_int_expr());
-        if (lexer::cur_tok_float_val) return std::move(parse_float_expr());
-        if (lexer::cur_tok_char_val) return std::move(parse_char_expr());
-        if (lexer::cur_tok_string_val) return std::move(parse_string_expr());
-        if (lexer::cur_tok_bool_val) return std::move(parse_bool_expr());
+        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr());
+        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr());
+        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr());
+        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr());
+        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr());
+        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr());
 
         // parsing something when it is passed as an identifier
         if (current_token == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
 
-
     }
-    
+
+    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> token_stream) {
+        /*
+        std::vector<lexer::Token_Type> nested_expression;
+
+
+        int index_of_highest_prec_op = 0;
+        int current_index = 0;
+        int highest_prec = 0;
+        for (lexer::Token_Type token : nested_expression) { // iterate over the nexted expression looking for the highest precedence operator
+            if (operator_precedence.find(token) != operator_precedence.end()) {
+                if (operator_precedence[token] > highest_prec) {
+                    index_of_highest_prec_op = current_index;
+                }
+                // find the highest precedence expression
+            }
+
+            nested_expression.emplace_back(token);
+            current_index++;
+        }
+
+        if (index_of_highest_prec_op == 0) {
+            //return std::move(parse_expression(nested_expression[0]));
+        }
+
+
+        if (index_of_highest_prec_op == nested_expression.size() - 1) {
+            utility::parser_error("Operater not infixed into expression", lexer::line_count);
+        }
+
+        // we now hold the index of the highest precedence operator in index_of_highest_prec_op
+
+        return nullptr;
+        */
+
+       return nullptr;
+    }
    
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
         ast::types type;
@@ -176,7 +258,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
 
         return std::move(ast_node);
     }
@@ -188,7 +270,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
         return std::move(ast_node);
     }
 
@@ -199,7 +281,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
         return std::move(ast_node);
     }
 
@@ -210,7 +292,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
         return std::move(ast_node);
     }
 
@@ -221,7 +303,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
         return std::move(ast_node);
     }
 
@@ -232,7 +314,7 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        get_next_token();
+        //get_next_token();
         return std::move(ast_node);
     }
 
