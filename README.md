@@ -1,7 +1,16 @@
-Hello, my name is Daniel Gunther, and this is my first major excursion into the world of LLVM. <br />
-For licensing information, please refer to /docs/license.txt. <br />
-To get started using the language (not fully usable yet), refer to /docs/start.txt. <br />
-To get into my head and see my problem solving approach throughout, please refer to other <br />
-files in the /docs directory, as well as the myriad of inline comments throughout my source code. <br />
-Thank you for checking this project out, and feel free to make suggestions and use the project <br />
-so long as you abide by the license agreement.
+**Hello!**  
+My name is **Daniel Gunther**, and this is my first major excursion into the world of LLVM.
+
+### Documentation and Getting Started
+
+- **Licensing Information:**  
+  For licensing details, please refer to the [license.txt](/docs/license.txt) file in the `/docs` directory.
+
+- **Getting Started:**  
+  Although the language is not fully usable yet, you can find preliminary instructions in the [start.txt](/docs/start.txt) file in the `/docs` directory.
+
+- **Understand My Approach:**  
+  To get a deeper understanding of my problem-solving approach and thought process, check out the additional files in the `/docs` directory and explore the numerous inline comments throughout the source code.
+
+Thank you for taking the time to explore this project! Feel free to make suggestions or use the project, as long as you adhere to the license agreement.
+
