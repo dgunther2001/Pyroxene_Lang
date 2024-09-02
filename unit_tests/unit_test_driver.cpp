@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION 0
+#define DEBUG_OPTION 1
 
 
 int main(int argc, char** argv) {
@@ -34,13 +34,14 @@ int main(int argc, char** argv) {
     }
     
     #if (DEBUG_OPTION == 1)
-        while (true) {
-            int token = lexer::get_token();
-            if (token == lexer::tok_eof) {
-                break;
-            }
-            print_individual_token(token);
+        std::pair<std::vector<int>, std::vector<std::optional<lexer::lexer_stored_values>>> token_stream = lexer::tokenize_file();
+        std::vector<int> tokens = token_stream.first;
+        std::vector<std::optional<lexer::lexer_stored_values>> adj_values = token_stream.second;
+        for (int i = 0; i < tokens.size(); i++) {
+           print_individual_token(tokens[i], adj_values[i]);
         }
+        std::cout << "\n";
+
     #elif (DEBUG_OPTION == 2)
         while (true) {
             int token = lexer::get_token();

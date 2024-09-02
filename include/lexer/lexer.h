@@ -10,7 +10,10 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #define LEXER_H
 
 #include <string>
+#include <vector>
 #include <istream>
+#include <optional>
+#include <variant>
 
 namespace lexer {
 
@@ -52,6 +55,11 @@ namespace lexer {
         tok_return = -130
     };
 
+    typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;
+
+    extern std::vector<Token_Type> token_stream;
+    extern std::vector<std::optional<lexer_stored_values>> stored_values;
+
     // various variables that encode user defined variables that hold the value of the token as well
     extern std::string identifier;
     extern int integer_value;
@@ -67,8 +75,9 @@ namespace lexer {
     extern bool cur_tok_string_val;
     extern bool cur_tok_bool_val;
 
-    extern int get_token(); // primary lexer function
+    extern Token_Type get_token(); // primary lexer function
 
+    extern std::pair<std::vector<int>, std::vector<std::optional<lexer_stored_values>>> tokenize_file();
 }
 
 #endif

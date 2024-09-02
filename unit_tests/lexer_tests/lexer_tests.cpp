@@ -8,8 +8,9 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 #include "../../include/lexer/lexer.h"
 #include <iostream>
+#include <variant>
 
-static void print_individual_token(int token) {
+static void print_individual_token(int token, const std::optional<lexer::lexer_stored_values>& value) {
 
     switch (token) {
         case lexer::tok_eof:
@@ -34,7 +35,7 @@ static void print_individual_token(int token) {
             std::cout << "Token string\n";
             break;
         case lexer::tok_identifier:
-            std::cout << "Token Identifier: " <<  lexer::identifier << "\n";
+            std::cout << "Token Identifier: ";
             break;
         case lexer::tok_for:
             std::cout << "Token for\n";
@@ -52,16 +53,16 @@ static void print_individual_token(int token) {
             std::cout << "Token assignment\n";
             break;
         case lexer::tok_float_val:
-            std::cout << "Token float value: "<< lexer::float_value << "\n";
+            std::cout << "Token float value: ";
             break;
         case lexer::tok_int_val:
-            std::cout << "Token int value: "<< lexer::integer_value << "\n";
+            std::cout << "Token int value: ";
             break;
         case lexer::tok_string_val:
-            std::cout << "Token string value: "<< lexer::string_value << "\n";
+            std::cout << "Token string value: ";
             break;
         case lexer::tok_char_val:
-            std::cout << "Token character value: "<< lexer::char_value << "\n";
+            std::cout << "Token character value: ";
             break;
         case lexer::tok_open_paren:
             std::cout << "Token open parenthesis\n";
@@ -114,6 +115,10 @@ static void print_individual_token(int token) {
         default: 
             std::cout << "Unknown Token\n";
             break;
+    }
+
+    if (value.has_value()) {
+        std::visit([](const auto& arg) { std::cout << arg << "\n"; }, value.value());
     }
 }
 

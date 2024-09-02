@@ -17,6 +17,9 @@ namespace lexer {
 
     int line_count = 1; // holds a line count for error handling
 
+    std::vector<Token_Type> token_stream;
+    std::vector<std::optional<lexer_stored_values>> stored_values;
+
     std::string identifier; // holds user defined identifiers
     int integer_value; // holds integer values
     float float_value; // holds floating point values
@@ -36,7 +39,7 @@ namespace lexer {
         Return: returns an integer value corresponding to values in the enum Token_Type
         Arguments: none
     */
-    int get_token() {
+    Token_Type get_token() {
         static int previous_character = ' ';  // initializes the previous character to an empty character to avoid undefined behaviour
 
         cur_tok_int_val = false;
@@ -351,8 +354,44 @@ namespace lexer {
 
         // if the current character doesn't fit into our tokenization scheme...
         int current_character = previous_character; // store the current character for look back purposes
-        previous_character = input->get(); // consume the current character
-        return current_character; // return the ASCII value of the current character (this is why Token_Type stores only negative values)
+    }
+
+    std::pair<std::vector<int>, std::vector<std::optional<lexer_stored_values>>> tokenize_file() {
+        std::vector<int> tokens;
+        std::vector<std::optional<lexer_stored_values>> adj_tok_values;
+
+        while (true) {
+            int token = get_token();
+            tokens.emplace_back(token);
+            if (token == tok_eof) {
+                break;
+            }
+            switch (token) {
+                case tok_identifier:
+                    adj_tok_values.emplace_back(identifier);
+                    break;
+                case tok_int_val:
+                    adj_tok_values.emplace_back(integer_value);
+                    break;
+                case tok_float_val:
+                    adj_tok_values.emplace_back(float_value);
+                    break;
+                case tok_char_val:
+                    adj_tok_values.emplace_back(char_value);
+                    break;
+                case tok_string_val:
+                    adj_tok_values.emplace_back(string_value);
+                    break;
+                case tok_true: case tok_false:
+                    adj_tok_values.emplace_back(bool_value);
+                    break;
+                default:
+                    adj_tok_values.emplace_back(std::nullopt);
+                    break;
+            }
+        }
+
+        return std::make_pair(tokens, adj_tok_values);
     }
 
 }
