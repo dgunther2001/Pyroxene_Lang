@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION 0
+#define DEBUG_OPTION 5
 
 
 int main(int argc, char** argv) {
@@ -49,6 +49,37 @@ int main(int argc, char** argv) {
             }
             std::cout << "[" << lexer::cur_tok_int_val << ", " << lexer::cur_tok_float_val << ", " << lexer::cur_tok_char_val << ", " <<
                 lexer::cur_tok_string_val << ", " << lexer::cur_tok_bool_val << "]\n";
+        }
+
+    #elif (DEBUG_OPTION == 3)
+        lexer::tokenize_file();
+        for (int i = 0; i < lexer::token_stream.size(); i++) {
+           print_individual_token(lexer::token_stream[i], lexer::stored_values[i]);
+        }
+        std::cout << "\n";
+        std::cout << "Number of Tokens: " << lexer::token_stream.size() + 1 << "\n";
+
+        parser::get_next_token();
+
+        utility::initialize_operator_precendence();
+
+        utility::primary_driver_loop();
+
+        file.close();
+
+    #elif (DEBUG_OPTION == 4) 
+        lexer::tokenize_file();
+        for (int i = 0; i < lexer::token_stream.size(); i++) {
+            std::cout << i;
+            if (lexer::stored_values[i] == std::nullopt) {
+                std::cout << " nullopt.\n";
+            } else {
+                std::cout << " not nullopt.\n";
+            }
+            /* else if (lexer::stored_values[i].has_value()) {
+                std::cout << std::get<std::string>(lexer::stored_values[i]);
+            }
+            */
         }
     
     #else

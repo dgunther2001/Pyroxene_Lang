@@ -45,11 +45,9 @@ int main(int argc, char** argv) {
         lexer::input = &std::cin;
     }
 
-    std::pair<std::vector<int>, std::vector<std::optional<lexer::lexer_stored_values>>> token_stream = lexer::tokenize_file();
-    std::vector<int> tokens = token_stream.first;
-    std::vector<std::optional<lexer::lexer_stored_values>> adj_values = token_stream.second;
+    lexer::tokenize_file();
 
-    //parser::get_next_token();
+    parser::get_next_token();
 
     utility::initialize_operator_precendence();
 

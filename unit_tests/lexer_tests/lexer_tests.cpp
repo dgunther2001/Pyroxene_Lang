@@ -118,7 +118,9 @@ static void print_individual_token(int token, const std::optional<lexer::lexer_s
     }
 
     if (value.has_value()) {
-        std::visit([](const auto& arg) { std::cout << arg << "\n"; }, value.value());
+        if (!std::holds_alternative<bool>(value.value())) {
+            std::visit([](const auto& arg) { std::cout << arg << "\n"; }, value.value());
+        } 
     }
 }
 

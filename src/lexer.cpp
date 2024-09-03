@@ -360,6 +360,7 @@ namespace lexer {
         while (true) {
             Token_Type token = get_token();
             if (token == tok_eof) {
+                token_stream.emplace_back(token);
                 break;
             }
             token_stream.emplace_back(token);
