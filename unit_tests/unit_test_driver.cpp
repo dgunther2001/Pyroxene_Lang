@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION 1
+#define DEBUG_OPTION 0
 
 
 int main(int argc, char** argv) {
@@ -34,13 +34,12 @@ int main(int argc, char** argv) {
     }
     
     #if (DEBUG_OPTION == 1)
-        std::pair<std::vector<int>, std::vector<std::optional<lexer::lexer_stored_values>>> token_stream = lexer::tokenize_file();
-        std::vector<int> tokens = token_stream.first;
-        std::vector<std::optional<lexer::lexer_stored_values>> adj_values = token_stream.second;
-        for (int i = 0; i < tokens.size(); i++) {
-           print_individual_token(tokens[i], adj_values[i]);
+        lexer::tokenize_file();
+        for (int i = 0; i < lexer::token_stream.size(); i++) {
+           print_individual_token(lexer::token_stream[i], lexer::stored_values[i]);
         }
         std::cout << "\n";
+        std::cout << "Number of Tokens: " << lexer::token_stream.size() + 1 << "\n";
 
     #elif (DEBUG_OPTION == 2)
         while (true) {
@@ -53,6 +52,8 @@ int main(int argc, char** argv) {
         }
     
     #else
+        lexer::tokenize_file();
+
         parser::get_next_token();
 
         utility::initialize_operator_precendence();

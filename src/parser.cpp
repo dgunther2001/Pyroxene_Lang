@@ -19,8 +19,12 @@ namespace parser {
 
     std::map<lexer::Token_Type, int> operator_precedence;
 
+    int current_token_index = 0;
+    int token_index_max = lexer::token_stream.size();
+
     int get_next_token() {
-        current_token = lexer::get_token();
+        current_token = lexer::token_stream[current_token_index];
+        current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
 
         return current_token;

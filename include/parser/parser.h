@@ -28,6 +28,9 @@ namespace parser {
 
     extern std::map<lexer::Token_Type, int> operator_precedence;
 
+    extern int current_token_index;
+    extern int token_index_max;
+
    // extern std::unique_ptr<ast::top_level_expr> tokenize_expr_vector();
 
     int get_next_token();

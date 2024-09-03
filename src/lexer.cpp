@@ -356,42 +356,38 @@ namespace lexer {
         int current_character = previous_character; // store the current character for look back purposes
     }
 
-    std::pair<std::vector<int>, std::vector<std::optional<lexer_stored_values>>> tokenize_file() {
-        std::vector<int> tokens;
-        std::vector<std::optional<lexer_stored_values>> adj_tok_values;
-
+    void tokenize_file() {
         while (true) {
-            int token = get_token();
-            tokens.emplace_back(token);
+            Token_Type token = get_token();
             if (token == tok_eof) {
                 break;
             }
+            token_stream.emplace_back(token);
             switch (token) {
                 case tok_identifier:
-                    adj_tok_values.emplace_back(identifier);
+                    stored_values.emplace_back(identifier);
                     break;
                 case tok_int_val:
-                    adj_tok_values.emplace_back(integer_value);
+                    stored_values.emplace_back(integer_value);
                     break;
                 case tok_float_val:
-                    adj_tok_values.emplace_back(float_value);
+                    stored_values.emplace_back(float_value);
                     break;
                 case tok_char_val:
-                    adj_tok_values.emplace_back(char_value);
+                    stored_values.emplace_back(char_value);
                     break;
                 case tok_string_val:
-                    adj_tok_values.emplace_back(string_value);
+                    stored_values.emplace_back(string_value);
                     break;
                 case tok_true: case tok_false:
-                    adj_tok_values.emplace_back(bool_value);
+                    stored_values.emplace_back(bool_value);
                     break;
                 default:
-                    adj_tok_values.emplace_back(std::nullopt);
+                    stored_values.emplace_back(std::nullopt);
                     break;
             }
         }
 
-        return std::make_pair(tokens, adj_tok_values);
     }
 
 }

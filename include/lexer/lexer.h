@@ -77,7 +77,7 @@ namespace lexer {
 
     extern Token_Type get_token(); // primary lexer function
 
-    extern std::pair<std::vector<int>, std::vector<std::optional<lexer_stored_values>>> tokenize_file();
+    extern void tokenize_file();
 }
 
 #endif
