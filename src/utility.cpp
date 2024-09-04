@@ -51,7 +51,7 @@ namespace utility {
         while (true) {
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
-                    
+                
                     #if (DEBUG_MODE == 1)
                         std::cout << "Variable Map:\n";
                         for (auto const& [key, value] : parser::var_map) {

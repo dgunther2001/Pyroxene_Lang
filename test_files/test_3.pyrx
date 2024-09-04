@@ -8,17 +8,13 @@
 
 int b = 5;
 int f = 33;
-char g = 'a';
+//char g = 'a';
+//bool d = true;
+//bool z = false;
 
-/*
-char c = 'c';
 
-bool d = true;
+b = 7;
+f = b;
 
-a = 44.4;
-*/
+bool y = true;
 
-//b = f;
-b = g;
-//l = f;
-//f = s;
