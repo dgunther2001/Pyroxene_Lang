@@ -1,5 +1,4 @@
-**Hello!**  
-My name is **Daniel Gunther**, and this is my first major excursion into the world of LLVM.
+**Hello!** My name is **Daniel Gunther**, and this is my first major excursion into the world of LLVM.
 
 ### Documentation and Getting Started
 
@@ -12,8 +11,8 @@ My name is **Daniel Gunther**, and this is my first major excursion into the wor
 - **Understand My Approach:**  
   To get a deeper understanding of my problem-solving approach and thought process, check out the additional files in the [`/docs`](/docs) directory.
 
-- **Check Out the Documentation For Each Component:**
+- **Check Out the Documentation For Each Component:**  
   Understand the inner workings of Pyroxene by looking at the extensive documentation provided for each step of the pipeline to LLVM and ARM in the [`/docs/modules`](/docs/modules/) directory.  
 
-Thank you for taking the time to explore this project! Feel free to make suggestions or use the project, as long as you adhere to the license agreement.
+**Thank you for taking the time to explore this project! Feel free to make suggestions or use the project, as long as you adhere to the license agreement.**
 
