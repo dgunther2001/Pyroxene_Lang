@@ -17,11 +17,16 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace lexer {
 
-    // <a name="line_count"></a>
-    extern int line_count; // holds a line count variable for debug messages
+    /**
+     * @brief Tracks the current line number being processed in the input stream.
+     */
+    extern int line_count;
 
-    // <a name="Token_Type"></a>
-    enum Token_Type { // defines all of the types of tokens (in negative to avoid ASCII collissions)
+    /**
+     * @brief Enumeration of all possible tokens that are valid.
+     * @details Defines all the types of tokens, using negative values to avoid ASCII collisions.
+     */
+    enum Token_Type {
         tok_eof = -1,
         tok_dot = -3,
         tok_true = -5,
@@ -57,41 +62,61 @@ namespace lexer {
         tok_return = -130
     };
 
-    // <a name="lexer_stored_values"></a>
+    /**
+     * @brief A type definition using std::variant to store different values associated with tokens.
+     * @details Can store strings, integers, floats, characters, or booleans.
+     */
     typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;
 
-    // <a name="token_stream"></a>
+    /**
+     * @brief A vector that stores tokens lexed from the input stream.
+     */
     extern std::vector<Token_Type> token_stream;
 
-    // <a name="stored_values"></a>
+    /**
+     * @brief A vector that stores the optional values associated with each token.
+     * @details Can be strings, integers, floats, characters, booleans, or std::nullopt.
+     */
     extern std::vector<std::optional<lexer_stored_values>> stored_values;
 
-    // <a name="identifier"></a>
+    /**
+     * @brief Stores the current identifier from the input stream if identified.
+     */
     extern std::string identifier;
 
-    // <a name="integer_value"></a>
+    /**
+     * @brief Stores the current integer value from the input stream if identified.
+     */
     extern int integer_value;
 
-    // <a name="float_value"></a>
+    /**
+     * @brief Stores the current float value from the input stream if identified.
+     */
     extern float float_value;
 
-    // <a name="bool_value"></a>
+    /**
+     * @brief Stores the current boolean value from the input stream if identified.
+     */
     extern bool bool_value;
 
-    // <a name="char_value"></a>
+    /**
+     * @brief Stores the current character value from the input stream if identified.
+     */
     extern char char_value;
 
-    // <a name="string_value"></a>
+    /**
+     * @brief Stores the current string value from the input stream if identified.
+     */
     extern std::string string_value;
 
-    // <a name="input"></a>
+    /**
+     * @brief Pointer to the input stream (a .pyrx file).
+     */
     extern std::istream* input;
-
-
 
     extern Token_Type get_token(); 
 
     extern void tokenize_file();
 }
 
-#endif
+#endif // LEXER_H

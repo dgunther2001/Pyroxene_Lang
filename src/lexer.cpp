@@ -9,7 +9,6 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #include "../include/lexer/lexer.h"
 #include "../include/utility/utility.h"
 
-
 namespace lexer {
 
     int line_count = 1; 
@@ -25,83 +24,83 @@ namespace lexer {
     std::string string_value; 
     std::istream* input; 
 
-    // <a name="get_token"></a>
+    /**
+     * @brief Retrieves the next token from the input stream.
+     * @details Updates the relevant associated value (can be std::nullopt).
+     * 
+     * @return The type of the next token identified in the input stream.
+     */
     Token_Type get_token() {
-        // <a name="previous_character"></a>
+        /**
+         * @brief Stores the current character in `input` that is being considered.
+         */
         static int previous_character = ' ';  
 
-        // <a name="whitespace"></a>
+        /**
+         * @brief Iterates over all whitespace and ignores it by incrementing the `previous_character`.
+         */
         while (isspace(previous_character)) {  
             if (previous_character == '\n') line_count++; 
             previous_character = input->get(); 
         }
 
-        // <a name="single_character_tokens"></a>
+        /**
+         * @brief Tokenizes all single character tokens, such as `(`, `{`, `+`, `EOF`, and others.
+         */
         if (previous_character == ';') {
             previous_character = input->get();
             return tok_semicolon;
         }
 
-        
         if (previous_character == '=') {
             previous_character = input->get();
             return tok_assignment;
         }
 
-        
         if (previous_character == '(') { 
             previous_character = input->get();
             return tok_open_paren;
         }
 
-        
         if (previous_character == ')') {
             previous_character = input->get();
             return tok_close_paren;
         }
 
-        
         if (previous_character == '{') {
             previous_character = input->get();
             return tok_open_brack;
         }
 
-        
         if (previous_character == '}') {
             previous_character = input->get();
             return tok_close_brack;
         }
 
-        
         if (previous_character == '[') {
             previous_character = input->get();
             return tok_open_arr;
         }
 
-        
         if (previous_character == ']') {
             previous_character = input->get();
             return tok_close_arr;
         }
 
-        
         if (previous_character == '.') {
             previous_character = input->get();
             return tok_dot;
         }
 
-        
         if (previous_character == ',') {
             previous_character = input->get();
             return tok_comma;
         } 
 
-        
         if (previous_character == EOF) { 
             return tok_eof; 
         }
 
-        
         if (previous_character == '+') {
             previous_character = input->get();
             return tok_plus;
@@ -117,8 +116,9 @@ namespace lexer {
             return tok_mult;
         }
 
-
-        // <a name="div_and_comments"></a>
+        /**
+         * @brief Deals with character consumption when handling comments (inline and multiline), as well as the division operator.
+         */
         if (previous_character == '/') { 
             previous_character = input->get(); 
             if (isspace(previous_character)) {
@@ -132,7 +132,6 @@ namespace lexer {
                 } while (previous_character != '\n' && previous_character != EOF);
             }
 
-            
             if (previous_character == '*') {  
                 previous_character = input->get(); 
 
@@ -152,12 +151,10 @@ namespace lexer {
                 }
             }
 
-            
             if (previous_character == EOF) {
                 return tok_eof;
             }
 
-            
             if (previous_character == '\n') {
                 line_count++;
             }
@@ -166,7 +163,9 @@ namespace lexer {
             return get_token(); 
         }
 
-        // <a name="keywords_and_identifiers"></a>
+        /**
+         * @brief Finds keywords such as `int` and `class`, and lexes an identifier if the input stream doesn't yield a keyword.
+         */
         if (isalpha(previous_character) || previous_character == '_') { 
             identifier = previous_character; 
             while (isalnum(previous_character = input->get()) || (previous_character == '_')) { 
@@ -226,10 +225,11 @@ namespace lexer {
             }
 
             return tok_identifier;
-            
         }
 
-        // <a name="numbers"></a>
+        /**
+         * @brief Parses numeric input values and lexes an int or float based on whether the input contains a `.` or not.
+         */
         if (isdigit(previous_character)) { 
             std::string temp_num; 
             bool is_float = false; 
@@ -258,10 +258,11 @@ namespace lexer {
 
             integer_value = std::stoi(temp_num); 
             return tok_int_val;
-
         }
 
-        // <a name="strings"></a>
+        /**
+         * @brief Parses string literals.
+         */
         if (previous_character == '"') { 
             string_value = ""; 
             while (true) { 
@@ -269,7 +270,6 @@ namespace lexer {
 
                 if (previous_character == '"') { 
                     previous_character = input->get();
-
                     return tok_string_val;
                 }
 
@@ -278,12 +278,13 @@ namespace lexer {
                     break;
                 }
 
-
                 string_value += previous_character; 
             }
         }
 
-        // <a name="chars"></a>
+        /**
+         * @brief Parses character literals.
+         */
         if (previous_character == '\'') { 
             previous_character = input->get(); 
 
@@ -312,10 +313,15 @@ namespace lexer {
         int current_character = previous_character; 
     }
 
-    // <a name="tokenize_file"></a>
+    /**
+     * @brief Reads the input file and populates token_stream and stored_values.
+     * @details Populates token_stream with the tokens and stored_values with their corresponding values.
+     */
     void tokenize_file() {
         while (true) {
-            // <a name="store_tok_stream"></a>
+            /**
+             * @brief Stores tokens in the `token_stream` vector.
+             */
             Token_Type token = get_token();
             if (token == tok_eof) {
                 token_stream.emplace_back(token);
@@ -323,7 +329,9 @@ namespace lexer {
             }
             token_stream.emplace_back(token); // deals with the EOF
 
-            // <a name="store_tok_values"></a>
+            /**
+             * @brief Stores values associated with the adjacent token in the `stored_values` vector.
+             */
             switch (token) {
                 case tok_identifier:
                     stored_values.emplace_back(identifier);
@@ -348,7 +356,6 @@ namespace lexer {
                     break;
             }
         }
-
     }
 
 }
