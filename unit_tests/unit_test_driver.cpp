@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION 5
+#define DEBUG_OPTION -1
 
 
 int main(int argc, char** argv) {

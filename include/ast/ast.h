@@ -79,6 +79,24 @@ namespace ast {
 
         types get_expr_type() const override {return type;}
         void debug_output();
+        char get_op() { 
+            switch (op) {
+                case lexer::tok_plus:
+                    return '+';
+                    break;
+                case lexer::tok_minus:
+                    return '-';
+                    break;
+                case lexer::tok_mult:
+                    return '*';
+                    break;
+                case lexer::tok_div:
+                    return '/';
+                    break;
+                default:
+                    std::abort();
+            }
+         }
         //llvm::Value* codegen() override;
     };
 

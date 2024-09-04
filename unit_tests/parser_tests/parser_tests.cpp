@@ -12,7 +12,7 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 #include <iostream>
 
 void ast::binary_expr::debug_output() {
-    std::cout << "Binary Expression: "; // incomplete...
+    std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
 }
 
 void ast::identifier_expr::debug_output() {
