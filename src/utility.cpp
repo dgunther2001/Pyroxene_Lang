@@ -49,11 +49,17 @@ namespace utility {
 
     void primary_driver_loop() {
         while (true) {
+            #if (DEBUG_MODE == 1)
+                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon) {
+                    std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                }
+            #endif
+
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
                 
                     #if (DEBUG_MODE == 1)
-                        std::cout << "Variable Map:\n";
+                        std::cout << "\033[32m\nVariable Map:\033[0m\n";
                         for (auto const& [key, value] : parser::var_map) {
                             std::cout << key << " : " << ast::get_type_as_string(value) << "\n";
                         }
