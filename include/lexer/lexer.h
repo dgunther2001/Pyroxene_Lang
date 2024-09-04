@@ -17,8 +17,10 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace lexer {
 
+    // <a name="line_count"></a>
     extern int line_count; // holds a line count variable for debug messages
 
+    // <a name="Token_Type"></a>
     enum Token_Type { // defines all of the types of tokens (in negative to avoid ASCII collissions)
         tok_eof = -1,
         tok_dot = -3,
@@ -55,27 +57,39 @@ namespace lexer {
         tok_return = -130
     };
 
+    // <a name="lexer_stored_values"></a>
     typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;
 
+    // <a name="token_stream"></a>
     extern std::vector<Token_Type> token_stream;
+
+    // <a name="stored_values"></a>
     extern std::vector<std::optional<lexer_stored_values>> stored_values;
 
-    // various variables that encode user defined variables that hold the value of the token as well
+    // <a name="identifier"></a>
     extern std::string identifier;
+
+    // <a name="integer_value"></a>
     extern int integer_value;
+
+    // <a name="float_value"></a>
     extern float float_value;
+
+    // <a name="bool_value"></a>
     extern bool bool_value;
+
+    // <a name="char_value"></a>
     extern char char_value;
+
+    // <a name="string_value"></a>
     extern std::string string_value;
+
+    // <a name="input"></a>
     extern std::istream* input;
 
-    extern bool cur_tok_int_val;
-    extern bool cur_tok_float_val;
-    extern bool cur_tok_char_val;
-    extern bool cur_tok_string_val;
-    extern bool cur_tok_bool_val;
 
-    extern Token_Type get_token(); // primary lexer function
+
+    extern Token_Type get_token(); 
 
     extern void tokenize_file();
 }

@@ -1,85 +1,93 @@
 # Lexer Documentation
 
-This document provides an overview of the variables, types, and functions used in the Pyroxene lexer.
+**This document provides a necessary overview of the variables, types, and functions used in the Pyroxene lexer, as well as their components and permitted types when applicable.**  
 
 ## Variables
 
-- [Jump to `line_count`](../../include/lexer/lexer.h#line_count)  
+<a id="line_count_md"></a>
+- [`line_count`](../../include/lexer/lexer.h#line_count)  
   `int line_count;`  
   **Description**: Tracks the current line number being processed in the input stream.
 
-- [Jump to `token_stream`](../../include/lexer/lexer.h#token_stream)  
+<a id="token_stream_md"></a>
+- [`token_stream`](../../include/lexer/lexer.h#token_stream)  
   `std::vector<Token_Type> token_stream;`  
-  **Description**: A vector that stores the sequence of tokens identified in the input stream.
+  **Description**: A vector that stores tokens lexed from the input stream.
 
-- [Jump to `stored_values`](../../include/lexer/lexer.h#stored_values)  
+<a id="stored_values_md"></a>
+- [`stored_values`](../../include/lexer/lexer.h#stored_values)  
   `std::vector<std::optional<lexer_stored_values>> stored_values;`  
-  **Description**: A vector that stores the optional values associated with each token. These values can be strings, integers, floats, characters, or booleans.
+  **Description**: A vector that stores the optional values associated with each token. Can be strings, integers, floats, characters, booleans, or `std::nullopt`.
 
-- [Jump to `identifier`](../../include/lexer/lexer.h#identifier)  
+<a id="identifier_md"></a>
+- [`identifier`](../../include/lexer/lexer.h#identifier)  
   `std::string identifier;`  
-  **Description**: Stores the current identifier token if identified in the input stream.
+  **Description**: Stores the current identifier from the input stream if we identify one.
 
-- [Jump to `integer_value`](../../include/lexer/lexer.h#integer_value)  
+<a id="integer_value_md"></a>
+- [`integer_value`](../../include/lexer/lexer.h#integer_value)  
   `int integer_value;`  
-  **Description**: Stores the current integer value token if identified in the input stream.
+  **Description**: Stores the current integer value from the input stream if we identify one.
 
-- [Jump to `float_value`](../../include/lexer/lexer.h#float_value)  
+<a id="float_value_md"></a>
+- [`float_value`](../../include/lexer/lexer.h#float_value)  
   `float float_value;`  
-  **Description**: Stores the current float value token if identified in the input stream.
+  **Description**: Stores the current float value from the input stream if we identify one.
 
-- [Jump to `bool_value`](../../include/lexer/lexer.h#bool_value)  
+<a id="bool_value_md"></a>
+- [`bool_value`](../../include/lexer/lexer.h#bool_value)  
   `bool bool_value;`  
-  **Description**: Stores the current boolean value token if identified in the input stream.
+  **Description**: Stores the current boolean value from the input stream if we identify one.
 
-- [Jump to `char_value`](../../include/lexer/lexer.h#char_value)  
+<a id="char_value_md"></a>
+- [`char_value`](../../include/lexer/lexer.h#char_value)  
   `char char_value;`  
-  **Description**: Stores the current character value token if identified in the input stream.
+  **Description**: Stores the current character value from the input stream if we identify one.
 
-- [Jump to `string_value`](../../include/lexer/lexer.h#string_value)  
+<a id="string_value_md"></a>
+- [`string_value`](../../include/lexer/lexer.h#string_value)  
   `std::string string_value;`  
-  **Description**: Stores the current string value token if identified in the input stream.
+  **Description**: Stores the current string value from the input stream if we identify one.
 
-- [Jump to `input`](../../include/lexer/lexer.h#input)  
+<a id="input_md"></a>
+- [`input`](../../include/lexer/lexer.h#input)  
   `std::istream* input;`  
-  **Description**: Pointer to the input stream from which the lexer reads data.
-
-- [Jump to `cur_tok_int_val`](../../include/lexer/lexer.h#cur_tok_int_val)  
-  `bool cur_tok_int_val;`  
-  **Description**: Flag indicating whether the current token is an integer.
-
-- [Jump to `cur_tok_float_val`](../../include/lexer/lexer.h#cur_tok_float_val)  
-  `bool cur_tok_float_val;`  
-  **Description**: Flag indicating whether the current token is a float.
-
-- [Jump to `cur_tok_char_val`](../../include/lexer/lexer.h#cur_tok_char_val)  
-  `bool cur_tok_char_val;`  
-  **Description**: Flag indicating whether the current token is a character.
-
-- [Jump to `cur_tok_string_val`](../../include/lexer/lexer.h#cur_tok_string_val)  
-  `bool cur_tok_string_val;`  
-  **Description**: Flag indicating whether the current token is a string.
-
-- [Jump to `cur_tok_bool_val`](../../include/lexer/lexer.h#cur_tok_bool_val)  
-  `bool cur_tok_bool_val;`  
-  **Description**: Flag indicating whether the current token is a boolean.
+  **Description**: Pointer to the input stream (a .pyrx file).
 
 ## Types
 
-- [Jump to `Token_Type`](../../include/lexer/lexer.h#Token_Type)  
-  `enum Token_Type`  
-  **Description**: Enumeration defining the various types of tokens that can be identified by the lexer.
+<a id="Token_Type_md"></a>
+- [`Token_Type`](../../include/lexer/lexer.h#Token_Type)  
+  `enum Token_Type;`  
+  **Description**: Enumeration of all possible tokens that are valid.
 
-- [Jump to `lexer_stored_values`](../../include/lexer/lexer.h#lexer_stored_values)  
+<a id="lexer_stored_values_md"></a>
+- [`lexer_stored_values`](../../include/lexer/lexer.h#lexer_stored_values)  
   `typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;`  
-  **Description**: A type definition using `std::variant` to store different possible values associated with tokens, such as strings, integers, floats, characters, and booleans.
+  **Description**: A type definition using `std::variant` to store different values associated with tokens.
 
 ## Functions
 
-- [Jump to `get_token`](../../include/lexer/lexer.h#get_token)  
+<a id="get_token_md"></a>
+- [`get_token()`](../../src/lexer.cpp#get_token)  
   `Token_Type get_token();`  
-  **Description**: Retrieves the next token from the input stream and updates the relevant variables and flags.
+  **Description**: Retrieves the next token from the input stream and updates the relevant associated value (can be `std::nullopt`).  
+  **Components**:  
+  - [`previous_character`](../../src/lexer.cpp#previous_character): Stores the current character in `input` that is being considered.  
+  - [Whitespace](../../src/lexer.cpp#previous_character): Iterates over all whitespace and ignores it by incrementing the `previous_character`.  
+  - [Individual Characters](../../src/lexer.cpp#single_character_tokens): Tokenizes all single character tokens, such as `(`, `{`, `+`, `EOF`, and others.   
+  - [Comments and Division](../../src/lexer.cpp#div_and_comments): Deals with character consumption when handling comments (inline and multiline), as well as the division operator.  
+  - [Keywords and Identifiers](../../src/lexer.cpp#keywords_and_identifiers): Identifies keywords such as `int` and `class`, and lexes an identifier if the input stream doesn't yield a keyword.    
+  - [Integers and Floats](../../src/lexer.cpp#numbers): Parses numeric input values and lexes an int or float based on whether the input contains a `.` or not.    
+  - [Strings](../../src/lexer.cpp#strings): Parses string literals.  
+  - [Characters](../../src/lexer.cpp#chars): Parses character literals.  
 
-- [Jump to `tokenize_file`](../../include/lexer/lexer.h#tokenize_file)  
+<a id="tokenize_file"></a>
+- [`tokenize_file()`](../../src/lexer.cpp#tokenize_file)  
   `void tokenize_file();`  
-  **Description**: Reads the input file and populates `token_stream` and `stored_values` with the tokens and their corresponding values.
+  **Description**: Reads the input file and populates `token_stream` and `stored_values` with the tokens and their corresponding values.  
+  **Components**:  
+  - [Token Stream Storage](../../src/lexer.cpp#store_tok_stream): Stores tokens in the [`token_stream`](#token_stream_md) vector.  
+  - [Associated Value Storage](../../src/lexer.cpp#store_tok_values): Stores values associated with the adjacent token in the [`stored_values`](#stored_values_md) vector.
+
+
