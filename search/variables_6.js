@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['operator_5fprecedence_0',['operator_precedence',['../namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572',1,'parser']]]
+  ['token_5fstream_0',['token_stream',['../namespacelexer.html#a1ea36c4da63a34511efba62b615b4f44',1,'lexer']]]
 ];
