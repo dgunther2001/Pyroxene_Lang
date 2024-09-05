@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['_7efunc_5fdefn_0',['~func_defn',['../classast_1_1func__defn.html#a56a2d270a7b54ef553db1f1e4fc6de6b',1,'ast::func_defn']]],
-  ['_7etop_5flevel_5fexpr_1',['~top_level_expr',['../classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe',1,'ast::top_level_expr']]]
+  ['var_5fmap_0',['var_map',['../namespaceparser.html#a8bdc6d2f297a4a69d150bcc936461e69',1,'parser']]],
+  ['variable_5fassignment_1',['variable_assignment',['../classast_1_1variable__assignment.html',1,'ast::variable_assignment'],['../classast_1_1variable__assignment.html#a8de877f4f7084771fe2562122f141d7c',1,'ast::variable_assignment::variable_assignment()']]],
+  ['variable_5fdeclaration_2',['variable_declaration',['../classast_1_1variable__declaration.html',1,'ast::variable_declaration'],['../classast_1_1variable__declaration.html#a7af9f162f1e18ac597d2851b27885c1c',1,'ast::variable_declaration::variable_declaration()']]],
+  ['variable_5fdefinition_3',['variable_definition',['../classast_1_1variable__definition.html',1,'ast::variable_definition'],['../classast_1_1variable__definition.html#ad8a98a856135ee2fc278d5b28fd2d651',1,'ast::variable_definition::variable_definition()']]]
 ];

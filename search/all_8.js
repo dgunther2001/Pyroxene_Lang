@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['parser_0',['parser',['../namespaceparser.html',1,'']]],
-  ['parser_5ftests_2ecpp_1',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]]
+  ['operator_5fprecedence_0',['operator_precedence',['../namespaceparser.html#a317162f967390e24e66e8cbe4f29abad',1,'parser']]]
 ];
