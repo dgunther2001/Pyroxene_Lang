@@ -395,7 +395,7 @@ Variables</h2></td></tr>
 <div class="line">            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) { </div>
 <div class="line">                <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++;</div>
 <div class="line">            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character == EOF) { </div>
-<div class="line">                utility::lexer_error(<span class="stringliteral">&quot;Unterminated multiline comment&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">                <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unterminated multiline comment&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">            }</div>
 <div class="line">            previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line">        }</div>
@@ -414,6 +414,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:301</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
+<div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:53</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Keywords and Identifiers</dt><dd>Handles parsing alphanumeric input into keyword and identifier tokens: <div class="fragment"><div class="line"><span class="keywordflow">if</span> (isalpha(previous_character) || previous_character == <span class="charliteral">&#39;_&#39;</span>) { </div>
 <div class="line">    <a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> = previous_character; </div>
@@ -499,7 +500,7 @@ Variables</h2></td></tr>
 <div class="line">        temp_num += previous_character; </div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;.&#39;</span> &amp;&amp; is_float == <span class="keyword">true</span>) { </div>
-<div class="line">            utility::lexer_error(<span class="stringliteral">&quot;Too many decimal points passed to FP number&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>); </div>
+<div class="line">            <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Too many decimal points passed to FP number&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>); </div>
 <div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;.&#39;</span>) { </div>
 <div class="line">            is_float = <span class="keyword">true</span>; </div>
 <div class="line">        }</div>
@@ -507,7 +508,7 @@ Variables</h2></td></tr>
 <div class="line">        previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line">    </div>
 <div class="line">        <span class="keywordflow">if</span> (previous_character == EOF) { </div>
-<div class="line">            utility::lexer_error(<span class="stringliteral">&quot;Unexpected end of input while reading a number&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">            <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unexpected end of input while reading a number&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">    }  <span class="keywordflow">while</span>(isdigit(previous_character) || previous_character == <span class="charliteral">&#39;.&#39;</span>); </div>
@@ -537,7 +538,7 @@ Variables</h2></td></tr>
 <div class="line">         }</div>
 <div class="line"> </div>
 <div class="line">         <span class="keywordflow">if</span> (previous_character == EOF || previous_character == <span class="charliteral">&#39;;&#39;</span>) { </div>
-<div class="line">             utility::lexer_error(<span class="stringliteral">&quot;Unterminated string&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">             <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unterminated string&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">             <span class="keywordflow">break</span>;</div>
 <div class="line">         }</div>
 <div class="line"> </div>
@@ -550,11 +551,11 @@ Variables</h2></td></tr>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (previous_character == EOF) { </div>
-<div class="line">        utility::lexer_error(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\&#39;&#39;</span>) { </div>
-<div class="line">         utility::lexer_error(<span class="stringliteral">&quot;No character provided&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">         <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;No character provided&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_variable" href="#ad1919047943e7c2844e66ed6b0c7eca3">char_value</a> = previous_character; </div>
@@ -562,9 +563,9 @@ Variables</h2></td></tr>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">if</span> (previous_character == EOF) { </div>
-<div class="line">        utility::lexer_error(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character != <span class="charliteral">&#39;\&#39;&#39;</span>) { </div>
-<div class="line">        utility::lexer_error(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Unterminated character&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>

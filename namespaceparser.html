@@ -327,16 +327,16 @@ Variables</h2></td></tr>
 <div class="line">        identifier = std::get&lt;std::string&gt;(value.value());</div>
 <div class="line">    } </div>
 <div class="line">    <span class="keywordflow">else</span> {</div>
-<div class="line">        utility::parser_error(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line">} </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>.find(identifier) == <a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>.end()) {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Variable not yet defined&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Variable not yet defined&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (std::find(<a class="code hl_variable" href="#a0a6dd6f16a5fec5d3e0920530d92965e">defined_vars</a>.begin(), <a class="code hl_variable" href="#a0a6dd6f16a5fec5d3e0920530d92965e">defined_vars</a>.end(), identifier) == <a class="code hl_variable" href="#a0a6dd6f16a5fec5d3e0920530d92965e">defined_vars</a>.end()) {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Variable not yet initialized&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Variable not yet initialized&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::identifier_expr&gt;(identifier, <a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>[identifier]);</div>
@@ -345,6 +345,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_ac762e6415092515d1673f9ebd161bfcc"><div class="ttname"><a href="namespacelexer.html#ac762e6415092515d1673f9ebd161bfcc">lexer::stored_values</a></div><div class="ttdeci">std::vector&lt; std::optional&lt; lexer_stored_values &gt; &gt; stored_values</div><div class="ttdef"><b>Definition</b> lexer.cpp:17</div></div>
 <div class="ttc" id="anamespaceparser_html_a0a6dd6f16a5fec5d3e0920530d92965e"><div class="ttname"><a href="#a0a6dd6f16a5fec5d3e0920530d92965e">parser::defined_vars</a></div><div class="ttdeci">std::vector&lt; std::string &gt; defined_vars</div><div class="ttdef"><b>Definition</b> parser.cpp:18</div></div>
 <div class="ttc" id="anamespaceparser_html_ae59dd22fb111699bf39fece9995ab000"><div class="ttname"><a href="#ae59dd22fb111699bf39fece9995ab000">parser::var_map</a></div><div class="ttdeci">std::map&lt; std::string, ast::types &gt; var_map</div><div class="ttdef"><b>Definition</b> parser.cpp:16</div></div>
+<div class="ttc" id="anamespaceutility_html_a9268449c45b475023dde39f4010b698a"><div class="ttname"><a href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a></div><div class="ttdeci">void parser_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:68</div></div>
 </div><!-- fragment --><p>. </p>
 
 </div>
@@ -445,13 +446,13 @@ Variables</h2></td></tr>
 <div class="line">        identifier = std::get&lt;std::string&gt;(value.value());</div>
 <div class="line">    } </div>
 <div class="line">    <span class="keywordflow">else</span> {</div>
-<div class="line">        utility::parser_error(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>.find(identifier) == <a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>.end()) {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Variable not yet declared&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Variable not yet declared&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="#a5ae126257d31d8a2193a9505a63c3cb3">get_next_token</a>(); </div>
@@ -459,7 +460,7 @@ Variables</h2></td></tr>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> assigned_expr = <a class="code hl_function" href="#a75ea25852e3dec21a092b48f469249c2">parse_expression</a>();</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (assigned_expr-&gt;get_expr_type() != <a class="code hl_variable" href="#ae59dd22fb111699bf39fece9995ab000">var_map</a>[identifier]) {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Invalid assignment&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Invalid assignment&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::variable_assignment&gt;(assigned_expr-&gt;get_expr_type(), identifier, std::move(assigned_expr));</div>
@@ -536,7 +537,7 @@ Variables</h2></td></tr>
 <div class="line">        type = <a class="code hl_enumvalue" href="namespaceast.html#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast::bool_type</a>;</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">    <span class="keywordflow">default</span>:</div>
-<div class="line">        utility::parser_error(<span class="stringliteral">&quot;Invalid type specified&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>); </div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Invalid type specified&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>); </div>
 <div class="line">}    </div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="#a5ae126257d31d8a2193a9505a63c3cb3">get_next_token</a>();</div>
@@ -560,7 +561,7 @@ Variables</h2></td></tr>
 <div class="line">        identifier = std::get&lt;std::string&gt;(value.value());</div>
 <div class="line">    } </div>
 <div class="line">    <span class="keywordflow">else</span> {</div>
-<div class="line">        utility::parser_error(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Expected identifier&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"> </div>
@@ -574,7 +575,7 @@ Variables</h2></td></tr>
 <div class="line">} <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a656c2bbdea7bed8ee50f04451666a17e">current_token</a> == <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a>) {</div>
 <div class="line">    <span class="keywordflow">return</span> std::move(<a class="code hl_function" href="#a225cae65740979873fd013b5b6f6c114">parse_var_decl</a>(type, identifier));</div>
 <div class="line">} <span class="keywordflow">else</span> {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Expected variable definition or declaration&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Expected variable definition or declaration&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a></div><div class="ttdeci">@ tok_assignment</div><div class="ttdoc">Assignment operator.</div><div class="ttdef"><b>Definition</b> lexer.h:58</div></div>
 <div class="ttc" id="anamespaceparser_html_a225cae65740979873fd013b5b6f6c114"><div class="ttname"><a href="#a225cae65740979873fd013b5b6f6c114">parser::parse_var_decl</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl(ast::types type, std::string identifier)</div><div class="ttdef"><b>Definition</b> parser.cpp:387</div></div>
@@ -605,7 +606,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="keyword">auto</span> assigned_expr = <a class="code hl_function" href="#a75ea25852e3dec21a092b48f469249c2">parse_expression</a>();</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (assigned_expr-&gt;get_expr_type() != type) {</div>
-<div class="line">    utility::parser_error(<span class="stringliteral">&quot;Defining a variable with incorrect type&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Defining a variable with incorrect type&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::variable_definition&gt;(type, identifier, std::move(assigned_expr));</div>
