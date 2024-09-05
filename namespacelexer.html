@@ -531,17 +531,17 @@ Variables</h2></td></tr>
 <div class="line">    <span class="keywordflow">while</span> (<span class="keyword">true</span>) { </div>
 <div class="line">        previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;&quot;&#39;</span>) { </div>
-<div class="line">            previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7">tok_string_val</a>;</div>
-<div class="line">        }</div>
+<div class="line">         <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;&quot;&#39;</span>) { </div>
+<div class="line">             previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
+<div class="line">             <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7">tok_string_val</a>;</div>
+<div class="line">         }</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (previous_character == EOF || previous_character == <span class="charliteral">&#39;;&#39;</span>) { </div>
-<div class="line">            utility::lexer_error(<span class="stringliteral">&quot;Unterminated string&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        }</div>
+<div class="line">         <span class="keywordflow">if</span> (previous_character == EOF || previous_character == <span class="charliteral">&#39;;&#39;</span>) { </div>
+<div class="line">             utility::lexer_error(<span class="stringliteral">&quot;Unterminated string&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
+<div class="line">             <span class="keywordflow">break</span>;</div>
+<div class="line">         }</div>
 <div class="line"> </div>
-<div class="line">        <a class="code hl_variable" href="#ac6c312257777281ee94e7ff466400568">string_value</a> += previous_character; </div>
+<div class="line">         <a class="code hl_variable" href="#ac6c312257777281ee94e7ff466400568">string_value</a> += previous_character; </div>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7">lexer::tok_string_val</a></div><div class="ttdeci">@ tok_string_val</div><div class="ttdoc">String literal value.</div><div class="ttdef"><b>Definition</b> lexer.h:41</div></div>

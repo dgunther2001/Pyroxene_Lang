@@ -175,7 +175,27 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
+<h4>This function maps types defined in the enumerator to string for debug use when parsing AST nodes. </h4>
+<div class="fragment"><div class="line"><span class="keywordflow">switch</span> (type) {</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">int_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;int&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">float_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;float&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">char_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;char&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">string_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;string&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">bool_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;bool&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">default</span>: </div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">ast::char_type</a></div><div class="ttdeci">@ char_type</div><div class="ttdef"><b>Definition</b> ast.h:32</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">ast::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">ast::string_type</a></div><div class="ttdeci">@ string_type</div><div class="ttdef"><b>Definition</b> ast.h:33</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdef"><b>Definition</b> ast.h:31</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdef"><b>Definition</b> ast.h:34</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 </div><!-- contents -->
