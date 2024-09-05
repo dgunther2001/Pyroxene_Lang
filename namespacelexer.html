@@ -274,7 +274,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<h2>This function reads characters from the input stream and categorizes them into tokens, and updates the relevant associated value, which can be <code>std::nullopt</code> if not applicable. </h2>
+<h4>This function reads characters from the input stream and categorizes them into tokens, and updates the relevant associated value, which can be <code>std::nullopt</code> if not applicable. </h4>
 <dl class="section user"><dt>Handling Whitespaces</dt><dd>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>: <div class="fragment"><div class="line"><span class="keywordflow">while</span> (isspace(previous_character)) {  </div>
 <div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++; </div>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
@@ -575,7 +575,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<h2>This function reads through the entire input stream and calls <code><a class="el" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token()</a></code> to retrieve tokens and their associated values. It continuously populates the <code>token_stream</code> with the tokens and <code>stored_values</code> with their corresponding values. </h2>
+<h4>This function reads through the entire input stream and calls <code><a class="el" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token()</a></code> to retrieve tokens and their associated values. It continuously populates the <code>token_stream</code> with the tokens and <code>stored_values</code> with their corresponding values. </h4>
 <dl class="section user"><dt>Token Storage</dt><dd>Stores tokens in the <code>token_stream</code> vector: <div class="fragment"><div class="line"><a class="code hl_enumeration" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a> token = <a class="code hl_function" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a>();</div>
 <div class="line"><span class="keywordflow">if</span> (token == <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">tok_eof</a>) {</div>
 <div class="line">    <a class="code hl_variable" href="#a1ea36c4da63a34511efba62b615b4f44">token_stream</a>.emplace_back(token);</div>
