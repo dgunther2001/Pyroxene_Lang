@@ -15,5 +15,6 @@ var searchData=
   ['parse_5fvar_5fdefn_12',['parse_var_defn',['../namespaceparser.html#a87e302c5de140e98a0265a0913af9878',1,'parser']]],
   ['parser_13',['parser',['../namespaceparser.html',1,'']]],
   ['parser_2ecpp_14',['parser.cpp',['../parser_8cpp.html',1,'']]],
-  ['parser_5ftests_2ecpp_15',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]]
+  ['parser_2eh_15',['parser.h',['../parser_8h.html',1,'']]],
+  ['parser_5ftests_2ecpp_16',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]]
 ];
