@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['retrieval_20from_20input_20stream_3a_0',['Token retrieval from input stream:',['../namespacelexer.html#get_token',1,'']]]
+  ['stored_5fvalues_0',['stored_values',['../namespacelexer.html#ac762e6415092515d1673f9ebd161bfcc',1,'lexer']]],
+  ['string_5fvalue_1',['string_value',['../namespacelexer.html#ac6c312257777281ee94e7ff466400568',1,'lexer']]]
 ];

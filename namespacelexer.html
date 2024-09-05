@@ -151,10 +151,10 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a6eeb74841871266bc4c8f7e00e7c3a4d" id="r_a6eeb74841871266bc4c8f7e00e7c3a4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a> ()</td></tr>
-<tr class="memdesc:a6eeb74841871266bc4c8f7e00e7c3a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the next token from the input stream, and updates the relevant associated value (can be std::nullopt).  <br /></td></tr>
+<tr class="memdesc:a6eeb74841871266bc4c8f7e00e7c3a4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the next token from the input stream.  <br /></td></tr>
 <tr class="separator:a6eeb74841871266bc4c8f7e00e7c3a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b0213c6365a3dd65d3bee1d031713d" id="r_a20b0213c6365a3dd65d3bee1d031713d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20b0213c6365a3dd65d3bee1d031713d">tokenize_file</a> ()</td></tr>
-<tr class="memdesc:a20b0213c6365a3dd65d3bee1d031713d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the input file and populates token_stream and stored_values.  <br /></td></tr>
+<tr class="memdesc:a20b0213c6365a3dd65d3bee1d031713d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the input file and populates <code>token_stream</code> and <code>stored_values</code>.  <br /></td></tr>
 <tr class="separator:a20b0213c6365a3dd65d3bee1d031713d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
@@ -277,87 +277,13 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Retrieves the next token from the input stream, and updates the relevant associated value (can be std::nullopt). </p>
-<h1><a class="anchor" id="get_token"></a>
-Token retrieval from input stream:</h1>
-<h2><a class="anchor" id="whitespace_handling"></a>
-Current character:</h2>
-<p>Stores the current character in <code>input</code> that is being considered. </p><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> previous_character = <span class="charliteral">&#39; &#39;</span>;  </div>
-</div><!-- fragment --><p>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>. </p><div class="fragment"><div class="line"><span class="keywordflow">while</span> (isspace(previous_character)) {  </div>
-<div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++; </div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line"> }</div>
-<div class="ttc" id="anamespacelexer_html_a094bf53953e31c419b3e6558322d5ecc"><div class="ttname"><a href="#a094bf53953e31c419b3e6558322d5ecc">lexer::input</a></div><div class="ttdeci">std::istream * input</div><div class="ttdoc">Pointer to the input stream (a .pyrx file).</div><div class="ttdef"><b>Definition</b> lexer.cpp:25</div></div>
-<div class="ttc" id="anamespacelexer_html_a3194f54b2efb03a1d7dd1c3071fc93e0"><div class="ttname"><a href="#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a></div><div class="ttdeci">int line_count</div><div class="ttdoc">Tracks the current line number being processed in the input stream.</div><div class="ttdef"><b>Definition</b> lexer.cpp:14</div></div>
-</div><!-- fragment --><p>Tokenizes all single character tokens, such as <code>(</code>, <code>{</code>, <code>+</code>, <code>EOF</code>, and others. </p><div class="fragment"><div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;;&#39;</span>) {</div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">tok_semicolon</a>;</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;=&#39;</span>) {</div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">tok_assignment</a>;</div>
-<div class="line">}</div>
-<div class="line">.</div>
-<div class="line">.</div>
-<div class="line">.</div>
-<div class="line">if (previous_character == <span class="charliteral">&#39;*&#39;</span>) {</div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">tok_mult</a>;</div>
-<div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdef"><b>Definition</b> lexer.h:45</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a></div><div class="ttdeci">@ tok_assignment</div><div class="ttdef"><b>Definition</b> lexer.h:59</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
-</div><!-- fragment --><p>Deals with character consumption when handling comments (inline and multiline), as well as the division operator.</p>
-<div class="fragment"><div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;/&#39;</span>) { </div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">    <span class="keywordflow">if</span> (isspace(previous_character)) {</div>
-<div class="line">        previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">tok_div</a>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;/&#39;</span>) { </div>
-<div class="line">        <span class="keywordflow">do</span> { </div>
-<div class="line">            previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">        } <span class="keywordflow">while</span> (previous_character != <span class="charliteral">&#39;\n&#39;</span> &amp;&amp; previous_character != EOF);</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;*&#39;</span>) {  </div>
-<div class="line">        previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line"> </div>
-<div class="line">        <span class="keywordflow">while</span> (<span class="keyword">true</span>) { </div>
-<div class="line">            <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;*&#39;</span>) { </div>
-<div class="line">                previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">                <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;/&#39;</span>) { </div>
-<div class="line">                    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">                    <span class="keywordflow">return</span> <a class="code hl_function" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a>(); </div>
-<div class="line">                }</div>
-<div class="line">            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) { </div>
-<div class="line">                <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++;</div>
-<div class="line">            } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (previous_character == EOF) { </div>
-<div class="line">                utility::lexer_error(<span class="stringliteral">&quot;Unterminated multiline comment&quot;</span>, <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
-<div class="line">            }</div>
-<div class="line">            previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">        }</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (previous_character == EOF) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">tok_eof</a>;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) {</div>
-<div class="line">        <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a>(); </div>
-<div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdoc">Retrieves the next token from the input stream, and updates the relevant associated value (can be std...</div><div class="ttdef"><b>Definition</b> lexer.cpp:31</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdef"><b>Definition</b> lexer.h:57</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a></div><div class="ttdeci">@ tok_eof</div><div class="ttdef"><b>Definition</b> lexer.h:30</div></div>
-</div><!-- fragment --><p>Finds keywords such as <code>int</code> and <code>class</code>, and lexes an identifier if the input stream doesn't yield a keyword.</p>
-<p>Parses numeric input values and lexes an int or float based on whether the input contains a <code>.</code> or not.</p>
-<p>Parses string literals.</p>
-<p>Parses character literals.</p>
+<p>Retrieves the next token from the input stream. </p>
+<p>This function reads characters from the input stream and categorizes them into tokens. It updates the relevant associated value, which can be <code>std::nullopt</code> if not applicable.</p>
+<dl class="section user"><dt>Token Retrieval from Input Stream</dt><dd>Describes the process of retrieving tokens from the input stream:</dd></dl>
+<dl class="section user"><dt>Handling Whitespaces</dt><dd>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>.</dd></dl>
+<dl class="section user"><dt>Single Character Tokens</dt><dd>Tokenizes all single character tokens, such as <code>(</code>, <code>{</code>, <code>+</code>, <code>EOF</code>, and others.</dd></dl>
+<dl class="section user"><dt>Complex Token Handling</dt><dd>Deals with character consumption when handling comments (inline and multiline), as well as the division operator.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The type of the next token identified in the input stream. </dd></dl>
 
 </div>
 </div>
@@ -376,10 +302,10 @@ Current character:</h2>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the input file and populates token_stream and stored_values. </p>
-<p>Populates token_stream with the tokens and stored_values with their corresponding values. </p>
-<p>Stores tokens in the <code>token_stream</code> vector.</p>
-<p>Stores values associated with the adjacent token in the <code>stored_values</code> vector.</p>
+<p>Reads the input file and populates <code>token_stream</code> and <code>stored_values</code>. </p>
+<p>This function reads through the entire input stream and calls <code><a class="el" href="#a6eeb74841871266bc4c8f7e00e7c3a4d" title="Retrieves the next token from the input stream.">get_token()</a></code> to retrieve tokens and their associated values. It continuously populates the <code>token_stream</code> with the tokens and <code>stored_values</code> with their corresponding values.</p>
+<dl class="section user"><dt>Token Storage</dt><dd>Stores tokens in the <code>token_stream</code> vector.</dd></dl>
+<dl class="section user"><dt>Associated Value Storage</dt><dd>Stores values associated with the adjacent token in the <code>stored_values</code> vector. Depending on the token type, it stores various types of values such as identifiers, integers, floats, characters, strings, or booleans. </dd></dl>
 
 </div>
 </div>
