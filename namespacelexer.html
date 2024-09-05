@@ -278,11 +278,11 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves the next token from the input stream, and updates the relevant associated value (can be std::nullopt). </p>
-<h1><a class="anchor" id="Token"></a>
-retrieval from input stream:</h1>
-<h1><a class="anchor" id="Current"></a>
-character: Stores the current character in <code>input</code> that is being considered.</h1>
-<div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> previous_character = <span class="charliteral">&#39; &#39;</span>;  </div>
+<h1><a class="anchor" id="get_token"></a>
+Token retrieval from input stream:</h1>
+<h2><a class="anchor" id="whitespace_handling"></a>
+Current character:</h2>
+<p>Stores the current character in <code>input</code> that is being considered. </p><div class="fragment"><div class="line"><span class="keyword">static</span> <span class="keywordtype">int</span> previous_character = <span class="charliteral">&#39; &#39;</span>;  </div>
 </div><!-- fragment --><p>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>. </p><div class="fragment"><div class="line"><span class="keywordflow">while</span> (isspace(previous_character)) {  </div>
 <div class="line">    <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;\n&#39;</span>) <a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>++; </div>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
