@@ -278,15 +278,15 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Retrieves the next token from the input stream. </p>
-<p>Updates the relevant associated value (can be std::nullopt). </p><dl class="section return"><dt>Returns</dt><dd>The type of the next token identified in the input stream. <a class="anchor" id="get_token"></a></dd></dl>
-<p>Stores the current character in <code>input</code> that is being considered. <a class="anchor" id="previous_character"></a></p>
-<p>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>. <a class="anchor" id="ignore_whitespace"></a></p>
-<p>Tokenizes all single character tokens, such as <code>(</code>, <code>{</code>, <code>+</code>, <code>EOF</code>, and others. <a class="anchor" id="tokenize_single_character"></a></p>
-<p>Deals with character consumption when handling comments (inline and multiline), as well as the division operator. <a class="anchor" id="handle_comments"></a></p>
-<p>Finds keywords such as <code>int</code> and <code>class</code>, and lexes an identifier if the input stream doesn't yield a keyword. <a class="anchor" id="find_keywords"></a></p>
-<p>Parses numeric input values and lexes an int or float based on whether the input contains a <code>.</code> or not. <a class="anchor" id="parse_numeric_values"></a></p>
-<p>Parses string literals. <a class="anchor" id="parse_string_literals"></a></p>
-<p>Parses character literals. <a class="anchor" id="parse_character_literals"></a> </p>
+<p>Updates the relevant associated value (can be std::nullopt). </p><dl class="section return"><dt>Returns</dt><dd>The type of the next token identified in the input stream. </dd></dl>
+<p>Stores the current character in <code>input</code> that is being considered.</p>
+<p>Iterates over all whitespace and ignores it by incrementing the <code>previous_character</code>.</p>
+<p>Tokenizes all single character tokens, such as <code>(</code>, <code>{</code>, <code>+</code>, <code>EOF</code>, and others.</p>
+<p>Deals with character consumption when handling comments (inline and multiline), as well as the division operator.</p>
+<p>Finds keywords such as <code>int</code> and <code>class</code>, and lexes an identifier if the input stream doesn't yield a keyword.</p>
+<p>Parses numeric input values and lexes an int or float based on whether the input contains a <code>.</code> or not.</p>
+<p>Parses string literals.</p>
+<p>Parses character literals.</p>
 
 </div>
 </div>
@@ -306,9 +306,9 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reads the input file and populates token_stream and stored_values. </p>
-<p>Populates token_stream with the tokens and stored_values with their corresponding values. <a class="anchor" id="tokenize_file"></a></p>
-<p>Stores tokens in the <code>token_stream</code> vector. <a class="anchor" id="store_tokens"></a></p>
-<p>Stores values associated with the adjacent token in the <code>stored_values</code> vector. <a class="anchor" id="store_values"></a> </p>
+<p>Populates token_stream with the tokens and stored_values with their corresponding values. </p>
+<p>Stores tokens in the <code>token_stream</code> vector.</p>
+<p>Stores values associated with the adjacent token in the <code>stored_values</code> vector.</p>
 
 </div>
 </div>
