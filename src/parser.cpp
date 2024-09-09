@@ -22,6 +22,17 @@ namespace parser {
     int current_token_index = 0;
     int token_index_max = lexer::token_stream.size();
 
+    /**
+     * @par Grabs the next token from input, increments the index, and casts it to an int.
+     * 
+     * @code
+        current_token = lexer::token_stream[current_token_index];
+        current_token_index++;
+        current_token_as_token = static_cast<lexer::Token_Type>(current_token);
+
+        return current_token;
+     * @endcode
+     */
     int get_next_token() {
         current_token = lexer::token_stream[current_token_index];
         current_token_index++;
@@ -43,15 +54,53 @@ namespace parser {
     }
     */
 
-    std::unique_ptr<ast::top_level_expr> parse_expression() {
-        
-        lexer::Token_Type first_tok = current_token_as_token; // stores the expression
+   /**
+    * @par When called, figures out whether we are dealing with a unary, or binary expression, and calls the respective function.
+    * 
+    * @par Initialize the vector of tokens.
+    * Stores the first token in the vector, and then consumes it. This happens regardless of whether the expression is unary, or binary.
+    * 
+    * @code
+        lexer::Token_Type first_tok = current_token_as_token; 
 
         std::vector<lexer::Token_Type> single_nested_expr_tokens;
         std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values;
         single_nested_expr_tokens.emplace_back(current_token_as_token);
 
-        get_next_token(); // consume the token
+        get_next_token(); 
+    * @endcode
+
+      @par Check if we have a binary operator
+      If we have a binary op, store all of those tokens in the vector and consume them until we reach a semicolon. Then return a call to the binary expression parser;
+
+      @code
+        if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
+            while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
+                single_nested_expr_tokens.emplace_back(current_token_as_token);
+                get_next_token();
+            }
+
+            return std::move(parse_binary_expr(single_nested_expr_tokens));
+        }
+      @endcode
+
+      @par If there is no operator, it is a primary expression, so call the function that parses primary expressions with that initial token.
+
+      @code
+        else {
+            return std::move(parse_primary_expression(first_tok));
+        }
+      @endcode
+    */
+    std::unique_ptr<ast::top_level_expr> parse_expression() {
+        
+        lexer::Token_Type first_tok = current_token_as_token; 
+
+        std::vector<lexer::Token_Type> single_nested_expr_tokens;
+        std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values;
+        single_nested_expr_tokens.emplace_back(current_token_as_token);
+
+        get_next_token(); 
 
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
             while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
@@ -69,12 +118,7 @@ namespace parser {
                 get_next_token();
             }
 
-            // for debug printing only
-            // for (lexer::Token_Type token : single_nested_expr_tokens) {
-            //     std::cout << token << "\n";
-            // }
-
-            return std::move(parse_binary_expr(single_nested_expr_tokens/*, single_nested_expr_values*/));
+            return std::move(parse_binary_expr(single_nested_expr_tokens));
         }
 
         else {
@@ -85,23 +129,70 @@ namespace parser {
         // add parsing of function calls
     }
     
-    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok) {
-        // now i need to implement a lookahead function that stores a bunch of tokens in a theoretically infinitely chained expression and call the respective functions on them
-        // how to do this => store tokens in an array like data structure where i can find operators of higher precedence, and then 
-
-        // where can i start => simply parsing single operands
+    /**
+     * @par When called, parses tokens into leaf nodes of our AST.
+     * 
+     * @code
         if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr());
         if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr());
         if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr());
         if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr());
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr());
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr());
-
-        // parsing something when it is passed as an identifier
         if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
-
+     * @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok) {
+        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr());
+        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr());
+        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr());
+        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr());
+        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr());
+        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr());
+        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
     }
 
+    /**
+     * @par When called, parses a binary expression recursively into an AST subtree
+     * 
+     * @par Grab the stream of tokens in the expression, and look for the highest precedence operator.
+     * 
+     * @code
+        int index_of_highest_prec_op = -1;
+        int highest_prec = -1;
+
+        for (int current_index = 0; current_index < sub_tok_stream.size(); current_index++) {
+            lexer::Token_Type token = sub_tok_stream[current_index];
+            if (operator_precedence.find(token) != operator_precedence.end()) {
+                if (operator_precedence[token] > highest_prec) {
+                    highest_prec = operator_precedence[token];
+                    index_of_highest_prec_op = current_index;
+                }
+            }
+        }
+     * @endcode
+
+       @par If there is no valid operator found, the expression is primary, so call that function and return it.
+
+       @code 
+        if (index_of_highest_prec_op == -1) {
+            return std::move(parse_primary_expression(sub_tok_stream.at(0)));
+        }
+       @endcode
+
+       @par If the expression is binary, we recursively call parse_binary_expression(...) twice, with the token stream split around the highest precedence operator.
+       @code
+        auto left_expr = parse_binary_expr({sub_tok_stream.begin(), sub_tok_stream.begin() + index_of_highest_prec_op});
+        auto right_expr = parse_binary_expr({sub_tok_stream.begin() + index_of_highest_prec_op + 1, sub_tok_stream.end()});
+       @endcode
+
+       @par We then check the type, and return a constructed ast::binary_expr
+
+       @code
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+       @endcode
+
+     */
     std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream/*, std::vector<std::optional<lexer::lexer_stored_values>> sub_stored_values*/) {
 
         if (sub_tok_stream.empty()) {
@@ -129,15 +220,6 @@ namespace parser {
             utility::parser_error("Operator not infix", lexer::line_count);
         }
 
-        /*
-        std::cout << "\n\n";
-        for(lexer::Token_Type token : sub_tok_stream) {
-            std::cout << token << "\n";
-        }
-        std::cout << "\n\n";
-
-        std::cout << index_of_highest_prec_op << "\n\n";
-        */
 
         auto left_expr = parse_binary_expr({sub_tok_stream.begin(), sub_tok_stream.begin() + index_of_highest_prec_op});
         auto right_expr = parse_binary_expr({sub_tok_stream.begin() + index_of_highest_prec_op + 1, sub_tok_stream.end()});
@@ -146,8 +228,6 @@ namespace parser {
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
         lexer::Token_Type type_tok = sub_tok_stream.at(index_of_highest_prec_op - 1);
-
-        //std::cout << type_tok << "\n\n";
             
         ast::types bin_type;
         switch (type_tok) {
@@ -180,6 +260,67 @@ namespace parser {
         
     }
    
+   /**
+    * @par If we identify a type keyword in the token stream, we jump into this function to check if it is a valid variable declaration, or definition.
+    * 
+    * @par First we check the type
+    * @code
+    *   ast::types type;
+        std::string identifier;
+        switch (current_token) {
+            case lexer::tok_int:
+                type = ast::int_type;
+                break;
+            case lexer::tok_float:
+                type = ast::float_type;
+                break;
+            case lexer::tok_char:
+                type = ast::char_type;
+                break;
+            case lexer::tok_string:
+                type = ast::string_type;
+                break;
+            case lexer::tok_bool:
+                type = ast::bool_type;
+                break;
+            default:
+                utility::parser_error("Invalid type specified", lexer::line_count); 
+        }    
+
+        get_next_token();
+    * @endcode
+
+      @par We then store the identifier, and put it in the type map.
+      
+      @code
+        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+
+        if (value.has_value()) {
+            if (std::holds_alternative<std::string>(value.value())) {
+                identifier = std::get<std::string>(value.value());
+            } 
+            else {
+                utility::parser_error("Expected identifier", lexer::line_count);
+            }
+        }
+
+        get_next_token();
+
+        var_map.insert({identifier, type});
+      @endcode
+
+      @par We then check whether the next token is an '=', or a ';' and call the respective declaration, or definition token.
+
+      @code
+        if (current_token == lexer::tok_assignment) {
+            return std::move(parse_var_defn(type, identifier));
+        } else if (current_token == lexer::tok_semicolon) {
+            return std::move(parse_var_decl(type, identifier));
+        } else {
+            utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+        }
+      @endcode
+    */
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
         ast::types type;
         std::string identifier;
@@ -217,8 +358,6 @@ namespace parser {
             }
         }
 
-        //identifier = std::get_if<std::string>(lexer::stored_values[current_token_index - 1]);
-
         get_next_token(); // consume the identifier
 
         var_map.insert({identifier, type});
@@ -232,6 +371,19 @@ namespace parser {
         }
     }
     
+    /**
+     * @par This function simply needs to create an AST node for a variable declaration based on the values passed to it
+     * 
+     * @code
+        auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
+
+        #if (DEBUG_MODE == 1)
+            ast_node->debug_output();
+        #endif
+
+        return std::move(ast_node);
+     * @endcode
+     */
     std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier) {
 
         auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
@@ -244,15 +396,26 @@ namespace parser {
 
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier) {
-        /*
-        if (var_map.find(identifier) != var_map.end()) {
-            std::cout << identifier << " inserted into map.\n";
+    /**
+     * @par Parses a variable definition, and returns an AST node, as well as inserts it into the defined_vars map.
+     * 
+     * @code
+        get_next_token(); // consume the '='
+        auto assigned_expr = parse_expression();
+
+        if (assigned_expr->get_expr_type() != type) {
+            utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
         }
-        */
-
-
+        
+        auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
         get_next_token();
+        defined_vars.emplace_back(identifier);
+        return std::move(ast_node);
+     * @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier) {
+
+        get_next_token(); // consume the '='
 
         auto assigned_expr = parse_expression();
 
@@ -276,7 +439,50 @@ namespace parser {
         return std::move(ast_node);
     }
 
-    
+    /**
+     * @par Parses assignment for predefined variables
+     * 
+     * @par Validate that the identifier has been declared.
+     * 
+     * @code
+     *  std::string identifier;
+        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+        
+        if (value.has_value()) {
+            if (std::holds_alternative<std::string>(value.value())) {
+                identifier = std::get<std::string>(value.value());
+            } 
+            else {
+                utility::parser_error("Expected identifier", lexer::line_count);
+            }
+        }
+
+        
+        if (var_map.find(identifier) == var_map.end()) {
+            utility::parser_error("Variable not yet declared", lexer::line_count);
+        }
+
+        get_next_token(); 
+     * @endcode
+
+       @par Parse the new expression assigned, and validate its type.
+
+       @code
+        auto assigned_expr = parse_expression();
+
+        if (assigned_expr->get_expr_type() != var_map[identifier]) {
+            utility::parser_error("Invalid assignment", lexer::line_count);
+        }
+
+        auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+
+        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
+            defined_vars.emplace_back(identifier);
+        }
+
+        return std::move(ast_node);
+       @endcode
+     */
     std::unique_ptr<ast::top_level_expr> parse_var_assign() {
         std::string identifier;
         std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
@@ -325,6 +531,35 @@ namespace parser {
         return std::move(ast_node);
     }
 
+    /**
+     * @par This parses primary identifiers, and validates that they have been pre-defined
+     * 
+     * @code
+        std::string identifier;
+
+        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 2];
+
+        if (value.has_value()) {
+            if (std::holds_alternative<std::string>(value.value())) {
+                identifier = std::get<std::string>(value.value());
+            } 
+            else {
+                utility::parser_error("Expected identifier", lexer::line_count);
+            }
+        } 
+
+        if (var_map.find(identifier) == var_map.end()) {
+            utility::parser_error("Variable not yet defined", lexer::line_count);
+        }
+
+        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
+            utility::parser_error("Variable not yet initialized", lexer::line_count);
+        }
+
+        auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
+        return std::move(ast_node);
+     * @endcode.
+     */
     std::unique_ptr<ast::top_level_expr> parse_identifier_expr() {
 
         std::string identifier;

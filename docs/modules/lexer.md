@@ -5,7 +5,7 @@
 ## Variables
 
 <a id="line_count_md"></a>
-- [`line_count`](../../include/lexer/lexer.h#line_count)  
+- [`line_count`](../../include/lexer/lexer.h#L20)  
   `int line_count;`  
   **Description**: Tracks the current line number being processed in the input stream.
 
@@ -50,7 +50,7 @@
   **Description**: Stores the current string value from the input stream if we identify one.
 
 <a id="input_md"></a>
-- [`input`](../../include/lexer/lexer.h#input)  
+- [`input`](../../include/lexer/lexer.h#lexer-input)  
   `std::istream* input;`  
   **Description**: Pointer to the input stream (a .pyrx file).
 
@@ -74,7 +74,7 @@
   **Description**: Retrieves the next token from the input stream and updates the relevant associated value (can be `std::nullopt`).  
   **Components**:  
   - [`previous_character`](../../src/lexer.cpp#previous_character): Stores the current character in `input` that is being considered.  
-  - [Whitespace](../../src/lexer.cpp#previous_character): Iterates over all whitespace and ignores it by incrementing the `previous_character`.  
+  - [Whitespace](../../src/lexer.cpp#whitespace): Iterates over all whitespace and ignores it by incrementing the `previous_character`.  
   - [Individual Characters](../../src/lexer.cpp#single_character_tokens): Tokenizes all single character tokens, such as `(`, `{`, `+`, `EOF`, and others.   
   - [Comments and Division](../../src/lexer.cpp#div_and_comments): Deals with character consumption when handling comments (inline and multiline), as well as the division operator.  
   - [Keywords and Identifiers](../../src/lexer.cpp#keywords_and_identifiers): Identifies keywords such as `int` and `class`, and lexes an identifier if the input stream doesn't yield a keyword.    

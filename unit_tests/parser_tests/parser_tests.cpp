@@ -11,43 +11,107 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 #include <iostream>
 
-void ast::binary_expr::debug_output() {
-    std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
-}
+namespace parser {
 
-void ast::identifier_expr::debug_output() {
-     std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
-}
+     /**
+      * @fn ast::binary_expr::debug_output()
+      * @code
+      * std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
+      * @endcode
+      */
+     void ast::binary_expr::debug_output() {
+          std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
+     }
 
-void ast::integer_expression::debug_output() {
-    std::cout << "Literal expression of type: int" << "\n"; 
-}
+     /**
+      * @fn ast::identifier_expr::debug_output()
+      * @code
+      * std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * @endcode
+      */
+     void ast::identifier_expr::debug_output() {
+          std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
 
-void ast::float_expression::debug_output() {
-     std::cout << "Literal expression of type: float" << "\n"; 
-}
+     /**
+      * @fn ast::integer_expression::debug_output()
+      * @code
+      * std::cout << "Literal expression of type: int" << "\n"; 
+      * @endcode
+      */
+     void ast::integer_expression::debug_output() {
+          std::cout << "Literal expression of type: int" << "\n"; 
+     }
 
-void ast::char_expression::debug_output() {
-     std::cout << "Literal expression of type: char" << "\n"; 
-}
+     /**
+      * @fn ast::float_expression::debug_output()
+      * @code
+      * std::cout << "Literal expression of type: float" << "\n"; 
+      * @endcode
+      */
+     void ast::float_expression::debug_output() {
+          std::cout << "Literal expression of type: float" << "\n"; 
+     }
 
-void ast::string_expression::debug_output() {
-     std::cout << "Literal expression of type: string" << "\n"; 
-}
+     /**
+      * @fn ast::char_expression::debug_output()
+      * @code
+      * std::cout << "Literal expression of type: char" << "\n";
+      * @endcode
+      */
+     void ast::char_expression::debug_output() {
+          std::cout << "Literal expression of type: char" << "\n"; 
+     }
 
-void ast::bool_expression::debug_output() {
-     std::cout << "Literal expression of type: bool" << "\n"; 
-}
+     /**
+      * @fn ast::string_expression::debug_output()
+      * @code
+      * std::cout << "Literal expression of type: string" << "\n"; 
+      * @endcode
+      */
+     void ast::string_expression::debug_output() {
+          std::cout << "Literal expression of type: string" << "\n"; 
+     }
 
-void ast::variable_declaration::debug_output() {
-     std::cout << "Variable declaration of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
-}
+     /**
+      * @fn ast::bool_expression::debug_output()
+      * @code
+      * std::cout << "Literal expression of type: bool" << "\n"; 
+      * @endcode
+      */
+     void ast::bool_expression::debug_output() {
+          std::cout << "Literal expression of type: bool" << "\n"; 
+     }
 
-void ast::variable_definition::debug_output() {
-     std::cout << "Variable definition of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
-}
+     /**
+      * @fn ast::variable_declaration::debug_output()
+      * @code
+      * std::cout << "Variable declaration of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * @endcode
+      */
+     void ast::variable_declaration::debug_output() {
+          std::cout << "Variable declaration of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
 
-void ast::variable_assignment::debug_output() {
-     std::cout << "Variable assignment of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+     /**
+      * @fn ast::variable_definition::debug_output()
+      * @code
+      * std::cout << "Variable definition of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * @endcode
+      */
+     void ast::variable_definition::debug_output() {
+          std::cout << "Variable definition of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
+
+     /**
+      * @fn ast::variable_assignment::debug_output()
+      * @code
+      * std::cout << "Variable assignment of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * @endcode
+      */
+     void ast::variable_assignment::debug_output() {
+          std::cout << "Variable assignment of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
+
 }
 

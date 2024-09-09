@@ -9,3 +9,6 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 1. Fix binary expression calls w/in the parse expression method of the parser (validate that I am properly dealing with optional variants) ~line 60
 2. Fix binary expreesion typing and grabbing values from the type map...
 3. Enforce typing on EACH side of the binary expr, not just one
+
+4. ***** Calling primary expression from binary and just from parse expression have differeing behavior, so YOU NEED TO FIX THIS (perhaps split into 2 functions...)
+5. ***** Fix primary expression parsing, as it still looks at the values in the lexer stream...

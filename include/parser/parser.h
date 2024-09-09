@@ -18,20 +18,40 @@ If LICENSE.txt is not included, this version of the source code is provided in b
 
 namespace parser {
 
+    /**
+     * @par Tracks the current token being processed from `lexer::token_stream`.
+     */
     extern int current_token;
 
+    /**
+     * @par Stores the current token as an enumerated `lexer::Token_Type` as opposed to a raw integer.
+     */
     extern lexer::Token_Type current_token_as_token;
 
+    /**
+     * @par Stores a vector of predefined variables and their respective type to block redeclaration, and do basic type checking.
+     */
     extern std::map<std::string, ast::types> var_map;
 
+    /**
+     * @par Stores a vector of variables that have been not just declared, but defined to hold value.
+     */
     extern std::vector<std::string> defined_vars;
 
+    /**
+     * @par Stores the precedence of operators, so that the parser knows which order to traverse an expression.
+     */
     extern std::map<lexer::Token_Type, int> operator_precedence;
 
+    /**
+     * @par Stores the index of the token we are parsing in the lexer::token_stream
+     */
     extern int current_token_index;
-    extern int token_index_max;
 
-   // extern std::unique_ptr<ast::top_level_expr> tokenize_expr_vector();
+    /**
+     * @par Stores the length of the lexer::token_stream so that we don't attempt to access out of bounds elements.
+     */
+    extern int token_index_max;
 
     int get_next_token();
 
