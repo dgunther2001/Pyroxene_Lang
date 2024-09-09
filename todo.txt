@@ -1,10 +1,10 @@
-MIT License
-Copyright (c) 2024 Daniel Gunther
+#MIT License
+#Copyright (c) 2024 Daniel Gunther
 
-For the full license text, see the LICENSE.txt file in the docs directory.
-If LICENSE.txt is not included, this version of the source code is provided in breach of this license.
+#For the full license text, see the LICENSE.md file in the root directory.
+#If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 
-******************************************************
+#******************************************************
 
 1. Fix binary expression calls w/in the parse expression method of the parser (validate that I am properly dealing with optional variants) ~line 60
 2. Fix binary expreesion typing and grabbing values from the type map...
