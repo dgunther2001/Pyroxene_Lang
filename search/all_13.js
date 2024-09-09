@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['welcome_20to_20pyroxene_0',['Welcome to Pyroxene',['../index.html',1,'']]],
-  ['windows_1',['Windows',['../md_docs_2start.html#autotoc_md8',1,'']]]
+  ['zsh_20and_20bash_20shells_0',['Zsh and Bash Shells',['../md_docs_2start.html#autotoc_md7',1,'']]]
 ];

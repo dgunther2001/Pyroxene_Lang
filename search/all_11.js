@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20getting_20started_20_3a_20to_20run_20pyroxene_20click_20here_0',['@ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;Getting Started&quot;: To run Pyroxene, click here.',['../index.html#autotoc_md1',1,'']]],
-  ['utility_1',['utility',['../namespaceutility.html',1,'']]],
-  ['utility_2ecpp_2',['utility.cpp',['../utility_8cpp.html',1,'']]],
-  ['utility_2eh_3',['utility.h',['../utility_8h.html',1,'']]]
+  ['var_5fmap_0',['var_map',['../namespaceparser.html#ae59dd22fb111699bf39fece9995ab000',1,'parser']]],
+  ['variable_5fassignment_1',['variable_assignment',['../classast_1_1variable__assignment.html',1,'ast::variable_assignment'],['../classast_1_1variable__assignment.html#a8de877f4f7084771fe2562122f141d7c',1,'ast::variable_assignment::variable_assignment()']]],
+  ['variable_5fdeclaration_2',['variable_declaration',['../classast_1_1variable__declaration.html',1,'ast::variable_declaration'],['../classast_1_1variable__declaration.html#a7af9f162f1e18ac597d2851b27885c1c',1,'ast::variable_declaration::variable_declaration()']]],
+  ['variable_5fdefinition_3',['variable_definition',['../classast_1_1variable__definition.html',1,'ast::variable_definition'],['../classast_1_1variable__definition.html#ad8a98a856135ee2fc278d5b28fd2d651',1,'ast::variable_definition::variable_definition()']]]
 ];
