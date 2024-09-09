@@ -9,6 +9,7 @@ var searchData=
   ['docker_20and_20or_20docker_20desktop_6',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md5',1,'']]],
   ['docker_20desktop_7',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md5',1,'']]],
   ['docs_20start_20md_20getting_20started_20_3a_20to_20run_20pyroxene_20look_20here_8',['@ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;Getting Started&quot;: To run Pyroxene, look here.',['../index.html#autotoc_md1',1,'']]],
-  ['driver_5fargs_5ferror_9',['driver_args_error',['../namespaceutility.html#a5fb805a9dc14c1813af86e3178be56b5',1,'utility']]],
-  ['driver_5fextension_5ferror_10',['driver_extension_error',['../namespaceutility.html#a4baeffca872d24b9a9fb99f570deed29',1,'utility']]]
+  ['documentation_20roadmap_9',['Documentation Roadmap',['../index.html#autotoc_md2',1,'']]],
+  ['driver_5fargs_5ferror_10',['driver_args_error',['../namespaceutility.html#a5fb805a9dc14c1813af86e3178be56b5',1,'utility']]],
+  ['driver_5fextension_5ferror_11',['driver_extension_error',['../namespaceutility.html#a4baeffca872d24b9a9fb99f570deed29',1,'utility']]]
 ];
