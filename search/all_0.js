@@ -1,9 +1,4 @@
 var searchData=
 [
-  ['and_20bash_20shells_0',['Zsh and Bash Shells',['../md_docs_2start.html#autotoc_md6',1,'']]],
-  ['and_20enable_20docker_20and_20or_20docker_20desktop_1',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md4',1,'']]],
-  ['and_20or_20docker_20desktop_2',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md4',1,'']]],
-  ['ast_3',['ast',['../namespaceast.html',1,'']]],
-  ['ast_2ecpp_4',['ast.cpp',['../ast_8cpp.html',1,'']]],
-  ['ast_2eh_5',['ast.h',['../ast_8h.html',1,'']]]
+  ['_3a_20to_20run_20pyroxene_20look_20here_0',['Setup Guide @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;Getting Started&quot;: To run Pyroxene, look here.',['../index.html#autotoc_md1',1,'']]]
 ];
