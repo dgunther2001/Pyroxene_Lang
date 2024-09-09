@@ -19,5 +19,5 @@ var searchData=
   ['parser_5ferror_16',['parser_error',['../namespaceutility.html#a9268449c45b475023dde39f4010b698a',1,'utility']]],
   ['parser_5ftests_2ecpp_17',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]],
   ['primary_5fdriver_5floop_18',['primary_driver_loop',['../namespaceutility.html#afbb30e890b50ac29a9d9dbf1226bf39b',1,'utility']]],
-  ['pyroxene_19',['Pyroxene',['../index.html',1,'Pyroxene'],['..//Users/danielgunther/Developer/pyroxene_lang/docs/landing.md#autotoc_md0',1,'Welcome to Pyroxene']]]
+  ['pyroxene_19',['Welcome to Pyroxene',['../index.html',1,'']]]
 ];

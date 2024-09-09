@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['to_20pyroxene_0',['Welcome to Pyroxene',['..//Users/danielgunther/Developer/pyroxene_lang/docs/landing.md#autotoc_md0',1,'']]],
+  ['to_20pyroxene_0',['Welcome to Pyroxene',['../index.html',1,'']]],
   ['tok_5fassignment_1',['tok_assignment',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90',1,'lexer']]],
   ['tok_5fbool_2',['tok_bool',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a',1,'lexer']]],
   ['tok_5fchar_3',['tok_char',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9',1,'lexer']]],

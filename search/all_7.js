@@ -7,5 +7,5 @@ var searchData=
   ['int_5ftype_4',['int_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6',1,'ast']]],
   ['integer_5fexpression_5',['integer_expression',['../classast_1_1integer__expression.html',1,'ast::integer_expression'],['../classast_1_1integer__expression.html#acdeadf92bd1167038d2e84b3796a53d1',1,'ast::integer_expression::integer_expression()']]],
   ['integer_5fvalue_6',['integer_value',['../namespacelexer.html#aa374dc15c2d2a0962392e302ca627b4f',1,'lexer']]],
-  ['is_20a_20roadmap_20for_20ya_7',['Here is a roadmap for ya!',['..//Users/danielgunther/Developer/pyroxene_lang/docs/landing.md#autotoc_md1',1,'']]]
+  ['is_20a_20roadmap_20for_20ya_7',['Here is a roadmap for ya!',['../index.html#autotoc_md1',1,'']]]
 ];
