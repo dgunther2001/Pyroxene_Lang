@@ -22,5 +22,5 @@ var searchData=
   ['pyroxene_19',['Pyroxene',['../index.html#autotoc_md4',1,'Using Pyroxene'],['../index.html',1,'Welcome to Pyroxene']]],
   ['pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_20',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
   ['pyroxene_5flang_20docs_20start_20md_20here_21',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['pyroxene_5flang_20license_20md_20here_22',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;',['../index.html#autotoc_md1',1,'']]]
+  ['pyroxene_5flang_20license_20md_20here_22',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]]
 ];

@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['the_20license_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_0',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;',['../index.html#autotoc_md1',1,'']]],
+  ['the_20license_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_0',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]],
   ['the_20repository_1',['Clone the repository',['../md_docs_2start.html#autotoc_md6',1,'']]],
   ['to_20pyroxene_2',['Welcome to Pyroxene',['../index.html',1,'']]],
   ['to_20run_20pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_3',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['to_20view_20the_20license_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_4',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;',['../index.html#autotoc_md1',1,'']]],
+  ['to_20view_20the_20license_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_4',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]],
   ['tok_5fassignment_5',['tok_assignment',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90',1,'lexer']]],
   ['tok_5fbool_6',['tok_bool',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a',1,'lexer']]],
   ['tok_5fchar_7',['tok_char',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9',1,'lexer']]],
