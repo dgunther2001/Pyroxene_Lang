@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['welcome_20to_20pyroxene_0',['Welcome to Pyroxene',['../index.html',1,'']]]
+  ['utility_0',['utility',['../namespaceutility.html',1,'']]],
+  ['utility_2ecpp_1',['utility.cpp',['../utility_8cpp.html',1,'']]],
+  ['utility_2eh_2',['utility.h',['../utility_8h.html',1,'']]]
 ];
