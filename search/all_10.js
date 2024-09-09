@@ -2,7 +2,7 @@ var searchData=
 [
   ['the_20repository_0',['Clone the repository',['../md_docs_2start.html#autotoc_md4',1,'']]],
   ['to_20pyroxene_1',['Welcome to Pyroxene',['../index.html',1,'']]],
-  ['to_20run_20pyroxene_20look_20here_2',['@ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;Getting Started&quot;: To run Pyroxene, look here.',['../index.html#autotoc_md1',1,'']]],
+  ['to_20run_20pyroxene_20click_20here_2',['@ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;Getting Started&quot;: To run Pyroxene, click here.',['../index.html#autotoc_md1',1,'']]],
   ['tok_5fassignment_3',['tok_assignment',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90',1,'lexer']]],
   ['tok_5fbool_4',['tok_bool',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a',1,'lexer']]],
   ['tok_5fchar_5',['tok_char',['../namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9',1,'lexer']]],
