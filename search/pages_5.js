@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['to_20pyroxene_0',['Welcome to Pyroxene',['../index.html',1,'']]]
+  ['run_20pyroxene_0',['How do I run Pyroxene?',['../md_docs_2start.html',1,'']]]
 ];

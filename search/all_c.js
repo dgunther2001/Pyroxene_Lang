@@ -20,6 +20,7 @@ var searchData=
   ['parser_5ftests_2ecpp_17',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]],
   ['primary_5fdriver_5floop_18',['primary_driver_loop',['../namespaceutility.html#afbb30e890b50ac29a9d9dbf1226bf39b',1,'utility']]],
   ['pyroxene_19',['Pyroxene',['../md_docs_2start.html',1,'How do I run Pyroxene?'],['../index.html',1,'Welcome to Pyroxene']]],
-  ['pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_20',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]],
-  ['pyroxene_5flang_20docs_20start_20md_20here_21',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]]
+  ['pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_20',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
+  ['pyroxene_5flang_20docs_20start_20md_20here_21',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
+  ['pyroxene_5flang_20license_20md_20here_22',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;',['../index.html#autotoc_md1',1,'']]]
 ];
