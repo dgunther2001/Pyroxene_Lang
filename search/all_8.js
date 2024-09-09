@@ -1,12 +1,13 @@
 var searchData=
 [
-  ['i_20run_20pyroxene_0',['How do I run Pyroxene?',['../md_docs_2start.html',1,'']]],
-  ['identifier_1',['identifier',['../namespacelexer.html#a0586f976980cc76c5600f1867c16c903',1,'lexer']]],
-  ['identifier_5fexpr_2',['identifier_expr',['../classast_1_1identifier__expr.html',1,'ast::identifier_expr'],['../classast_1_1identifier__expr.html#a03f21c7d6985e6d45f854761786c3f53',1,'ast::identifier_expr::identifier_expr()']]],
-  ['initialize_5foperator_5fprecendence_3',['initialize_operator_precendence',['../namespaceutility.html#a1d75c24cf0cb3411a4b4709554030eb3',1,'utility']]],
-  ['input_4',['input',['../namespacelexer.html#a094bf53953e31c419b3e6558322d5ecc',1,'lexer']]],
-  ['install_20and_20enable_20docker_20and_20or_20docker_20desktop_5',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md6',1,'']]],
-  ['int_5ftype_6',['int_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6',1,'ast']]],
-  ['integer_5fexpression_7',['integer_expression',['../classast_1_1integer__expression.html',1,'ast::integer_expression'],['../classast_1_1integer__expression.html#acdeadf92bd1167038d2e84b3796a53d1',1,'ast::integer_expression::integer_expression()']]],
-  ['integer_5fvalue_8',['integer_value',['../namespacelexer.html#aa374dc15c2d2a0962392e302ca627b4f',1,'lexer']]]
+  ['char_5fexpression_0',['char_expression',['../classast_1_1char__expression.html',1,'ast::char_expression'],['../classast_1_1char__expression.html#ac7bfda24058aca46b99c0b378f2c7c1e',1,'ast::char_expression::char_expression()']]],
+  ['char_5ftype_1',['char_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb',1,'ast']]],
+  ['char_5fvalue_2',['char_value',['../namespacelexer.html#ad1919047943e7c2844e66ed6b0c7eca3',1,'lexer']]],
+  ['classes_3',['5. Classes',['../md_docs_2syntax.html#autotoc_md16',1,'']]],
+  ['click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_4',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
+  ['click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_5',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;',['../index.html#autotoc_md1',1,'']]],
+  ['clone_20the_20repository_6',['Clone the repository',['../md_docs_2start.html#autotoc_md6',1,'']]],
+  ['current_5ftoken_7',['current_token',['../namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e',1,'parser']]],
+  ['current_5ftoken_5fas_5ftoken_8',['current_token_as_token',['../namespaceparser.html#a0840b936d58d181cd72b6d10bdc8746d',1,'parser']]],
+  ['current_5ftoken_5findex_9',['current_token_index',['../namespaceparser.html#a609514eca432c41bf023f4f23443a68c',1,'parser']]]
 ];

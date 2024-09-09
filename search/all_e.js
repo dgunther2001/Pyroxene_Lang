@@ -1,11 +1,12 @@
 var searchData=
 [
-  ['shells_0',['Zsh and Bash Shells',['../md_docs_2start.html#autotoc_md8',1,'']]],
-  ['start_20md_20here_1',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['start_2emd_2',['start.md',['../start_8md.html',1,'']]],
-  ['started_3a_20to_20run_20pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_3',['Getting Started: To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['stored_5fvalues_4',['stored_values',['../namespacelexer.html#ac762e6415092515d1673f9ebd161bfcc',1,'lexer']]],
-  ['string_5fexpression_5',['string_expression',['../classast_1_1string__expression.html',1,'ast::string_expression'],['../classast_1_1string__expression.html#a8b04e515589756b25a853796cef7fcfb',1,'ast::string_expression::string_expression()']]],
-  ['string_5ftype_6',['string_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622',1,'ast']]],
-  ['string_5fvalue_7',['string_value',['../namespacelexer.html#ac6c312257777281ee94e7ff466400568',1,'lexer']]]
+  ['identifier_0',['identifier',['../namespacelexer.html#a0586f976980cc76c5600f1867c16c903',1,'lexer']]],
+  ['identifier_5fexpr_1',['identifier_expr',['../classast_1_1identifier__expr.html',1,'ast::identifier_expr'],['../classast_1_1identifier__expr.html#a03f21c7d6985e6d45f854761786c3f53',1,'ast::identifier_expr::identifier_expr()']]],
+  ['implementation_20roadmap_2',['Langauge Implementation Roadmap',['../index.html#autotoc_md3',1,'']]],
+  ['initialize_5foperator_5fprecendence_3',['initialize_operator_precendence',['../namespaceutility.html#a1d75c24cf0cb3411a4b4709554030eb3',1,'utility']]],
+  ['input_4',['input',['../namespacelexer.html#a094bf53953e31c419b3e6558322d5ecc',1,'lexer']]],
+  ['install_20and_20enable_20docker_20and_20or_20docker_20desktop_5',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md7',1,'']]],
+  ['int_5ftype_6',['int_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6',1,'ast']]],
+  ['integer_5fexpression_7',['integer_expression',['../classast_1_1integer__expression.html',1,'ast::integer_expression'],['../classast_1_1integer__expression.html#acdeadf92bd1167038d2e84b3796a53d1',1,'ast::integer_expression::integer_expression()']]],
+  ['integer_5fvalue_8',['integer_value',['../namespacelexer.html#aa374dc15c2d2a0962392e302ca627b4f',1,'lexer']]]
 ];
