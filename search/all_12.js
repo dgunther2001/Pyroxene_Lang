@@ -19,8 +19,9 @@ var searchData=
   ['parser_5ferror_16',['parser_error',['../namespaceutility.html#a9268449c45b475023dde39f4010b698a',1,'utility']]],
   ['parser_5ftests_2ecpp_17',['parser_tests.cpp',['../parser__tests_8cpp.html',1,'']]],
   ['primary_5fdriver_5floop_18',['primary_driver_loop',['../namespaceutility.html#afbb30e890b50ac29a9d9dbf1226bf39b',1,'utility']]],
-  ['pyroxene_19',['Pyroxene',['../index.html#autotoc_md4',1,'Using Pyroxene'],['../index.html',1,'Welcome to Pyroxene']]],
-  ['pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_20',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['pyroxene_5flang_20docs_20start_20md_20here_21',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
-  ['pyroxene_5flang_20license_20md_20here_22',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]]
+  ['program_20abstract_20syntax_20tree_20ast_20ast_20that_20can_20each_20hold_20their_20own_20llvm_20ir_20codegen_20function_19',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
+  ['pyroxene_20',['Pyroxene',['../index.html#autotoc_md4',1,'Using Pyroxene'],['../index.html',1,'Welcome to Pyroxene']]],
+  ['pyroxene_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20docs_20start_20md_20here_21',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
+  ['pyroxene_5flang_20docs_20start_20md_20here_22',['To run Pyroxene, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/docs/start.md&quot; &quot;here&quot;.',['../index.html#autotoc_md2',1,'']]],
+  ['pyroxene_5flang_20license_20md_20here_23',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md1',1,'']]]
 ];

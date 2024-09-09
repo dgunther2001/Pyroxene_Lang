@@ -8,6 +8,7 @@ var searchData=
   ['get_5ftoken_5',['get_token',['../namespacelexer.html#a6eeb74841871266bc4c8f7e00e7c3a4d',1,'lexer']]],
   ['get_5ftype_5fas_5fstring_6',['get_type_as_string',['../namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b',1,'ast']]],
   ['get_5fvalue_7',['get_value',['../classast_1_1integer__expression.html#abad564ab80a3b779a7f7e7809529f151',1,'ast::integer_expression::get_value()'],['../classast_1_1float__expression.html#abd668fe08ce5c9f563e050c6484731df',1,'ast::float_expression::get_value()'],['../classast_1_1char__expression.html#a3696edc4d2008446e9ee6a7e4e99316b',1,'ast::char_expression::get_value()'],['../classast_1_1string__expression.html#a038be06d1f6b0b4bc8310facb48487bf',1,'ast::string_expression::get_value()'],['../classast_1_1bool__expression.html#ae9b340d4100f2c735201fd67547c3f0a',1,'ast::bool_expression::get_value()']]],
-  ['graphs_8',['6. Graphs',['../md_docs_2syntax.html#autotoc_md17',1,'']]],
-  ['guide_9',['Start Guide',['../md_docs_2start.html',1,'']]]
+  ['grammar_8',['Context Free Grammar',['../md_docs_2cfg.html',1,'']]],
+  ['graphs_9',['6. Graphs',['../md_docs_2syntax.html#autotoc_md17',1,'']]],
+  ['guide_10',['Start Guide',['../md_docs_2start.html',1,'']]]
 ];
