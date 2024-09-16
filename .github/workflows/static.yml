@@ -1,36 +1,23 @@
-name: Build and Deploy Documentation
+name: Deploy GitHub Pages
 
 on:
   push:
     branches:
       - main
+      - adding_more_docs
 
 permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Python 3.x
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y doxygen graphviz
-
-      - name: Generate Documentation
-        run: doxygen Doxyfile
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./html
-
