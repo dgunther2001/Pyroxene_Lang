@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     llvm \
     llvm-dev \
+    llvm-14-dev \
     libllvm14 \
     zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
@@ -32,7 +33,7 @@ ARG DEBUG_MODE
 ARG FILE_PATH
 
 RUN mkdir build && cd build && \
-    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_FLAGS="-stdlib=libc++" -DBUILD_DEBUG_DRIVER=${DEBUG_MODE} .. && \
+    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_DEBUG_DRIVER=${DEBUG_MODE} .. && \
     make
 
 ENTRYPOINT ["./build/driver"]
