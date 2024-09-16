@@ -10,9 +10,12 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 
 namespace ast {
-    //std::unique_ptr<llvm::LLVMContext> LLVM_Context;
+
+    std::unique_ptr<llvm::LLVMContext> LLVM_Context;
+    std::unique_ptr<llvm::Module> LLVM_Module;
+
     llvm::Value* ast::integer_expression::codegen() {
-        return nullptr;
+        return llvm::ConstantInt::get(*LLVM_Context, llvm::APInt(64, held_value, true));
     }
 
     llvm::Value* ast::float_expression::codegen() {

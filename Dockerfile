@@ -10,18 +10,31 @@ FROM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+ARG TARGETPLATFORM
+
+ARG LLVM_ARCH="AArch64"
+
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+        export LLVM_ARCH="X86"; \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+        export LLVM_ARCH="AArch64"; \
+    else \
+        echo "Unsupported architecture: $TARGETPLATFORM"; exit 1; \
+    fi
+
 RUN apt-get update && apt-get install -y \
-    build-essential \
-    clang \
-    libc++-dev \
-    libc++abi-dev \
-    cmake \
-    llvm \
-    llvm-dev \
-    llvm-14-dev \
-    libllvm14 \
-    zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+build-essential \
+clang \
+libc++-dev \
+libc++abi-dev \
+cmake \
+llvm \
+llvm-dev \
+llvm-14-tools \
+llvm-14-dev \
+libllvm14 \
+zlib1g-dev \
+&& rm -rf /var/lib/apt/lists/*
 
 
 WORKDIR /

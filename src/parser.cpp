@@ -153,6 +153,9 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(top_level));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(top_level));
         if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(top_level)); 
+
+        utility::parser_error("Primary expression not recognized", lexer::line_count);
+        return nullptr;
     }
 
     /**
@@ -257,7 +260,7 @@ namespace parser {
 
             auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
 
-            #if (DEBUG_MODE == 1)
+            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 ast_node->debug_output();
             #endif
 
@@ -371,9 +374,10 @@ namespace parser {
             return std::move(parse_var_defn(type, identifier));
         } else if (current_token == lexer::tok_semicolon) {
             return std::move(parse_var_decl(type, identifier));
-        } else {
-            utility::parser_error("Expected variable definition or declaration", lexer::line_count);
-        }
+        } 
+        utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+        return nullptr;
+
     }
     
     /**
@@ -393,7 +397,7 @@ namespace parser {
 
         auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -432,7 +436,7 @@ namespace parser {
 
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -522,7 +526,7 @@ namespace parser {
 
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -590,7 +594,7 @@ namespace parser {
 
         auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -616,7 +620,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);
         
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -642,7 +646,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_float_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::float_expression>(lexer::float_value);
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -669,7 +673,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::char_expression>(lexer::char_value);
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -696,7 +700,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::string_expression>(lexer::string_value);
 
-        #if (DEBUG_MODE == 1)
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
 
@@ -722,7 +726,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::bool_expression>(lexer::bool_value);
 
-        #if (DEBUG_MODE == 1) 
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1) 
             ast_node->debug_output();
         #endif
 

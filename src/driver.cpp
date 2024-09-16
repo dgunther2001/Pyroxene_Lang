@@ -53,6 +53,13 @@ int main(int argc, char** argv) {
 
     utility::primary_driver_loop();
 
+    llvm::InitializeNativeTarget();
+    llvm::InitializeNativeTargetAsmPrinter();
+    llvm::InitializeNativeTargetAsmParser();
+
+
+
+
     file.close();
 
     return 0;
