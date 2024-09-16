@@ -6,15 +6,12 @@ For the full license text, see the LICENSE.md file in the root directory.
 If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 */
 
-int b = 5;
-int f = 33;
-//char g = 'a';
-//bool d = true;
-//bool z = false;
+int b = 44;
+int c = 33 + 99;
+int d;
+66 + 33 * c;
+44;
 
-
-b = 7;
-f = b;
+d = 77 / 99 + b;
 
 bool y = true;
-

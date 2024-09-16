@@ -102,6 +102,7 @@ namespace parser {
 
         get_next_token(); 
 
+
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
             while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
                 single_nested_expr_tokens.emplace_back(current_token_as_token);
@@ -122,7 +123,7 @@ namespace parser {
         }
 
         else {
-            return std::move(parse_primary_expression(first_tok));
+            return std::move(parse_primary_expression(first_tok, true));
         }
         
 
@@ -132,24 +133,26 @@ namespace parser {
     /**
      * @par When called, parses tokens into leaf nodes of our AST.
      * 
+     * @param prev_tok The token being parsed as a primary expression,
+     * @param top_level This indicates whether or not the expression is or isn't nested within a binary expression. (true = not in binary_expr)
      * @code
-        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr());
-        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr());
-        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr());
-        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr());
-        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr());
-        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr());
-        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
+        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr(top_level));
+        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr(top_level));
+        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr(top_level));
+        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr(top_level));
+        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(top_level));
+        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(top_level));
+        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(top_level)); 
      * @endcode
      */
-    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok) {
-        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr());
-        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr());
-        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr());
-        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr());
-        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr());
-        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr());
-        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr()); 
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level) {
+        if (prev_tok == lexer::tok_int_val) return std::move(parse_int_expr(top_level));
+        if (prev_tok == lexer::tok_float_val) return std::move(parse_float_expr(top_level));
+        if (prev_tok == lexer::tok_char_val) return std::move(parse_char_expr(top_level));
+        if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr(top_level));
+        if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(top_level));
+        if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(top_level));
+        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(top_level)); 
     }
 
     /**
@@ -172,11 +175,11 @@ namespace parser {
         }
      * @endcode
 
-       @par If there is no valid operator found, the expression is primary, so call that function and return it.
+       @par If there is no valid operator found, the expression is primary, so call that function and return it and inform the primary expression not to consume tokens.
 
        @code 
         if (index_of_highest_prec_op == -1) {
-            return std::move(parse_primary_expression(sub_tok_stream.at(0)));
+            return std::move(parse_primary_expression(sub_tok_stream.at(0), false));
         }
        @endcode
 
@@ -213,7 +216,7 @@ namespace parser {
         }
 
         if (index_of_highest_prec_op == -1) {
-            return std::move(parse_primary_expression(sub_tok_stream.at(0)));
+            return std::move(parse_primary_expression(sub_tok_stream.at(0), false));
         }
 
         if (index_of_highest_prec_op == 0 || index_of_highest_prec_op == sub_tok_stream.size() - 1) {
@@ -246,6 +249,8 @@ namespace parser {
             case lexer::tok_true: case lexer::tok_false:
                 bin_type = ast::bool_type;
                 break;
+            case lexer::tok_identifier:
+                break; // ADD TYPE VALIDATION LOGIC LATER
             default:
                 utility::parser_error("Unexpected type in binary expression", lexer::line_count);
         }
@@ -408,7 +413,6 @@ namespace parser {
         }
         
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
-        get_next_token();
         defined_vars.emplace_back(identifier);
         return std::move(ast_node);
      * @endcode
@@ -431,8 +435,6 @@ namespace parser {
         #if (DEBUG_MODE == 1)
             ast_node->debug_output();
         #endif
-
-        get_next_token();
 
         defined_vars.emplace_back(identifier);
 
@@ -560,7 +562,7 @@ namespace parser {
         return std::move(ast_node);
      * @endcode.
      */
-    std::unique_ptr<ast::top_level_expr> parse_identifier_expr() {
+    std::unique_ptr<ast::top_level_expr> parse_identifier_expr(bool top_level) {
 
         std::string identifier;
 
@@ -592,63 +594,141 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
 
         return std::move(ast_node);
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_int_expr() {
+    /**
+     * @par This parses integer literals.
+     * @param top_level Indicates whether this expresion is part of a binary subexpression.
+     * 
+     * @code
+     * auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);
+     *  if (top_level) {
+            get_next_token();
+        }
+        return std::move(ast_node);
+        @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::integer_expression>(lexer::integer_value);
         
         #if (DEBUG_MODE == 1)
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_float_expr() {
+    /**
+     * @par This parses float literals.
+     * @param top_level Indicates whether this expresion is part of a binary subexpression.
+     * 
+     * @code
+        auto ast_node = std::make_unique<ast::float_expression>(lexer::float_value);
+
+        if (top_level) {
+            get_next_token();
+        }
+        return std::move(ast_node);
+        @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_float_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::float_expression>(lexer::float_value);
 
         #if (DEBUG_MODE == 1)
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_char_expr() {
+    /**
+     * @par This parses char literals.
+     * @param top_level Indicates whether this expresion is part of a binary subexpression.
+     * 
+     * @code
+        std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level) {
+            auto ast_node = std::make_unique<ast::char_expression>(lexer::char_value);
+
+            if (top_level) {
+                get_next_token();
+            }
+        return std::move(ast_node);
+        @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::char_expression>(lexer::char_value);
 
         #if (DEBUG_MODE == 1)
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_string_expr() {
+
+    /**
+     * @par This parses string literals.
+     * @param top_level Indicates whether this expresion is part of a binary subexpression.
+     * 
+     * @code
+        auto ast_node = std::make_unique<ast::string_expression>(lexer::string_value);
+
+        if (top_level) {
+            get_next_token();
+        }
+        return std::move(ast_node);
+        @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::string_expression>(lexer::string_value);
 
         #if (DEBUG_MODE == 1)
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
-    std::unique_ptr<ast::top_level_expr> parse_bool_expr() {
+    /**
+     * @par This parses boolean literals.
+     * @param top_level Indicates whether this expresion is part of a binary subexpression.
+     * 
+     * @code
+        auto ast_node = std::make_unique<ast::bool_expression>(lexer::bool_value);
+
+        if (top_level) {
+            get_next_token();
+        }
+        return std::move(ast_node);
+        @endcode
+     */
+    std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level) {
         auto ast_node = std::make_unique<ast::bool_expression>(lexer::bool_value);
 
         #if (DEBUG_MODE == 1) 
             ast_node->debug_output();
         #endif
 
-        //get_next_token();
+        if (top_level) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
