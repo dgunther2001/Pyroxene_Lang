@@ -15,6 +15,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 namespace ast {
     extern std::unique_ptr<llvm::LLVMContext> LLVM_Context;
     extern std::unique_ptr<llvm::Module> LLVM_Module;
+    extern std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
 }
 
 #endif
