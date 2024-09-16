@@ -177,14 +177,15 @@ namespace utility {
                 case lexer::tok_semicolon:
                     parser::get_next_token(); // ignore semicolons and get the next token...
                     break; 
+                    /*
                 case lexer::tok_int_val: 
-                    parser::parse_int_expr();
+                    parser::parse_int_expr(true);
                     break;
                 case lexer::tok_float_val: 
-                    parser::parse_float_expr();
+                    parser::parse_float_expr(true);
                     break;
                 case lexer::tok_char_val: 
-                    parser::parse_char_expr();
+                    parser::parse_char_expr(true);
                     break;
                 case lexer::tok_string_val: 
                     parser::parse_string_expr();
@@ -195,6 +196,7 @@ namespace utility {
                 case lexer::tok_false:
                     parser::parse_bool_expr();
                     break; 
+                    */
                 case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
                     parser::parse_var_decl_defn();
                     break;

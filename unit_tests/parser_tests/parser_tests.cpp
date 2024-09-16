@@ -11,7 +11,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include <iostream>
 
-namespace parser {
+namespace ast {
 
      /**
       * @fn ast::binary_expr::debug_output()
