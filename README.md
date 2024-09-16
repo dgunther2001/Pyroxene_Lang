@@ -1,4 +1,4 @@
-<img src="docs/images/pyroxene-icon.png" alt="Logo" width="200"/>
+<img src="images/pyroxene_icon.png" alt="Logo" width="200"/>
 
 **Hello!** My name is **Daniel Gunther**, and this is my first major excursion into the world of LLVM.
 
