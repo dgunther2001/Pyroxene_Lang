@@ -100,9 +100,9 @@ namespace utility {
     }
 
     void init_llvm_mods() {
-        ast::LLVM_Context = std::make_unique<llvm::LLVMContext>();
-        ast::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *ast::LLVM_Context);
-        ast::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*ast::LLVM_Context);
+        codegen::LLVM_Context = std::make_unique<llvm::LLVMContext>();
+        codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
+        codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
     }
 
     /**

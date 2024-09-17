@@ -10,23 +10,24 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include <iostream>
 
-
-namespace ast {
-
+namespace codegen {
     std::unique_ptr<llvm::LLVMContext> LLVM_Context;
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
+}
+
+namespace ast {
 
     llvm::Value* ast::integer_expression::codegen() {
-        return llvm::ConstantInt::get(ast::IR_Builder->getInt64Ty(), held_value, true);
+        return llvm::ConstantInt::get(codegen::IR_Builder->getInt64Ty(), held_value, true);
     }
 
     llvm::Value* ast::float_expression::codegen() {
-        return llvm::ConstantFP::get(ast::IR_Builder->getDoubleTy(), held_value);
+        return llvm::ConstantFP::get(codegen::IR_Builder->getDoubleTy(), held_value);
     }
 
     llvm::Value* ast::char_expression::codegen() {
-        return llvm::ConstantInt::get(ast::IR_Builder->getInt8Ty(), held_value, true);
+        return llvm::ConstantInt::get(codegen::IR_Builder->getInt8Ty(), held_value, true);
     }
 
     llvm::Value* ast::string_expression::codegen() {
@@ -34,7 +35,7 @@ namespace ast {
     }
 
     llvm::Value* ast::bool_expression::codegen() {
-        return llvm::ConstantInt::get(ast::IR_Builder->getInt1Ty(), held_value ? 1 : 0);
+        return llvm::ConstantInt::get(codegen::IR_Builder->getInt1Ty(), held_value ? 1 : 0);
     }
 
     llvm::Value* ast::identifier_expr::codegen() {
@@ -60,7 +61,7 @@ namespace ast {
         llvm::Type* variable_type = constant_value->getType();
 
     llvm::GlobalVariable* new_global = new llvm::GlobalVariable(
-        *LLVM_Module,               // Module to which the global variable will be added
+        *codegen::LLVM_Module,               // Module to which the global variable will be added
         variable_type,              // Type of the global variable
         false,                      // Whether the variable is constant
         llvm::GlobalValue::ExternalLinkage, // Linkage type
