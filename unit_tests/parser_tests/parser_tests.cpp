@@ -40,7 +40,7 @@ namespace ast {
       * @endcode
       */
      void ast::integer_expression::debug_output() {
-          std::cout << "Literal expression of type: int" << "\n"; 
+          std::cout << "Literal expression of type: int (" << held_value << ")\n"; 
      }
 
      /**
@@ -50,7 +50,7 @@ namespace ast {
       * @endcode
       */
      void ast::float_expression::debug_output() {
-          std::cout << "Literal expression of type: float" << "\n"; 
+          std::cout << "Literal expression of type: float (" << held_value << ")\n"; 
      }
 
      /**
@@ -60,7 +60,7 @@ namespace ast {
       * @endcode
       */
      void ast::char_expression::debug_output() {
-          std::cout << "Literal expression of type: char" << "\n"; 
+          std::cout << "Literal expression of type: char (" << held_value << ")\n"; 
      }
 
      /**
@@ -70,7 +70,7 @@ namespace ast {
       * @endcode
       */
      void ast::string_expression::debug_output() {
-          std::cout << "Literal expression of type: string" << "\n"; 
+          std::cout << "Literal expression of type: string (" << held_value << ")\n"; 
      }
 
      /**
@@ -80,7 +80,7 @@ namespace ast {
       * @endcode
       */
      void ast::bool_expression::debug_output() {
-          std::cout << "Literal expression of type: bool" << "\n"; 
+          std::cout << "Literal expression of type: bool (" << held_value << ")\n"; 
      }
 
      /**

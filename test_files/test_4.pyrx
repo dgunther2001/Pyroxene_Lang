@@ -1,1 +1,4 @@
-4;
+int a = 4;
+float b = 33.3;
+char c = 'a';
+bool d = true;

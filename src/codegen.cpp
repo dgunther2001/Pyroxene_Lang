@@ -26,7 +26,7 @@ namespace ast {
     }
 
     llvm::Value* ast::char_expression::codegen() {
-        return llvm::ConstantInt::get(ast::IR_Builder->getInt8Ty(), held_value, false);
+        return llvm::ConstantInt::get(ast::IR_Builder->getInt8Ty(), held_value, true);
     }
 
     llvm::Value* ast::string_expression::codegen() {
@@ -34,7 +34,7 @@ namespace ast {
     }
 
     llvm::Value* ast::bool_expression::codegen() {
-        return llvm::ConstantInt::get(ast::IR_Builder->getInt1Ty(), held_value, false);
+        return llvm::ConstantInt::get(ast::IR_Builder->getInt1Ty(), held_value ? 1 : 0);
     }
 
     llvm::Value* ast::identifier_expr::codegen() {
@@ -54,8 +54,24 @@ namespace ast {
     }
 
     llvm::Value* ast::variable_definition::codegen() {
-        return nullptr;
+        llvm::Value* expression_value = assigned_value->codegen();
+        llvm::Constant* constant_value = llvm::dyn_cast<llvm::Constant>(expression_value);
+
+        llvm::Type* variable_type = constant_value->getType();
+
+    llvm::GlobalVariable* new_global = new llvm::GlobalVariable(
+        *LLVM_Module,               // Module to which the global variable will be added
+        variable_type,              // Type of the global variable
+        false,                      // Whether the variable is constant
+        llvm::GlobalValue::ExternalLinkage, // Linkage type
+        constant_value,                // Initial value of the global variable
+        identifier_name            // Name of the global variable
+    );
+
+        return new_global;
     }
+
+
 
 
 }

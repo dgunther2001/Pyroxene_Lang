@@ -456,10 +456,12 @@ namespace lexer {
             }
 
             if (identifier == "true") {
+                bool_value = true;
                 return tok_true;
             }
 
             if (identifier == "false") {
+                bool_value = false;
                 return tok_false;
             }
 

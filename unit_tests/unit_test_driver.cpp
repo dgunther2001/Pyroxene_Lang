@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
 
         utility::primary_driver_loop();
 
-        ast::LLVM_Module->print(llvm::errs(), nullptr);
+        ast::LLVM_Module->print(llvm::outs(), nullptr);
 
         file.close();
 
