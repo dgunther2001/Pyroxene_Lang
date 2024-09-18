@@ -12,3 +12,5 @@
 
 4. ***** Calling primary expression from binary and just from parse expression have differeing behavior, so YOU NEED TO FIX THIS (perhaps split into 2 functions...)
 5. ***** Fix primary expression parsing, as it still looks at the values in the lexer stream...
+
+6. ***** Fix semicolons not working withion strings and causing unterminated strings

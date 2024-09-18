@@ -30,7 +30,7 @@ namespace ast {
       * @endcode
       */
      void ast::identifier_expr::debug_output() {
-          std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+          std::cout << "Identifier expression (" << identifier_name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
 
      /**

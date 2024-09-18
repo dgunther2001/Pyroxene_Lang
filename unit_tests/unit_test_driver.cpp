@@ -122,6 +122,12 @@ int main(int argc, char** argv) {
 
         utility::initialize_operator_precendence();
 
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmPrinter();
+        llvm::InitializeNativeTargetAsmParser();
+
+        utility::init_llvm_mods();
+
         utility::primary_driver_loop();
 
         file.close();

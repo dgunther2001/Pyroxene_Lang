@@ -2,3 +2,23 @@ int a = 4;
 float b = 33.3;
 char c = 'a';
 bool d = true;
+string e = "daniel";
+
+int f = a;
+float g = b;
+char h = c;
+bool i = d;
+string j = e;
+
+int k;
+float l;
+char m;
+
+bool o;
+
+k = 44;
+
+
+
+
+//string aa = "kdfldhosajfajsf";
