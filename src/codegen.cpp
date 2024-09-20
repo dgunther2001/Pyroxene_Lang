@@ -14,6 +14,8 @@ namespace codegen {
     std::unique_ptr<llvm::LLVMContext> LLVM_Context;
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
+
+    std::map<std::string, llvm::AllocaInst*> symbol_table;
 }
 
 namespace ast {
@@ -48,21 +50,15 @@ namespace ast {
     }
 
     llvm::Value* ast::identifier_expr::codegen() {
-        llvm::GlobalVariable* globalVar = codegen::LLVM_Module->getNamedGlobal(identifier_name);
+        llvm::AllocaInst* variable_allocation = codegen::symbol_table[identifier_name];
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(variable_allocation->getAllocatedType(), variable_allocation, identifier_name);
 
-        llvm::Type* returnType = globalVar->getValueType();
+        if (variable_allocation->getAllocatedType()->isIntegerTy(64)) {
+            load->setAlignment(llvm::Align(8));
+        }
 
-        llvm::FunctionType *funcType = llvm::FunctionType::get(returnType, false);
-        llvm::Function *func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "assign_ident_global_val", *codegen::LLVM_Module);
+        return load;
 
-        llvm::BasicBlock *entry = llvm::BasicBlock::Create(*codegen::LLVM_Context, "entry_pt", func);
-        codegen::IR_Builder->SetInsertPoint(entry);
-
-        llvm::Value* loadedValue = codegen::IR_Builder->CreateLoad(globalVar->getValueType(), globalVar, identifier_name);
-
-        codegen::IR_Builder->CreateRet(loadedValue);
-
-        return func;
     }
 
     llvm::Value* ast::binary_expr::codegen() {
@@ -70,47 +66,24 @@ namespace ast {
     }
 
     llvm::Value* ast::variable_assignment::codegen() {
-        llvm::GlobalVariable* globalVar = codegen::LLVM_Module->getNamedGlobal(identifier_name);
-
-        llvm::Type* variable_type;
-        switch (type) {
-            case int_type:
-                variable_type = llvm::Type::getInt64Ty(*codegen::LLVM_Context);
-                break;
-            case float_type:
-                variable_type = llvm::Type::getDoubleTy(*codegen::LLVM_Context);
-                break;
-            case char_type:
-                variable_type = llvm::Type::getInt8Ty(*codegen::LLVM_Context);
-                break;
-            case string_type:
-                // TODO MAKE THIS WORK LATER!!!
-                std::cerr << "Error: String type not implemented.\n";
-                return nullptr;
-            case bool_type:
-                variable_type = llvm::Type::getInt1Ty(*codegen::LLVM_Context);
-                break;
-            default:
-                return nullptr;
-        }
-
         llvm::Value* expression_value = assigned_value->codegen();
-        if (!expression_value) {
-            std::cerr << "Error: Failed to generate the expression value.\n";
+
+        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
+
+        if (codegen::symbol_table.find(identifier_name) == codegen::symbol_table.end()) {
+            std::cout << "Identifier not found(" << identifier_name << ").\n"; // do proper error handling later
             return nullptr;
         }
 
-        llvm::FunctionType *funcType = llvm::FunctionType::get(llvm::Type::getVoidTy(*codegen::LLVM_Context), false);
-        llvm::Function *func = llvm::Function::Create(funcType, llvm::Function::ExternalLinkage, "reassign_global", *codegen::LLVM_Module);
+        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
 
-        llvm::BasicBlock *entry = llvm::BasicBlock::Create(*codegen::LLVM_Context, "entry_pt", func);
-        codegen::IR_Builder->SetInsertPoint(entry);
+        llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, codegen::symbol_table[identifier_name]);
 
-        codegen::IR_Builder->CreateStore(expression_value, globalVar);
+        if (codegen::symbol_table[identifier_name]->getAllocatedType()->isIntegerTy(64)) {
+            store->setAlignment(llvm::Align(8));
+        }
 
-        codegen::IR_Builder->CreateRetVoid();
-
-        return nullptr;
+        return store;
     }
 
     llvm::Value* ast::variable_declaration::codegen() {
@@ -135,34 +108,33 @@ namespace ast {
                 break;
         }
 
-        llvm::GlobalVariable* new_global = new llvm::GlobalVariable(
-            *codegen::LLVM_Module,               // Module to which the global variable will be added
-            variable_type,              // Type of the global variable
-            false,                      // Whether the variable is constant
-            llvm::GlobalValue::ExternalLinkage, // Linkage type
-            nullptr,                // Initial value of the global variable
-            identifier_name            // Name of the global variable
-        );
+        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
 
-        return new_global;
+        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
+        llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
+
+        codegen::symbol_table.insert({identifier_name, variable_allocation});
+
+        return variable_allocation;    
     }
 
     llvm::Value* ast::variable_definition::codegen() {
         llvm::Value* expression_value = assigned_value->codegen();
-        llvm::Constant* constant_value = llvm::dyn_cast<llvm::Constant>(expression_value);
 
-        llvm::Type* variable_type = constant_value->getType();
+        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
 
-        llvm::GlobalVariable* new_global = new llvm::GlobalVariable(
-            *codegen::LLVM_Module,               // Module to which the global variable will be added
-            variable_type,              // Type of the global variable
-            false,                      // Whether the variable is constant
-            llvm::GlobalValue::ExternalLinkage, // Linkage type
-            constant_value,                // Initial value of the global variable
-            identifier_name            // Name of the global variable
-        );
+        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
+        llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(expression_value->getType(), nullptr, identifier_name);
 
-        return new_global;
+        llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, variable_allocation);
+
+        if (variable_allocation->getAllocatedType()->isIntegerTy(64)) {
+            store->setAlignment(llvm::Align(8));
+        }
+
+        codegen::symbol_table.insert({identifier_name, variable_allocation});
+
+        return variable_allocation;
     }
 
 

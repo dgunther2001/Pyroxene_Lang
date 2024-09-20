@@ -100,9 +100,23 @@ namespace utility {
     }
 
     void init_llvm_mods() {
+        
         codegen::LLVM_Context = std::make_unique<llvm::LLVMContext>();
         codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
         codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
+
+        llvm::FunctionType* funcType = llvm::FunctionType::get(llvm::Type::getVoidTy(*codegen::LLVM_Context), false);
+
+        llvm::Function* topLevelFunc = llvm::Function::Create(
+            funcType, llvm::Function::ExternalLinkage, "__file__", *codegen::LLVM_Module
+        );
+
+        llvm::BasicBlock* entry = llvm::BasicBlock::Create(*codegen::LLVM_Context, "entry", topLevelFunc);
+        codegen::IR_Builder->SetInsertPoint(entry);
+    }
+
+    void end_llvm_mods() {
+        codegen::IR_Builder->CreateRetVoid();
     }
 
     /**

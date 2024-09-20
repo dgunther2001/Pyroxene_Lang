@@ -1,10 +1,25 @@
 int a = 4;
+int b = 5;
+int c = a;
+
+int d;
+
+c = b;
+d = c;
+
+/*
 float b = 33.3;
 char c = 'a';
 bool d = true;
 string e = "daniel";
+*/
 
-int f = a;
+
+
+
+
+//int f = a;
+/*
 float g = b;
 char h = c;
 bool i = d;
@@ -15,8 +30,10 @@ float l;
 char m;
 
 bool o;
+*/
 
-k = 44;
+//int k;
+//k = 44;
 
 
 

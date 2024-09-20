@@ -31,6 +31,8 @@ namespace utility {
 
     extern void primary_driver_loop();
 
+    extern void end_llvm_mods();
+
 }
 
 #endif

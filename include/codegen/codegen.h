@@ -12,11 +12,13 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/Module.h"
 #include "../ast/ast.h"
+#include <map>
 
 namespace codegen {
     extern std::unique_ptr<llvm::LLVMContext> LLVM_Context;
     extern std::unique_ptr<llvm::Module> LLVM_Module;
     extern std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
+    extern std::map<std::string, llvm::AllocaInst*> symbol_table;
 }
 namespace ast {
 }
