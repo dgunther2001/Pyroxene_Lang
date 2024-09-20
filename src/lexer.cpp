@@ -17,7 +17,7 @@ namespace lexer {
     std::vector<std::optional<lexer_stored_values>> stored_values;
 
     std::string identifier; 
-    int integer_value; 
+    int64_t integer_value; 
     float float_value; 
     bool bool_value; 
     char char_value; 

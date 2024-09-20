@@ -609,7 +609,7 @@ namespace parser {
         @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level, lexer::lexer_stored_values value) {
-        auto ast_node = std::make_unique<ast::integer_expression>(std::get<int>(value));
+        auto ast_node = std::make_unique<ast::integer_expression>(std::get<int64_t>(value));
         
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();

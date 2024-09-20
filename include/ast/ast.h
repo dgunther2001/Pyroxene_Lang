@@ -194,12 +194,12 @@ namespace ast {
      * @code
         class integer_expression : public top_level_expr {
         private:
-            int held_value;
+            int64_t held_value;
             types type = int_type;
 
         public:
-            integer_expression(int held_value) : held_value(held_value) {}
-            const int get_value() const {return held_value;}
+            integer_expression(int64_t held_value) : held_value(held_value) {}
+            const int64_t get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
             llvm::Value* codegen() override;
@@ -208,12 +208,12 @@ namespace ast {
      */
     class integer_expression : public top_level_expr {
     private:
-        int held_value;
+        int64_t held_value;
         types type = int_type;
 
     public:
-        integer_expression(int held_value) : held_value(held_value) {}
-        const int get_value() const {return held_value;}
+        integer_expression(int64_t held_value) : held_value(held_value) {}
+        const int64_t get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
         llvm::Value* codegen() override;
