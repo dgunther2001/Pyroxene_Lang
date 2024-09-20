@@ -14,3 +14,34 @@
 5. ***** Fix primary expression parsing, as it still looks at the values in the lexer stream...
 
 6. ***** Fix semicolons not working withion strings and causing unterminated strings
+
+7. potentially add mutexes to globals if updating
+
+9. Add keyowrd to make variables global on the scale of external linkage and thus also immutable (global) => add a boolean (isGlobal) to the var decl and var defn ast nodes and parsing
+10. Enforce main function entry point
+
+Long term objectives:
+    Control structures; Functions; Classes
+    Arrays (memory arena NOT NOW!!!)
+    Graphs in LLVM
+    Main function entry point
+    Variable declaration; definition; assignment
+    Add pointers
+
+    HOW TO IMPLEMENT RAII
+    Stacks
+    Queues
+    Hash
+    Graph // figure out and think about how to convert these
+
+
+    NO! If time permits add inheritance (classes now just agregate data structure with functions)
+
+This week:
+Fix binary expressions
+Why do strings terminate on ';' within them
+Implement the global keyword and place that within variable decls and defns
+Fix decl and assignment in llvm ir codegen
+
+time permitting => enforce main function entry point
+
