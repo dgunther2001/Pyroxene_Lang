@@ -97,9 +97,12 @@ Langauge Implementation Roadmap</h3>
 <p><a href="docs/images/system_overview_diagram.png">Top-Level Design</a>: system design diagram. <br  />
  <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacelexer.html">Lexer</a>: where a .pyrx file is converted into tokens. <br  />
  <a class="el" href="md_docs_2cfg.html">CFG</a>: Pyroxene's context-free-grammar. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST</a>: the higher order grammar of Pyroxene. <br  />
+ <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST</a>: the higher order grammar of Pyroxene (avoid codegen functions for now). <br  />
  <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceparser.html">Parser</a>: where a sequence of tokens is validated and converted to higher order gramattical structures. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceutility.html">Utility</a>: error handling and driver functions. <br  />
+ <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacecodegen.html">Codegen</a>: where llvm backbone is setup (context, module, ir builder, etc). <br  />
+ <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST-Codegen</a>: back in AST, but specifically look at codegen() functions. <br  />
+</p>
+<p><a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceutility.html">Utility</a>: error handling and driver functions. <br  />
 </p>
 <h3><a class="anchor" id="autotoc_md4"></a>
 Using Pyroxene</h3>
