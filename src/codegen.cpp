@@ -56,6 +56,7 @@ namespace codegen {
 
 namespace ast {
     /**
+     * @fn ast::integer_expression::codegen()
      * @par Generates IR for primary integer expressions.
      * 
      * @code
@@ -67,6 +68,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::float_expression::codegen()
      * @par Generates IR for primary float expressions.
      * 
      * @code
@@ -78,6 +80,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::char_expression::codegen()
      * @par Generates IR for primary character expressions.
      * 
      * @code
@@ -89,6 +92,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::string_expression::codegen()
      * @par Generates IR for primary string expressions.
      * 
      * @par Instantiate a vector of LLVM Constants. Iterate over the string, and pass each character in an ascii conversion into the Constant* vector.
@@ -123,6 +127,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::bool_expression::codegen()
      * @par Generates IR for primary boolean expressions.
      * 
      * @code
@@ -134,6 +139,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::identifier_expr::codegen()
      * @par Generates IR for primary identifier expressions. Grabs the actualy pointer to the allocation, and creates a load instruction based on the pointer to the stack allocation.
      * 
      * @code
@@ -155,6 +161,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::binary_expr::codegen()
      * @par Generates IR for binary expressions. As primary expressions are allocated during recursive calls of the codegen function, we just need to deal with the operator.
      * 
      * @par Recursively generate IR for the left and right subtree.
@@ -207,6 +214,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::variable_assignment::codegen()
      * @par Generates IR for reassignment of variables.
      * 
      * @par Validate that what we are reassigning even exists in the symbol table, then generate IR for the new value, and create a store instruction.
@@ -244,6 +252,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::variable_declaration::codegen()
      * @par Allows us to declare variables into the symbol table and onto the stack without defining them.
      * 
      * @par Convert the AST tyope to an LLVM type, and create a temporary IR builder that places the current entry point at the start of the current function block.
@@ -277,6 +286,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::variable_definition::codegen()
      * @par Generates IR for variable definitions, where we declare a variable, and assign it a value.
      * 
      * @par First, we generate IR for the expression assigned, and then set the insertion point to the top of the current block to insert allocation instruction.
