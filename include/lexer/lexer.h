@@ -33,6 +33,7 @@ namespace lexer {
         tok_int = -10,         ///< Integer type
         tok_float = -20,       ///< Float type
         tok_bool = -30,        ///< Boolean type
+        tok_void = -35,        ///< Void type
         tok_char = -40,        ///< Character type
         tok_def = -41,         ///< Function definition keyword
         tok_string = -50,      ///< String type

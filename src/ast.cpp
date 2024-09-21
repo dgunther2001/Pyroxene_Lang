@@ -24,6 +24,8 @@ namespace ast {
                 return "string";
             case (bool_type):
                 return "bool";
+            case (void_type):
+                return "void";
             default: 
                 return "";
         }
@@ -41,6 +43,8 @@ namespace ast {
                 return "string";
             case (bool_type):
                 return "bool";
+            case (void_type):
+                return "void";
             default: // ADD ERROR HANDLING HERE
                 return "";
         }

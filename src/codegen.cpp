@@ -326,6 +326,14 @@ namespace ast {
     }
 
 
+    llvm::Value* ast::return_expr::codegen() {
+        return nullptr;
+    }
+
+
+    llvm::Value* ast::func_defn::codegen() {
+        return nullptr;
+    }
 
 
 }

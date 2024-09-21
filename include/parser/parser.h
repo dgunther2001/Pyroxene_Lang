@@ -72,6 +72,9 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level, lexer::lexer_stored_values value);
     std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level, lexer::lexer_stored_values value);
 
+    std::unique_ptr<ast::func_defn> parse_function();
+    std::unique_ptr<ast::top_level_expr> parse_return();
+
 
     /*
     // TO DELETE

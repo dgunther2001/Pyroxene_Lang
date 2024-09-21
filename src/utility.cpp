@@ -202,7 +202,7 @@ namespace utility {
             #endif
             
             std::unique_ptr<ast::top_level_expr> expr = nullptr;  
-            std::unique_ptr<ast::func_defn> func_expr = nullptr;  
+            std::unique_ptr<ast::func_defn> func = nullptr;  
 
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
@@ -225,6 +225,14 @@ namespace utility {
                     break;
                 case lexer::tok_identifier:
                     expr = parser::parse_var_assign();
+                    expr->codegen();
+                    break;
+                case lexer::tok_def:
+                    func = parser::parse_function();
+                    func->codegen();
+                    break;
+                case lexer::tok_return:
+                    expr = parser::parse_return();
                     expr->codegen();
                     break;
                 default:

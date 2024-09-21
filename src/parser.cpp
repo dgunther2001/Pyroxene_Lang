@@ -750,4 +750,99 @@ namespace parser {
         return std::move(ast_node);
     }
 
+    std::unique_ptr<ast::func_defn> parse_function() {
+        // need to eat "def"
+        // need to get type, store it, and then eat it
+        // grab the name, store it, and then eat it
+        // consume a "(""
+        // while next token is a comma, parse a variable declaration
+        // do this and store it in the parameters vector
+        // when we hit a ")", stop
+        // consume a "{"
+
+        // while not "}"... check whether it is a var decl or defn, return, or just a regulation expression (case statement based on the current token...)
+        // validate that any return statement is of the expected type
+        
+        // hold a boolean flag that indicates whether a return statement exists for functions...
+
+        get_next_token(); // eat def
+
+        if (!lexer::stored_values.at(current_token_index).has_value()) {
+            std::cout << "FUNC NULLOPT!!!\n\n";
+            return nullptr;
+        }
+
+        ast::types ret_type;
+        switch (current_token) {
+            case lexer::tok_int:
+                ret_type = ast::int_type;
+                break;
+            case lexer::tok_float:
+                ret_type = ast::float_type;
+                break;
+            case lexer::tok_char:
+                ret_type = ast::char_type;
+                break;
+            case lexer::tok_string:
+                ret_type = ast::string_type;
+                break;
+            case lexer::tok_bool:
+                ret_type = ast::bool_type;
+                break;
+            case lexer::tok_void:
+                ret_type = ast::void_type;
+                break;
+            default:
+                utility::parser_error("Invalid return type provided to function", lexer::line_count);
+        }
+
+        get_next_token(); // consume the type
+
+        std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index).value()); // grab the function name
+
+        get_next_token(); // consume the name
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '('", lexer::line_count);
+        }
+
+        get_next_token();
+
+        std::vector<ast::variable_declaration> parameters;
+
+        while (true) {
+            auto current_decl = parse_var_decl_defn();
+            parameters.emplace_back(std::move(current_decl));
+
+            if (current_token == lexer::tok_comma) {
+                get_next_token();
+            } else if (current_token == lexer::tok_close_paren) {
+                get_next_token();
+                break;
+            } else {
+                utility::parser_error("Expected ',' or ')'", lexer::line_count);
+            }
+        }
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Expected opening bracket", lexer::linecount);
+        }
+
+        get_next_token(); // consume the bracket
+
+        // parse a bunch of expressions
+        // then simply grab a closing brace
+        // instantiate the ast node and return iut
+
+        
+        return nullptr;
+
+    }
+
+    std::unique_ptr<ast::top_level_expr> parse_return() {
+        get_next_token();
+        auto ast_node = parse_expression();
+        return std::move(ast_node);
+    }
+
 }

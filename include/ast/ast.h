@@ -19,6 +19,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <memory>
 #include <string>
 #include <vector>
+#include <set>
 
 
 namespace ast {
@@ -27,11 +28,12 @@ namespace ast {
      * @par An enumeration of valid types Pyroxene that are stored inspecific AST nodes.
      */
     typedef enum {
-        int_type = -1, ///< Integer literals
-        float_type = -2, ///< Float literals
-        char_type = -3, ///< Character literals
-        string_type = -4, ///< String literals
-        bool_type = -5 ///< Boolean literals
+        int_type = -1, ///< Integer type
+        float_type = -2, ///< Float type
+        char_type = -3, ///< Character type
+        string_type = -4, ///< String type
+        bool_type = -5, ///< Boolean type
+        void_type = -6 ///< Void type 
     } types;
 
     /**
@@ -64,10 +66,19 @@ namespace ast {
         types return_type;
         std::string func_name;
         std::vector<std::unique_ptr<top_level_expr>> expressions;
-        std::unique_ptr<top_level_expr> return_expr;
+        std::set<std::string> function_symbol_table;
+        std::vector<std::unique_ptr<variable_declaration>>parameters;
     public:
+        func_defn(types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<variable_declaration>> parameters) :
+            return_type(return_type),
+            func_name(name),
+            expressions(std::move(expressions)),
+            function_symbol_table(std::move(var_names)),
+            parameters(std::move(parameters))
+            {}
+
         ~func_defn() = default;
-        //llvm::Value* codegen() = 0;
+        llvm::Value* codegen();
     };
 
     /**
@@ -470,6 +481,21 @@ namespace ast {
             {}
         types get_expr_type() const override {return type;} 
         const std::string& get_name() const {return identifier_name;}
+        void debug_output();
+        llvm::Value* codegen() override;
+    };
+
+    class return_expr : public top_level_expr {
+    private:
+        types type;
+        std::unique_ptr<top_level_expr> returned_value;
+    
+    public:
+        return_expr(types type, std::unique_ptr<top_level_expr> return_val) : 
+            type(type),
+            returned_value(std::move(return_val)) 
+            {}
+        types get_expr_type() const override {return type;} 
         void debug_output();
         llvm::Value* codegen() override;
     };
