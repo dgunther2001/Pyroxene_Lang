@@ -116,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a969377b9d2355b411c2afae0631dd01a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a523217e5c0366e65272544f3ec9caf7f" id="r_a523217e5c0366e65272544f3ec9caf7f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a523217e5c0366e65272544f3ec9caf7f">get_expr_type</a> () const override</td></tr>
 <tr class="separator:a523217e5c0366e65272544f3ec9caf7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04e210534594e254a3f21b6b02e72738" id="r_a04e210534594e254a3f21b6b02e72738"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04e210534594e254a3f21b6b02e72738">codegen</a> () override</td></tr>
+<tr class="separator:a04e210534594e254a3f21b6b02e72738"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,10 +134,11 @@ Public Member Functions</h2></td></tr>
 <div class="line">    <span class="keyword">const</span> std::string&amp; <a class="code hl_function" href="#a038be06d1f6b0b4bc8310facb48487bf">get_value</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> held_value;}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a969377b9d2355b411c2afae0631dd01a">debug_output</a>();</div>
 <div class="line">    <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> <a class="code hl_function" href="#a523217e5c0366e65272544f3ec9caf7f">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;}</div>
-<div class="line">    llvm::Value* codegen() <span class="keyword">override</span>;</div>
+<div class="line">    llvm::Value* <a class="code hl_function" href="#a04e210534594e254a3f21b6b02e72738">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassast_1_1string__expression_html"><div class="ttname"><a href="classast_1_1string__expression.html">ast::string_expression</a></div><div class="ttdef"><b>Definition</b> ast.h:302</div></div>
 <div class="ttc" id="aclassast_1_1string__expression_html_a038be06d1f6b0b4bc8310facb48487bf"><div class="ttname"><a href="#a038be06d1f6b0b4bc8310facb48487bf">ast::string_expression::get_value</a></div><div class="ttdeci">const std::string &amp; get_value() const</div><div class="ttdef"><b>Definition</b> ast.h:309</div></div>
+<div class="ttc" id="aclassast_1_1string__expression_html_a04e210534594e254a3f21b6b02e72738"><div class="ttname"><a href="#a04e210534594e254a3f21b6b02e72738">ast::string_expression::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div></div>
 <div class="ttc" id="aclassast_1_1string__expression_html_a523217e5c0366e65272544f3ec9caf7f"><div class="ttname"><a href="#a523217e5c0366e65272544f3ec9caf7f">ast::string_expression::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:311</div></div>
 <div class="ttc" id="aclassast_1_1string__expression_html_a8b04e515589756b25a853796cef7fcfb"><div class="ttname"><a href="#a8b04e515589756b25a853796cef7fcfb">ast::string_expression::string_expression</a></div><div class="ttdeci">string_expression(std::string held_value)</div><div class="ttdef"><b>Definition</b> ast.h:308</div></div>
 <div class="ttc" id="aclassast_1_1string__expression_html_a969377b9d2355b411c2afae0631dd01a"><div class="ttname"><a href="#a969377b9d2355b411c2afae0631dd01a">ast::string_expression::debug_output</a></div><div class="ttdeci">void debug_output()</div><div class="ttdef"><b>Definition</b> parser_tests.cpp:72</div></div>
@@ -169,6 +172,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a04e210534594e254a3f21b6b02e72738" name="a04e210534594e254a3f21b6b02e72738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04e210534594e254a3f21b6b02e72738">&#9670;&#160;</a></span>codegen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * ast::string_expression::codegen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
 <a id="a969377b9d2355b411c2afae0631dd01a" name="a969377b9d2355b411c2afae0631dd01a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a969377b9d2355b411c2afae0631dd01a">&#9670;&#160;</a></span>debug_output()</h2>
 

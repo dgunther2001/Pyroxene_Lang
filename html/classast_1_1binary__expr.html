@@ -116,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a2cbae213c42ea65d7eaa3dc484faf9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53744a84ceb698cd63dfd9b321aca208" id="r_a53744a84ceb698cd63dfd9b321aca208"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a53744a84ceb698cd63dfd9b321aca208">get_op</a> ()</td></tr>
 <tr class="separator:a53744a84ceb698cd63dfd9b321aca208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a199170e86e3e23705bc4cdf54574fce3" id="r_a199170e86e3e23705bc4cdf54574fce3"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a199170e86e3e23705bc4cdf54574fce3">codegen</a> () override</td></tr>
+<tr class="separator:a199170e86e3e23705bc4cdf54574fce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,9 +158,10 @@ Public Member Functions</h2></td></tr>
 <div class="line">                std::abort();</div>
 <div class="line">        }</div>
 <div class="line">    }</div>
-<div class="line">    llvm::Value* codegen() <span class="keyword">override</span>;</div>
+<div class="line">    llvm::Value* <a class="code hl_function" href="#a199170e86e3e23705bc4cdf54574fce3">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:115</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_a199170e86e3e23705bc4cdf54574fce3"><div class="ttname"><a href="#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a2cbae213c42ea65d7eaa3dc484faf9ec"><div class="ttname"><a href="#a2cbae213c42ea65d7eaa3dc484faf9ec">ast::binary_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div><div class="ttdef"><b>Definition</b> parser_tests.cpp:22</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a53744a84ceb698cd63dfd9b321aca208"><div class="ttname"><a href="#a53744a84ceb698cd63dfd9b321aca208">ast::binary_expr::get_op</a></div><div class="ttdeci">char get_op()</div><div class="ttdef"><b>Definition</b> ast.h:131</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_ad6b603cb385c15f7be653e412f8d40e6"><div class="ttname"><a href="#ad6b603cb385c15f7be653e412f8d40e6">ast::binary_expr::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:129</div></div>
@@ -211,6 +214,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a199170e86e3e23705bc4cdf54574fce3" name="a199170e86e3e23705bc4cdf54574fce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a199170e86e3e23705bc4cdf54574fce3">&#9670;&#160;</a></span>codegen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * ast::binary_expr::codegen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
 <a id="a2cbae213c42ea65d7eaa3dc484faf9ec" name="a2cbae213c42ea65d7eaa3dc484faf9ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2cbae213c42ea65d7eaa3dc484faf9ec">&#9670;&#160;</a></span>debug_output()</h2>
 

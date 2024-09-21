@@ -114,37 +114,37 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="foldopen" id="foldopen00032" data-start="{" data-end="}">
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classast_1_1identifier__expr.html#aab94691a05eb79c7d5e1188bfc2c0746">   32</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1identifier__expr.html#aab94691a05eb79c7d5e1188bfc2c0746">ast::identifier_expr::debug_output</a>() {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Identifier expression of type &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a>(get_expr_type()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Identifier expression (&quot;</span> &lt;&lt; identifier_name &lt;&lt; <span class="stringliteral">&quot;) of type &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a>(get_expr_type()) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>     }</div>
 </div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
 <div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classast_1_1integer__expression.html#a4ec5fea1b13794c01df05260c6ed33be">   42</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1integer__expression.html#a4ec5fea1b13794c01df05260c6ed33be">ast::integer_expression::debug_output</a>() {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: int&quot;</span> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: int (&quot;</span> &lt;&lt; held_value &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>; </div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>     }</div>
 </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="foldopen" id="foldopen00052" data-start="{" data-end="}">
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classast_1_1float__expression.html#a080b39bb28eecc139f342e02316507b7">   52</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1float__expression.html#a080b39bb28eecc139f342e02316507b7">ast::float_expression::debug_output</a>() {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: float&quot;</span> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: float (&quot;</span> &lt;&lt; held_value &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>; </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>     }</div>
 </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classast_1_1char__expression.html#a851556ce08507957e8566892c17cc814">   62</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1char__expression.html#a851556ce08507957e8566892c17cc814">ast::char_expression::debug_output</a>() {</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: char&quot;</span> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: char (&quot;</span> &lt;&lt; held_value &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>; </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>     }</div>
 </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
 <div class="foldopen" id="foldopen00072" data-start="{" data-end="}">
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classast_1_1string__expression.html#a969377b9d2355b411c2afae0631dd01a">   72</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1string__expression.html#a969377b9d2355b411c2afae0631dd01a">ast::string_expression::debug_output</a>() {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: string&quot;</span> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: string (&quot;</span> &lt;&lt; held_value &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>; </div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>     }</div>
 </div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 <div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classast_1_1bool__expression.html#a0b8bf8d6a79725ec62601da94971f99a">   82</a></span>     <span class="keywordtype">void</span> <a class="code hl_function" href="classast_1_1bool__expression.html#a0b8bf8d6a79725ec62601da94971f99a">ast::bool_expression::debug_output</a>() {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: bool&quot;</span> &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>; </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>          std::cout &lt;&lt; <span class="stringliteral">&quot;Literal expression of type: bool (&quot;</span> &lt;&lt; held_value &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>; </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>     }</div>
 </div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
