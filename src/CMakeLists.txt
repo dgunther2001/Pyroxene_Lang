@@ -6,4 +6,4 @@
 
 #******************************************************
 
-project(llvm_kaleidoscope)
+project(pyroxene_lang)
