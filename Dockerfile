@@ -33,6 +33,10 @@ llvm-14-tools \
 llvm-14-dev \
 libllvm14 \
 zlib1g-dev \
+valgrind \
+gdb \
+vim \
+git \
 && rm -rf /var/lib/apt/lists/*
 
 
@@ -51,3 +55,11 @@ RUN mkdir build && cd build && \
 ENTRYPOINT ["./build/driver"]
 
 CMD ["./test_files/test_1.pyrx"]
+
+
+### THIS RUNS VALGRIND, YOUR SAVIOR
+#RUN chmod +x ./build/driver
+
+#ENTRYPOINT ["valgrind", "--leak-check=full", "./build/driver"]
+
+#CMD ["./test_files/test_4.pyrx"]
