@@ -140,7 +140,7 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="aclassast_1_1integer__expression_html_a12ab82d8e8b152a7a3a45fa8190b9f39"><div class="ttname"><a href="#a12ab82d8e8b152a7a3a45fa8190b9f39">ast::integer_expression::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:218</div></div>
 <div class="ttc" id="aclassast_1_1integer__expression_html_a14c83dab571b5b08d524594c46ab1de4"><div class="ttname"><a href="#a14c83dab571b5b08d524594c46ab1de4">ast::integer_expression::integer_expression</a></div><div class="ttdeci">integer_expression(int64_t held_value)</div><div class="ttdef"><b>Definition</b> ast.h:215</div></div>
 <div class="ttc" id="aclassast_1_1integer__expression_html_a4ec5fea1b13794c01df05260c6ed33be"><div class="ttname"><a href="#a4ec5fea1b13794c01df05260c6ed33be">ast::integer_expression::debug_output</a></div><div class="ttdeci">void debug_output()</div><div class="ttdef"><b>Definition</b> parser_tests.cpp:42</div></div>
-<div class="ttc" id="aclassast_1_1integer__expression_html_a69c13e06a93b61e08ec6560eb2526707"><div class="ttname"><a href="#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html_a69c13e06a93b61e08ec6560eb2526707"><div class="ttname"><a href="#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:66</div></div>
 <div class="ttc" id="aclassast_1_1integer__expression_html_aff0112bd1b8d339f6e0f55eb14313440"><div class="ttname"><a href="#aff0112bd1b8d339f6e0f55eb14313440">ast::integer_expression::get_value</a></div><div class="ttdeci">const int64_t get_value() const</div><div class="ttdef"><b>Definition</b> ast.h:216</div></div>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:51</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:29</div></div>
@@ -194,7 +194,10 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<dl class="section user"><dt>Generates IR for primary integer expressions.</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><span class="keywordflow">return</span> llvm::ConstantInt::get(<a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;getInt64Ty(), held_value, <span class="keyword">true</span>);</div>
+<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
+</div><!-- fragment --> 
 <p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
 
 </div>
@@ -271,6 +274,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/ast/<a class="el" href="ast_8h_source.html">ast.h</a></li>
+<li>src/<a class="el" href="codegen_8cpp.html">codegen.cpp</a></li>
 <li>unit_tests/parser_tests/<a class="el" href="parser__tests_8cpp_source.html">parser_tests.cpp</a></li>
 </ul>
 </div><!-- contents -->
