@@ -62,3 +62,14 @@ ADD MODULUS OPERATION!!!
 Deal with binary expressions when an invalid type...
 
 figure out why you had to flip operator precedence values (mult lower than plus, but happens first...)
+
+
+### Adding comments to LLVM IR Initialization Commit
+1. Primary driver loop codegen. (util) CHECK
+2. Operator precedence change. (util) CHECK
+3. Init and end llvm mods (util) CHECK
+4. Fix parameters for primary expressions and the parse primary function (parser)
+5. Overhaul the parse bianry expressions (parser) CHECK
+6. Fix parse expression (parser) CHECK
+7. Codegen.h decls CHECK
+8. Codegen.cpp codegen functions CHECK
