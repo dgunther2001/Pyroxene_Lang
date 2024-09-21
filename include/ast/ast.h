@@ -52,7 +52,7 @@ namespace ast {
     public:
         virtual ~top_level_expr() = default;
         //virtual void debug_output();
-        //virtual llvm::Value* codegen() = 0;
+        virtual llvm::Value* codegen() = 0;
 
         virtual ast::types get_expr_type() const { // PLACEHOLDER
             return ast::types::float_type;
@@ -146,7 +146,7 @@ namespace ast {
                     std::abort();
             }
          }
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -184,7 +184,7 @@ namespace ast {
         const std::string& get_identifier_name() const {return identifier_name;}
         types get_expr_type() const override {return type;}
         void debug_output();
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
 
     };
 
@@ -194,12 +194,12 @@ namespace ast {
      * @code
         class integer_expression : public top_level_expr {
         private:
-            int held_value;
+            int64_t held_value;
             types type = int_type;
 
         public:
-            integer_expression(int held_value) : held_value(held_value) {}
-            const int get_value() const {return held_value;}
+            integer_expression(int64_t held_value) : held_value(held_value) {}
+            const int64_t get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
             llvm::Value* codegen() override;
@@ -208,15 +208,15 @@ namespace ast {
      */
     class integer_expression : public top_level_expr {
     private:
-        int held_value;
+        int64_t held_value;
         types type = int_type;
 
     public:
-        integer_expression(int held_value) : held_value(held_value) {}
-        const int get_value() const {return held_value;}
+        integer_expression(int64_t held_value) : held_value(held_value) {}
+        const int64_t get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -247,7 +247,7 @@ namespace ast {
         const float get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -278,7 +278,7 @@ namespace ast {
         const char get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -309,7 +309,7 @@ namespace ast {
         const std::string& get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -340,7 +340,7 @@ namespace ast {
         const bool get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /*
@@ -387,7 +387,7 @@ namespace ast {
         types get_expr_type() const override {return type;} 
         const std::string& get_name() const {return identifier_name;}
         void debug_output();
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -430,7 +430,7 @@ namespace ast {
         types get_expr_type() const override {return type;} 
         const std::string& get_name() const {return identifier_name;}
         void debug_output();
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     /**
@@ -471,7 +471,7 @@ namespace ast {
         types get_expr_type() const override {return type;} 
         const std::string& get_name() const {return identifier_name;}
         void debug_output();
-        //llvm::Value* codegen() override;
+        llvm::Value* codegen() override;
     };
 
     

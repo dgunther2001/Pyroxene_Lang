@@ -12,3 +12,64 @@
 
 4. ***** Calling primary expression from binary and just from parse expression have differeing behavior, so YOU NEED TO FIX THIS (perhaps split into 2 functions...)
 5. ***** Fix primary expression parsing, as it still looks at the values in the lexer stream...
+
+6. ***** Fix semicolons not working withion strings and causing unterminated strings
+
+7. potentially add mutexes to globals if updating
+
+9. Add keyowrd to make variables global on the scale of external linkage and thus also immutable (global) => add a boolean (isGlobal) to the var decl and var defn ast nodes and parsing
+10. Enforce main function entry point
+
+Long term objectives:
+    Control structures; Functions; Classes
+    Arrays (memory arena NOT NOW!!!)
+    Graphs in LLVM
+    Main function entry point
+    Variable declaration; definition; assignment
+    Add pointers
+
+    HOW TO IMPLEMENT RAII
+    Stacks
+    Queues
+    Hash
+    Graph // figure out and think about how to convert these
+
+
+    NO! If time permits add inheritance (classes now just agregate data structure with functions)
+
+This week:
+Fix binary expressions
+Why do strings terminate on ';' within them
+Implement the global keyword and place that within variable decls and defns
+Fix decl and assignment in llvm ir codegen
+
+time permitting => enforce main function entry point
+
+
+
+Create global immutable expressions to be used across files like macros
+
+
+
+
+line 102 of parser where access value vector
+
+
+b+c; fdefaults to a var assign, you need to fix this, so that it can just have regular bianry expressions...
+
+ADD MODULUS OPERATION!!!
+
+Deal with binary expressions when an invalid type...
+
+figure out why you had to flip operator precedence values (mult lower than plus, but happens first...)
+
+
+### Adding comments to LLVM IR Initialization Commit
+1. Primary driver loop codegen. (util) CHECK
+2. Operator precedence change. (util) CHECK
+3. Init and end llvm mods (util) CHECK
+4. Fix parameters for primary expressions and the parse primary function (parser)
+5. Overhaul the parse bianry expressions (parser) CHECK
+6. Fix parse expression (parser) CHECK
+7. Codegen.h decls CHECK
+8. Codegen.cpp codegen functions CHECK

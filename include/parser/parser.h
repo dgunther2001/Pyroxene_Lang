@@ -57,20 +57,32 @@ namespace parser {
 
 
     std::unique_ptr<ast::top_level_expr> parse_expression();
-    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> token_stream);
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream, std::vector<std::optional<lexer::lexer_stored_values>> sub_value_stream);
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn();
     std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier);
     std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier);
     std::unique_ptr<ast::top_level_expr> parse_var_assign();
 
+    std::unique_ptr<ast::top_level_expr> parse_identifier_expr(bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_float_expr(bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level, lexer::lexer_stored_values value);
+    std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level, lexer::lexer_stored_values value);
+
+
+    /*
+    // TO DELETE
+    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_identifier_expr(bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_float_expr(bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level);
     std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level);
+    */
 
 }
 

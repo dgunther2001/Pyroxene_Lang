@@ -1,0 +1,11 @@
+int a = 4;
+int b = 5;
+int c = a;
+
+int d;
+
+d = a;
+
+int e = a + 10;
+
+d = e / b + c * a;

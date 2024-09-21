@@ -11,21 +11,26 @@ project(pyroxene_lang)
 
 set(CMAKE_CXX_STANDARD 17)
 
-find_package(LLVM REQUIRED CONFIG)
-
+# Find and configure LLVM
+find_package(LLVM 14 REQUIRED CONFIG)
 include_directories(${LLVM_INCLUDE_DIRS})
-
 add_definitions(${LLVM_DEFINITIONS})
 
-# Detect host architecture and map LLVM components accordingly
-if(LLVM_TARGETS_TO_BUILD STREQUAL "X86" OR LLVM_TARGETS_TO_BUILD MATCHES "X86")
-    llvm_map_components_to_libnames(LLVM_LIBS core orcjit X86CodeGen X86AsmParser X86Desc X86Info)
-elseif(LLVM_TARGETS_TO_BUILD STREQUAL "AArch64" OR LLVM_TARGETS_TO_BUILD MATCHES "AArch64")
-    llvm_map_components_to_libnames(LLVM_LIBS core orcjit AArch64CodeGen AArch64AsmParser AArch64Desc AArch64Info)
-elseif(LLVM_TARGETS_TO_BUILD STREQUAL "ARM" OR LLVM_TARGETS_TO_BUILD MATCHES "ARM")
-    llvm_map_components_to_libnames(LLVM_LIBS core orcjit ARMCodeGen ARMAsmParser ARMDesc ARMInfo)
+
+if(NOT DEFINED ENV{LLVM_ARCH})
+    message(FATAL_ERROR "LLVM_ARCH environment variable not set.")
+endif()
+
+set(LLVM_ARCH $ENV{LLVM_ARCH})
+
+if(LLVM_ARCH STREQUAL "X86")
+    llvm_map_components_to_libnames(LLVM_LIBS core orcjit X86)
+elseif(LLVM_ARCH STREQUAL "AArch64")
+    llvm_map_components_to_libnames(LLVM_LIBS core orcjit AArch64)
+elseif(LLVM_ARCH STREQUAL "ARM")
+    llvm_map_components_to_libnames(LLVM_LIBS core orcjit ARM)
 else()
-    message(FATAL_ERROR "Unsupported architecture: ${LLVM_TARGETS_TO_BUILD}")
+    message(FATAL_ERROR "Unsupported architecture: ${LLVM_ARCH}")
 endif()
 
 add_subdirectory(include)
@@ -40,7 +45,6 @@ if(BUILD_DEBUG_DRIVER)
         unit_tests/lexer_tests/lexer_tests.cpp
         src/lexer.cpp src/parser.cpp src/ast.cpp src/codegen.cpp src/type_checker.cpp src/utility.cpp
     )
-    target_link_libraries(driver ${LLVM_LIBS})
 else()
     add_definitions(-DDEBUG_MODE=0)
     add_executable(driver 
@@ -52,6 +56,7 @@ else()
         src/type_checker.cpp 
         src/utility.cpp
     )
-    target_link_libraries(driver ${LLVM_LIBS})
 endif()
+
+target_link_libraries(driver ${LLVM_LIBS} pthread dl)
 

@@ -65,7 +65,7 @@ namespace lexer {
      * 
      * @par A type definition using std::variant to store different values associated with tokens, that can store strings, integers, floats, characters, or booleans.
      */
-    typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;
+    typedef std::variant<std::string, int64_t, float, char, bool> lexer_stored_values;
 
     /**
      * @par A vector that stores tokens lexed from the input stream.
@@ -85,7 +85,7 @@ namespace lexer {
     /**
      * @par Stores the current integer value from the input stream if applicable.
      */
-    extern int integer_value;
+    extern int64_t integer_value;
 
     /**
      * @par Stores the current float value from the input stream if applicable.

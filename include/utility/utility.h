@@ -14,6 +14,9 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../ast/ast.h"
+#include "../codegen/codegen.h"
+
+#define PARSER_PRINT_UTIL 0
 
 namespace utility {
 
@@ -24,7 +27,11 @@ namespace utility {
     extern void output_current_token();
     extern void initialize_operator_precendence();
 
+    extern void init_llvm_mods();
+
     extern void primary_driver_loop();
+
+    extern void end_llvm_mods();
 
 }
 

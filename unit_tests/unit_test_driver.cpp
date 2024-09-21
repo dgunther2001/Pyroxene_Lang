@@ -9,10 +9,17 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "lexer_tests/lexer_tests.cpp"
 #include "../include/utility/utility.h"
 #include "../include/parser/parser.h"
+#include "../include/ast/ast.h"
+
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/TargetSelect.h"
+#include "llvm/ExecutionEngine/Orc/LLJIT.h"
+
+
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION -1
+#define DEBUG_OPTION 5
 
 
 int main(int argc, char** argv) {
@@ -89,13 +96,41 @@ int main(int argc, char** argv) {
             }
             */
         }
-    
+    #elif (DEBUG_OPTION == 5)
+        lexer::tokenize_file();
+
+        parser::get_next_token();
+
+        utility::initialize_operator_precendence();
+
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmPrinter();
+        llvm::InitializeNativeTargetAsmParser();
+
+        utility::init_llvm_mods();
+
+        utility::primary_driver_loop();
+
+        codegen::LLVM_Module->print(llvm::outs(), nullptr);
+
+        utility::end_llvm_mods();
+
+        std::cout << "\nLLVM Symbol Table Size: " << codegen::symbol_table.size() << "\n";
+
+        file.close();
+
     #else
         lexer::tokenize_file();
 
         parser::get_next_token();
 
         utility::initialize_operator_precendence();
+
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmPrinter();
+        llvm::InitializeNativeTargetAsmParser();
+
+        utility::init_llvm_mods();
 
         utility::primary_driver_loop();
 
