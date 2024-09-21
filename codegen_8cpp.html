@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pyroxene: src Directory Reference</title>
+<title>Pyroxene: src/codegen.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,22 +88,38 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">src Directory Reference</div></div>
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">codegen.cpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="icondoc"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ast_8cpp.html">ast.cpp</a></td></tr>
+<div class="textblock"><code>#include &quot;<a class="el" href="codegen_8h_source.html">../include/codegen/codegen.h</a>&quot;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html">codegen</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="icondoc"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="codegen_8cpp.html">codegen.cpp</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceast.html">ast</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="icondoc"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="lexer_8cpp.html">lexer.cpp</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="icondoc"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="parser_8cpp.html">parser.cpp</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="icondoc"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="utility_8cpp.html">utility.cpp</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:abb9b2b119e0c3d003dbeab964c1ef0cb" id="r_abb9b2b119e0c3d003dbeab964c1ef0cb"><td class="memItemLeft" align="right" valign="top">llvm::Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a> (<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> current_type)</td></tr>
+<tr class="separator:abb9b2b119e0c3d003dbeab964c1ef0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2ed9460a080f3ccd65a6b8afa232595a" id="r_a2ed9460a080f3ccd65a6b8afa232595a"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; llvm::LLVMContext &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a></td></tr>
+<tr class="separator:a2ed9460a080f3ccd65a6b8afa232595a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c83a7aa3f52eaf082b779f3a81166fe" id="r_a0c83a7aa3f52eaf082b779f3a81166fe"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; llvm::Module &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></td></tr>
+<tr class="separator:a0c83a7aa3f52eaf082b779f3a81166fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b39c1264ded17ff5cd25cd3b5f880c" id="r_a79b39c1264ded17ff5cd25cd3b5f880c"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></td></tr>
+<tr class="separator:a79b39c1264ded17ff5cd25cd3b5f880c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4d61dcaf7fa5b4d2d2ae68e504fbe5d" id="r_ac4d61dcaf7fa5b4d2d2ae68e504fbe5d"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, llvm::AllocaInst * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen::symbol_table</a></td></tr>
+<tr class="separator:ac4d61dcaf7fa5b4d2d2ae68e504fbe5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

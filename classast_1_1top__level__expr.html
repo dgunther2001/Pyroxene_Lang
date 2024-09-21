@@ -91,7 +91,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classast_1_1top__level__expr-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">ast::top_level_expr Class Reference</div></div>
+  <div class="headertitle"><div class="title">ast::top_level_expr Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -119,6 +119,8 @@ Inheritance diagram for ast::top_level_expr:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3430477e06c9b7de405decf1466d8cc3" id="r_a3430477e06c9b7de405decf1466d8cc3"><td class="memItemLeft" align="right" valign="top">virtual llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3430477e06c9b7de405decf1466d8cc3">codegen</a> ()=0</td></tr>
+<tr class="separator:a3430477e06c9b7de405decf1466d8cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a310f0586f8f80fde54a3d4ef829259e9" id="r_a310f0586f8f80fde54a3d4ef829259e9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a310f0586f8f80fde54a3d4ef829259e9">get_expr_type</a> () const</td></tr>
 <tr class="separator:a310f0586f8f80fde54a3d4ef829259e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -126,7 +128,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><dl class="section user"><dt>This is an abstract class that all expression type AST nodes fall under.</dt><dd><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="classast_1_1top__level__expr.html">top_level_expr</a> {</div>
 <div class="line"> <span class="keyword">public</span>:</div>
 <div class="line">     <span class="keyword">virtual</span> <a class="code hl_class" href="classast_1_1top__level__expr.html">~top_level_expr</a>() = <span class="keywordflow">default</span>; </div>
-<div class="line">     <span class="keyword">virtual</span> llvm::Value* codegen() = 0; <span class="comment">// function that will generate LLVM IR (&quot;= 0&quot; makes this class abstrac)</span></div>
+<div class="line">     <span class="keyword">virtual</span> llvm::Value* <a class="code hl_namespace" href="namespacecodegen.html">codegen</a>() = 0; <span class="comment">// function that will generate LLVM IR (&quot;= 0&quot; makes this class abstrac)</span></div>
 <div class="line"> </div>
 <div class="line">     <span class="keyword">virtual</span> <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> get_expr_type()<span class="keyword"> const </span>{ <span class="comment">// placeholder function overwritten for identfier and literal AST leavs.</span></div>
 <div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceast.html#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::types::float_type</a>;</div>
@@ -135,6 +137,7 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:51</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:29</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdoc">Float literals.</div><div class="ttdef"><b>Definition</b> ast.h:31</div></div>
+<div class="ttc" id="anamespacecodegen_html"><div class="ttname"><a href="namespacecodegen.html">codegen</a></div><div class="ttdef"><b>Definition</b> codegen.cpp:13</div></div>
 </div><!-- fragment --> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8d58ff4331899fba8a326afdbf8fabfe" name="a8d58ff4331899fba8a326afdbf8fabfe"></a>
@@ -163,6 +166,33 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3430477e06c9b7de405decf1466d8cc3" name="a3430477e06c9b7de405decf1466d8cc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3430477e06c9b7de405decf1466d8cc3">&#9670;&#160;</a></span>codegen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual llvm::Value * ast::top_level_expr::codegen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classast_1_1binary__expr.html#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#ab1d8cecfa26c36bf1ea4626bac8851bb">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#a1c05a6f66df411e0e3aad2624b34b87d">ast::char_expression</a>, <a class="el" href="classast_1_1float__expression.html#a6098c5599d2e9fcdf8bf5b69e9eb06cb">ast::float_expression</a>, <a class="el" href="classast_1_1identifier__expr.html#a543793aa523839fd14545e637794416d">ast::identifier_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression</a>, <a class="el" href="classast_1_1string__expression.html#a04e210534594e254a3f21b6b02e72738">ast::string_expression</a>, <a class="el" href="classast_1_1variable__assignment.html#ad72337194c16fa71dbc8189d1df0b9f3">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#ad5a16c85ca8b74d98d0abce0a01bcc80">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#a52de7d40d82d8e3354ea1723f6ece4b2">ast::variable_definition</a>.</p>
+
+</div>
+</div>
 <a id="a310f0586f8f80fde54a3d4ef829259e9" name="a310f0586f8f80fde54a3d4ef829259e9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a310f0586f8f80fde54a3d4ef829259e9">&#9670;&#160;</a></span>get_expr_type()</h2>
 

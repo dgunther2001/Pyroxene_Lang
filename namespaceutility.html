@@ -104,6 +104,10 @@ Functions</h2></td></tr>
 <tr class="separator:a9a9bb4b8fecdcdc3959e007c2f94b125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d75c24cf0cb3411a4b4709554030eb3" id="r_a1d75c24cf0cb3411a4b4709554030eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d75c24cf0cb3411a4b4709554030eb3">initialize_operator_precendence</a> ()</td></tr>
 <tr class="separator:a1d75c24cf0cb3411a4b4709554030eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36e1ec31f9e08d3b039414e7fa1b9d2c" id="r_a36e1ec31f9e08d3b039414e7fa1b9d2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36e1ec31f9e08d3b039414e7fa1b9d2c">init_llvm_mods</a> ()</td></tr>
+<tr class="separator:a36e1ec31f9e08d3b039414e7fa1b9d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d2eaa26c6991ec4653588c398402dd" id="r_a12d2eaa26c6991ec4653588c398402dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12d2eaa26c6991ec4653588c398402dd">end_llvm_mods</a> ()</td></tr>
+<tr class="separator:a12d2eaa26c6991ec4653588c398402dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbb30e890b50ac29a9d9dbf1226bf39b" id="r_afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbb30e890b50ac29a9d9dbf1226bf39b">primary_driver_loop</a> ()</td></tr>
 <tr class="separator:afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -154,6 +158,58 @@ Functions</h2></td></tr>
 </div><!-- fragment --> 
 </div>
 </div>
+<a id="a12d2eaa26c6991ec4653588c398402dd" name="a12d2eaa26c6991ec4653588c398402dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12d2eaa26c6991ec4653588c398402dd">&#9670;&#160;</a></span>end_llvm_mods()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void utility::end_llvm_mods </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Called after all IR has been generated. Creates return out of the top level function, and then exits.</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateRetVoid();</div>
+<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a36e1ec31f9e08d3b039414e7fa1b9d2c" name="a36e1ec31f9e08d3b039414e7fa1b9d2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36e1ec31f9e08d3b039414e7fa1b9d2c">&#9670;&#160;</a></span>init_llvm_mods()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void utility::init_llvm_mods </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>This is where we setup the LLVM Context, Modulem, and IR Builder.</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a> = std::make_unique&lt;llvm::LLVMContext&gt;();</div>
+<div class="line"><a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a> = std::make_unique&lt;llvm::Module&gt;(<span class="stringliteral">&quot;__top_level_module__&quot;</span>, *<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>);</div>
+<div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a> = std::make_unique&lt;llvm::IRBuilder&lt;&gt;&gt;(*codegen::LLVM_Context);</div>
+<div class="ttc" id="anamespacecodegen_html_a0c83a7aa3f52eaf082b779f3a81166fe"><div class="ttname"><a href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::Module &gt; LLVM_Module</div><div class="ttdef"><b>Definition</b> codegen.cpp:15</div></div>
+<div class="ttc" id="anamespacecodegen_html_a2ed9460a080f3ccd65a6b8afa232595a"><div class="ttname"><a href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::LLVMContext &gt; LLVM_Context</div><div class="ttdef"><b>Definition</b> codegen.cpp:14</div></div>
+</div><!-- fragment --><dl class="section user"><dt>We place the current module into a top level void function to avoid explicit global variables, and instead are able to place them on the stack. We then set the </dt><dd>entry point to the top level function, allowing the creation of load and store instructions on globals.</dd></dl>
+<div class="fragment"><div class="line">llvm::FunctionType* function_type = llvm::FunctionType::get(llvm::Type::getVoidTy(*<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>), <span class="keyword">false</span>);</div>
+<div class="line"> </div>
+<div class="line">llvm::Function* top_level_function = llvm::Function::Create(</div>
+<div class="line">    funcType, llvm::Function::ExternalLinkage, <span class="stringliteral">&quot;__file__&quot;</span>, *<a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line">llvm::BasicBlock* top_level_entry_point = llvm::BasicBlock::Create(*<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>, <span class="stringliteral">&quot;__top_level_entry_point__&quot;</span>, top_level_function);</div>
+<div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;SetInsertPoint(top_level_entry_point);</div>
+</div><!-- fragment --> 
+</div>
+</div>
 <a id="a1d75c24cf0cb3411a4b4709554030eb3" name="a1d75c24cf0cb3411a4b4709554030eb3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d75c24cf0cb3411a4b4709554030eb3">&#9670;&#160;</a></span>initialize_operator_precendence()</h2>
 
@@ -168,11 +224,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Where operator precednce map is defined</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a>, 100});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a>, 200});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a>, 300});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a>, 400});</div>
+<dl class="section user"><dt>Where operator precednce map is defined (Higher values called later)</dt><dd></dd></dl>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a>, 1000});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a>, 900});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a>, 800});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a>, 700});</div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a></div><div class="ttdeci">@ tok_plus</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:53</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition</b> lexer.h:55</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a></div><div class="ttdeci">@ tok_minus</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:54</div></div>
@@ -265,7 +321,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>This is called in both drivers (entrypoints), that takes in the current token stored in <code>parser::current_token</code>, and calls the correct parsing function.</dt><dd></dd></dl>
+<dl class="section user"><dt>This is called in both drivers (entrypoints), that takes in the current token stored in <code>parser::current_token</code>, and calls the correct parsing function and codegen if applicable.</dt><dd></dd></dl>
 <div class="fragment"><div class="line"><span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
 <div class="line"><span class="preprocessor">    #if (DEBUG_MODE == 1)</span></div>
 <div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> != <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a> &amp;&amp; <a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> != <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a>) {</div>
@@ -274,73 +330,48 @@ Functions</h2></td></tr>
 <div class="line"><span class="preprocessor">    #endif</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">switch</span>(<a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a>) {</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a>:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a>: <span class="comment">// if its the end of the file, exit the loop</span></div>
+<div class="line"> </div>
+<div class="line">    </div>
+<div class="line"><span class="preprocessor">        #if (DEBUG_MODE == 1 &amp;&amp; PARSER_PRINT_UTIL == 1)</span></div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\033[32m\nVariable Map:\033[0m\n&quot;</span>;</div>
+<div class="line">            <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [key, value] : <a class="code hl_variable" href="namespaceparser.html#ae59dd22fb111699bf39fece9995ab000">parser::var_map</a>) {</div>
+<div class="line">                std::cout &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot; : &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a>(value) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line">            }</div>
+<div class="line"><span class="preprocessor">        #endif</span></div>
 <div class="line">        </div>
-<div class="line"><span class="preprocessor">            #if (DEBUG_MODE == 1)</span></div>
-<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;\033[32m\nVariable Map:\033[0m\n&quot;</span>;</div>
-<div class="line">                <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [key, value] : <a class="code hl_variable" href="namespaceparser.html#ae59dd22fb111699bf39fece9995ab000">parser::var_map</a>) {</div>
-<div class="line">                    std::cout &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot; : &quot;</span> &lt;&lt; <a class="code hl_function" href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a>(value) &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">                }</div>
-<div class="line"><span class="preprocessor">            #endif</span></div>
-<div class="line">            </div>
-<div class="line">            <span class="keywordflow">return</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>; </div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ad65783d460f52df01fa3247768c91b5a">lexer::tok_int_val</a>: </div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#ae2152f085b45b872712eea6df596a4dc">parser::parse_int_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ade888a6269d4851b727ddd5224181bdb">lexer::tok_float_val</a>: </div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#ac6fbf688c5ecef8860f802e8e7450a5e">parser::parse_float_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0092aa5476cd7723a09a8d9078716ed8">lexer::tok_char_val</a>: </div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#a84556ae77e36825616604adb427a2290">parser::parse_char_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7">lexer::tok_string_val</a>: </div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#adb101c5eae08f603b82d7c028f9758ba">parser::parse_string_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a71a61a8cea0f39066af085f497210e25">lexer::tok_true</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#ae5ec27147d823cb7bed6ff32f9b6c72a">parser::parse_bool_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a37f8a1898b24ae41d937f0871e7c1f20">lexer::tok_false</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#ae5ec27147d823cb7bed6ff32f9b6c72a">parser::parse_bool_expr</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>; </div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">default</span>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
+<div class="line">        <span class="keywordflow">return</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a>:</div>
+<div class="line">        <a class="code hl_function" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a>(); <span class="comment">// ignore semicolons and get the next token...</span></div>
+<div class="line">        <span class="keywordflow">break</span>; </div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a>:</div>
+<div class="line">        expr = <a class="code hl_function" href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a>();</div>
+<div class="line">        expr-&gt;codegen();</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a>:</div>
+<div class="line">        expr = <a class="code hl_function" href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a>();</div>
+<div class="line">        expr-&gt;codegen();</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">default</span>:</div>
+<div class="line">        expr = <a class="code hl_function" href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a>();</div>
+<div class="line">        expr-&gt;codegen();</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">}</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceast_html_a5bd7f9340c66f7f097a1a3e81d52967b"><div class="ttname"><a href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a></div><div class="ttdeci">std::string get_type_as_string(types type)</div><div class="ttdef"><b>Definition</b> ast.cpp:32</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0092aa5476cd7723a09a8d9078716ed8"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0092aa5476cd7723a09a8d9078716ed8">lexer::tok_char_val</a></div><div class="ttdeci">@ tok_char_val</div><div class="ttdoc">Character literal value.</div><div class="ttdef"><b>Definition</b> lexer.h:42</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a></div><div class="ttdeci">@ tok_identifier</div><div class="ttdoc">Identifier.</div><div class="ttdef"><b>Definition</b> lexer.h:43</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdoc">Semicolon.</div><div class="ttdef"><b>Definition</b> lexer.h:44</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a></div><div class="ttdeci">@ tok_int</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> lexer.h:33</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a37f8a1898b24ae41d937f0871e7c1f20"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a37f8a1898b24ae41d937f0871e7c1f20">lexer::tok_false</a></div><div class="ttdeci">@ tok_false</div><div class="ttdoc">Boolean false.</div><div class="ttdef"><b>Definition</b> lexer.h:32</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a></div><div class="ttdeci">@ tok_char</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> lexer.h:36</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a71a61a8cea0f39066af085f497210e25"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a71a61a8cea0f39066af085f497210e25">lexer::tok_true</a></div><div class="ttdeci">@ tok_true</div><div class="ttdoc">Boolean true.</div><div class="ttdef"><b>Definition</b> lexer.h:31</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a9b038237b6c0da575768a2fcea4b0ef7">lexer::tok_string_val</a></div><div class="ttdeci">@ tok_string_val</div><div class="ttdoc">String literal value.</div><div class="ttdef"><b>Definition</b> lexer.h:41</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a></div><div class="ttdeci">@ tok_string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> lexer.h:38</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a></div><div class="ttdeci">@ tok_bool</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> lexer.h:35</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ad65783d460f52df01fa3247768c91b5a"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ad65783d460f52df01fa3247768c91b5a">lexer::tok_int_val</a></div><div class="ttdeci">@ tok_int_val</div><div class="ttdoc">Integer literal value.</div><div class="ttdef"><b>Definition</b> lexer.h:39</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ade888a6269d4851b727ddd5224181bdb"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ade888a6269d4851b727ddd5224181bdb">lexer::tok_float_val</a></div><div class="ttdeci">@ tok_float_val</div><div class="ttdoc">Float literal value.</div><div class="ttdef"><b>Definition</b> lexer.h:40</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a></div><div class="ttdeci">@ tok_eof</div><div class="ttdoc">End of file.</div><div class="ttdef"><b>Definition</b> lexer.h:29</div></div>
 <div class="ttc" id="anamespaceparser_html_a5ae126257d31d8a2193a9505a63c3cb3"><div class="ttname"><a href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a></div><div class="ttdeci">int get_next_token()</div><div class="ttdef"><b>Definition</b> parser.cpp:36</div></div>
-<div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:95</div></div>
-<div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:329</div></div>
-<div class="ttc" id="anamespaceparser_html_a84556ae77e36825616604adb427a2290"><div class="ttname"><a href="namespaceparser.html#a84556ae77e36825616604adb427a2290">parser::parse_char_expr</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_char_expr(bool top_level)</div><div class="ttdef"><b>Definition</b> parser.cpp:669</div></div>
-<div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:488</div></div>
-<div class="ttc" id="anamespaceparser_html_ac6fbf688c5ecef8860f802e8e7450a5e"><div class="ttname"><a href="namespaceparser.html#ac6fbf688c5ecef8860f802e8e7450a5e">parser::parse_float_expr</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_float_expr(bool top_level)</div><div class="ttdef"><b>Definition</b> parser.cpp:642</div></div>
-<div class="ttc" id="anamespaceparser_html_adb101c5eae08f603b82d7c028f9758ba"><div class="ttname"><a href="namespaceparser.html#adb101c5eae08f603b82d7c028f9758ba">parser::parse_string_expr</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_string_expr(bool top_level)</div><div class="ttdef"><b>Definition</b> parser.cpp:696</div></div>
-<div class="ttc" id="anamespaceparser_html_ae2152f085b45b872712eea6df596a4dc"><div class="ttname"><a href="namespaceparser.html#ae2152f085b45b872712eea6df596a4dc">parser::parse_int_expr</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_int_expr(bool top_level)</div><div class="ttdef"><b>Definition</b> parser.cpp:616</div></div>
+<div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:101</div></div>
+<div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:347</div></div>
+<div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:507</div></div>
 <div class="ttc" id="anamespaceparser_html_ae59dd22fb111699bf39fece9995ab000"><div class="ttname"><a href="namespaceparser.html#ae59dd22fb111699bf39fece9995ab000">parser::var_map</a></div><div class="ttdeci">std::map&lt; std::string, ast::types &gt; var_map</div><div class="ttdef"><b>Definition</b> parser.cpp:16</div></div>
-<div class="ttc" id="anamespaceparser_html_ae5ec27147d823cb7bed6ff32f9b6c72a"><div class="ttname"><a href="namespaceparser.html#ae5ec27147d823cb7bed6ff32f9b6c72a">parser::parse_bool_expr</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_bool_expr(bool top_level)</div><div class="ttdef"><b>Definition</b> parser.cpp:722</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
