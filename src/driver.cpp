@@ -13,6 +13,11 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "../include/type_checker/type_checker.h"
 #include "../include/utility/utility.h"
 
+
+#include "llvm/Support/raw_ostream.h"
+#include "llvm/Support/TargetSelect.h"
+#include "llvm/ExecutionEngine/Orc/LLJIT.h"
+
 #include <iostream>
 #include <fstream>
 

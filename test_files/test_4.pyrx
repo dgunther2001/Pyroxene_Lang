@@ -4,38 +4,8 @@ int c = a;
 
 int d;
 
-c = b;
-d = c;
+d = a;
 
-/*
-float b = 33.3;
-char c = 'a';
-bool d = true;
-string e = "daniel";
-*/
+int e = a + 10;
 
-
-
-
-
-//int f = a;
-/*
-float g = b;
-char h = c;
-bool i = d;
-string j = e;
-
-int k;
-float l;
-char m;
-
-bool o;
-*/
-
-//int k;
-//k = 44;
-
-
-
-
-//string aa = "kdfldhosajfajsf";
+d = e / b + c * a;

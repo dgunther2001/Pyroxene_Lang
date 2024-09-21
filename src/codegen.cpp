@@ -62,6 +62,28 @@ namespace ast {
     }
 
     llvm::Value* ast::binary_expr::codegen() {
+        llvm::Value* left_value = left->codegen();
+        llvm::Value* right_value = right->codegen();
+
+        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
+
+        switch (op) {
+        case lexer::tok_plus:  
+            return codegen::IR_Builder->CreateAdd(left_value, right_value, "addtmp");
+        case lexer::tok_minus:  
+            return codegen::IR_Builder->CreateSub(left_value, right_value, "subtmp");
+        case lexer::tok_mult:  
+            return codegen::IR_Builder->CreateMul(left_value, right_value, "multmp");
+        case lexer::tok_div:  
+            return codegen::IR_Builder->CreateSDiv(left_value, right_value, "divtmp"); 
+            /*
+        case '%':  
+            return codegen::IR_Builder->CreateSRem(left_value, right_value, "modtmp"); 
+            */
+        default:
+            return nullptr;
+        }
+
         return nullptr;
     }
 

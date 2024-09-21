@@ -58,7 +58,7 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_expression();
     std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level, lexer::lexer_stored_values value);
-    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> token_stream);
+    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream, std::vector<std::optional<lexer::lexer_stored_values>> sub_value_stream);
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn();
     std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier);

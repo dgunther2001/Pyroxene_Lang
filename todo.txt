@@ -45,3 +45,20 @@ Fix decl and assignment in llvm ir codegen
 
 time permitting => enforce main function entry point
 
+
+
+Create global immutable expressions to be used across files like macros
+
+
+
+
+line 102 of parser where access value vector
+
+
+b+c; fdefaults to a var assign, you need to fix this, so that it can just have regular bianry expressions...
+
+ADD MODULUS OPERATION!!!
+
+Deal with binary expressions when an invalid type...
+
+figure out why you had to flip operator precedence values (mult lower than plus, but happens first...)

@@ -100,30 +100,29 @@ namespace parser {
         std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values;
         single_nested_expr_tokens.emplace_back(current_token_as_token);
 
+
+        single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
         get_next_token(); 
 
-    /* REINTRODUCE LATER
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
             while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
                 single_nested_expr_tokens.emplace_back(current_token_as_token);
-
+                single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
     
 
                 get_next_token();
             }
-
-            return std::move(parse_binary_expr(single_nested_expr_tokens));
+            return std::move(parse_binary_expr(single_nested_expr_tokens, single_nested_expr_values));
         }
 
         else {
-            */
-        if (lexer::stored_values.at(current_token_index - 2).has_value()) {
-            lexer::lexer_stored_values value = lexer::stored_values.at(current_token_index - 2).value();
-            return std::move(parse_primary_expression(first_tok, true, value));
-        } else {
-            utility::parser_error("No value stored for the current token", lexer::line_count);
+            if (lexer::stored_values.at(current_token_index - 2).has_value()) {
+                lexer::lexer_stored_values value = lexer::stored_values.at(current_token_index - 2).value();
+                return std::move(parse_primary_expression(first_tok, true, value));
+            } else {
+                utility::parser_error("No value stored for the current token", lexer::line_count);
+            }
         }
-        //}
         
 
         // add parsing of function calls
@@ -199,11 +198,17 @@ namespace parser {
        @endcode
 
      */
-    /* TO BE FIXED
-    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream) {
+    std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream, std::vector<std::optional<lexer::lexer_stored_values>> sub_value_stream) {
 
         if (sub_tok_stream.empty()) {
             utility::parser_error("Empty token stream provided to parse_binary_expr", lexer::line_count);
+        }
+
+        if (sub_tok_stream.size() == 1) {
+            if (sub_value_stream.at(0) == std::nullopt) {
+                utility::parser_error("Expected value for token", lexer::line_count);
+            }
+            return std::move(parse_primary_expression(sub_tok_stream.at(0), false, sub_value_stream.at(0).value()));
         }
 
         int index_of_highest_prec_op = -1;
@@ -219,56 +224,39 @@ namespace parser {
             }
         }
 
-        if (index_of_highest_prec_op == -1) {
-            return std::move(parse_primary_expression(sub_tok_stream.at(0), false));
-        }
-
         if (index_of_highest_prec_op == 0 || index_of_highest_prec_op == sub_tok_stream.size() - 1) {
             utility::parser_error("Operator not infix", lexer::line_count);
         }
 
 
-        auto left_expr = parse_binary_expr({sub_tok_stream.begin(), sub_tok_stream.begin() + index_of_highest_prec_op});
-        auto right_expr = parse_binary_expr({sub_tok_stream.begin() + index_of_highest_prec_op + 1, sub_tok_stream.end()});
+        std::vector<lexer::Token_Type> left_tokens(sub_tok_stream.begin(), sub_tok_stream.begin() + index_of_highest_prec_op);
+        std::vector<std::optional<lexer::lexer_stored_values>> left_values(sub_value_stream.begin(), sub_value_stream.begin() + index_of_highest_prec_op);
 
+        std::vector<lexer::Token_Type> right_tokens(sub_tok_stream.begin() + index_of_highest_prec_op + 1, sub_tok_stream.end());
+        std::vector<std::optional<lexer::lexer_stored_values>> right_values(sub_value_stream.begin() + index_of_highest_prec_op + 1, sub_value_stream.end());
 
+        auto left_expr = parse_binary_expr(left_tokens, left_values);
+        auto right_expr = parse_binary_expr(right_tokens, right_values);
+        
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
-        lexer::Token_Type type_tok = sub_tok_stream.at(index_of_highest_prec_op - 1);
-            
         ast::types bin_type;
-        switch (type_tok) {
-            case lexer::tok_int_val:
-                bin_type = ast::int_type;
-                break;
-            case lexer::tok_float_val:
-                bin_type = ast::float_type;
-                break;
-            case lexer::tok_char_val:
-                bin_type = ast::char_type;
-                break;
-            case lexer::tok_string_val:
-                bin_type = ast::string_type;
-                break;
-            case lexer::tok_true: case lexer::tok_false:
-                bin_type = ast::bool_type;
-                break;
-            case lexer::tok_identifier:
-                break; // ADD TYPE VALIDATION LOGIC LATER
-            default:
-                utility::parser_error("Unexpected type in binary expression", lexer::line_count);
+        if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
+            bin_type = left_expr->get_expr_type(); 
+        } else {
+            utility::parser_error("Mismatched types in binary expression", lexer::line_count);
         }
+            
 
-            auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
 
-            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                ast_node->debug_output();
-            #endif
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
 
-            return std::move(ast_node);
+        return std::move(ast_node);
         
     }
-    */
    
    /**
     * @par If we identify a type keyword in the token stream, we jump into this function to check if it is a valid variable declaration, or definition.
@@ -515,6 +503,7 @@ namespace parser {
         if (current_token != lexer::tok_assignment) {
             utility::parser_error("Expected an assignment", lexer::line_count);
         }
+        
 
         get_next_token(); // consume the '='
 
@@ -525,6 +514,7 @@ namespace parser {
         if (assigned_expr->get_expr_type() != var_map[identifier]) {
             utility::parser_error("Invalid assignment", lexer::line_count);
         }
+        
 
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
 
