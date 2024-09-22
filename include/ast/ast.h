@@ -78,6 +78,7 @@ namespace ast {
             {}
 
         ~func_defn() = default;
+        void debug_output();
         llvm::Value* codegen();
     };
 
@@ -442,6 +443,13 @@ namespace ast {
         const std::string& get_name() const {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
+
+        bool is_binary() {
+            if (dynamic_cast<binary_expr*>(assigned_value.get())) {
+                return true;
+            }
+            return false;
+        }
     };
 
     /**

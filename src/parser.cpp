@@ -798,7 +798,7 @@ namespace parser {
 
         get_next_token(); // consume the type
 
-        std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index).value()); // grab the function name
+        std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
 
         get_next_token(); // consume the name
 
@@ -811,14 +811,15 @@ namespace parser {
         std::vector<std::unique_ptr<ast::top_level_expr>> parameters;
 
         while (true) {
+            if (current_token == lexer::tok_close_paren) {
+                get_next_token(); // consume closing paren
+                break;
+            }
             auto current_decl = parse_var_decl_defn();
             parameters.emplace_back(std::move(current_decl));
 
             if (current_token == lexer::tok_comma) {
                 get_next_token();
-            } else if (current_token == lexer::tok_close_paren) {
-                get_next_token();
-                break;
             } else {
                 utility::parser_error("Expected ',' or ')'", lexer::line_count);
             }
@@ -842,8 +843,12 @@ namespace parser {
                     std::string var_name;
                     if (auto* named_var = dynamic_cast<ast::variable_definition*>(current_expr.get())) {
                         var_name = named_var->get_name();
+                        if (named_var->is_binary()){
+                            get_next_token();
+                        }
                     } else if (auto* named_var = dynamic_cast<ast::variable_declaration*>(current_expr.get())) {
                         var_name = named_var->get_name();
+                        get_next_token();
                     }
                     var_names.insert(var_name);
                     break;
@@ -868,6 +873,10 @@ namespace parser {
 
         auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
 
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            func_definition->debug_output();
+        #endif
+
         return func_definition;
 
     }
@@ -875,6 +884,10 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_return() {
         get_next_token();
         auto ast_node = parse_expression();
+
+        if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(ast_node.get())) {
+            get_next_token();
+        }
         return std::move(ast_node);
     }
 
