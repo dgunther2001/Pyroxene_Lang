@@ -196,8 +196,10 @@ namespace utility {
 
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon) {
+                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
                     std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                } else if (parser::current_token == lexer::tok_def) {
+                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
                 }
             #endif
             

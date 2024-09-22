@@ -113,6 +113,16 @@ namespace ast {
           std::cout << "Variable assignment of type (" << identifier_name << "): " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
 
+     /**
+      * @fn ast::return_expr::debug_output()
+      * @code
+      * std::cout << "Parsed return statement.\n";
+      * @endcode
+      */
+     void ast::return_expr::debug_output() {
+          std::cout << "Parsed return statement\n";
+     }
+
 
      /**
       * @fn ast::func_defn::debug_output()
@@ -121,7 +131,7 @@ namespace ast {
       * @endcode
       */
      void ast::func_defn::debug_output() {
-          std::cout << "Parsing function with name: " << func_name << "\n";
+          std::cout << "Parsed function with name: " << func_name << "\n";
      }
 
 }

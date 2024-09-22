@@ -894,6 +894,12 @@ namespace parser {
         if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(ast_node.get())) {
             get_next_token();
         }
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(ast_node.get());
+            return_expr_ptr->debug_output();
+        #endif
+
         return std::move(ast_node);
     }
 
