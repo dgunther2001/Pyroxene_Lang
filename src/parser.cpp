@@ -387,7 +387,7 @@ namespace parser {
 
         if (current_token == lexer::tok_assignment) {
             return std::move(parse_var_defn(type, identifier));
-        } else if (current_token == lexer::tok_semicolon) {
+        } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
             return std::move(parse_var_decl(type, identifier));
         } 
         utility::parser_error("Expected variable definition or declaration", lexer::line_count);
@@ -812,17 +812,23 @@ namespace parser {
 
         while (true) {
             if (current_token == lexer::tok_close_paren) {
-                get_next_token(); // consume closing paren
+                get_next_token(); 
                 break;
             }
+
             auto current_decl = parse_var_decl_defn();
             parameters.emplace_back(std::move(current_decl));
 
+            
             if (current_token == lexer::tok_comma) {
                 get_next_token();
+            } else if (current_token == lexer::tok_close_paren) {
+                get_next_token();
+                break;
             } else {
                 utility::parser_error("Expected ',' or ')'", lexer::line_count);
             }
+            
         }
 
         if (current_token != lexer::tok_open_brack) {
