@@ -67,9 +67,9 @@ namespace ast {
         std::string func_name;
         std::vector<std::unique_ptr<top_level_expr>> expressions;
         std::set<std::string> function_symbol_table;
-        std::vector<std::unique_ptr<variable_declaration>>parameters;
+        std::vector<std::unique_ptr<top_level_expr>>parameters;
     public:
-        func_defn(types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<variable_declaration>> parameters) :
+        func_defn(types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<top_level_expr>> parameters) :
             return_type(return_type),
             func_name(name),
             expressions(std::move(expressions)),

@@ -808,7 +808,7 @@ namespace parser {
 
         get_next_token();
 
-        std::vector<ast::variable_declaration> parameters;
+        std::vector<std::unique_ptr<ast::top_level_expr>> parameters;
 
         while (true) {
             auto current_decl = parse_var_decl_defn();
@@ -825,17 +825,50 @@ namespace parser {
         }
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Expected opening bracket", lexer::linecount);
+            utility::parser_error("Expected opening bracket", lexer::line_count);
         }
 
         get_next_token(); // consume the bracket
 
-        // parse a bunch of expressions
-        // then simply grab a closing brace
-        // instantiate the ast node and return iut
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        std::set<std::string> var_names;
+        while (current_token != lexer::tok_close_brack) {
+            // parse expressions and add them to a vector
+            // consume semicolons as we go
+            std::unique_ptr<ast::top_level_expr> current_expr;
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
+                    current_expr = parse_var_decl_defn();
+                    std::string var_name;
+                    if (auto* named_var = dynamic_cast<ast::variable_definition*>(current_expr.get())) {
+                        var_name = named_var->get_name();
+                    } else if (auto* named_var = dynamic_cast<ast::variable_declaration*>(current_expr.get())) {
+                        var_name = named_var->get_name();
+                    }
+                    var_names.insert(var_name);
+                    break;
+                }
+                case lexer::tok_return:
+                    current_expr = parse_return();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
 
-        
-        return nullptr;
+            expressions.emplace_back(std::move(current_expr));
+
+            // add error handling here
+
+            //get_next_token(); // consume the ';' (MAY NEED TO BE REMOVED!!!)
+        }
+
+        get_next_token(); // consume the '}'
+
+        // instantiate the ast node and return it
+
+        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
+
+        return func_definition;
 
     }
 
