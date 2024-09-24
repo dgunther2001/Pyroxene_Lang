@@ -11,5 +11,5 @@ def int my_func(int l, int b) {
     int g = 44;
     //char f;
     //return 11 + 3;
-    //return 10;
+    return 10;
 }

@@ -7,7 +7,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 */
 
 #include "../include/parser/parser.h"
-#include "../unit_tests/parser_tests/parser_tests.cpp"
+#include "../debug_test_suite/parser_tests/parser_tests.cpp"
 namespace parser {
     int current_token;
 
