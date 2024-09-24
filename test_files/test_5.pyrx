@@ -1,0 +1,15 @@
+//int rm;
+
+//int lm = 44;
+
+// fix paramter passing (variable decl params)
+// figure out why variable defns work, variable decls dont within the actual function...
+def int my_func(int l, int b) {
+    //int l = 55;
+    //int d = 33;
+    int m = 10 * 10 / 44 + 22;
+    int g = 44;
+    //char f;
+    //return 11 + 3;
+    return 10;
+}

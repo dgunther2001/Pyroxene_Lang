@@ -73,3 +73,14 @@ figure out why you had to flip operator precedence values (mult lower than plus,
 6. Fix parse expression (parser) CHECK
 7. Codegen.h decls CHECK
 8. Codegen.cpp codegen functions CHECK
+
+
+### Functions
+1. Add function AST node CHECK
+2. Add return ast node (extends expressions) CHECK
+2. Have a vector in the ast node that stores a sequence of expressions (note => return is an expression) CHECK
+3. Write a parsing algorithm for returns
+4. Write a parsing algorithm for functions
+5. Write llvm ir for each...
+6. Write docs for all of the above...
+7. Add debug functions for the new AST nodes and w/in parsing algos

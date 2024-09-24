@@ -90,7 +90,7 @@ namespace ast {
       * @endcode
       */
      void ast::variable_declaration::debug_output() {
-          std::cout << "Variable declaration of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+          std::cout << "Variable declaration of type (" << identifier_name << "): " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
 
      /**
@@ -100,7 +100,7 @@ namespace ast {
       * @endcode
       */
      void ast::variable_definition::debug_output() {
-          std::cout << "Variable definition of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+          std::cout << "Variable definition of type (" << identifier_name << "): " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
 
      /**
@@ -110,7 +110,28 @@ namespace ast {
       * @endcode
       */
      void ast::variable_assignment::debug_output() {
-          std::cout << "Variable assignment of type: " << ast::get_type_as_string(get_expr_type()) << "\n";
+          std::cout << "Variable assignment of type (" << identifier_name << "): " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
+
+     /**
+      * @fn ast::return_expr::debug_output()
+      * @code
+      * std::cout << "Parsed return statement.\n";
+      * @endcode
+      */
+     void ast::return_expr::debug_output() {
+          std::cout << "Parsed return statement\n";
+     }
+
+
+     /**
+      * @fn ast::func_defn::debug_output()
+      * @code
+      * std::cout << "Parsing function with name: " << func_name << "\n";
+      * @endcode
+      */
+     void ast::func_defn::debug_output() {
+          std::cout << "Parsed function with name: " << func_name << "\n";
      }
 
 }

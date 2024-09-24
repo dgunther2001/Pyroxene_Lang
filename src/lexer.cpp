@@ -173,6 +173,10 @@ namespace lexer {
      *         return tok_string;
      *     }
      * 
+     *     if (identifier == "void") {
+     *         return tok_void;
+     *     }
+     * 
      *     if (identifier == "for") {
      *         return tok_for;
      *     }
@@ -433,6 +437,10 @@ namespace lexer {
             
             if (identifier == "float") {
                 return tok_float;
+            }
+
+            if (identifier == "void") {
+                return tok_void;
             }
 
             if (identifier == "bool") {

@@ -41,8 +41,8 @@ option(BUILD_DEBUG_DRIVER "Build the debug test driver instead of the main drive
 if(BUILD_DEBUG_DRIVER)
     add_definitions(-DDEBUG_MODE=1)
     add_executable(driver 
-        unit_tests/unit_test_driver.cpp
-        unit_tests/lexer_tests/lexer_tests.cpp
+        debug_test_suite/unit_test_driver.cpp
+        debug_test_suite/lexer_tests/lexer_tests.cpp
         src/lexer.cpp src/parser.cpp src/ast.cpp src/codegen.cpp src/type_checker.cpp src/utility.cpp
     )
 else()

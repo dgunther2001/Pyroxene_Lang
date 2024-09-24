@@ -196,13 +196,15 @@ namespace utility {
 
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon) {
+                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
                     std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                } else if (parser::current_token == lexer::tok_def) {
+                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
                 }
             #endif
             
             std::unique_ptr<ast::top_level_expr> expr = nullptr;  
-            std::unique_ptr<ast::func_defn> func_expr = nullptr;  
+            std::unique_ptr<ast::func_defn> func = nullptr;  
 
             switch(parser::current_token) {
                 case lexer::tok_eof: // if its the end of the file, exit the loop
@@ -225,6 +227,14 @@ namespace utility {
                     break;
                 case lexer::tok_identifier:
                     expr = parser::parse_var_assign();
+                    expr->codegen();
+                    break;
+                case lexer::tok_def:
+                    func = parser::parse_function();
+                    func->codegen();
+                    break;
+                case lexer::tok_return:
+                    expr = parser::parse_return();
                     expr->codegen();
                     break;
                 default:
