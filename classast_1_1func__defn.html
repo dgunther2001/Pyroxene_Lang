@@ -99,10 +99,88 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:ac86c58d6d6bdac52130ea9e48da0d2b1" id="r_ac86c58d6d6bdac52130ea9e48da0d2b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac86c58d6d6bdac52130ea9e48da0d2b1">func_defn</a> (<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> return_type, std::string name, std::vector&lt; std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; &gt; parameters)</td></tr>
+<tr class="separator:ac86c58d6d6bdac52130ea9e48da0d2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a56a2d270a7b54ef553db1f1e4fc6de6b" id="r_a56a2d270a7b54ef553db1f1e4fc6de6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a56a2d270a7b54ef553db1f1e4fc6de6b">~func_defn</a> ()=default</td></tr>
 <tr class="separator:a56a2d270a7b54ef553db1f1e4fc6de6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb862ee8d338a91c74ee68e8b78ca61" id="r_a4fb862ee8d338a91c74ee68e8b78ca61"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fb862ee8d338a91c74ee68e8b78ca61">debug_output</a> ()</td></tr>
+<tr class="separator:a4fb862ee8d338a91c74ee68e8b78ca61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c9ba55826809ef75a41f1ae00a21ff7" id="r_a9c9ba55826809ef75a41f1ae00a21ff7"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9c9ba55826809ef75a41f1ae00a21ff7">codegen</a> ()</td></tr>
+<tr class="separator:a9c9ba55826809ef75a41f1ae00a21ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section user"><dt>This class holds the data related to function definitions.</dt><dd><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="classast_1_1func__defn.html">func_defn</a> {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> return_type;</div>
+<div class="line">    std::string func_name;</div>
+<div class="line">    std::vector&lt;std::unique_ptr&lt;top_level_expr&gt;&gt; expressions;</div>
+<div class="line">    std::set&lt;std::string&gt; function_symbol_table;</div>
+<div class="line">    std::vector&lt;std::unique_ptr&lt;top_level_expr&gt;&gt;parameters;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <a class="code hl_function" href="#ac86c58d6d6bdac52130ea9e48da0d2b1">func_defn</a>(<a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> return_type, std::string name, std::vector&lt;std::unique_ptr&lt;top_level_expr&gt;&gt; expressions, std::set&lt;std::string&gt; var_names, std::vector&lt;std::unique_ptr&lt;top_level_expr&gt;&gt; parameters) :</div>
+<div class="line">        return_type(return_type),</div>
+<div class="line">        func_name(name),</div>
+<div class="line">        expressions(std::move(expressions)),</div>
+<div class="line">        function_symbol_table(std::move(var_names)),</div>
+<div class="line">        parameters(std::move(parameters))</div>
+<div class="line">        {}</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_function" href="#a56a2d270a7b54ef553db1f1e4fc6de6b">~func_defn</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a4fb862ee8d338a91c74ee68e8b78ca61">debug_output</a>();</div>
+<div class="line">    llvm::Value* <a class="code hl_function" href="#a9c9ba55826809ef75a41f1ae00a21ff7">codegen</a>();</div>
+<div class="line">};</div>
+<div class="ttc" id="aclassast_1_1func__defn_html"><div class="ttname"><a href="classast_1_1func__defn.html">ast::func_defn</a></div><div class="ttdef"><b>Definition</b> ast.h:89</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a4fb862ee8d338a91c74ee68e8b78ca61"><div class="ttname"><a href="#a4fb862ee8d338a91c74ee68e8b78ca61">ast::func_defn::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a56a2d270a7b54ef553db1f1e4fc6de6b"><div class="ttname"><a href="#a56a2d270a7b54ef553db1f1e4fc6de6b">ast::func_defn::~func_defn</a></div><div class="ttdeci">~func_defn()=default</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a9c9ba55826809ef75a41f1ae00a21ff7"><div class="ttname"><a href="#a9c9ba55826809ef75a41f1ae00a21ff7">ast::func_defn::codegen</a></div><div class="ttdeci">llvm::Value * codegen()</div><div class="ttdef"><b>Definition</b> codegen.cpp:421</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_ac86c58d6d6bdac52130ea9e48da0d2b1"><div class="ttname"><a href="#ac86c58d6d6bdac52130ea9e48da0d2b1">ast::func_defn::func_defn</a></div><div class="ttdeci">func_defn(types return_type, std::string name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; parameters)</div><div class="ttdef"><b>Definition</b> ast.h:97</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
+</div><!-- fragment --> </dd></dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ac86c58d6d6bdac52130ea9e48da0d2b1" name="ac86c58d6d6bdac52130ea9e48da0d2b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac86c58d6d6bdac52130ea9e48da0d2b1">&#9670;&#160;</a></span>func_defn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ast::func_defn::func_defn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a></td>          <td class="paramname"><span class="paramname"><em>return_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>expressions</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::set&lt; std::string &gt;</td>          <td class="paramname"><span class="paramname"><em>var_names</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>parameters</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a56a2d270a7b54ef553db1f1e4fc6de6b" name="a56a2d270a7b54ef553db1f1e4fc6de6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a56a2d270a7b54ef553db1f1e4fc6de6b">&#9670;&#160;</a></span>~func_defn()</h2>
 
@@ -128,8 +206,106 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9c9ba55826809ef75a41f1ae00a21ff7" name="a9c9ba55826809ef75a41f1ae00a21ff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c9ba55826809ef75a41f1ae00a21ff7">&#9670;&#160;</a></span>codegen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * ast::func_defn::codegen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<h4>Functionally, takes all of the relevant parameters in the <a class="el" href="classast_1_1func__defn.html">func_defn</a> ast node, and converts them to IR. </h4>
+<dl class="section user"><dt>Grab the return type, as well as the types of all of the paramters.</dt><dd><div class="fragment"><div class="line">llvm::Type* func_return_type = <a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(return_type);</div>
+<div class="line"> </div>
+<div class="line"> std::vector&lt;llvm::Type*&gt; parameter_types;</div>
+<div class="line"> <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; parameter : parameters) {</div>
+<div class="line">     parameter_types.emplace_back(<a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameter.get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a4ae5a6f27bcc0916a753bba899cd795c">get_expr_type</a>()));</div>
+<div class="line"> }</div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html"><div class="ttname"><a href="classast_1_1variable__declaration.html">ast::variable_declaration</a></div><div class="ttdef"><b>Definition</b> ast.h:414</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a4ae5a6f27bcc0916a753bba899cd795c"><div class="ttname"><a href="classast_1_1variable__declaration.html#a4ae5a6f27bcc0916a753bba899cd795c">ast::variable_declaration::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:424</div></div>
+<div class="ttc" id="anamespacecodegen_html_abb9b2b119e0c3d003dbeab964c1ef0cb"><div class="ttname"><a href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a></div><div class="ttdeci">llvm::Type * get_llvm_type(ast::types current_type)</div><div class="ttdef"><b>Definition</b> codegen.cpp:40</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Generate an llvm::FunctionType* which holds the function return type and parameter types. </dt><dd><div class="fragment"><div class="line">llvm::FunctionType* func_type = llvm::FunctionType::get(func_return_type, parameter_types, <span class="keyword">false</span>);</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Create the function declaration in the current module. </dt><dd><div class="fragment"><div class="line">llvm::Function* function_decl = llvm::Function::Create(func_type, llvm::Function::ExternalLinkage, func_name, *<a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a>);</div>
+<div class="ttc" id="anamespacecodegen_html_a0c83a7aa3f52eaf082b779f3a81166fe"><div class="ttname"><a href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::Module &gt; LLVM_Module</div><div class="ttdef"><b>Definition</b> codegen.cpp:15</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Create a new basic block for the function, which is essentially just a control flow boundary for the function, and set the IR_Builder insertion point to it.</dt><dd><div class="fragment"><div class="line">llvm::BasicBlock* function_block = llvm::BasicBlock::Create(*<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>, <span class="stringliteral">&quot;entry_pt_&quot;</span> + func_name, function_decl);</div>
+<div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;SetInsertPoint(function_block);</div>
+<div class="ttc" id="anamespacecodegen_html_a2ed9460a080f3ccd65a6b8afa232595a"><div class="ttname"><a href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::LLVMContext &gt; LLVM_Context</div><div class="ttdef"><b>Definition</b> codegen.cpp:14</div></div>
+<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>We iterate over the parameters array in the AST Node, and set the name of the argument in the llvm::Function* to the values stored in the parameters vector.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; parameters.size(); i++) {</div>
+<div class="line">    llvm::Argument* argument = function_decl-&gt;getArg(i); </div>
+<div class="line">    argument-&gt;setName(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameters.at(i).get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">get_name</a>());</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a29468bcbdc636c1642bda54182fa367b"><div class="ttname"><a href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">ast::variable_declaration::get_name</a></div><div class="ttdeci">const std::string &amp; get_name() const</div><div class="ttdef"><b>Definition</b> ast.h:425</div></div>
+</div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; parameters.size(); i++) {</div>
+<div class="line">    llvm::Argument* argument = function_decl-&gt;getArg(i); </div>
+<div class="line">    argument-&gt;setName(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameters.at(i).get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">get_name</a>());</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; expression : expressions) {</div>
+<div class="line">    llvm::Value* current_expr = expression-&gt;codegen();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1return__expr.html">ast::return_expr</a>*<span class="keyword">&gt;</span>(expression.get())) {</div>
+<div class="line">        <span class="keywordflow">if</span> (func_return_type-&gt;isVoidTy()) {</div>
+<div class="line">            <span class="comment">// ADD ERROR HANDLING HERE</span></div>
+<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(func_return_type != <a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(expression-&gt;get_expr_type())) {</div>
+<div class="line">            <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Invalid return type&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">        }</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassast_1_1return__expr_html"><div class="ttname"><a href="classast_1_1return__expr.html">ast::return_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:540</div></div>
+<div class="ttc" id="anamespacelexer_html_a3194f54b2efb03a1d7dd1c3071fc93e0"><div class="ttname"><a href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a></div><div class="ttdeci">int line_count</div><div class="ttdef"><b>Definition</b> lexer.cpp:14</div></div>
+<div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:83</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Check whether the current control flow block has a terminator (return and branch), and if not, generate one with the default value of return type.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!function_block-&gt;getTerminator()) {</div>
+<div class="line">    <span class="keywordflow">if</span> (func_return_type-&gt;isVoidTy()) {</div>
+<div class="line">        <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateRetVoid(); </div>
+<div class="line">    } <span class="keywordflow">else</span> {</div>
+<div class="line">        llvm::Value* default_return_value = llvm::Constant::getNullValue(func_return_type);</div>
+<div class="line">        <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateRet(default_return_value); </div>
+<div class="line">        </div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Reset the IR insertion point back to the global insertion point and return control back to the global block. Then return the llvm::Function*.</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;SetInsertPoint(<a class="code hl_variable" href="namespacecodegen.html#ae92ca0442631b7872f388e5917ce9b51">codegen::top_level_entry</a>);</div>
+<div class="line"><span class="keywordflow">return</span> function_decl;</div>
+<div class="ttc" id="anamespacecodegen_html_ae92ca0442631b7872f388e5917ce9b51"><div class="ttname"><a href="namespacecodegen.html#ae92ca0442631b7872f388e5917ce9b51">codegen::top_level_entry</a></div><div class="ttdeci">llvm::BasicBlock * top_level_entry</div><div class="ttdef"><b>Definition</b> codegen.cpp:18</div></div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="a4fb862ee8d338a91c74ee68e8b78ca61" name="a4fb862ee8d338a91c74ee68e8b78ca61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fb862ee8d338a91c74ee68e8b78ca61">&#9670;&#160;</a></span>debug_output()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ast::func_defn::debug_output </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/ast/<a class="el" href="ast_8h_source.html">ast.h</a></li>
+<li>src/<a class="el" href="codegen_8cpp.html">codegen.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -108,6 +108,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1integer__expression.html">integer_expression</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1return__expr.html">return_expr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1string__expression.html">string_expression</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a></td></tr>
@@ -128,6 +130,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">string_type</a> = -4
 , <br />
 &#160;&#160;<a class="el" href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">bool_type</a> = -5
+, <a class="el" href="#a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6">void_type</a> = -6
 <br />
  }</td></tr>
 <tr class="separator:a40c97931a3dcafde9769060c39123341"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,15 +154,17 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section user"><dt>An enumeration of valid types Pyroxene that are stored inspecific AST nodes.</dt><dd></dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6" name="a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"></a>int_type&#160;</td><td class="fielddoc"><p>Integer literals. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6" name="a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"></a>int_type&#160;</td><td class="fielddoc"><p>Integer type. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95" name="a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"></a>float_type&#160;</td><td class="fielddoc"><p>Float literals. </p>
+<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95" name="a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"></a>float_type&#160;</td><td class="fielddoc"><p>Float type. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb" name="a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb"></a>char_type&#160;</td><td class="fielddoc"><p>Character literals. </p>
+<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb" name="a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb"></a>char_type&#160;</td><td class="fielddoc"><p>Character type. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622" name="a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622"></a>string_type&#160;</td><td class="fielddoc"><p>String literals. </p>
+<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622" name="a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622"></a>string_type&#160;</td><td class="fielddoc"><p>String type. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679" name="a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679"></a>bool_type&#160;</td><td class="fielddoc"><p>Boolean literals. </p>
+<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679" name="a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679"></a>bool_type&#160;</td><td class="fielddoc"><p>Boolean type. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6" name="a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6"></a>void_type&#160;</td><td class="fielddoc"><p>Void type. </p>
 </td></tr>
 </table>
 
@@ -192,14 +197,17 @@ Functions</h2></td></tr>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;string&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">bool_type</a>):</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;bool&quot;</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> (<a class="code hl_enumvalue" href="#a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6">void_type</a>):</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;void&quot;</span>;</div>
 <div class="line">    <span class="keywordflow">default</span>: </div>
 <div class="line">        <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">ast::char_type</a></div><div class="ttdeci">@ char_type</div><div class="ttdoc">Character literals.</div><div class="ttdef"><b>Definition</b> ast.h:32</div></div>
-<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">ast::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdoc">Integer literals.</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
-<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">ast::string_type</a></div><div class="ttdeci">@ string_type</div><div class="ttdoc">String literals.</div><div class="ttdef"><b>Definition</b> ast.h:33</div></div>
-<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdoc">Float literals.</div><div class="ttdef"><b>Definition</b> ast.h:31</div></div>
-<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdoc">Boolean literals.</div><div class="ttdef"><b>Definition</b> ast.h:34</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">ast::char_type</a></div><div class="ttdeci">@ char_type</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> ast.h:33</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">ast::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> ast.h:31</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6">ast::void_type</a></div><div class="ttdeci">@ void_type</div><div class="ttdoc">Void type.</div><div class="ttdef"><b>Definition</b> ast.h:36</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">ast::string_type</a></div><div class="ttdeci">@ string_type</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> ast.h:34</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> ast.h:32</div></div>
+<div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679"><div class="ttname"><a href="#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> ast.h:35</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
