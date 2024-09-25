@@ -332,16 +332,16 @@ namespace parser {
         var_map.insert({identifier, type});
       @endcode
 
-      @par We then check whether the next token is an '=', or a ';' and call the respective declaration, or definition token.
+      @par We then check whether the next token is an '=', or a ';', ',', or an ')' and call the respective declaration, or definition token.
 
       @code
         if (current_token == lexer::tok_assignment) {
             return std::move(parse_var_defn(type, identifier));
-        } else if (current_token == lexer::tok_semicolon) {
+        } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
             return std::move(parse_var_decl(type, identifier));
-        } else {
-            utility::parser_error("Expected variable definition or declaration", lexer::line_count);
-        }
+        
+        utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+
       @endcode
     */
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
@@ -750,6 +750,129 @@ namespace parser {
         return std::move(ast_node);
     }
 
+    /**
+     * <h4> Parses function definitions, which is a multi-parsing process, as it makes use of many other parsing APIs. </h4>
+     * 
+     * def (ret_type) (func_name) (arg1, arg2, ..., argn) {
+     *      expr1;
+     *      expr2;
+     *      ...
+     *      expr n;
+     * 
+     *      return (expr);
+     * }
+     * 
+     * @par Consume 'def', the return type, and the name (also storing them in the process)
+     * @code
+     *   get_next_token();
+
+        ast::types ret_type;
+        switch (current_token) {
+            case lexer::tok_int:
+                ret_type = ast::int_type;
+                break;
+            case lexer::tok_float:
+                ret_type = ast::float_type;
+                break;
+            case lexer::tok_char:
+                ret_type = ast::char_type;
+                break;
+            case lexer::tok_string:
+                ret_type = ast::string_type;
+                break;
+            case lexer::tok_bool:
+                ret_type = ast::bool_type;
+                break;
+            case lexer::tok_void:
+                ret_type = ast::void_type;
+                break;
+            default:
+                utility::parser_error("Invalid return type provided to function", lexer::line_count);
+        }
+
+        get_next_token(); 
+
+        std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
+
+        get_next_token(); 
+     * @endcode
+
+       @par Consume the opening parenthesis, then consume and store as many variable declarations as there are, and then consume the ')', and '{'.
+       @code
+        get_next_token();
+
+        std::vector<std::unique_ptr<ast::top_level_expr>> parameters;
+
+        while (true) {
+            if (current_token == lexer::tok_close_paren) {
+                get_next_token(); 
+                break;
+            }
+
+            auto current_decl = parse_var_decl_defn();
+            parameters.emplace_back(std::move(current_decl));
+
+            
+            if (current_token == lexer::tok_comma) {
+                get_next_token();
+            } else if (current_token == lexer::tok_close_paren) {
+                get_next_token();
+                break;
+            } else {
+                utility::parser_error("Expected ',' or ')'", lexer::line_count);
+            }
+            
+        }
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Expected opening bracket", lexer::line_count);
+        }
+
+        get_next_token();
+       @endcode
+
+       @par Parse expressions and store them in a vector until we reach a closing bracket.
+       @code
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        std::set<std::string> var_names;
+        while (current_token != lexer::tok_close_brack) {
+            std::unique_ptr<ast::top_level_expr> current_expr;
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
+                    current_expr = parse_var_decl_defn();
+                    std::string var_name;
+                    if (auto* named_var = dynamic_cast<ast::variable_definition*>(current_expr.get())) {
+                        var_name = named_var->get_name();
+                        if (named_var->is_binary()){
+                            get_next_token();
+                        }
+                    } else if (auto* named_var = dynamic_cast<ast::variable_declaration*>(current_expr.get())) {
+                        var_name = named_var->get_name();
+                        get_next_token();
+                    }
+                    var_names.insert(var_name);
+                    break;
+                }
+                case lexer::tok_return:
+                    current_expr = parse_return();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            expressions.emplace_back(std::move(current_expr));
+
+        }
+
+        get_next_token(); 
+       @endcode
+
+       @par Construct the function definition node, and return it.
+       @code
+        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
+        return func_definition;
+       @endcode
+     */
     std::unique_ptr<ast::func_defn> parse_function() {
         // need to eat "def"
         // need to get type, store it, and then eat it
@@ -869,8 +992,6 @@ namespace parser {
             expressions.emplace_back(std::move(current_expr));
 
             // add error handling here
-
-            //get_next_token(); // consume the ';' (MAY NEED TO BE REMOVED!!!)
         }
 
         get_next_token(); // consume the '}'
@@ -887,18 +1008,36 @@ namespace parser {
 
     }
 
+    /**
+     * @par Parses a return expression and then returns a return_expr ast node
+     * "return (expr);"
+     * 
+     * @code
+     *  get_next_token();
+        auto expr_node = parse_expression();
+
+        if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(expr_node.get())) {
+            get_next_token();
+        }
+
+        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+        return std::move(ast_node);
+     * @endcode
+     */
     std::unique_ptr<ast::top_level_expr> parse_return() {
         get_next_token();
-        auto ast_node = parse_expression();
+        auto expr_node = parse_expression();
 
-        if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(ast_node.get())) {
+        if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(expr_node.get())) {
             get_next_token();
         }
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-            auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(ast_node.get());
+            auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(expr_node.get());
             return_expr_ptr->debug_output();
         #endif
+
+        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
 
         return std::move(ast_node);
     }
