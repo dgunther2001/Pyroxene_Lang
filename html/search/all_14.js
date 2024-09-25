@@ -12,5 +12,6 @@ var searchData=
   ['symbol_5ftable_9',['symbol_table',['../namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d',1,'codegen']]],
   ['syntax_10',['Language Syntax',['../md_docs_2syntax.html',1,'']]],
   ['syntax_20tree_20ast_20ast_20that_20can_20each_20hold_20their_20own_20llvm_20ir_20codegen_20function_11',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
-  ['syntax_2emd_12',['syntax.md',['../syntax_8md.html',1,'']]]
+  ['syntax_2emd_12',['syntax.md',['../syntax_8md.html',1,'']]],
+  ['system_5foverview_5fdiagram_2epng_13',['system_overview_diagram.png',['../system__overview__diagram_8png.html',1,'']]]
 ];
