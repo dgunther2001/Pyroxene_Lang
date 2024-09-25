@@ -72,6 +72,21 @@ namespace utility {
     }
 
     /**
+     * @par Thrown to abort if codegen fails.
+     * 
+     * @code
+        std::cout <<"\033[1;31m";
+        std::cout << "Codegen error: " << message << " on line " << line << "\n";
+        std::abort();
+     * @endcode
+     */
+    void codegen_error(const std::string& message, int line) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Codegen error: " << message << " on line " << line << "\n";
+        std::abort();
+    }
+
+    /**
      * @par Spits out the current token to OStream.
      * 
      * @code
@@ -135,8 +150,9 @@ namespace utility {
             function_type, llvm::Function::ExternalLinkage, "__file__", *codegen::LLVM_Module
         );
 
-        llvm::BasicBlock* top_level_entry_point = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__top_level_entry_point__", top_level_function);
-        codegen::IR_Builder->SetInsertPoint(top_level_entry_point);
+        codegen::top_level_entry = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__top_level_entry_point__", top_level_function);
+        
+        codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
     }
 
     /**
@@ -155,40 +171,50 @@ namespace utility {
      * 
      * @code
         while (true) {
-            #if (DEBUG_MODE == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon) {
+            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
                     std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                } else if (parser::current_token == lexer::tok_def) {
+                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
                 }
             #endif
 
             switch(parser::current_token) {
-            case lexer::tok_eof: // if its the end of the file, exit the loop
+                case lexer::tok_eof: // if its the end of the file, exit the loop
 
-            
-                #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                    std::cout << "\033[32m\nVariable Map:\033[0m\n";
-                    for (auto const& [key, value] : parser::var_map) {
-                        std::cout << key << " : " << ast::get_type_as_string(value) << "\n";
-                    }
-                #endif
                 
-                return;
-            case lexer::tok_semicolon:
-                parser::get_next_token(); // ignore semicolons and get the next token...
-                break; 
-            case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
-                expr = parser::parse_var_decl_defn();
-                expr->codegen();
-                break;
-            case lexer::tok_identifier:
-                expr = parser::parse_var_assign();
-                expr->codegen();
-                break;
-            default:
-                expr = parser::parse_expression();
-                expr->codegen();
-                break;
-        }
+                    #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                        std::cout << "\033[32m\nVariable Map:\033[0m\n";
+                        for (auto const& [key, value] : parser::var_map) {
+                            std::cout << key << " : " << ast::get_type_as_string(value) << "\n";
+                        }
+                    #endif
+                    
+                    return;
+                case lexer::tok_semicolon:
+                    parser::get_next_token(); // ignore semicolons and get the next token...
+                    break; 
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
+                    expr = parser::parse_var_decl_defn();
+                    expr->codegen();
+                    break;
+                case lexer::tok_identifier:
+                    expr = parser::parse_var_assign();
+                    expr->codegen();
+                    break;
+                case lexer::tok_def:
+                    func = parser::parse_function();
+                    func->codegen();
+                    break;
+                case lexer::tok_return:
+                    expr = parser::parse_return();
+                    expr->codegen();
+                    break;
+                default:
+                    expr = parser::parse_expression();
+                    expr->codegen();
+                    break;
+            }
         }
      * @endcode
      */

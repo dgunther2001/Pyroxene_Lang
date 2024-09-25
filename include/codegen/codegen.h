@@ -12,6 +12,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/Module.h"
 #include "../ast/ast.h"
+#include "../utility/utility.h"
 #include <map>
 
 namespace codegen {
@@ -32,9 +33,14 @@ namespace codegen {
     extern std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
 
     /**
-     * This is the global symbol table that holds identifier names, as well as a pointer to their allocation on the stack which holds type and value information.
+     * @par This is the global symbol table that holds identifier names, as well as a pointer to their allocation on the stack which holds type and value information.
      */
     extern std::map<std::string, llvm::AllocaInst*> symbol_table;
+
+    /**
+     * @par This stores the global entry point for control flow to be returned back to
+     */
+    extern llvm::BasicBlock* top_level_entry;
     
     extern llvm::Type* get_llvm_type(ast::types current_type);
 }

@@ -15,6 +15,7 @@ namespace codegen {
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
     std::map<std::string, llvm::AllocaInst*> symbol_table;
+    llvm::BasicBlock* top_level_entry;
 
     /**
      * @par Helper function to return an llvm::Type* based on the type stored in the AST.
@@ -325,14 +326,145 @@ namespace ast {
         return variable_allocation;
     }
 
-
-    llvm::Value* ast::return_expr::codegen() {
-        return nullptr;
+    /**
+     * @fn ast::return_expr::codegen()
+     * @par Generates IR for the expression attached to the return statement, and creates a return IR instruction.
+     * @code
+     *  llvm::Value* return_value = returned_value->codegen();
+        codegen::IR_Builder->CreateRet(return_value);
+        return return_value;
+     * @endcode
+     */
+    llvm::Value* ast::return_expr::codegen() { 
+        llvm::Value* return_value = returned_value->codegen();
+        codegen::IR_Builder->CreateRet(return_value);
+        return return_value;
     }
 
+    /**
+     * @fn ast::func_defn::codegen()
+     * <h4> Functionally, takes all of the relevant parameters in the func_defn ast node, and converts them to IR. </h4>
+     * 
+     * @par Grab the return type, as well as the types of all of the paramters.
+     * @code
+     * llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
 
+        std::vector<llvm::Type*> parameter_types;
+        for (auto const& parameter : parameters) {
+            parameter_types.emplace_back(codegen::get_llvm_type(dynamic_cast<ast::variable_declaration*>(parameter.get())->get_expr_type()));
+        }
+     * @endcode
+
+       @par Generate an llvm::FunctionType* which holds the function return type and parameter types. 
+       @code
+        llvm::FunctionType* func_type = llvm::FunctionType::get(func_return_type, parameter_types, false);
+       @endcode
+
+       @par Create the function declaration in the current module. 
+       @code
+        llvm::Function* function_decl = llvm::Function::Create(func_type, llvm::Function::ExternalLinkage, func_name, *codegen::LLVM_Module);
+       @endcode
+
+       @par Create a new basic block for the function, which is essentially just a control flow boundary for the function, and set the IR_Builder insertion point to it.
+       @code
+        llvm::BasicBlock* function_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "entry_pt_" + func_name, function_decl);
+        codegen::IR_Builder->SetInsertPoint(function_block);
+       @endcode
+
+       @par We iterate over the parameters array in the AST Node, and set the name of the argument in the llvm::Function* to the values stored in the parameters vector.
+       @code
+        for (int i = 0; i < parameters.size(); i++) {
+            llvm::Argument* argument = function_decl->getArg(i); 
+            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
+        }
+       @endcode
+       @par Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.
+       @code
+        for (int i = 0; i < parameters.size(); i++) {
+            llvm::Argument* argument = function_decl->getArg(i); 
+            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
+        }
+
+        for (auto const& expression : expressions) {
+            llvm::Value* current_expr = expression->codegen();
+
+            if (dynamic_cast<ast::return_expr*>(expression.get())) {
+                if (func_return_type->isVoidTy()) {
+                    // ADD ERROR HANDLING HERE
+                } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
+                    utility::codegen_error("Invalid return type", lexer::line_count);
+                }
+                break;
+            }
+        }
+       @endcode
+
+       @par Check whether the current control flow block has a terminator (return and branch), and if not, generate one with the default value of return type.
+       @code
+        if (!function_block->getTerminator()) {
+            if (func_return_type->isVoidTy()) {
+                codegen::IR_Builder->CreateRetVoid(); 
+            } else {
+                llvm::Value* default_return_value = llvm::Constant::getNullValue(func_return_type);
+                codegen::IR_Builder->CreateRet(default_return_value); 
+                
+            }
+        }
+       @endcode
+
+       @par Reset the IR insertion point back to the global insertion point and return control back to the global block. Then return the llvm::Function*.
+       @code
+        codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
+        return function_decl;
+       @endcode
+     */
     llvm::Value* ast::func_defn::codegen() {
-        return nullptr;
+        llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
+
+        std::vector<llvm::Type*> parameter_types;
+        for (auto const& parameter : parameters) {
+            parameter_types.emplace_back(codegen::get_llvm_type(dynamic_cast<ast::variable_declaration*>(parameter.get())->get_expr_type()));
+        }
+
+        llvm::FunctionType* func_type = llvm::FunctionType::get(func_return_type, parameter_types, false); // specifies return type and parameter types for the function
+
+        llvm::Function* function_decl = llvm::Function::Create(func_type, llvm::Function::ExternalLinkage, func_name, *codegen::LLVM_Module); // creates the function based on all of the above parameters, and set it to the module
+
+        llvm::BasicBlock* function_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "entry_pt_" + func_name, function_decl);
+        codegen::IR_Builder->SetInsertPoint(function_block);
+
+    
+        for (int i = 0; i < parameters.size(); i++) {
+            llvm::Argument* argument = function_decl->getArg(i); 
+            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
+        }
+
+        for (auto const& expression : expressions) {
+            llvm::Value* current_expr = expression->codegen();
+
+            if (dynamic_cast<ast::return_expr*>(expression.get())) {
+                if (func_return_type->isVoidTy()) {
+                    // ADD ERROR HANDLING HERE
+                } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
+                    utility::codegen_error("Invalid return type", lexer::line_count);
+                }
+                break;
+            }
+        }
+
+        if (!function_block->getTerminator()) {
+            if (func_return_type->isVoidTy()) {
+                codegen::IR_Builder->CreateRetVoid(); 
+            } else {
+                llvm::Value* default_return_value = llvm::Constant::getNullValue(func_return_type);
+                codegen::IR_Builder->CreateRet(default_return_value); 
+                
+            }
+        }
+
+        codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
+
+        return function_decl;
     }
 
 

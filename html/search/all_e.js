@@ -12,5 +12,6 @@ var searchData=
   ['integer_5fexpression_9',['integer_expression',['../classast_1_1integer__expression.html',1,'ast::integer_expression'],['../classast_1_1integer__expression.html#a14c83dab571b5b08d524594c46ab1de4',1,'ast::integer_expression::integer_expression()']]],
   ['integer_5fvalue_10',['integer_value',['../namespacelexer.html#a2d316c268c0a2311fbf8e13114787596',1,'lexer']]],
   ['ir_20codegen_20function_11',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
-  ['ir_5fbuilder_12',['IR_Builder',['../namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c',1,'codegen']]]
+  ['ir_5fbuilder_12',['IR_Builder',['../namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c',1,'codegen']]],
+  ['is_5fbinary_13',['is_binary',['../classast_1_1variable__definition.html#a7737744b95ddd642e392548dd40a653a',1,'ast::variable_definition']]]
 ];

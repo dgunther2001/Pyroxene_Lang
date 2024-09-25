@@ -106,6 +106,8 @@ Variables</h2></td></tr>
 <tr class="separator:a79b39c1264ded17ff5cd25cd3b5f880c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac4d61dcaf7fa5b4d2d2ae68e504fbe5d" id="r_ac4d61dcaf7fa5b4d2d2ae68e504fbe5d"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, llvm::AllocaInst * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">symbol_table</a></td></tr>
 <tr class="separator:ac4d61dcaf7fa5b4d2d2ae68e504fbe5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92ca0442631b7872f388e5917ce9b51" id="r_ae92ca0442631b7872f388e5917ce9b51"><td class="memItemLeft" align="right" valign="top">llvm::BasicBlock *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae92ca0442631b7872f388e5917ce9b51">top_level_entry</a></td></tr>
+<tr class="separator:ae92ca0442631b7872f388e5917ce9b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="abb9b2b119e0c3d003dbeab964c1ef0cb" name="abb9b2b119e0c3d003dbeab964c1ef0cb"></a>
@@ -198,7 +200,22 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This is the global symbol table that holds identifier names, as well as a pointer to their allocation on the stack which holds type and value information. </p>
+<dl class="section user"><dt>This is the global symbol table that holds identifier names, as well as a pointer to their allocation on the stack which holds type and value information.</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ae92ca0442631b7872f388e5917ce9b51" name="ae92ca0442631b7872f388e5917ce9b51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae92ca0442631b7872f388e5917ce9b51">&#9670;&#160;</a></span>top_level_entry</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::BasicBlock * codegen::top_level_entry</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>This stores the global entry point for control flow to be returned back to</dt><dd></dd></dl>
 
 </div>
 </div>

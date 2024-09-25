@@ -16,7 +16,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "../ast/ast.h"
 #include "../codegen/codegen.h"
 
-#define PARSER_PRINT_UTIL 1
+#define PARSER_PRINT_UTIL 0
 
 namespace utility {
 
@@ -24,6 +24,7 @@ namespace utility {
     extern void driver_args_error(const int num_args);
     extern void lexer_error(const std::string& message, int line);
     extern void parser_error(const std::string& message, int line);
+    extern void codegen_error(const std::string& message, int line);
     extern void output_current_token();
     extern void initialize_operator_precendence();
 

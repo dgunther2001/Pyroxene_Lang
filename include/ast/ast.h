@@ -61,6 +61,31 @@ namespace ast {
         }
     };
 
+    /**
+     * @par This class holds the data related to function definitions.
+     * @code
+        class func_defn {
+        private:
+            types return_type;
+            std::string func_name;
+            std::vector<std::unique_ptr<top_level_expr>> expressions;
+            std::set<std::string> function_symbol_table;
+            std::vector<std::unique_ptr<top_level_expr>>parameters;
+        public:
+            func_defn(types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<top_level_expr>> parameters) :
+                return_type(return_type),
+                func_name(name),
+                expressions(std::move(expressions)),
+                function_symbol_table(std::move(var_names)),
+                parameters(std::move(parameters))
+                {}
+
+            ~func_defn() = default;
+            void debug_output();
+            llvm::Value* codegen();
+        };
+     * @endcode
+     */
     class func_defn {
     private:
         types return_type;
@@ -493,6 +518,25 @@ namespace ast {
         llvm::Value* codegen() override;
     };
 
+    /**
+     * @par This class holds data related to return expressions.
+     * @code
+        class return_expr : public top_level_expr {
+        private:
+            types type;
+            std::unique_ptr<top_level_expr> returned_value;
+        
+        public:
+            return_expr(types type, std::unique_ptr<top_level_expr> return_val) : 
+                type(type),
+                returned_value(std::move(return_val)) 
+                {}
+            types get_expr_type() const override {return type;} 
+            void debug_output();
+            llvm::Value* codegen() override;
+        };
+     * @endcode
+     */
     class return_expr : public top_level_expr {
     private:
         types type;
