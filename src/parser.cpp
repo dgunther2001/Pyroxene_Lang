@@ -59,18 +59,6 @@ namespace parser {
         return current_token;
     }
 
-    /*
-    std::unique_ptr<ast::top_level_expr> tokenize_expr_vector() {
-        std::vector<lexer::Token_Type> single_nested_expr_tokens;
-        while (current_token != lexer::tok_semicolon) { // while it is an expression...
-            single_nested_expr_tokens.emplace_back(current_token);
-            get_next_token();
-        }
-
-        return std::move(parse_binary_expr(single_nested_expr_tokens));
-        // need to somehow store identifiers and raw values as well...
-    }
-    */
 
    /**
     * @par When called, figures out whether we are dealing with a unary, or binary expression, and calls the respective function.
@@ -404,9 +392,7 @@ namespace parser {
             default:
                 utility::parser_error("Invalid type specified", lexer::line_count); 
         }    
-
         get_next_token(); // consume the type
-
 
         std::optional<lexer::lexer_stored_values> value = current_value;
 
@@ -418,11 +404,9 @@ namespace parser {
                 utility::parser_error("Expected identifier", lexer::line_count);
             }
         }
-
         get_next_token(); // consume the identifier
 
         var_map.insert({identifier, type});
-
         if (current_token == lexer::tok_assignment) {
             return std::move(parse_var_defn(type, identifier));
         } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
@@ -977,20 +961,14 @@ namespace parser {
                 case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
                     current_expr = parse_var_decl_defn();
                     std::string var_name;
-                    if (auto* named_var = dynamic_cast<ast::variable_definition*>(current_expr.get())) {
-                        var_name = named_var->get_name();
-                        if (named_var->is_binary()){
-                            get_next_token();
-                        }
-                    } else if (auto* named_var = dynamic_cast<ast::variable_declaration*>(current_expr.get())) {
-                        var_name = named_var->get_name();
-                        get_next_token();
-                    }
                     var_names.insert(var_name);
                     break;
                 }
                 case lexer::tok_return:
                     current_expr = parse_return();
+                    break;
+                case lexer::tok_semicolon:
+                    get_next_token();
                     break;
                 default:
                     current_expr = parse_expression();

@@ -167,11 +167,28 @@ namespace utility {
     }
 
     /**
-     * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
+     * @par Initializes all values in the parser token getter method.
      * 
      * @code
      *  parser::current_token_as_token = lexer::token_stream.at(0);
-     *  parser::current_value = lexer::token_stream.at(0);
+        parser::current_value = lexer::token_stream.at(0);
+        parser::current_token = parser::current_token_as_token;
+        parser::current_token_index = 0;
+     * @endcode
+     */
+    void init_parser() {
+        parser::current_token_as_token = lexer::token_stream.at(0);
+        parser::current_value = lexer::token_stream.at(0);
+        parser::current_token = parser::current_token_as_token;
+        parser::current_token_index = 0;
+    }
+
+    /**
+     * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
+     * 
+     * @code
+
+     * 
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
@@ -225,10 +242,11 @@ namespace utility {
      * @endcode
      */
     void primary_driver_loop() {
-        parser::current_token_as_token = lexer::token_stream.at(0);
-        parser::current_value = lexer::token_stream.at(0);
+        parser::get_next_token();
 
         while (true) {
+            
+
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
                     std::cout << "\033[32m\nParsing New Statement:\033[0m\n";

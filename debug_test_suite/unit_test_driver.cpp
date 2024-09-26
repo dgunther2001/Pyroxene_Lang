@@ -76,7 +76,7 @@ int main(int argc, char** argv) {
 
 
         utility::initialize_operator_precendence();
-
+        utility::init_parser();
         utility::primary_driver_loop();
 
         file.close();
@@ -106,6 +106,8 @@ int main(int argc, char** argv) {
 
         utility::init_llvm_mods();
 
+        utility::init_parser();
+
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
@@ -126,6 +128,8 @@ int main(int argc, char** argv) {
         llvm::InitializeNativeTargetAsmParser();
 
         utility::init_llvm_mods();
+
+        utility::init_parser();
 
         utility::primary_driver_loop();
 
