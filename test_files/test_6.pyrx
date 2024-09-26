@@ -6,14 +6,6 @@ For the full license text, see the LICENSE.md file in the root directory.
 If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 */
 
-int a = 4;
-int b = 5;
-int c = a;
-
-int d;
-
-d = a;
-
-int e = a + 10;
-
-d = e / b + c * a;
+if (55 + 11) {
+    int i = 55;
+} 

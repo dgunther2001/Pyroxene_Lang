@@ -556,11 +556,13 @@ namespace ast {
     private:
         std::unique_ptr<top_level_expr> condition;
         std::vector<std::unique_ptr<top_level_expr>> expressions;
+        std::unique_ptr<top_level_expr> else_stmt;
     
     public:
-        if_expr(std::unique_ptr<top_level_expr> condition, std::vector<std::unique_ptr<top_level_expr>> expressions) :
+        if_expr(std::unique_ptr<top_level_expr> condition, std::vector<std::unique_ptr<top_level_expr>> expressions, std::unique_ptr<top_level_expr> else_stmt) :
             condition(std::move(condition)),
-            expressions(std::move(expressions))
+            expressions(std::move(expressions)),
+            else_stmt(std::move(else_stmt))
             {}
         void debug_output();
         llvm::Value* codegen() override;

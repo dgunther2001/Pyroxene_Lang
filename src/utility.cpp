@@ -214,10 +214,6 @@ namespace utility {
                     expr = parser::parse_if();
                     expr->codegen();
                     break;
-                case lexer::tok_else:
-                    expr = parser::parse_else();
-                    expr->codegen();
-                    break;
                 default:
                     expr = parser::parse_expression();
                     expr->codegen();
@@ -273,10 +269,6 @@ namespace utility {
                     break;
                 case lexer::tok_if:
                     expr = parser::parse_if();
-                    expr->codegen();
-                    break;
-                case lexer::tok_else:
-                    expr = parser::parse_else();
                     expr->codegen();
                     break;
                 default:

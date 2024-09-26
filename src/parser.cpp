@@ -70,11 +70,21 @@ namespace parser {
     * @endcode
 
       @par Check if we have a binary operator
-      If we have a binary op, store all of those tokens and values in the vectors and consume them until we reach a semicolon. Then return a call to the binary expression parser;
+      If we have a binary op, store all of those tokens and values in the vectors and consume them until we reach a semicolon. Then return a call to the binary expression parser.
+      We also need to store a count of parenthesis, as we need to allow subexpressions to be contained within parenthesis, but properly terminate for things like if statements
 
       @code
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
-            while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
+
+            int paren_count = 0;
+
+            while ((current_token_as_token != lexer::tok_semicolon)  && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression...
+                if (current_token == lexer::tok_open_paren) {
+                    paren_count++;
+                } else if (current_token == lexer::tok_close_paren) {
+                    paren_count--;
+                }
+                
                 single_nested_expr_tokens.emplace_back(current_token_as_token);
                 single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
     
@@ -108,7 +118,19 @@ namespace parser {
         get_next_token(); 
 
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
-            while (current_token_as_token != lexer::tok_semicolon) { // while it is an expression...
+
+            int paren_count = 0;
+
+            while ((current_token_as_token != lexer::tok_semicolon)  && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression.. 
+                
+                if (current_token == lexer::tok_open_paren) {
+                    paren_count++;
+                    std::cout << "increment p\n";
+                } else if (current_token == lexer::tok_close_paren) {
+                    std::cout << "decrement p\n";
+                    paren_count--;
+                }
+                
                 single_nested_expr_tokens.emplace_back(current_token_as_token);
                 single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
     
@@ -1032,17 +1054,17 @@ namespace parser {
             get_next_token();
         }
 
-        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-            //auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(expr_node.get());
-            return_expr_ptr->debug_output();
-        #endif
-
         auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
 
         return std::move(ast_node);
     }
 
     std::unique_ptr<ast::top_level_expr> parse_if() {
+        
         get_next_token(); // consume the if
 
         if (current_token != lexer::tok_open_paren) {
@@ -1051,8 +1073,8 @@ namespace parser {
 
         get_next_token(); // consume the (
 
-        auto condition = parse_expression(); // MAY HAVE TO DO A DBINARRY DYNAMIC CAST THING HERE...
-
+        auto condition = parse_expression(); // MAY HAVE TO DO A BINARRY DYNAMIC CAST THING HERE...
+        
         if (current_token != lexer::tok_close_paren) {
             utility::parser_error("Exprected ')'", lexer::line_count);
         }
@@ -1060,7 +1082,7 @@ namespace parser {
         get_next_token(); // consume the )
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Exprected '['", lexer::line_count);
+            utility::parser_error("Exprected '{'", lexer::line_count);
         }
 
         get_next_token(); // consume the {
@@ -1087,7 +1109,13 @@ namespace parser {
 
         get_next_token(); // consume the '}'
 
-        auto if_node = std::make_unique<ast::if_expr>(std::move(condition), std::move(expressions));
+        std::unique_ptr<ast::top_level_expr> else_stmt = nullptr;
+
+        if (current_token == lexer::tok_else) {
+            else_stmt = parse_else(); 
+        }
+
+        auto if_node = std::make_unique<ast::if_expr>(std::move(condition), std::move(expressions), std::move(else_stmt));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             if_node->debug_output();
