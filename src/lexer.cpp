@@ -637,6 +637,7 @@ namespace lexer {
             Token_Type token = get_token();
             if (token == tok_eof) {
                 token_stream.emplace_back(token);
+                stored_values.emplace_back(std::nullopt);
                 break;
             }
             token_stream.emplace_back(token);

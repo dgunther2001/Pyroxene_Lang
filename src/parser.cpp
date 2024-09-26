@@ -22,11 +22,21 @@ namespace parser {
     int current_token_index = 0;
     int token_index_max = lexer::token_stream.size();
 
+    std::optional<lexer::lexer_stored_values> current_value;
+
     /**
      * @par Grabs the next token from input, increments the index, and casts it to an int.
      * 
      * @code
-        current_token = lexer::token_stream[current_token_index];
+        if (current_token_index >= lexer::token_stream.size()) {
+            throw std::out_of_range("Token Stream Access OUT OF RANGE");
+        }
+        current_token = lexer::token_stream.at(current_token_index);
+
+        if (current_token_index >= lexer::stored_values.size()) {
+            throw std::out_of_range("Value Stream Access OUT OF RANGE");
+        }
+        current_value = lexer::stored_values.at(current_token_index);
         current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
 
@@ -34,7 +44,15 @@ namespace parser {
      * @endcode
      */
     int get_next_token() {
-        current_token = lexer::token_stream[current_token_index];
+        if (current_token_index >= lexer::token_stream.size()) {
+            throw std::out_of_range("Token Stream Access OUT OF RANGE");
+        }
+        current_token = lexer::token_stream.at(current_token_index);
+
+        if (current_token_index >= lexer::stored_values.size()) {
+            throw std::out_of_range("Value Stream Access OUT OF RANGE");
+        }
+        current_value = lexer::stored_values.at(current_token_index);
         current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
 
@@ -111,46 +129,42 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_expression() {
         
         lexer::Token_Type first_tok = current_token_as_token; 
+        std::optional<lexer::lexer_stored_values> current_expr_val = current_value;
+
         std::vector<lexer::Token_Type> single_nested_expr_tokens;
         std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values;
-        single_nested_expr_tokens.emplace_back(current_token_as_token);
-        single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
+
+        single_nested_expr_tokens.emplace_back(first_tok);
+        single_nested_expr_values.emplace_back(current_expr_val);
+
         get_next_token(); 
 
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
-
             int paren_count = 0;
 
-            while ((current_token_as_token != lexer::tok_semicolon)  && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression.. 
+            while ((current_token_as_token != lexer::tok_semicolon) && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression.. 
                 
                 if (current_token == lexer::tok_open_paren) {
                     paren_count++;
-                    std::cout << "increment p\n";
                 } else if (current_token == lexer::tok_close_paren) {
-                    std::cout << "decrement p\n";
                     paren_count--;
                 }
                 
                 single_nested_expr_tokens.emplace_back(current_token_as_token);
-                single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
-    
-
+                single_nested_expr_values.emplace_back(current_value);
                 get_next_token();
             }
+
             return std::move(parse_binary_expr(single_nested_expr_tokens, single_nested_expr_values));
         }
 
         else {
-            if (lexer::stored_values.at(current_token_index - 2).has_value()) {
-                lexer::lexer_stored_values value = lexer::stored_values.at(current_token_index - 2).value();
-                return std::move(parse_primary_expression(first_tok, true, value));
+            if (current_expr_val.has_value()) {
+                return std::move(parse_primary_expression(first_tok, true, current_expr_val.value()));
             } else {
                 utility::parser_error("No value stored for the current token", lexer::line_count);
             }
         }
-        
-
-        // add parsing of function calls
     }
     
     /**
@@ -246,17 +260,19 @@ namespace parser {
      * @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream, std::vector<std::optional<lexer::lexer_stored_values>> sub_value_stream) {
+        
 
         if (sub_tok_stream.empty()) {
             utility::parser_error("Empty token stream provided to parse_binary_expr", lexer::line_count);
         }
-
+        
         if (sub_tok_stream.size() == 1) {
             if (sub_value_stream.at(0) == std::nullopt) {
                 utility::parser_error("Expected value for token", lexer::line_count);
             }
             return std::move(parse_primary_expression(sub_tok_stream.at(0), false, sub_value_stream.at(0).value()));
         }
+
 
         int index_of_highest_prec_op = -1;
         int highest_prec = -1;
@@ -629,9 +645,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
 
         return std::move(ast_node);
     }
@@ -656,9 +672,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
         return std::move(ast_node);
     }
 
@@ -683,9 +699,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
         return std::move(ast_node);
     }
 
@@ -711,9 +727,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
         return std::move(ast_node);
     }
 
@@ -739,9 +755,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
         return std::move(ast_node);
     }
 
@@ -766,9 +782,9 @@ namespace parser {
             ast_node->debug_output();
         #endif
 
-        if (top_level) {
-            get_next_token();
-        }
+        // if (top_level) {
+        //     get_next_token();
+        // }
         return std::move(ast_node);
     }
 

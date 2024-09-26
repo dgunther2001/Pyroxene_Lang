@@ -170,6 +170,8 @@ namespace utility {
      * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
      * 
      * @code
+     *  parser::current_token_as_token = lexer::token_stream.at(0);
+     *  parser::current_value = lexer::token_stream.at(0);
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
@@ -223,6 +225,8 @@ namespace utility {
      * @endcode
      */
     void primary_driver_loop() {
+        parser::current_token_as_token = lexer::token_stream.at(0);
+        parser::current_value = lexer::token_stream.at(0);
 
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)

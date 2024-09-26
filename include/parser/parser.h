@@ -29,6 +29,11 @@ namespace parser {
     extern lexer::Token_Type current_token_as_token;
 
     /**
+     * @par Stores the current value adjacent to the current token (can be an std::nullopt)
+     */
+    extern std::optional<lexer::lexer_stored_values> current_value;
+
+    /**
      * @par Stores a vector of predefined variables and their respective type to block redeclaration, and do basic type checking.
      */
     extern std::map<std::string, ast::types> var_map;
@@ -52,6 +57,7 @@ namespace parser {
      * @par Stores the length of the lexer::token_stream so that we don't attempt to access out of bounds elements.
      */
     extern int token_index_max;
+    
 
     int get_next_token();
 

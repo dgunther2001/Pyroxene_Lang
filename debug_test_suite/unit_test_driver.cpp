@@ -74,7 +74,6 @@ int main(int argc, char** argv) {
         std::cout << "\n";
         std::cout << "Number of Tokens: " << lexer::token_stream.size() + 1 << "\n";
 
-        parser::get_next_token();
 
         utility::initialize_operator_precendence();
 
@@ -99,8 +98,6 @@ int main(int argc, char** argv) {
     #elif (DEBUG_OPTION == 5)
         lexer::tokenize_file();
 
-        parser::get_next_token();
-
         utility::initialize_operator_precendence();
 
         llvm::InitializeNativeTarget();
@@ -121,8 +118,6 @@ int main(int argc, char** argv) {
 
     #else
         lexer::tokenize_file();
-
-        parser::get_next_token();
 
         utility::initialize_operator_precendence();
 
