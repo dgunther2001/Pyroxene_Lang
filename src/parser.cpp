@@ -503,7 +503,7 @@ namespace parser {
      * 
      * @code
      *  std::string identifier;
-        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+        std::optional<lexer::lexer_stored_values> value = current_value;
         
         if (value.has_value()) {
             if (std::holds_alternative<std::string>(value.value())) {
@@ -542,7 +542,7 @@ namespace parser {
      */
     std::unique_ptr<ast::top_level_expr> parse_var_assign() {
         std::string identifier;
-        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+        std::optional<lexer::lexer_stored_values> value = current_value;
         
         if (value.has_value()) {
             if (std::holds_alternative<std::string>(value.value())) {
