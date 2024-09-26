@@ -354,7 +354,7 @@ namespace parser {
       @par We then store the identifier, and put it in the type map.
       
       @code
-        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+        std::optional<lexer::lexer_stored_values> value = current_value;;
 
         if (value.has_value()) {
             if (std::holds_alternative<std::string>(value.value())) {
@@ -408,7 +408,7 @@ namespace parser {
         get_next_token(); // consume the type
 
 
-        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 1];
+        std::optional<lexer::lexer_stored_values> value = current_value;
 
         if (value.has_value()) {
             if (std::holds_alternative<std::string>(value.value())) {
@@ -485,8 +485,6 @@ namespace parser {
             utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
         }
         
-        
-
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)

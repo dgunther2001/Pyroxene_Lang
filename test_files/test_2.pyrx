@@ -17,3 +17,6 @@ My comment
 //6;
 33 + 4;
 6;
+
+int c = 33;
+int l;
