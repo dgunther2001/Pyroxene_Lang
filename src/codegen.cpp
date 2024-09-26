@@ -420,7 +420,6 @@ namespace ast {
      */
     llvm::Value* ast::func_defn::codegen() {
         llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
-
         std::vector<llvm::Type*> parameter_types;
         for (auto const& parameter : parameters) {
             parameter_types.emplace_back(codegen::get_llvm_type(dynamic_cast<ast::variable_declaration*>(parameter.get())->get_expr_type()));
@@ -442,7 +441,7 @@ namespace ast {
         for (auto const& expression : expressions) {
             llvm::Value* current_expr = expression->codegen();
 
-            if (dynamic_cast<ast::return_expr*>(expression.get())) {
+            if (auto return_expr = dynamic_cast<ast::return_expr*>(expression.get())) {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
                 } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
@@ -450,6 +449,8 @@ namespace ast {
                 }
                 break;
             }
+            
+            
         }
 
         if (!function_block->getTerminator()) {

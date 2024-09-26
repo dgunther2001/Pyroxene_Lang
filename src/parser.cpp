@@ -53,6 +53,7 @@ namespace parser {
             throw std::out_of_range("Value Stream Access OUT OF RANGE");
         }
         current_value = lexer::stored_values.at(current_token_index);
+
         current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
 
@@ -832,26 +833,22 @@ namespace parser {
                 case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
                     current_expr = parse_var_decl_defn();
                     std::string var_name;
-                    if (auto* named_var = dynamic_cast<ast::variable_definition*>(current_expr.get())) {
-                        var_name = named_var->get_name();
-                        if (named_var->is_binary()){
-                            get_next_token();
-                        }
-                    } else if (auto* named_var = dynamic_cast<ast::variable_declaration*>(current_expr.get())) {
-                        var_name = named_var->get_name();
-                        get_next_token();
-                    }
                     var_names.insert(var_name);
                     break;
                 }
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    break;
                 default:
                     current_expr = parse_expression();
             }
 
-            expressions.emplace_back(std::move(current_expr));
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
 
         }
 
@@ -881,11 +878,6 @@ namespace parser {
 
         get_next_token(); // eat def
 
-        if (!lexer::stored_values.at(current_token_index).has_value()) {
-            std::cout << "FUNC NULLOPT!!!\n\n";
-            return nullptr;
-        }
-
         ast::types ret_type;
         switch (current_token) {
             case lexer::tok_int:
@@ -912,7 +904,7 @@ namespace parser {
 
         get_next_token(); // consume the type
 
-        std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
+        std::string func_name = std::get<std::string>(current_value.value()); // grab the function name
 
         get_next_token(); // consume the name
 
@@ -969,12 +961,16 @@ namespace parser {
                     break;
                 case lexer::tok_semicolon:
                     get_next_token();
+                    current_expr = nullptr;
                     break;
                 default:
                     current_expr = parse_expression();
             }
 
-            expressions.emplace_back(std::move(current_expr));
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
+
 
             // add error handling here
         }
@@ -982,7 +978,6 @@ namespace parser {
         get_next_token(); // consume the '}'
 
         // instantiate the ast node and return it
-
         auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
@@ -1012,10 +1007,6 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_return() {
         get_next_token();
         auto expr_node = parse_expression();
-
-        if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(expr_node.get())) {
-            get_next_token();
-        }
 
         auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
 

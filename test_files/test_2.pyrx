@@ -13,6 +13,7 @@ int b;
 
 def float my_func(int a, char r) {
     int l = 44;
+    int c;
     //int f = 33 * l;
-    //return 55.3;
+    return 55.3;
 }
