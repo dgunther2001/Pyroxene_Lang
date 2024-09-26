@@ -75,6 +75,8 @@ namespace parser {
     std::unique_ptr<ast::func_defn> parse_function();
     std::unique_ptr<ast::top_level_expr> parse_return();
 
+    std::unique_ptr<ast::top_level_expr> parse_if();
+    std::unique_ptr<ast::top_level_expr> parse_else();
 
     /*
     // TO DELETE

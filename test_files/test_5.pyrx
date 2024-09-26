@@ -18,5 +18,10 @@ def int my_func(int l, int b) {
     return 0;
 }
 
-
 int l = 50;
+
+def float my_func2(float i, char c) {
+    return 31.4;
+}
+
+int z = 44;

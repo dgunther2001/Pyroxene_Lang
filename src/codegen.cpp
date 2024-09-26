@@ -467,5 +467,12 @@ namespace ast {
         return function_decl;
     }
 
+    llvm::Value* ast::if_expr::codegen() {
+        return nullptr;
+    }
+
+    llvm::Value* ast::else_expr::codegen() {
+        return nullptr;
+    }
 
 }

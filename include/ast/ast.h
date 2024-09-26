@@ -552,6 +552,33 @@ namespace ast {
         llvm::Value* codegen() override;
     };
 
+    class if_expr : public top_level_expr {
+    private:
+        std::unique_ptr<top_level_expr> condition;
+        std::vector<std::unique_ptr<top_level_expr>> expressions;
+    
+    public:
+        if_expr(std::unique_ptr<top_level_expr> condition, std::vector<std::unique_ptr<top_level_expr>> expressions) :
+            condition(std::move(condition)),
+            expressions(std::move(expressions))
+            {}
+        void debug_output();
+        llvm::Value* codegen() override;
+    };
+
+    class else_expr : public top_level_expr {
+    private:
+        std::vector<std::unique_ptr<top_level_expr>> expressions;
+    
+    public:
+        else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions) :
+            expressions(std::move(expressions))
+            {}
+        void debug_output();
+        llvm::Value* codegen() override;
+    };
+
+
     
     
     extern std::string get_type_as_string(types type);

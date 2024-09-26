@@ -177,6 +177,14 @@ namespace lexer {
      *         return tok_void;
      *     }
      * 
+     *     if (identifier == "if") {
+     *         return tok_if;
+     *     }
+     * 
+     *     if (identifier == "else") {
+     *         return tok_else;
+     *     }
+     * 
      *     if (identifier == "for") {
      *         return tok_for;
      *     }
@@ -441,6 +449,14 @@ namespace lexer {
 
             if (identifier == "void") {
                 return tok_void;
+            }
+
+            if (identifier == "if") {
+                return tok_if;
+            }
+        
+            if (identifier == "else") {
+                return tok_else;
             }
 
             if (identifier == "bool") {

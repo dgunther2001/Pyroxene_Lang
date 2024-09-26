@@ -1033,13 +1033,71 @@ namespace parser {
         }
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-            auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(expr_node.get());
+            //auto* return_expr_ptr = dynamic_cast<ast::return_expr*>(expr_node.get());
             return_expr_ptr->debug_output();
         #endif
 
         auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
 
         return std::move(ast_node);
+    }
+
+    std::unique_ptr<ast::top_level_expr> parse_if() {
+        get_next_token(); // consume the if
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Exprected '('", lexer::line_count);
+        }
+
+        get_next_token(); // consume the (
+
+        auto condition = parse_expression(); // MAY HAVE TO DO A DBINARRY DYNAMIC CAST THING HERE...
+
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Exprected ')'", lexer::line_count);
+        }
+
+        get_next_token(); // consume the )
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Exprected '['", lexer::line_count);
+        }
+
+        get_next_token(); // consume the {
+
+        std::unique_ptr<ast::top_level_expr> current_expr;
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+
+        while (current_token != lexer::tok_close_brack) {
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
+                    current_expr = parse_var_decl_defn();
+                    break;
+                }
+                case lexer::tok_return:
+                    current_expr = parse_return();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            expressions.emplace_back(std::move(current_expr));
+
+        }
+
+        get_next_token(); // consume the '}'
+
+        auto if_node = std::make_unique<ast::if_expr>(std::move(condition), std::move(expressions));
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            if_node->debug_output();
+        #endif
+
+        return std::move(if_node);
+    }
+    
+    std::unique_ptr<ast::top_level_expr> parse_else() {
+        return nullptr;
     }
 
 }

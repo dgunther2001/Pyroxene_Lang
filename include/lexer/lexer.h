@@ -36,6 +36,8 @@ namespace lexer {
         tok_void = -35,        ///< Void type
         tok_char = -40,        ///< Character type
         tok_def = -41,         ///< Function definition keyword
+        tok_if = -45,          ///< If keyword
+        tok_else = -46,        ///< Else keyword
         tok_string = -50,      ///< String type
         tok_int_val = -55,     ///< Integer literal value
         tok_float_val = -56,   ///< Float literal value

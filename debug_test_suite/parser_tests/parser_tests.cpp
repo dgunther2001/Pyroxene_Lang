@@ -134,5 +134,12 @@ namespace ast {
           std::cout << "Parsed function with name: " << func_name << "\n";
      }
 
+     void ast::if_expr::debug_output() {
+          std::cout << "Parsed if statement\n";
+     }
+
+     void ast::else_expr::debug_output() {
+          std::cout << "Parsed else statement\n";
+     }
 }
 
