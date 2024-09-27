@@ -20,6 +20,7 @@ namespace parser {
     std::map<lexer::Token_Type, int> operator_precedence;
 
     int current_token_index = 0;
+    int current_line;
     int token_index_max = lexer::token_stream.size();
 
     std::optional<lexer::lexer_stored_values> current_value;
@@ -35,8 +36,14 @@ namespace parser {
 
         if (current_token_index >= lexer::stored_values.size()) {
             throw std::out_of_range("Value Stream Access OUT OF RANGE");
-        }
-        current_value = lexer::stored_values.at(current_token_index);
+        }   
+        current_value = lexer::stored_values.at(current_token_index);     
+        
+        if (current_token_index >= lexer::line_count_vec.size()) {
+            throw std::out_of_range("Line Count Vector Access OUT OF RANGE");
+        } 
+        current_line = lexer::line_count_vec.at(current_token_index);
+
         current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
 
@@ -53,6 +60,11 @@ namespace parser {
             throw std::out_of_range("Value Stream Access OUT OF RANGE");
         }
         current_value = lexer::stored_values.at(current_token_index);
+
+        if (current_token_index >= lexer::line_count_vec.size()) {
+            throw std::out_of_range("Line Count Vector Access OUT OF RANGE");
+        } 
+        current_line = lexer::line_count_vec.at(current_token_index);
 
         current_token_index++;
         current_token_as_token = static_cast<lexer::Token_Type>(current_token);
@@ -110,7 +122,7 @@ namespace parser {
                 lexer::lexer_stored_values value = lexer::stored_values.at(current_token_index - 2).value();
                 return std::move(parse_primary_expression(first_tok, true, value));
             } else {
-                utility::parser_error("No value stored for the current token", lexer::line_count);
+                utility::parser_error("No value stored for the current token", current_line);
             }
         }
       @endcode
@@ -151,7 +163,7 @@ namespace parser {
             if (current_expr_val.has_value()) {
                 return std::move(parse_primary_expression(first_tok, current_expr_val.value()));
             } else {
-                utility::parser_error("No value stored for the current token", lexer::line_count);
+                utility::parser_error("No value stored for the current token", current_line);
             }
         }
     }
@@ -181,7 +193,7 @@ namespace parser {
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(value)); 
 
-        utility::parser_error("Primary expression not recognized", lexer::line_count);
+        utility::parser_error("Primary expression not recognized", current_line);
         return nullptr;
     }
 
@@ -196,7 +208,7 @@ namespace parser {
      * @code 
      *   if (sub_tok_stream.size() == 1) {
             if (sub_value_stream.at(0) == std::nullopt) {
-                utility::parser_error("Expected value for token", lexer::line_count);
+                utility::parser_error("Expected value for token", current_line);
             }
             return std::move(parse_primary_expression(sub_tok_stream.at(0), false, sub_value_stream.at(0).value()));
         }
@@ -219,7 +231,7 @@ namespace parser {
         }
 
         if (index_of_highest_prec_op == 0 || index_of_highest_prec_op == sub_tok_stream.size() - 1) {
-            utility::parser_error("Operator not infix", lexer::line_count);
+            utility::parser_error("Operator not infix", current_line);
         }
 
 
@@ -242,7 +254,7 @@ namespace parser {
         if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
             bin_type = left_expr->get_expr_type(); 
         } else {
-            utility::parser_error("Mismatched types in binary expression", lexer::line_count);
+            utility::parser_error("Mismatched types in binary expression", current_line);
         }
         auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
         return std::move(ast_node);
@@ -252,12 +264,12 @@ namespace parser {
         
 
         if (sub_tok_stream.empty()) {
-            utility::parser_error("Empty token stream provided to parse_binary_expr", lexer::line_count);
+            utility::parser_error("Empty token stream provided to parse_binary_expr", current_line);
         }
         
         if (sub_tok_stream.size() == 1) {
             if (sub_value_stream.at(0) == std::nullopt) {
-                utility::parser_error("Expected value for token", lexer::line_count);
+                utility::parser_error("Expected value for token", current_line);
             }
             return std::move(parse_primary_expression(sub_tok_stream.at(0), sub_value_stream.at(0).value()));
         }
@@ -277,7 +289,7 @@ namespace parser {
         }
 
         if (index_of_highest_prec_op == 0 || index_of_highest_prec_op == sub_tok_stream.size() - 1) {
-            utility::parser_error("Operator not infix", lexer::line_count);
+            utility::parser_error("Operator not infix", current_line);
         }
 
 
@@ -296,7 +308,7 @@ namespace parser {
         if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
             bin_type = left_expr->get_expr_type(); 
         } else {
-            utility::parser_error("Mismatched types in binary expression", lexer::line_count);
+            utility::parser_error("Mismatched types in binary expression", current_line);
         }
             
 
@@ -334,7 +346,7 @@ namespace parser {
                 type = ast::bool_type;
                 break;
             default:
-                utility::parser_error("Invalid type specified", lexer::line_count); 
+                utility::parser_error("Invalid type specified", current_line); 
         }    
 
         get_next_token();
@@ -350,7 +362,7 @@ namespace parser {
                 identifier = std::get<std::string>(value.value());
             } 
             else {
-                utility::parser_error("Expected identifier", lexer::line_count);
+                utility::parser_error("Expected identifier", current_line);
             }
         }
 
@@ -367,7 +379,7 @@ namespace parser {
         } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
             return std::move(parse_var_decl(type, identifier));
         
-        utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+        utility::parser_error("Expected variable definition or declaration", current_line);
 
       @endcode
     */
@@ -391,7 +403,7 @@ namespace parser {
                 type = ast::bool_type;
                 break;
             default:
-                utility::parser_error("Invalid type specified", lexer::line_count); 
+                utility::parser_error("Invalid type specified", current_line); 
         }    
         get_next_token(); // consume the type
 
@@ -402,7 +414,7 @@ namespace parser {
                 identifier = std::get<std::string>(value.value());
             } 
             else {
-                utility::parser_error("Expected identifier", lexer::line_count);
+                utility::parser_error("Expected identifier", current_line);
             }
         }
         get_next_token(); // consume the identifier
@@ -413,7 +425,7 @@ namespace parser {
         } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
             return std::move(parse_var_decl(type, identifier));
         } 
-        utility::parser_error("Expected variable definition or declaration", lexer::line_count);
+        utility::parser_error("Expected variable definition or declaration", current_line);
         return nullptr;
 
     }
@@ -451,7 +463,7 @@ namespace parser {
         auto assigned_expr = parse_expression();
 
         if (assigned_expr->get_expr_type() != type) {
-            utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
+            utility::parser_error("Defining a variable with incorrect type", current_line);
         }
         
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
@@ -467,7 +479,7 @@ namespace parser {
 
         
         if (assigned_expr->get_expr_type() != type) {
-            utility::parser_error("Defining a variable with incorrect type", lexer::line_count);
+            utility::parser_error("Defining a variable with incorrect type", current_line);
         }
         
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
@@ -495,13 +507,13 @@ namespace parser {
                 identifier = std::get<std::string>(value.value());
             } 
             else {
-                utility::parser_error("Expected identifier", lexer::line_count);
+                utility::parser_error("Expected identifier", current_line);
             }
         }
 
         
         if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet declared", lexer::line_count);
+            utility::parser_error("Variable not yet declared", current_line);
         }
 
         get_next_token(); 
@@ -513,7 +525,7 @@ namespace parser {
         auto assigned_expr = parse_expression();
 
         if (assigned_expr->get_expr_type() != var_map[identifier]) {
-            utility::parser_error("Invalid assignment", lexer::line_count);
+            utility::parser_error("Invalid assignment", current_line);
         }
 
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
@@ -534,20 +546,20 @@ namespace parser {
                 identifier = std::get<std::string>(value.value());
             } 
             else {
-                utility::parser_error("Expected identifier", lexer::line_count);
+                utility::parser_error("Expected identifier", current_line);
             }
         }
 
         
         if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet declared", lexer::line_count);
+            utility::parser_error("Variable not yet declared", current_line);
         }
 
         get_next_token(); // consumes the identifier
 
 
         if (current_token != lexer::tok_assignment) {
-            utility::parser_error("Expected an assignment", lexer::line_count);
+            utility::parser_error("Expected an assignment", current_line);
         }
         
 
@@ -558,7 +570,7 @@ namespace parser {
 
         
         if (assigned_expr->get_expr_type() != var_map[identifier]) {
-            utility::parser_error("Invalid assignment", lexer::line_count);
+            utility::parser_error("Invalid assignment", current_line);
         }
         
 
@@ -591,16 +603,16 @@ namespace parser {
                 identifier = std::get<std::string>(value.value());
             } 
             else {
-                utility::parser_error("Expected identifier", lexer::line_count);
+                utility::parser_error("Expected identifier", current_line);
             }
         } 
 
         if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet defined", lexer::line_count);
+            utility::parser_error("Variable not yet defined", current_line);
         }
 
         if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            utility::parser_error("Variable not yet initialized", lexer::line_count);
+            utility::parser_error("Variable not yet initialized", current_line);
         }
 
         auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
@@ -615,11 +627,11 @@ namespace parser {
         // deal with case where it is declared, but not defined ******IMPORTANT
 
         if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet defined", lexer::line_count);
+            utility::parser_error("Variable not yet defined", current_line);
         }
 
         if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            utility::parser_error("Variable not yet initialized", lexer::line_count);
+            utility::parser_error("Variable not yet initialized", current_line);
         }
 
         auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
@@ -779,7 +791,7 @@ namespace parser {
                 ret_type = ast::void_type;
                 break;
             default:
-                utility::parser_error("Invalid return type provided to function", lexer::line_count);
+                utility::parser_error("Invalid return type provided to function", current_line);
         }
 
         get_next_token(); 
@@ -811,13 +823,13 @@ namespace parser {
                 get_next_token();
                 break;
             } else {
-                utility::parser_error("Expected ',' or ')'", lexer::line_count);
+                utility::parser_error("Expected ',' or ')'", current_line);
             }
             
         }
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Expected opening bracket", lexer::line_count);
+            utility::parser_error("Expected opening bracket", current_line);
         }
 
         get_next_token();
@@ -899,7 +911,7 @@ namespace parser {
                 ret_type = ast::void_type;
                 break;
             default:
-                utility::parser_error("Invalid return type provided to function", lexer::line_count);
+                utility::parser_error("Invalid return type provided to function", current_line);
         }
 
         get_next_token(); // consume the type
@@ -909,7 +921,7 @@ namespace parser {
         get_next_token(); // consume the name
 
         if (current_token != lexer::tok_open_paren) {
-            utility::parser_error("Expected '('", lexer::line_count);
+            utility::parser_error("Expected '('", current_line);
         }
 
         get_next_token();
@@ -932,13 +944,13 @@ namespace parser {
                 get_next_token();
                 break;
             } else {
-                utility::parser_error("Expected ',' or ')'", lexer::line_count);
+                utility::parser_error("Expected ',' or ')'", current_line);
             }
             
         }
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Expected opening bracket", lexer::line_count);
+            utility::parser_error("Expected opening bracket", current_line);
         }
         get_next_token(); // consume the bracket
 
@@ -1036,7 +1048,7 @@ namespace parser {
      *  get_next_token();
 
         if (current_token != lexer::tok_open_paren) {
-            utility::parser_error("Exprected '('", lexer::line_count);
+            utility::parser_error("Exprected '('", current_line);
         }
 
         get_next_token();
@@ -1044,13 +1056,13 @@ namespace parser {
         auto condition = parse_expression(); 
 
         if (current_token != lexer::tok_close_paren) {
-            utility::parser_error("Expected ')'", lexer::line_count);
+            utility::parser_error("Expected ')'", current_line);
         }
 
         get_next_token();
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Exprected '{'", lexer::line_count);
+            utility::parser_error("Exprected '{'", current_line);
         }
 
         get_next_token(); 
@@ -1101,7 +1113,7 @@ namespace parser {
         get_next_token(); // consume the if
 
         if (current_token != lexer::tok_open_paren) {
-            utility::parser_error("Exprected '('", lexer::line_count);
+            utility::parser_error("Exprected '('", current_line);
         }
 
         get_next_token(); // consume the (
@@ -1110,13 +1122,13 @@ namespace parser {
 
         
         if (current_token != lexer::tok_close_paren) {
-            utility::parser_error("Expected ')'", lexer::line_count);
+            utility::parser_error("Expected ')'", current_line);
         }
 
         get_next_token(); // consume the )
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Exprected '{'", lexer::line_count);
+            utility::parser_error("Exprected '{'", current_line);
         }
 
         get_next_token(); // consume the {

@@ -173,6 +173,7 @@ namespace utility {
         parser::current_token_index = 0;
         parser::current_token_as_token = lexer::token_stream.at(parser::current_token_index);
         parser::current_value = lexer::stored_values.at(parser::current_token_index);
+        parser::current_line = lexer::line_count_vec.at(parser::current_token_index);
         parser::current_token = parser::current_token_as_token;
      * @endcode
      */
@@ -180,6 +181,7 @@ namespace utility {
         parser::current_token_index = 0;
         parser::current_token_as_token = lexer::token_stream.at(parser::current_token_index);
         parser::current_value = lexer::stored_values.at(parser::current_token_index);
+        parser::current_line = lexer::line_count_vec.at(parser::current_token_index);
         parser::current_token = parser::current_token_as_token;
     }
 
