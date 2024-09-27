@@ -34,6 +34,11 @@ namespace parser {
     extern std::optional<lexer::lexer_stored_values> current_value;
 
     /**
+     * @par Stores the current line
+     */
+    extern int current_line;
+
+    /**
      * @par Stores a vector of predefined variables and their respective type to block redeclaration, and do basic type checking.
      */
     extern std::map<std::string, ast::types> var_map;
@@ -83,18 +88,6 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_if();
     std::unique_ptr<ast::top_level_expr> parse_else();
-
-    /*
-    // TO DELETE
-    std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_identifier_expr(bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_int_expr(bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_float_expr(bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_char_expr(bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_string_expr(bool top_level);
-    std::unique_ptr<ast::top_level_expr> parse_bool_expr(bool top_level);
-    */
-
 }
 
 

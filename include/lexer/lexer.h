@@ -81,6 +81,11 @@ namespace lexer {
     extern std::vector<std::optional<lexer_stored_values>> stored_values;
 
     /**
+     * @par A vecor that holds the adjacent line number for error reporting.
+     */
+    extern std::vector<int> line_count_vec;
+
+    /**
      * @par Stores the current identifier from the input stream if applicable.
      */
     extern std::string identifier;

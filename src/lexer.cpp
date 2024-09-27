@@ -15,6 +15,7 @@ namespace lexer {
 
     std::vector<Token_Type> token_stream;
     std::vector<std::optional<lexer_stored_values>> stored_values;
+    std::vector<int> line_count_vec;
 
     std::string identifier; 
     int64_t integer_value; 
@@ -597,9 +598,11 @@ namespace lexer {
      * Token_Type token = get_token();
      * if (token == tok_eof) {
      *     token_stream.emplace_back(token);
+     *      stored_values.emplace_back(std::nullopt);
      *     break;
      * }
      * token_stream.emplace_back(token);
+     *  line_count_vec.emplace_back(line_count);
      * @endcode
      *
      * @par Associated Value Storage
@@ -638,9 +641,11 @@ namespace lexer {
             if (token == tok_eof) {
                 token_stream.emplace_back(token);
                 stored_values.emplace_back(std::nullopt);
+                line_count_vec.emplace_back(line_count);
                 break;
             }
             token_stream.emplace_back(token);
+            line_count_vec.emplace_back(line_count);
 
             switch (token) {
                 case tok_identifier:
@@ -666,6 +671,7 @@ namespace lexer {
                     break;
             }
         }
+
     }
 
 }
