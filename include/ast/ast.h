@@ -43,9 +43,14 @@ namespace ast {
         public:
             virtual ~top_level_expr() = default; 
             virtual llvm::Value* codegen() = 0; // function that will generate LLVM IR ("= 0" makes this class abstrac)
-
+            virtual std::string get_ast_class() const {
+                return "top";
+            }
             virtual ast::types get_expr_type() const { // placeholder function overwritten for identfier and literal AST leavs.
                 return ast::types::float_type;
+            }
+            virtual std::string get_name() const {
+                return ""; 
             }
         };
      * @endcode
@@ -55,9 +60,16 @@ namespace ast {
         virtual ~top_level_expr() = default;
         //virtual void debug_output();
         virtual llvm::Value* codegen() = 0;
+        virtual std::string get_ast_class() const {
+            return "top";
+        }
 
         virtual ast::types get_expr_type() const { // PLACEHOLDER
             return ast::types::float_type;
+        }
+
+        virtual std::string get_name() const {
+            return ""; 
         }
     };
 
@@ -125,6 +137,7 @@ namespace ast {
                 type(type)
                 {}
 
+            std::string get_ast_class() const { return "binary"; }
             types get_expr_type() const override {return type;}
             void debug_output();
             char get_op() { 
@@ -163,6 +176,7 @@ namespace ast {
             type(type)
             {}
 
+        std::string get_ast_class() const override { return "binary"; }
         types get_expr_type() const override {return type;}
         void debug_output();
         char get_op() { 
@@ -200,7 +214,8 @@ namespace ast {
                 identifier_name(identifier_name),
                 type(type)
                 {}
-            const std::string& get_identifier_name() const {return identifier_name;}
+            std::string get_ast_class() const override { return "identifier"; }
+            std::string get_name() const override {return identifier_name;}
             types get_expr_type() const override {return type;}
             void debug_output();
             llvm::Value* codegen() override;
@@ -218,7 +233,9 @@ namespace ast {
             identifier_name(identifier_name),
             type(type)
             {}
-        const std::string& get_identifier_name() const {return identifier_name;}
+
+        std::string get_ast_class() const override { return "identifier"; }    
+        std::string get_name() const override {return identifier_name;}
         types get_expr_type() const override {return type;}
         void debug_output();
         llvm::Value* codegen() override;
@@ -236,6 +253,7 @@ namespace ast {
 
         public:
             integer_expression(int64_t held_value) : held_value(held_value) {}
+            std::string get_ast_class() const override { return "int"; }
             const int64_t get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
@@ -250,6 +268,7 @@ namespace ast {
 
     public:
         integer_expression(int64_t held_value) : held_value(held_value) {}
+        std::string get_ast_class() const override { return "int"; }
         const int64_t get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
@@ -267,6 +286,7 @@ namespace ast {
 
         public:
             float_expression(float held_value) : held_value(held_value) {}
+            std::string get_ast_class() const override { return "float"; }
             const float get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
@@ -281,6 +301,7 @@ namespace ast {
 
     public:
         float_expression(float held_value) : held_value(held_value) {}
+        std::string get_ast_class() const override { return "float"; }
         const float get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
@@ -298,6 +319,7 @@ namespace ast {
 
         public:
             char_expression(char held_value) : held_value(held_value) {}
+            std::string get_ast_class() const override { return "char"; }
             const char get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
@@ -312,6 +334,7 @@ namespace ast {
 
     public:
         char_expression(char held_value) : held_value(held_value) {}
+        std::string get_ast_class() const override { return "char"; }
         const char get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
@@ -329,6 +352,7 @@ namespace ast {
 
         public:
             string_expression(std::string held_value) : held_value(held_value) {}
+            std::string get_ast_class() const override { return "string"; }
             const std::string& get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
@@ -343,6 +367,7 @@ namespace ast {
 
     public:
         string_expression(std::string held_value) : held_value(held_value) {}
+        std::string get_ast_class() const override { return "string"; }
         const std::string& get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
@@ -360,6 +385,7 @@ namespace ast {
 
         public:
             bool_expression(bool held_value) : held_value(held_value) {}
+            std::string get_ast_class() const override { return "bool"; }
             const bool get_value() const {return held_value;}
             void debug_output();
             types get_expr_type() const override {return type;}
@@ -374,6 +400,7 @@ namespace ast {
 
     public:
         bool_expression(bool held_value) : held_value(held_value) {}
+        std::string get_ast_class() const override { return "bool"; }
         const bool get_value() const {return held_value;}
         void debug_output();
         types get_expr_type() const override {return type;}
@@ -404,8 +431,9 @@ namespace ast {
                 type(var_type),
                 identifier_name(identifier_name)
                 {}
+            std::string get_ast_class() const override { return "var_decl"; }
             types get_expr_type() const override {return type;} 
-            const std::string& get_name() const {return identifier_name;}
+            std::string get_name() const override {return identifier_name;}
             void debug_output();
             llvm::Value* codegen() override;
         };
@@ -421,8 +449,9 @@ namespace ast {
             type(var_type),
             identifier_name(identifier_name)
             {}
+        std::string get_ast_class() const override { return "var_decl"; }
         types get_expr_type() const override {return type;} 
-        const std::string& get_name() const {return identifier_name;}
+        std::string get_name() const override {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
     };
@@ -443,9 +472,9 @@ namespace ast {
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
                 {}
-            
+            std::string get_ast_class() const override { return "var_defn"; }
             types get_expr_type() const override {return type;} 
-            const std::string& get_name() const {return identifier_name;}
+            std::string get_name() const override {return identifier_name;}
             void debug_output();
             llvm::Value* codegen() override;
         };
@@ -463,18 +492,11 @@ namespace ast {
             identifier_name(identifier_name),
             assigned_value(std::move(assigned_value))
             {}
-        
+        std::string get_ast_class() const override { return "var_defn"; }
         types get_expr_type() const override {return type;} 
-        const std::string& get_name() const {return identifier_name;}
+        std::string get_name() const override {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
-
-        bool is_binary() {
-            if (dynamic_cast<binary_expr*>(assigned_value.get())) {
-                return true;
-            }
-            return false;
-        }
     };
 
     /**
@@ -493,8 +515,9 @@ namespace ast {
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
                 {}
+            std::string get_ast_class() const override { return "var_assign"; }
             types get_expr_type() const override {return type;} 
-            const std::string& get_name() const {return identifier_name;}
+            std::string get_name() const override {return identifier_name;}
             void debug_output();
             llvm::Value* codegen() override;
         };
@@ -512,8 +535,9 @@ namespace ast {
             identifier_name(identifier_name),
             assigned_value(std::move(assigned_value))
             {}
+        std::string get_ast_class() const override { return "var_assign"; }
         types get_expr_type() const override {return type;} 
-        const std::string& get_name() const {return identifier_name;}
+        std::string get_name() const override {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
     };
@@ -531,6 +555,7 @@ namespace ast {
                 type(type),
                 returned_value(std::move(return_val)) 
                 {}
+            std::string get_ast_class() const override { return "return"; }
             types get_expr_type() const override {return type;} 
             void debug_output();
             llvm::Value* codegen() override;
@@ -547,6 +572,7 @@ namespace ast {
             type(type),
             returned_value(std::move(return_val)) 
             {}
+        std::string get_ast_class() const override { return "return"; }
         types get_expr_type() const override {return type;} 
         void debug_output();
         llvm::Value* codegen() override;
@@ -567,6 +593,7 @@ namespace ast {
                 expressions(std::move(expressions)),
                 else_stmt(std::move(else_stmt))
                 {}
+            std::string get_ast_class() const override { return "if"; }
             void debug_output();
             llvm::Value* codegen() override;
         };
@@ -584,6 +611,7 @@ namespace ast {
             expressions(std::move(expressions)),
             else_stmt(std::move(else_stmt))
             {}
+        std::string get_ast_class() const override { return "if"; }
         void debug_output();
         llvm::Value* codegen() override;
     };
@@ -596,6 +624,7 @@ namespace ast {
         else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions) :
             expressions(std::move(expressions))
             {}
+        std::string get_ast_class() const override { return "else"; }
         void debug_output();
         llvm::Value* codegen() override;
     };

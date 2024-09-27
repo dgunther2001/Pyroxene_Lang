@@ -351,7 +351,7 @@ namespace ast {
 
         std::vector<llvm::Type*> parameter_types;
         for (auto const& parameter : parameters) {
-            parameter_types.emplace_back(codegen::get_llvm_type(dynamic_cast<ast::variable_declaration*>(parameter.get())->get_expr_type()));
+            parameter_types.emplace_back(codegen::get_llvm_type(parameter->get_expr_type()));
         }
      * @endcode
 
@@ -375,20 +375,16 @@ namespace ast {
        @code
         for (int i = 0; i < parameters.size(); i++) {
             llvm::Argument* argument = function_decl->getArg(i); 
-            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
+            argument->setName(parameters.at(i)->get_name());
         }
        @endcode
        @par Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.
        @code
-        for (int i = 0; i < parameters.size(); i++) {
-            llvm::Argument* argument = function_decl->getArg(i); 
-            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
-        }
 
         for (auto const& expression : expressions) {
             llvm::Value* current_expr = expression->codegen();
 
-            if (dynamic_cast<ast::return_expr*>(expression.get())) {
+            if (expression->get_ast_class() == "return") {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
                 } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
@@ -422,7 +418,7 @@ namespace ast {
         llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
         std::vector<llvm::Type*> parameter_types;
         for (auto const& parameter : parameters) {
-            parameter_types.emplace_back(codegen::get_llvm_type(dynamic_cast<ast::variable_declaration*>(parameter.get())->get_expr_type()));
+            parameter_types.emplace_back(codegen::get_llvm_type(parameter->get_expr_type()));
         }
 
         llvm::FunctionType* func_type = llvm::FunctionType::get(func_return_type, parameter_types, false); // specifies return type and parameter types for the function
@@ -435,13 +431,13 @@ namespace ast {
     
         for (int i = 0; i < parameters.size(); i++) {
             llvm::Argument* argument = function_decl->getArg(i); 
-            argument->setName(dynamic_cast<ast::variable_declaration*>(parameters.at(i).get())->get_name());
+            argument->setName(parameters.at(i)->get_name());
         }
 
         for (auto const& expression : expressions) {
             llvm::Value* current_expr = expression->codegen();
 
-            if (auto return_expr = dynamic_cast<ast::return_expr*>(expression.get())) {
+            if (expression->get_ast_class() == "return") {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
                 } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
