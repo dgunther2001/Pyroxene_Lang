@@ -6,14 +6,14 @@ For the full license text, see the LICENSE.md file in the root directory.
 If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 */
 
-int a = 4;
-int b = 5;
-int c = a;
 
-int d;
+int a = 33 + 77;
+int b;
 
-d = a;
 
-int e = a + 10;
-
-d = e / b + c * a;
+def float my_func(int a, char r) {
+    int l = 44;
+    int c;
+    //int f = 33 * l;
+    return 55.3;
+}

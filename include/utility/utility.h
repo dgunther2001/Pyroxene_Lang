@@ -30,6 +30,7 @@ namespace utility {
 
     extern void init_llvm_mods();
 
+    extern void init_parser();
     extern void primary_driver_loop();
 
     extern void end_llvm_mods();
