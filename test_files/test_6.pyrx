@@ -11,3 +11,10 @@ if (55 + 11) {
     int j = 33;
     i + j * 88;
 } 
+
+def int my_func(int a, float b, char c) {
+    int d = 33;
+    if (55+33) {
+        string e = "Daniel";
+    }
+}
