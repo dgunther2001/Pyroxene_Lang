@@ -170,17 +170,17 @@ namespace utility {
      * @par Initializes all values in the parser token getter method.
      * 
      * @code
-     *  parser::current_token_as_token = lexer::token_stream.at(0);
-        parser::current_value = lexer::token_stream.at(0);
-        parser::current_token = parser::current_token_as_token;
         parser::current_token_index = 0;
+        parser::current_token_as_token = lexer::token_stream.at(parser::current_token_index);
+        parser::current_value = lexer::stored_values.at(parser::current_token_index);
+        parser::current_token = parser::current_token_as_token;
      * @endcode
      */
     void init_parser() {
-        parser::current_token_as_token = lexer::token_stream.at(0);
-        parser::current_value = lexer::token_stream.at(0);
-        parser::current_token = parser::current_token_as_token;
         parser::current_token_index = 0;
+        parser::current_token_as_token = lexer::token_stream.at(parser::current_token_index);
+        parser::current_value = lexer::stored_values.at(parser::current_token_index);
+        parser::current_token = parser::current_token_as_token;
     }
 
     /**

@@ -8,4 +8,6 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 if (55 + 11) {
     int i = 55;
+    int j = 33;
+    i + j * 88;
 } 

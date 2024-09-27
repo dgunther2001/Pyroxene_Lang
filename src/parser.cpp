@@ -940,7 +940,6 @@ namespace parser {
         if (current_token != lexer::tok_open_brack) {
             utility::parser_error("Expected opening bracket", lexer::line_count);
         }
-
         get_next_token(); // consume the bracket
 
         std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
@@ -957,7 +956,7 @@ namespace parser {
                     break;
                 }
                 case lexer::tok_return:
-                    current_expr = parse_return();
+                    current_expr = parse_return(); // validate within a function control flow block
                     break;
                 case lexer::tok_semicolon:
                     get_next_token();
@@ -1027,10 +1026,11 @@ namespace parser {
 
         get_next_token(); // consume the (
 
-        auto condition = parse_expression(); // MAY HAVE TO DO A BINARRY DYNAMIC CAST THING HERE...
+        auto condition = parse_expression(); 
+
         
         if (current_token != lexer::tok_close_paren) {
-            utility::parser_error("Exprected ')'", lexer::line_count);
+            utility::parser_error("Expected ')'", lexer::line_count);
         }
 
         get_next_token(); // consume the )
@@ -1043,21 +1043,25 @@ namespace parser {
 
         std::unique_ptr<ast::top_level_expr> current_expr;
         std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-
         while (current_token != lexer::tok_close_brack) {
             switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
                     current_expr = parse_var_decl_defn();
                     break;
-                }
-                case lexer::tok_return:
+                case lexer::tok_return: // validate we are in a function here
                     current_expr = parse_return();
+                    break;
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    current_expr = nullptr;
                     break;
                 default:
                     current_expr = parse_expression();
             }
 
-            expressions.emplace_back(std::move(current_expr));
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
 
         }
 
