@@ -962,6 +962,9 @@ namespace parser {
                     get_next_token();
                     current_expr = nullptr;
                     break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
+                    break;
                 default:
                     current_expr = parse_expression();
             }
@@ -1016,6 +1019,83 @@ namespace parser {
         return std::move(ast_node);
     }
 
+    /**
+     * <h4> Parses through if statement blocks. </h4>
+     * 
+     * if (condition) {
+     *      expr1;
+     *      expr2;
+     *      ...
+     *      exprn;
+     * } (OPTIONAL) else {
+     *      ...
+     * }
+     * 
+     * @par Consumes header components of if block and storces the condition "if (cond) {"
+     * @code
+     *  get_next_token();
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Exprected '('", lexer::line_count);
+        }
+
+        get_next_token();
+
+        auto condition = parse_expression(); 
+
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')'", lexer::line_count);
+        }
+
+        get_next_token();
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Exprected '{'", lexer::line_count);
+        }
+
+        get_next_token(); 
+     * @endcode
+
+       @par Parse through all expressions contained within the if block, and store them.
+       @code
+        std::unique_ptr<ast::top_level_expr> current_expr;
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        while (current_token != lexer::tok_close_brack) {
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                    current_expr = parse_var_decl_defn();
+                    break;
+                case lexer::tok_return: 
+                    current_expr = parse_return();
+                    break;
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    current_expr = nullptr;
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
+        }
+
+        get_next_token(); 
+       @endcode
+
+       @par Check if an else statement comes after the if block, and if so parse it. Otherwise just store it as a nullptr. Then return the if node.
+       @code
+        std::unique_ptr<ast::top_level_expr> else_stmt = nullptr;
+
+        if (current_token == lexer::tok_else) {
+            else_stmt = parse_else(); 
+        }
+
+        auto if_node = std::make_unique<ast::if_expr>(std::move(condition), std::move(expressions), std::move(else_stmt));
+        return std::move(if_node);
+       @endcode
+     */
     std::unique_ptr<ast::top_level_expr> parse_if() {
         
         get_next_token(); // consume the if
