@@ -343,7 +343,7 @@ namespace ast {
 
     /**
      * @fn ast::func_defn::codegen()
-     * <h4> Functionally, takes all of the relevant parameters in the func_defn ast node, and converts them to IR. </h4>
+     * @details Functionally, takes all of the relevant parameters in the func_defn ast node, and converts them to IR.
      * 
      * @par Grab the return type, as well as the types of all of the paramters.
      * @code
@@ -392,7 +392,7 @@ namespace ast {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
                 } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
-                    utility::codegen_error("Invalid return type", lexer::line_count);
+                    utility::codegen_error("Invalid return type", parser::current_line);
                 }
                 break;
             }
@@ -445,7 +445,7 @@ namespace ast {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
                 } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
-                    utility::codegen_error("Invalid return type", lexer::line_count);
+                    utility::codegen_error("Invalid return type", parser::current_line);
                 }
                 break;
             }
