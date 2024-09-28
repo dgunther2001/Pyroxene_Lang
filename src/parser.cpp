@@ -305,12 +305,8 @@ namespace parser {
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
         ast::types bin_type;
-        if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
-            bin_type = left_expr->get_expr_type(); 
-        } else {
-            utility::parser_error("Mismatched types in binary expression", current_line);
-        }
-            
+
+        bin_type = left_expr->get_expr_type(); 
 
         auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
 
@@ -476,11 +472,6 @@ namespace parser {
         get_next_token(); // consume the '='
 
         auto assigned_expr = parse_expression();
-
-        
-        if (assigned_expr->get_expr_type() != type) {
-            utility::parser_error("Defining a variable with incorrect type", current_line);
-        }
         
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
 

@@ -129,11 +129,11 @@ Public Member Functions</h2></td></tr>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a4fb862ee8d338a91c74ee68e8b78ca61">debug_output</a>();</div>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a9c9ba55826809ef75a41f1ae00a21ff7">codegen</a>();</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1func__defn_html"><div class="ttname"><a href="classast_1_1func__defn.html">ast::func_defn</a></div><div class="ttdef"><b>Definition</b> ast.h:89</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html"><div class="ttname"><a href="classast_1_1func__defn.html">ast::func_defn</a></div><div class="ttdef"><b>Definition</b> ast.h:103</div></div>
 <div class="ttc" id="aclassast_1_1func__defn_html_a4fb862ee8d338a91c74ee68e8b78ca61"><div class="ttname"><a href="#a4fb862ee8d338a91c74ee68e8b78ca61">ast::func_defn::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="aclassast_1_1func__defn_html_a56a2d270a7b54ef553db1f1e4fc6de6b"><div class="ttname"><a href="#a56a2d270a7b54ef553db1f1e4fc6de6b">ast::func_defn::~func_defn</a></div><div class="ttdeci">~func_defn()=default</div></div>
-<div class="ttc" id="aclassast_1_1func__defn_html_a9c9ba55826809ef75a41f1ae00a21ff7"><div class="ttname"><a href="#a9c9ba55826809ef75a41f1ae00a21ff7">ast::func_defn::codegen</a></div><div class="ttdeci">llvm::Value * codegen()</div><div class="ttdef"><b>Definition</b> codegen.cpp:421</div></div>
-<div class="ttc" id="aclassast_1_1func__defn_html_ac86c58d6d6bdac52130ea9e48da0d2b1"><div class="ttname"><a href="#ac86c58d6d6bdac52130ea9e48da0d2b1">ast::func_defn::func_defn</a></div><div class="ttdeci">func_defn(types return_type, std::string name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; parameters)</div><div class="ttdef"><b>Definition</b> ast.h:97</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a9c9ba55826809ef75a41f1ae00a21ff7"><div class="ttname"><a href="#a9c9ba55826809ef75a41f1ae00a21ff7">ast::func_defn::codegen</a></div><div class="ttdeci">llvm::Value * codegen()</div><div class="ttdef"><b>Definition</b> codegen.cpp:417</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_ac86c58d6d6bdac52130ea9e48da0d2b1"><div class="ttname"><a href="#ac86c58d6d6bdac52130ea9e48da0d2b1">ast::func_defn::func_defn</a></div><div class="ttdeci">func_defn(types return_type, std::string name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; parameters)</div><div class="ttdef"><b>Definition</b> ast.h:111</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
 </div><!-- fragment --> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -221,15 +221,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<h4>Functionally, takes all of the relevant parameters in the <a class="el" href="classast_1_1func__defn.html">func_defn</a> ast node, and converts them to IR. </h4>
+<p>Functionally, takes all of the relevant parameters in the <a class="el" href="classast_1_1func__defn.html">func_defn</a> ast node, and converts them to IR.</p>
 <dl class="section user"><dt>Grab the return type, as well as the types of all of the paramters.</dt><dd><div class="fragment"><div class="line">llvm::Type* func_return_type = <a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(return_type);</div>
 <div class="line"> </div>
 <div class="line"> std::vector&lt;llvm::Type*&gt; parameter_types;</div>
 <div class="line"> <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; parameter : parameters) {</div>
-<div class="line">     parameter_types.emplace_back(<a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameter.get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a4ae5a6f27bcc0916a753bba899cd795c">get_expr_type</a>()));</div>
+<div class="line">     parameter_types.emplace_back(<a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(parameter-&gt;get_expr_type()));</div>
 <div class="line"> }</div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html"><div class="ttname"><a href="classast_1_1variable__declaration.html">ast::variable_declaration</a></div><div class="ttdef"><b>Definition</b> ast.h:414</div></div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html_a4ae5a6f27bcc0916a753bba899cd795c"><div class="ttname"><a href="classast_1_1variable__declaration.html#a4ae5a6f27bcc0916a753bba899cd795c">ast::variable_declaration::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:424</div></div>
 <div class="ttc" id="anamespacecodegen_html_abb9b2b119e0c3d003dbeab964c1ef0cb"><div class="ttname"><a href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a></div><div class="ttdeci">llvm::Type * get_llvm_type(ast::types current_type)</div><div class="ttdef"><b>Definition</b> codegen.cpp:40</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Generate an llvm::FunctionType* which holds the function return type and parameter types. </dt><dd><div class="fragment"><div class="line">llvm::FunctionType* func_type = llvm::FunctionType::get(func_return_type, parameter_types, <span class="keyword">false</span>);</div>
@@ -244,29 +242,22 @@ Public Member Functions</h2></td></tr>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>We iterate over the parameters array in the AST Node, and set the name of the argument in the llvm::Function* to the values stored in the parameters vector.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; parameters.size(); i++) {</div>
 <div class="line">    llvm::Argument* argument = function_decl-&gt;getArg(i); </div>
-<div class="line">    argument-&gt;setName(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameters.at(i).get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">get_name</a>());</div>
+<div class="line">    argument-&gt;setName(parameters.at(i)-&gt;get_name());</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html_a29468bcbdc636c1642bda54182fa367b"><div class="ttname"><a href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">ast::variable_declaration::get_name</a></div><div class="ttdeci">const std::string &amp; get_name() const</div><div class="ttdef"><b>Definition</b> ast.h:425</div></div>
 </div><!-- fragment --> </dd></dl>
-<dl class="section user"><dt>Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; parameters.size(); i++) {</div>
-<div class="line">    llvm::Argument* argument = function_decl-&gt;getArg(i); </div>
-<div class="line">    argument-&gt;setName(<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1variable__declaration.html">ast::variable_declaration</a>*<span class="keyword">&gt;</span>(parameters.at(i).get())-&gt;<a class="code hl_function" href="classast_1_1variable__declaration.html#a29468bcbdc636c1642bda54182fa367b">get_name</a>());</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; expression : expressions) {</div>
+<dl class="section user"><dt>Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; expression : expressions) {</div>
 <div class="line">    llvm::Value* current_expr = expression-&gt;codegen();</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (<span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classast_1_1return__expr.html">ast::return_expr</a>*<span class="keyword">&gt;</span>(expression.get())) {</div>
+<div class="line">    <span class="keywordflow">if</span> (expression-&gt;get_ast_class() == <span class="stringliteral">&quot;return&quot;</span>) {</div>
 <div class="line">        <span class="keywordflow">if</span> (func_return_type-&gt;isVoidTy()) {</div>
 <div class="line">            <span class="comment">// ADD ERROR HANDLING HERE</span></div>
 <div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span>(func_return_type != <a class="code hl_function" href="namespacecodegen.html#abb9b2b119e0c3d003dbeab964c1ef0cb">codegen::get_llvm_type</a>(expression-&gt;get_expr_type())) {</div>
-<div class="line">            <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Invalid return type&quot;</span>, <a class="code hl_variable" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a>);</div>
+<div class="line">            <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Invalid return type&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">        }</div>
 <div class="line">        <span class="keywordflow">break</span>;</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassast_1_1return__expr_html"><div class="ttname"><a href="classast_1_1return__expr.html">ast::return_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:540</div></div>
-<div class="ttc" id="anamespacelexer_html_a3194f54b2efb03a1d7dd1c3071fc93e0"><div class="ttname"><a href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer::line_count</a></div><div class="ttdeci">int line_count</div><div class="ttdef"><b>Definition</b> lexer.cpp:14</div></div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:23</div></div>
 <div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:83</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Check whether the current control flow block has a terminator (return and branch), and if not, generate one with the default value of return type.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!function_block-&gt;getTerminator()) {</div>
