@@ -16,8 +16,6 @@ namespace scope {
     /**
      * @struct llvm_var_info
      * @par Stores allocation, and type information related to a variable.
-     * 
-     * @brief Stores allocation and type information related to a variable.
      *
      * This structure holds information about a variable's allocation, type, and initialization status.
      *
