@@ -21,9 +21,11 @@ namespace ast {
      * @endcode
      */
     void ast::binary_expr::semantic_analysis() {
+        /*
         if ((left->get_expr_type() != type) || right->get_expr_type() != type) {
             utility::parser_error("Invalid types connected in binary expression", parser::current_line);
         }
+        */
     }
 
     /**
@@ -36,9 +38,11 @@ namespace ast {
      * @endcode
      */
     void ast::variable_definition::semantic_analysis() {
+        /*
         if (assigned_value->get_expr_type() != type) {
             utility::parser_error("Value of invalid type passed to '" + identifier_name + "'", parser::current_line);
         }
+        */
     }
 
     /**
@@ -51,8 +55,10 @@ namespace ast {
      * @endcode
      */
     void ast::variable_assignment::semantic_analysis() {
+        /*
         if (assigned_value->get_expr_type() != type) {
             utility::parser_error("Value of invalid type asssigned to '" + identifier_name + '"', parser::current_line);
         }
+        */
     }
 }

@@ -39,16 +39,6 @@ namespace parser {
     extern int current_line;
 
     /**
-     * @par Stores a vector of predefined variables and their respective type to block redeclaration, and do basic type checking.
-     */
-    extern std::map<std::string, ast::types> var_map;
-
-    /**
-     * @par Stores a vector of variables that have been not just declared, but defined to hold value.
-     */
-    extern std::vector<std::string> defined_vars;
-
-    /**
      * @par Stores the precedence of operators, so that the parser knows which order to traverse an expression.
      */
     extern std::map<lexer::Token_Type, int> operator_precedence;

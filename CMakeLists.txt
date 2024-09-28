@@ -43,7 +43,13 @@ if(BUILD_DEBUG_DRIVER)
     add_executable(driver 
         debug_test_suite/unit_test_driver.cpp
         debug_test_suite/lexer_tests/lexer_tests.cpp
-        src/lexer.cpp src/parser.cpp src/ast.cpp src/codegen.cpp src/type_checker.cpp src/utility.cpp
+        src/lexer.cpp 
+        src/parser.cpp 
+        src/ast.cpp 
+        src/codegen.cpp 
+        src/type_checker.cpp 
+        src/utility.cpp
+        src/scoping.cpp
     )
 else()
     add_definitions(-DDEBUG_MODE=0)
@@ -55,6 +61,7 @@ else()
         src/codegen.cpp 
         src/type_checker.cpp 
         src/utility.cpp
+        src/scoping.cpp
     )
 endif()
 

@@ -264,11 +264,17 @@ namespace ast {
         llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
      * @endcode
 
-       @par Create the variable allocation with a nullptr value, and insert it into the symbol table, then return the allocation.
+       @par Create the variable allocation with a nullptr value, and insert it into the current scope, then return the allocation.
 
        @code
         llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
-        codegen::symbol_table.insert({identifier_name, variable_allocation});
+        
+        if (scope::variable_exists_in_current_scope(identifier_name)) {
+            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope", current_line);
+        }
+        
+        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type);
+
         return variable_allocation;    
        @endcode
      * 
@@ -281,7 +287,11 @@ namespace ast {
         llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
         llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
 
-        codegen::symbol_table.insert({identifier_name, variable_allocation});
+        if (scope::variable_exists_in_current_scope(identifier_name)) {
+            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+        }
+
+        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type);
 
         return variable_allocation;    
     }
@@ -302,6 +312,13 @@ namespace ast {
      * 
      * @code
      *  llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(expression_value->getType(), nullptr, identifier_name);
+     * 
+     *  if (scope::variable_exists_in_current_scope(identifier_name)) {
+            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+        }
+
+        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_allocation->getAllocatedType()));
+     * 
         llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, variable_allocation);
         codegen::symbol_table.insert({identifier_name, variable_allocation});
         return variable_allocation;
@@ -314,6 +331,12 @@ namespace ast {
 
         llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
         llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(expression_value->getType(), nullptr, identifier_name);
+
+        if (scope::variable_exists_in_current_scope(identifier_name)) {
+            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+        }
+
+        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_allocation->getAllocatedType());
 
         llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, variable_allocation);
 

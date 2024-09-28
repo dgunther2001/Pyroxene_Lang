@@ -13,10 +13,6 @@ namespace parser {
 
     lexer::Token_Type current_token_as_token;
 
-    std::map<std::string, ast::types> var_map;
-
-    std::vector<std::string> defined_vars;
-
     std::map<lexer::Token_Type, int> operator_precedence;
 
     int current_token_index = 0;
@@ -364,7 +360,6 @@ namespace parser {
 
         get_next_token();
 
-        var_map.insert({identifier, type});
       @endcode
 
       @par We then check whether the next token is an '=', or a ';', ',', or an ')' and call the respective declaration, or definition token.
@@ -415,7 +410,6 @@ namespace parser {
         }
         get_next_token(); // consume the identifier
 
-        var_map.insert({identifier, type});
         if (current_token == lexer::tok_assignment) {
             return std::move(parse_var_defn(type, identifier));
         } else if (current_token == lexer::tok_semicolon || current_token == lexer::tok_comma || current_token == lexer::tok_close_paren) {
@@ -452,7 +446,7 @@ namespace parser {
     }
 
     /**
-     * @par Parses a variable definition, and returns an AST node, as well as inserts it into the defined_vars map.
+     * @par Parses a variable definition, and returns an AST node.
      * 
      * @code
         get_next_token(); // consume the '='
@@ -463,7 +457,6 @@ namespace parser {
         }
         
         auto ast_node = std::make_unique<ast::variable_definition>(type, identifier, std::move(assigned_expr));
-        defined_vars.emplace_back(identifier);
         return std::move(ast_node);
      * @endcode
      */
@@ -478,8 +471,6 @@ namespace parser {
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
-
-        defined_vars.emplace_back(identifier);
 
         return std::move(ast_node);
     }
@@ -502,11 +493,6 @@ namespace parser {
             }
         }
 
-        
-        if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet declared", current_line);
-        }
-
         get_next_token(); 
      * @endcode
 
@@ -515,15 +501,7 @@ namespace parser {
        @code
         auto assigned_expr = parse_expression();
 
-        if (assigned_expr->get_expr_type() != var_map[identifier]) {
-            utility::parser_error("Invalid assignment", current_line);
-        }
-
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
-
-        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            defined_vars.emplace_back(identifier);
-        }
 
         return std::move(ast_node);
        @endcode
@@ -541,11 +519,6 @@ namespace parser {
             }
         }
 
-        
-        if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet declared", current_line);
-        }
-
         get_next_token(); // consumes the identifier
 
 
@@ -559,21 +532,11 @@ namespace parser {
 
         auto assigned_expr = parse_expression();
 
-        
-        if (assigned_expr->get_expr_type() != var_map[identifier]) {
-            utility::parser_error("Invalid assignment", current_line);
-        }
-        
-
         auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
         #endif
-
-        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            defined_vars.emplace_back(identifier);
-        }
 
         return std::move(ast_node);
     }
@@ -585,28 +548,14 @@ namespace parser {
      * @param value Stores the actual associated identifier name.
      * 
      * @code
-        std::string identifier;
+        std::string identifier = std::get<std::string>(value);
 
-        std::optional<lexer::lexer_stored_values> value = lexer::stored_values[current_token_index - 2];
+        auto ast_node = std::make_unique<ast::identifier_expr>(identifier);
 
-        if (value.has_value()) {
-            if (std::holds_alternative<std::string>(value.value())) {
-                identifier = std::get<std::string>(value.value());
-            } 
-            else {
-                utility::parser_error("Expected identifier", current_line);
-            }
-        } 
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
 
-        if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet defined", current_line);
-        }
-
-        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            utility::parser_error("Variable not yet initialized", current_line);
-        }
-
-        auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
         return std::move(ast_node);
      * @endcode.
      */
@@ -614,18 +563,7 @@ namespace parser {
 
         std::string identifier = std::get<std::string>(value);
 
-
-        // deal with case where it is declared, but not defined ******IMPORTANT
-
-        if (var_map.find(identifier) == var_map.end()) {
-            utility::parser_error("Variable not yet defined", current_line);
-        }
-
-        if (std::find(defined_vars.begin(), defined_vars.end(), identifier) == defined_vars.end()) {
-            utility::parser_error("Variable not yet initialized", current_line);
-        }
-
-        auto ast_node = std::make_unique<ast::identifier_expr>(identifier, var_map[identifier]);
+        auto ast_node = std::make_unique<ast::identifier_expr>(identifier);
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();

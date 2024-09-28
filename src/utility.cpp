@@ -87,6 +87,21 @@ namespace utility {
     }
 
     /**
+     * @par Thrown to abort if scoping fails.
+     * 
+     * @code
+        std::cout <<"\033[1;31m";
+        std::cout << "Scoping error: " << message << " on line " << line << "\n";
+        std::abort();
+     * @endcode
+     */
+    void scoping_error(const std::string& message, int line) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Scoping error: " << message << " on line " << line << "\n";
+        std::abort();
+    }
+
+    /**
      * @par Spits out the current token to OStream.
      * 
      * @code
@@ -190,7 +205,8 @@ namespace utility {
      * 
      * @code
 
-     * 
+     *  scope::create_scope();
+
         while (true) {
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
@@ -244,6 +260,7 @@ namespace utility {
      * @endcode
      */
     void primary_driver_loop() {
+        scope::create_scope();
         parser::get_next_token();
 
         while (true) {

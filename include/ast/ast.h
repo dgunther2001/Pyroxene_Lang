@@ -136,9 +136,7 @@ namespace ast {
                 op(op),
                 left(std::move(left)),
                 right(std::move(right)),
-            {
-                semantic_analysis();
-            }
+            {}
         
             void semantic_analysis() override;
 
@@ -180,9 +178,7 @@ namespace ast {
             left(std::move(left)),
             right(std::move(right)),
             type(type)
-            {
-                semantic_analysis();
-            }
+            {}
         
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "binary"; }
@@ -216,16 +212,13 @@ namespace ast {
         class identifier_expr : public top_level_expr {
         private:
             std::string identifier_name;
-            types type;
 
         public:
-            identifier_expr(const std::string& identifier_name, types type) :
+            identifier_expr(const std::string& identifier_name) :
                 identifier_name(identifier_name),
-                type(type)
                 {}
-            std::string get_ast_class() const override { return "identifier"; }
+            std::string get_ast_class() const override { return "identifier"; }    
             std::string get_name() const override {return identifier_name;}
-            types get_expr_type() const override {return type;}
             void debug_output();
             llvm::Value* codegen() override;
 
@@ -235,16 +228,13 @@ namespace ast {
     class identifier_expr : public top_level_expr {
     private:
         std::string identifier_name;
-        types type;
 
     public:
-        identifier_expr(const std::string& identifier_name, types type) :
-            identifier_name(identifier_name),
-            type(type)
+        identifier_expr(const std::string& identifier_name) :
+            identifier_name(identifier_name)
             {}
         std::string get_ast_class() const override { return "identifier"; }    
         std::string get_name() const override {return identifier_name;}
-        types get_expr_type() const override {return type;}
         void debug_output();
         llvm::Value* codegen() override;
 
@@ -479,9 +469,7 @@ namespace ast {
                 type(var_type),
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
-                {
-                    semantic_analysis();
-                }
+                {}
         
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_defn"; }
@@ -503,9 +491,7 @@ namespace ast {
             type(var_type),
             identifier_name(identifier_name),
             assigned_value(std::move(assigned_value))
-            {
-                semantic_analysis();
-            }
+            {}
         
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_defn"; }
@@ -530,9 +516,7 @@ namespace ast {
                 type(var_type),
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
-                {
-                    semantic_analysis();
-                }
+                {}
 
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_assign"; }
@@ -554,9 +538,7 @@ namespace ast {
             type(var_type),
             identifier_name(identifier_name),
             assigned_value(std::move(assigned_value))
-            {
-                semantic_analysis();
-            }
+            {}
 
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_assign"; }
