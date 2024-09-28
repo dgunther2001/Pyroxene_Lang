@@ -18,5 +18,6 @@ var searchData=
   ['llvm_20ir_20codegen_20function_15',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
   ['llvm_5fcontext_16',['LLVM_Context',['../namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a',1,'codegen']]],
   ['llvm_5fmodule_17',['LLVM_Module',['../namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe',1,'codegen']]],
-  ['loops_18',['4. Loops',['../md_docs_2syntax.html#autotoc_md15',1,'']]]
+  ['llvm_5fvar_5finfo_18',['llvm_var_info',['../structscope_1_1llvm__var__info.html',1,'scope']]],
+  ['loops_19',['4. Loops',['../md_docs_2syntax.html#autotoc_md15',1,'']]]
 ];

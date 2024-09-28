@@ -139,9 +139,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">        type(var_type),</div>
 <div class="line">        identifier_name(identifier_name),</div>
 <div class="line">        assigned_value(std::move(assigned_value))</div>
-<div class="line">        {</div>
-<div class="line">            <a class="code hl_function" href="#ae8de91acd4a332190d79750a961d57be">semantic_analysis</a>();</div>
-<div class="line">        }</div>
+<div class="line">        {}</div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#ae8de91acd4a332190d79750a961d57be">semantic_analysis</a>() <span class="keyword">override</span>;</div>
 <div class="line">    std::string <a class="code hl_function" href="#a340420adc7fa24427337f57c50e158a7">get_ast_class</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;var_assign&quot;</span>; }</div>
@@ -151,13 +149,13 @@ Public Member Functions</h2></td></tr>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#ad72337194c16fa71dbc8189d1df0b9f3">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html"><div class="ttname"><a href="classast_1_1variable__assignment.html">ast::variable_assignment</a></div><div class="ttdef"><b>Definition</b> ast.h:546</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_a340420adc7fa24427337f57c50e158a7"><div class="ttname"><a href="#a340420adc7fa24427337f57c50e158a7">ast::variable_assignment::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:562</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_a79da500c35d7f9b7276328c3fe073b07"><div class="ttname"><a href="#a79da500c35d7f9b7276328c3fe073b07">ast::variable_assignment::get_name</a></div><div class="ttdeci">std::string get_name() const override</div><div class="ttdef"><b>Definition</b> ast.h:564</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_a8de877f4f7084771fe2562122f141d7c"><div class="ttname"><a href="#a8de877f4f7084771fe2562122f141d7c">ast::variable_assignment::variable_assignment</a></div><div class="ttdeci">variable_assignment(types var_type, const std::string &amp;identifier_name, std::unique_ptr&lt; top_level_expr &gt; assigned_value)</div><div class="ttdef"><b>Definition</b> ast.h:553</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_ac9f23be0a368133c20fd34cb45356b62"><div class="ttname"><a href="#ac9f23be0a368133c20fd34cb45356b62">ast::variable_assignment::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:563</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_ad72337194c16fa71dbc8189d1df0b9f3"><div class="ttname"><a href="#ad72337194c16fa71dbc8189d1df0b9f3">ast::variable_assignment::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:237</div></div>
-<div class="ttc" id="aclassast_1_1variable__assignment_html_ae8de91acd4a332190d79750a961d57be"><div class="ttname"><a href="#ae8de91acd4a332190d79750a961d57be">ast::variable_assignment::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:52</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html"><div class="ttname"><a href="classast_1_1variable__assignment.html">ast::variable_assignment</a></div><div class="ttdef"><b>Definition</b> ast.h:530</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_a340420adc7fa24427337f57c50e158a7"><div class="ttname"><a href="#a340420adc7fa24427337f57c50e158a7">ast::variable_assignment::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:544</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_a79da500c35d7f9b7276328c3fe073b07"><div class="ttname"><a href="#a79da500c35d7f9b7276328c3fe073b07">ast::variable_assignment::get_name</a></div><div class="ttdeci">std::string get_name() const override</div><div class="ttdef"><b>Definition</b> ast.h:546</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_a8de877f4f7084771fe2562122f141d7c"><div class="ttname"><a href="#a8de877f4f7084771fe2562122f141d7c">ast::variable_assignment::variable_assignment</a></div><div class="ttdeci">variable_assignment(types var_type, const std::string &amp;identifier_name, std::unique_ptr&lt; top_level_expr &gt; assigned_value)</div><div class="ttdef"><b>Definition</b> ast.h:537</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_ac9f23be0a368133c20fd34cb45356b62"><div class="ttname"><a href="#ac9f23be0a368133c20fd34cb45356b62">ast::variable_assignment::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:545</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_ad72337194c16fa71dbc8189d1df0b9f3"><div class="ttname"><a href="#ad72337194c16fa71dbc8189d1df0b9f3">ast::variable_assignment::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:263</div></div>
+<div class="ttc" id="aclassast_1_1variable__assignment_html_ae8de91acd4a332190d79750a961d57be"><div class="ttname"><a href="#ae8de91acd4a332190d79750a961d57be">ast::variable_assignment::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:56</div></div>
 <div class="ttc" id="aclassast_1_1variable__assignment_html_ae9d3f7e446607e49e63c779189ab109c"><div class="ttname"><a href="#ae9d3f7e446607e49e63c779189ab109c">ast::variable_assignment::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -220,18 +218,23 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section user"><dt>Generates IR for reassignment of variables.</dt><dd></dd></dl>
 <dl class="section user"><dt>Validate that what we are reassigning even exists in the symbol table, then generate IR for the new value, and create a store instruction.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen::symbol_table</a>.find(identifier_name) == <a class="code hl_variable" href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen::symbol_table</a>.end()) {</div>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (codegen::symbol_table.find(identifier_name) == codegen::symbol_table.end()) {</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Identifier not found(&quot;</span> &lt;&lt; identifier_name &lt;&lt; <span class="stringliteral">&quot;).\n&quot;</span>; <span class="comment">// do proper error handling later</span></div>
 <div class="line">    <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
 <div class="line">}</div>
 <div class="line"> </div>
+<div class="line">var_alloca_and_type-&gt;is_init = <span class="keyword">true</span>;</div>
+<div class="line"> </div>
 <div class="line">llvm::Value* expression_value = assigned_value-&gt;codegen();</div>
 <div class="line"> </div>
-<div class="line">llvm::StoreInst* store = <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateStore(expression_value, <a class="code hl_variable" href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen::symbol_table</a>[identifier_name]);</div>
+<div class="line">llvm::StoreInst* store = <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateStore(expression_value, codegen::symbol_table[identifier_name]);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (var_alloca_and_type-&gt;allocation-&gt;getType()-&gt;isIntegerTy(64)) {</div>
+<div class="line">    store-&gt;setAlignment(llvm::Align(8));</div>
+<div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">return</span> store;</div>
 <div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
-<div class="ttc" id="anamespacecodegen_html_ac4d61dcaf7fa5b4d2d2ae68e504fbe5d"><div class="ttname"><a href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen::symbol_table</a></div><div class="ttdeci">std::map&lt; std::string, llvm::AllocaInst * &gt; symbol_table</div><div class="ttdef"><b>Definition</b> codegen.cpp:17</div></div>
 </div><!-- fragment --> 
 <p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
 
@@ -360,7 +363,7 @@ Public Member Functions</h2></td></tr>
 <dl class="section user"><dt>Validate that the type of variable being reassigned matches the type of the expression.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (assigned_value-&gt;get_expr_type() != type) {</div>
 <div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Value of invalid type asssigned to &#39;&quot;</span> + identifier_name + <span class="charliteral">&#39;&quot;&#39;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:23</div></div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespaceutility_html_a9268449c45b475023dde39f4010b698a"><div class="ttname"><a href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a></div><div class="ttdeci">void parser_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:68</div></div>
 </div><!-- fragment --> </dd></dl>
 
