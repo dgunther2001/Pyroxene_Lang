@@ -83,23 +83,23 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceast.html">ast</a></li><li class="navelem"><a class="el" href="classast_1_1identifier__expr.html">identifier_expr</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespaceast.html">ast</a></li><li class="navelem"><a class="el" href="classast_1_1if__expr.html">if_expr</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">ast::identifier_expr Member List</div></div>
+  <div class="headertitle"><div class="title">ast::if_expr Member List</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a>, including all inherited members.</p>
+<p>This is the complete list of members for <a class="el" href="classast_1_1if__expr.html">ast::if_expr</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a543793aa523839fd14545e637794416d">codegen</a>() override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#aab94691a05eb79c7d5e1188bfc2c0746">debug_output</a>()</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#acee8110ab6003fc68d557d7ad64445e2">get_ast_class</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a488d8a35cebfdebe4b7aa93c545d5d13">get_expr_type</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a3e845213ac59e530579a65a0fe4d5aab">get_name</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a03f21c7d6985e6d45f854761786c3f53">identifier_expr</a>(const std::string &amp;identifier_name, types type)</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1if__expr.html#af769182521a67c74bf235580a9aa917a">codegen</a>() override</td><td class="entry"><a class="el" href="classast_1_1if__expr.html">ast::if_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1if__expr.html#ae01a4ba97ccdeb780f87cf579f4a5264">debug_output</a>()</td><td class="entry"><a class="el" href="classast_1_1if__expr.html">ast::if_expr</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1if__expr.html#ad4e600ed99c23a53b7469a6bc337beaf">get_ast_class</a>() const override</td><td class="entry"><a class="el" href="classast_1_1if__expr.html">ast::if_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a310f0586f8f80fde54a3d4ef829259e9">get_expr_type</a>() const</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a>() const</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1if__expr.html#a34dff65e28b1fdc94a53800d896d2e28">if_expr</a>(std::unique_ptr&lt; top_level_expr &gt; condition, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::unique_ptr&lt; top_level_expr &gt; else_stmt)</td><td class="entry"><a class="el" href="classast_1_1if__expr.html">ast::if_expr</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a>()</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a>()=default</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
 </table></div><!-- contents -->

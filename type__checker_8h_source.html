@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pyroxene: Member List</title>
+<title>Pyroxene: include/type_checker/type_checker.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -83,26 +83,30 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespaceast.html">ast</a></li><li class="navelem"><a class="el" href="classast_1_1identifier__expr.html">identifier_expr</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_a9264184dc0ff57063747677d466b9b3.html">type_checker</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">ast::identifier_expr Member List</div></div>
+  <div class="headertitle"><div class="title">type_checker.h</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a543793aa523839fd14545e637794416d">codegen</a>() override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#aab94691a05eb79c7d5e1188bfc2c0746">debug_output</a>()</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#acee8110ab6003fc68d557d7ad64445e2">get_ast_class</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a488d8a35cebfdebe4b7aa93c545d5d13">get_expr_type</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a3e845213ac59e530579a65a0fe4d5aab">get_name</a>() const override</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1identifier__expr.html#a03f21c7d6985e6d45f854761786c3f53">identifier_expr</a>(const std::string &amp;identifier_name, types type)</td><td class="entry"><a class="el" href="classast_1_1identifier__expr.html">ast::identifier_expr</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a>()</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a>()=default</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
-</table></div><!-- contents -->
+<a href="type__checker_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">MIT License</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">Copyright (c) 2024 Daniel Gunther</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"></span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">For the full license text, see the LICENSE.md file in the root directory.</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">If LICENSE.md is not included, this version of the source code is provided in breach of this license.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">*/</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#ifndef SEMANTIC_ANALYSIS_H</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define SEMANTIC_ANALYSIS_H</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="ast_8h.html">../ast/ast.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aast_8h_html"><div class="ttname"><a href="ast_8h.html">ast.h</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0

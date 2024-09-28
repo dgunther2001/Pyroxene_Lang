@@ -110,6 +110,8 @@ Inheritance diagram for ast::integer_expression:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a14c83dab571b5b08d524594c46ab1de4" id="r_a14c83dab571b5b08d524594c46ab1de4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14c83dab571b5b08d524594c46ab1de4">integer_expression</a> (int64_t held_value)</td></tr>
 <tr class="separator:a14c83dab571b5b08d524594c46ab1de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2194d1571ba609529d83441baababf9e" id="r_a2194d1571ba609529d83441baababf9e"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2194d1571ba609529d83441baababf9e">get_ast_class</a> () const override</td></tr>
+<tr class="separator:a2194d1571ba609529d83441baababf9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff0112bd1b8d339f6e0f55eb14313440" id="r_aff0112bd1b8d339f6e0f55eb14313440"><td class="memItemLeft" align="right" valign="top">const int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff0112bd1b8d339f6e0f55eb14313440">get_value</a> () const</td></tr>
 <tr class="separator:aff0112bd1b8d339f6e0f55eb14313440"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ec5fea1b13794c01df05260c6ed33be" id="r_a4ec5fea1b13794c01df05260c6ed33be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ec5fea1b13794c01df05260c6ed33be">debug_output</a> ()</td></tr>
@@ -121,6 +123,10 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr" id="r_a890040cc8ec1ed0bc8f7d1ff7802555b"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a> () const</td></tr>
+<tr class="separator:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr" id="r_a374b3a0999fd8ca026da623966fb5e9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a> ()</td></tr>
+<tr class="separator:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section user"><dt>Stores expressions of a single integer literal.</dt><dd></dd></dl>
@@ -131,18 +137,20 @@ Public Member Functions</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <a class="code hl_function" href="#a14c83dab571b5b08d524594c46ab1de4">integer_expression</a>(int64_t held_value) : held_value(held_value) {}</div>
+<div class="line">    std::string <a class="code hl_function" href="#a2194d1571ba609529d83441baababf9e">get_ast_class</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;int&quot;</span>; }</div>
 <div class="line">    <span class="keyword">const</span> int64_t <a class="code hl_function" href="#aff0112bd1b8d339f6e0f55eb14313440">get_value</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> held_value;}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a4ec5fea1b13794c01df05260c6ed33be">debug_output</a>();</div>
 <div class="line">    <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> <a class="code hl_function" href="#a12ab82d8e8b152a7a3a45fa8190b9f39">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;}</div>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a69c13e06a93b61e08ec6560eb2526707">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1integer__expression_html"><div class="ttname"><a href="classast_1_1integer__expression.html">ast::integer_expression</a></div><div class="ttdef"><b>Definition</b> ast.h:246</div></div>
-<div class="ttc" id="aclassast_1_1integer__expression_html_a12ab82d8e8b152a7a3a45fa8190b9f39"><div class="ttname"><a href="#a12ab82d8e8b152a7a3a45fa8190b9f39">ast::integer_expression::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:255</div></div>
-<div class="ttc" id="aclassast_1_1integer__expression_html_a14c83dab571b5b08d524594c46ab1de4"><div class="ttname"><a href="#a14c83dab571b5b08d524594c46ab1de4">ast::integer_expression::integer_expression</a></div><div class="ttdeci">integer_expression(int64_t held_value)</div><div class="ttdef"><b>Definition</b> ast.h:252</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html"><div class="ttname"><a href="classast_1_1integer__expression.html">ast::integer_expression</a></div><div class="ttdef"><b>Definition</b> ast.h:272</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html_a12ab82d8e8b152a7a3a45fa8190b9f39"><div class="ttname"><a href="#a12ab82d8e8b152a7a3a45fa8190b9f39">ast::integer_expression::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:282</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html_a14c83dab571b5b08d524594c46ab1de4"><div class="ttname"><a href="#a14c83dab571b5b08d524594c46ab1de4">ast::integer_expression::integer_expression</a></div><div class="ttdeci">integer_expression(int64_t held_value)</div><div class="ttdef"><b>Definition</b> ast.h:278</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html_a2194d1571ba609529d83441baababf9e"><div class="ttname"><a href="#a2194d1571ba609529d83441baababf9e">ast::integer_expression::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:279</div></div>
 <div class="ttc" id="aclassast_1_1integer__expression_html_a4ec5fea1b13794c01df05260c6ed33be"><div class="ttname"><a href="#a4ec5fea1b13794c01df05260c6ed33be">ast::integer_expression::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="aclassast_1_1integer__expression_html_a69c13e06a93b61e08ec6560eb2526707"><div class="ttname"><a href="#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:67</div></div>
-<div class="ttc" id="aclassast_1_1integer__expression_html_aff0112bd1b8d339f6e0f55eb14313440"><div class="ttname"><a href="#aff0112bd1b8d339f6e0f55eb14313440">ast::integer_expression::get_value</a></div><div class="ttdeci">const int64_t get_value() const</div><div class="ttdef"><b>Definition</b> ast.h:253</div></div>
-<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:53</div></div>
+<div class="ttc" id="aclassast_1_1integer__expression_html_aff0112bd1b8d339f6e0f55eb14313440"><div class="ttname"><a href="#aff0112bd1b8d339f6e0f55eb14313440">ast::integer_expression::get_value</a></div><div class="ttdeci">const int64_t get_value() const</div><div class="ttdef"><b>Definition</b> ast.h:280</div></div>
+<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">ast::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> ast.h:31</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -216,6 +224,33 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2194d1571ba609529d83441baababf9e" name="a2194d1571ba609529d83441baababf9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2194d1571ba609529d83441baababf9e">&#9670;&#160;</a></span>get_ast_class()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ast::integer_expression::get_ast_class </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a918298ba5ca74d15ea618d8ca6b188cb">ast::top_level_expr</a>.</p>
 
 </div>
 </div>

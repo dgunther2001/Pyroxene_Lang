@@ -110,10 +110,12 @@ Inheritance diagram for ast::variable_declaration:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7af9f162f1e18ac597d2851b27885c1c" id="r_a7af9f162f1e18ac597d2851b27885c1c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7af9f162f1e18ac597d2851b27885c1c">variable_declaration</a> (<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> var_type, const std::string &amp;identifier_name)</td></tr>
 <tr class="separator:a7af9f162f1e18ac597d2851b27885c1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0377c59a98e5e71d7d95babca4000511" id="r_a0377c59a98e5e71d7d95babca4000511"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0377c59a98e5e71d7d95babca4000511">get_ast_class</a> () const override</td></tr>
+<tr class="separator:a0377c59a98e5e71d7d95babca4000511"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ae5a6f27bcc0916a753bba899cd795c" id="r_a4ae5a6f27bcc0916a753bba899cd795c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ae5a6f27bcc0916a753bba899cd795c">get_expr_type</a> () const override</td></tr>
 <tr class="separator:a4ae5a6f27bcc0916a753bba899cd795c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29468bcbdc636c1642bda54182fa367b" id="r_a29468bcbdc636c1642bda54182fa367b"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29468bcbdc636c1642bda54182fa367b">get_name</a> () const</td></tr>
-<tr class="separator:a29468bcbdc636c1642bda54182fa367b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d830290c8ddb28cd1d4e150a35fdea7" id="r_a9d830290c8ddb28cd1d4e150a35fdea7"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d830290c8ddb28cd1d4e150a35fdea7">get_name</a> () const override</td></tr>
+<tr class="separator:a9d830290c8ddb28cd1d4e150a35fdea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a451871471a84a9fc166563d7577f09af" id="r_a451871471a84a9fc166563d7577f09af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a451871471a84a9fc166563d7577f09af">debug_output</a> ()</td></tr>
 <tr class="separator:a451871471a84a9fc166563d7577f09af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5a16c85ca8b74d98d0abce0a01bcc80" id="r_ad5a16c85ca8b74d98d0abce0a01bcc80"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5a16c85ca8b74d98d0abce0a01bcc80">codegen</a> () override</td></tr>
@@ -121,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr" id="r_a374b3a0999fd8ca026da623966fb5e9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a> ()</td></tr>
+<tr class="separator:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section user"><dt>Stores variable declarations (e.g. =&gt; int my_var;).</dt><dd></dd></dl>
@@ -134,17 +138,19 @@ Public Member Functions</h2></td></tr>
 <div class="line">        type(var_type),</div>
 <div class="line">        identifier_name(identifier_name)</div>
 <div class="line">        {}</div>
+<div class="line">    std::string <a class="code hl_function" href="#a0377c59a98e5e71d7d95babca4000511">get_ast_class</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;var_decl&quot;</span>; }</div>
 <div class="line">    <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> <a class="code hl_function" href="#a4ae5a6f27bcc0916a753bba899cd795c">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;} </div>
-<div class="line">    <span class="keyword">const</span> std::string&amp; <a class="code hl_function" href="#a29468bcbdc636c1642bda54182fa367b">get_name</a>()<span class="keyword"> const </span>{<span class="keywordflow">return</span> identifier_name;}</div>
+<div class="line">    std::string <a class="code hl_function" href="#a9d830290c8ddb28cd1d4e150a35fdea7">get_name</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> identifier_name;}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a451871471a84a9fc166563d7577f09af">debug_output</a>();</div>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#ad5a16c85ca8b74d98d0abce0a01bcc80">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:53</div></div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html"><div class="ttname"><a href="classast_1_1variable__declaration.html">ast::variable_declaration</a></div><div class="ttdef"><b>Definition</b> ast.h:414</div></div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html_a29468bcbdc636c1642bda54182fa367b"><div class="ttname"><a href="#a29468bcbdc636c1642bda54182fa367b">ast::variable_declaration::get_name</a></div><div class="ttdeci">const std::string &amp; get_name() const</div><div class="ttdef"><b>Definition</b> ast.h:425</div></div>
+<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html"><div class="ttname"><a href="classast_1_1variable__declaration.html">ast::variable_declaration</a></div><div class="ttdef"><b>Definition</b> ast.h:450</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a0377c59a98e5e71d7d95babca4000511"><div class="ttname"><a href="#a0377c59a98e5e71d7d95babca4000511">ast::variable_declaration::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:460</div></div>
 <div class="ttc" id="aclassast_1_1variable__declaration_html_a451871471a84a9fc166563d7577f09af"><div class="ttname"><a href="#a451871471a84a9fc166563d7577f09af">ast::variable_declaration::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html_a4ae5a6f27bcc0916a753bba899cd795c"><div class="ttname"><a href="#a4ae5a6f27bcc0916a753bba899cd795c">ast::variable_declaration::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:424</div></div>
-<div class="ttc" id="aclassast_1_1variable__declaration_html_a7af9f162f1e18ac597d2851b27885c1c"><div class="ttname"><a href="#a7af9f162f1e18ac597d2851b27885c1c">ast::variable_declaration::variable_declaration</a></div><div class="ttdeci">variable_declaration(types var_type, const std::string &amp;identifier_name)</div><div class="ttdef"><b>Definition</b> ast.h:420</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a4ae5a6f27bcc0916a753bba899cd795c"><div class="ttname"><a href="#a4ae5a6f27bcc0916a753bba899cd795c">ast::variable_declaration::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:461</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a7af9f162f1e18ac597d2851b27885c1c"><div class="ttname"><a href="#a7af9f162f1e18ac597d2851b27885c1c">ast::variable_declaration::variable_declaration</a></div><div class="ttdeci">variable_declaration(types var_type, const std::string &amp;identifier_name)</div><div class="ttdef"><b>Definition</b> ast.h:456</div></div>
+<div class="ttc" id="aclassast_1_1variable__declaration_html_a9d830290c8ddb28cd1d4e150a35fdea7"><div class="ttname"><a href="#a9d830290c8ddb28cd1d4e150a35fdea7">ast::variable_declaration::get_name</a></div><div class="ttdeci">std::string get_name() const override</div><div class="ttdef"><b>Definition</b> ast.h:462</div></div>
 <div class="ttc" id="aclassast_1_1variable__declaration_html_ad5a16c85ca8b74d98d0abce0a01bcc80"><div class="ttname"><a href="#ad5a16c85ca8b74d98d0abce0a01bcc80">ast::variable_declaration::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:276</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -234,6 +240,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0377c59a98e5e71d7d95babca4000511" name="a0377c59a98e5e71d7d95babca4000511"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0377c59a98e5e71d7d95babca4000511">&#9670;&#160;</a></span>get_ast_class()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ast::variable_declaration::get_ast_class </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a918298ba5ca74d15ea618d8ca6b188cb">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
 <a id="a4ae5a6f27bcc0916a753bba899cd795c" name="a4ae5a6f27bcc0916a753bba899cd795c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ae5a6f27bcc0916a753bba899cd795c">&#9670;&#160;</a></span>get_expr_type()</h2>
 
@@ -261,8 +294,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a29468bcbdc636c1642bda54182fa367b" name="a29468bcbdc636c1642bda54182fa367b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29468bcbdc636c1642bda54182fa367b">&#9670;&#160;</a></span>get_name()</h2>
+<a id="a9d830290c8ddb28cd1d4e150a35fdea7" name="a9d830290c8ddb28cd1d4e150a35fdea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d830290c8ddb28cd1d4e150a35fdea7">&#9670;&#160;</a></span>get_name()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -271,7 +304,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const std::string &amp; ast::variable_declaration::get_name </td>
+          <td class="memname">std::string ast::variable_declaration::get_name </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -279,10 +312,12 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">ast::top_level_expr</a>.</p>
 
 </div>
 </div>

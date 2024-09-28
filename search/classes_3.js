@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['identifier_5fexpr_0',['identifier_expr',['../classast_1_1identifier__expr.html',1,'ast']]],
-  ['integer_5fexpression_1',['integer_expression',['../classast_1_1integer__expression.html',1,'ast']]]
+  ['float_5fexpression_0',['float_expression',['../classast_1_1float__expression.html',1,'ast']]],
+  ['func_5fdefn_1',['func_defn',['../classast_1_1func__defn.html',1,'ast']]]
 ];
