@@ -14,13 +14,22 @@ namespace scope {
     };
 
     /**
+     * @struct llvm_var_info
      * @par Stores allocation, and type information related to a variable.
-     * @code
-     *  llvm::Value* allocation;
-        var_or_arg var_arg; 
-        llvm::Type* type; 
-        bool is_init; 
-     * @endcode
+     *
+     * This structure holds information about a variable's allocation, type, and initialization status.
+     *
+     * @var llvm_var_info::allocation
+     * The variable allocation (can be an llvm::Argument* or llvm::AllocaInst*).
+     *
+     * @var llvm_var_info::var_arg
+     * Indicates whether the variable is an argument or a regular variable.
+     *
+     * @var llvm_var_info::type
+     * Holds the type of the variable.
+     *
+     * @var llvm_var_info::is_init
+     * Indicates whether the variable has been initialized with a value.
      */
     typedef struct {
         llvm::Value* allocation; /**< The variable allocation (can be an llvm::Argument*, or llvm::AllocaInst*) */
