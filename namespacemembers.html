@@ -86,6 +86,12 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock">Here is a list of all namespace members with links to the namespace documentation for each member:</div>
 
+<h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
+<li>add_var_to_current_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a41c16319bb03f7679d147493ef074514">scope</a></li>
+<li>Argument&#160;:&#160;<a class="el" href="namespacescope.html#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope</a></li>
+</ul>
+
+
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
 <li>bool_type&#160;:&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast</a></li>
 <li>bool_value&#160;:&#160;<a class="el" href="namespacelexer.html#a3641e322519806f9d1a524ce349c4cca">lexer</a></li>
@@ -96,6 +102,7 @@ $(function(){ initResizable(false); });
 <li>char_type&#160;:&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">ast</a></li>
 <li>char_value&#160;:&#160;<a class="el" href="namespacelexer.html#ad1919047943e7c2844e66ed6b0c7eca3">lexer</a></li>
 <li>codegen_error()&#160;:&#160;<a class="el" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility</a></li>
+<li>create_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope</a></li>
 <li>current_line&#160;:&#160;<a class="el" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser</a></li>
 <li>current_token&#160;:&#160;<a class="el" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser</a></li>
 <li>current_token_as_token&#160;:&#160;<a class="el" href="namespaceparser.html#a0840b936d58d181cd72b6d10bdc8746d">parser</a></li>
@@ -105,7 +112,6 @@ $(function(){ initResizable(false); });
 
 
 <h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>defined_vars&#160;:&#160;<a class="el" href="namespaceparser.html#a0a6dd6f16a5fec5d3e0920530d92965e">parser</a></li>
 <li>driver_args_error()&#160;:&#160;<a class="el" href="namespaceutility.html#a5fb805a9dc14c1813af86e3178be56b5">utility</a></li>
 <li>driver_extension_error()&#160;:&#160;<a class="el" href="namespaceutility.html#a4baeffca872d24b9a9fb99f570deed29">utility</a></li>
 </ul>
@@ -113,6 +119,7 @@ $(function(){ initResizable(false); });
 
 <h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
 <li>end_llvm_mods()&#160;:&#160;<a class="el" href="namespaceutility.html#a12d2eaa26c6991ec4653588c398402dd">utility</a></li>
+<li>exit_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a21cdb44f51a06d33c6537c7167270879">scope</a></li>
 </ul>
 
 
@@ -182,10 +189,11 @@ $(function(){ initResizable(false); });
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
+<li>scoping_error()&#160;:&#160;<a class="el" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility</a></li>
+<li>scoping_stack&#160;:&#160;<a class="el" href="namespacescope.html#a905f50d938f068b4696811a1868875d5">scope</a></li>
 <li>stored_values&#160;:&#160;<a class="el" href="namespacelexer.html#ac762e6415092515d1673f9ebd161bfcc">lexer</a></li>
 <li>string_type&#160;:&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">ast</a></li>
 <li>string_value&#160;:&#160;<a class="el" href="namespacelexer.html#ac6c312257777281ee94e7ff466400568">lexer</a></li>
-<li>symbol_table&#160;:&#160;<a class="el" href="namespacecodegen.html#ac4d61dcaf7fa5b4d2d2ae68e504fbe5d">codegen</a></li>
 </ul>
 
 
@@ -236,7 +244,10 @@ $(function(){ initResizable(false); });
 
 
 <h3><a id="index_v" name="index_v"></a>- v -</h3><ul>
-<li>var_map&#160;:&#160;<a class="el" href="namespaceparser.html#ae59dd22fb111699bf39fece9995ab000">parser</a></li>
+<li>var_or_arg&#160;:&#160;<a class="el" href="namespacescope.html#ad04e3e2e2a5006b56b242b47bcca40cf">scope</a></li>
+<li>Variable&#160;:&#160;<a class="el" href="namespacescope.html#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">scope</a></li>
+<li>variable_exists_in_current_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a09b81a86985cd2658a1edf02e95b2f0b">scope</a></li>
+<li>variable_lookup()&#160;:&#160;<a class="el" href="namespacescope.html#a9c951dd8834eed9c5c716c6412e71dfe">scope</a></li>
 <li>void_type&#160;:&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6">ast</a></li>
 </ul>
 </div><!-- contents -->
