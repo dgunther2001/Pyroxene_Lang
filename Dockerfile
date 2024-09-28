@@ -60,6 +60,6 @@ CMD ["./test_files/test_1.pyrx"]
 ### THIS RUNS VALGRIND, YOUR SAVIOR
 #RUN chmod +x ./build/driver
 
-#ENTRYPOINT ["valgrind", "--leak-check=full", "--track-origins=yes",  "./build/driver"]
+#=ENTRYPOINT ["valgrind", "--leak-check=full", "--track-origins=yes",  "./build/driver"]
 
 #CMD ["./test_files/test_4.pyrx"]

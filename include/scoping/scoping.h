@@ -11,6 +11,7 @@ namespace scope {
     typedef struct {
         llvm::AllocaInst* allocation;
         llvm::Type* type;
+        bool is_init;
     } llvm_var_info;
 
     /**
@@ -20,7 +21,7 @@ namespace scope {
     
     void create_scope();
     void exit_scope();
-    void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type);
+    void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type, bool is_init);
     llvm_var_info* variable_lookup(const std::string &var_name);
     bool variable_exists_in_current_scope(const std::string &name);
 }

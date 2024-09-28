@@ -1,7 +1,12 @@
 
 int b;
 
-int c = 33;
+int c = 44;
+
+b = c;
+
+
+c = b;
 
 
 

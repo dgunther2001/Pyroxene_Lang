@@ -24,15 +24,15 @@ namespace scope {
     /**
      * TODO: docs
      */
-    void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type) {
-        scoping_stack.back()[name] = {allocation, type};
+    void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type, bool is_init) {
+        scoping_stack.back()[name] = {allocation, type, is_init};
     }
 
     /**
      * TODO: docs
      */
     llvm_var_info* variable_lookup(const std::string &var_name) {
-        
+
         for (auto it = scoping_stack.rbegin(); it != scoping_stack.rend(); ++it) {
             auto variable = it->find(var_name);  
             if (variable != it->end()) {
@@ -40,7 +40,7 @@ namespace scope {
             }
         }
 
-        utility::scoping_error("Variable not found", parser::current_line);
+        return nullptr;
     }
 
     /**
