@@ -110,6 +110,10 @@ Inheritance diagram for ast::binary_expr:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:afb187597aaada1ebc887801fa78c33a9" id="r_afb187597aaada1ebc887801fa78c33a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb187597aaada1ebc887801fa78c33a9">binary_expr</a> (<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175">lexer::Token_Type</a> op, std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; left, std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; right, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> type)</td></tr>
 <tr class="separator:afb187597aaada1ebc887801fa78c33a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b506e23c2abce36b5f88775df5d4de4" id="r_a2b506e23c2abce36b5f88775df5d4de4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2b506e23c2abce36b5f88775df5d4de4">semantic_analysis</a> () override</td></tr>
+<tr class="separator:a2b506e23c2abce36b5f88775df5d4de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa369667002ee0f6554fb319778ddae60" id="r_aa369667002ee0f6554fb319778ddae60"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa369667002ee0f6554fb319778ddae60">get_ast_class</a> () const override</td></tr>
+<tr class="separator:aa369667002ee0f6554fb319778ddae60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6b603cb385c15f7be653e412f8d40e6" id="r_ad6b603cb385c15f7be653e412f8d40e6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6b603cb385c15f7be653e412f8d40e6">get_expr_type</a> () const override</td></tr>
 <tr class="separator:ad6b603cb385c15f7be653e412f8d40e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cbae213c42ea65d7eaa3dc484faf9ec" id="r_a2cbae213c42ea65d7eaa3dc484faf9ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cbae213c42ea65d7eaa3dc484faf9ec">debug_output</a> ()</td></tr>
@@ -121,6 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr" id="r_a890040cc8ec1ed0bc8f7d1ff7802555b"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a> () const</td></tr>
+<tr class="separator:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section user"><dt>This parses binary expressions in a way that deals with operator precedence, and potentially infinite nesting.</dt><dd></dd></dl>
@@ -135,9 +141,14 @@ Public Member Functions</h2></td></tr>
 <div class="line">        op(op),</div>
 <div class="line">        left(std::move(left)),</div>
 <div class="line">        right(std::move(right)),</div>
-<div class="line">        type(type)</div>
-<div class="line">        {}</div>
+<div class="line">    {</div>
+<div class="line">        <a class="code hl_function" href="#a2b506e23c2abce36b5f88775df5d4de4">semantic_analysis</a>();</div>
+<div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a2b506e23c2abce36b5f88775df5d4de4">semantic_analysis</a>() <span class="keyword">override</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a2b506e23c2abce36b5f88775df5d4de4">semantic_analysis</a>() <span class="keyword">override</span>;</div>
+<div class="line">    std::string <a class="code hl_function" href="#aa369667002ee0f6554fb319778ddae60">get_ast_class</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;binary&quot;</span>; }</div>
 <div class="line">    <a class="code hl_enumeration" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> <a class="code hl_function" href="#ad6b603cb385c15f7be653e412f8d40e6">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a2cbae213c42ea65d7eaa3dc484faf9ec">debug_output</a>();</div>
 <div class="line">    <span class="keywordtype">char</span> <a class="code hl_function" href="#a53744a84ceb698cd63dfd9b321aca208">get_op</a>() { </div>
@@ -160,19 +171,21 @@ Public Member Functions</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a199170e86e3e23705bc4cdf54574fce3">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:152</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:171</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a199170e86e3e23705bc4cdf54574fce3"><div class="ttname"><a href="#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:192</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_a2b506e23c2abce36b5f88775df5d4de4"><div class="ttname"><a href="#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a2cbae213c42ea65d7eaa3dc484faf9ec"><div class="ttname"><a href="#a2cbae213c42ea65d7eaa3dc484faf9ec">ast::binary_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
-<div class="ttc" id="aclassast_1_1binary__expr_html_a53744a84ceb698cd63dfd9b321aca208"><div class="ttname"><a href="#a53744a84ceb698cd63dfd9b321aca208">ast::binary_expr::get_op</a></div><div class="ttdeci">char get_op()</div><div class="ttdef"><b>Definition</b> ast.h:168</div></div>
-<div class="ttc" id="aclassast_1_1binary__expr_html_ad6b603cb385c15f7be653e412f8d40e6"><div class="ttname"><a href="#ad6b603cb385c15f7be653e412f8d40e6">ast::binary_expr::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:166</div></div>
-<div class="ttc" id="aclassast_1_1binary__expr_html_afb187597aaada1ebc887801fa78c33a9"><div class="ttname"><a href="#afb187597aaada1ebc887801fa78c33a9">ast::binary_expr::binary_expr</a></div><div class="ttdeci">binary_expr(lexer::Token_Type op, std::unique_ptr&lt; top_level_expr &gt; left, std::unique_ptr&lt; top_level_expr &gt; right, types type)</div><div class="ttdef"><b>Definition</b> ast.h:159</div></div>
-<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:53</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_a53744a84ceb698cd63dfd9b321aca208"><div class="ttname"><a href="#a53744a84ceb698cd63dfd9b321aca208">ast::binary_expr::get_op</a></div><div class="ttdeci">char get_op()</div><div class="ttdef"><b>Definition</b> ast.h:191</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_aa369667002ee0f6554fb319778ddae60"><div class="ttname"><a href="#aa369667002ee0f6554fb319778ddae60">ast::binary_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:188</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_ad6b603cb385c15f7be653e412f8d40e6"><div class="ttname"><a href="#ad6b603cb385c15f7be653e412f8d40e6">ast::binary_expr::get_expr_type</a></div><div class="ttdeci">types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:189</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_afb187597aaada1ebc887801fa78c33a9"><div class="ttname"><a href="#afb187597aaada1ebc887801fa78c33a9">ast::binary_expr::binary_expr</a></div><div class="ttdeci">binary_expr(lexer::Token_Type op, std::unique_ptr&lt; top_level_expr &gt; left, std::unique_ptr&lt; top_level_expr &gt; right, types type)</div><div class="ttdef"><b>Definition</b> ast.h:178</div></div>
+<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
 <div class="ttc" id="anamespaceast_html_a40c97931a3dcafde9769060c39123341"><div class="ttname"><a href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> ast.h:30</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175">lexer::Token_Type</a></div><div class="ttdeci">Token_Type</div><div class="ttdef"><b>Definition</b> lexer.h:28</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a></div><div class="ttdeci">@ tok_plus</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:54</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a></div><div class="ttdeci">@ tok_minus</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:55</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:57</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a></div><div class="ttdeci">@ tok_plus</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition</b> lexer.h:58</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a></div><div class="ttdeci">@ tok_minus</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:57</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:59</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afb187597aaada1ebc887801fa78c33a9" name="afb187597aaada1ebc887801fa78c33a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afb187597aaada1ebc887801fa78c33a9">&#9670;&#160;</a></span>binary_expr()</h2>
@@ -276,6 +289,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa369667002ee0f6554fb319778ddae60" name="aa369667002ee0f6554fb319778ddae60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa369667002ee0f6554fb319778ddae60">&#9670;&#160;</a></span>get_ast_class()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string ast::binary_expr::get_ast_class </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a918298ba5ca74d15ea618d8ca6b188cb">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
 <a id="ad6b603cb385c15f7be653e412f8d40e6" name="ad6b603cb385c15f7be653e412f8d40e6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6b603cb385c15f7be653e412f8d40e6">&#9670;&#160;</a></span>get_expr_type()</h2>
 
@@ -325,6 +365,33 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2b506e23c2abce36b5f88775df5d4de4" name="a2b506e23c2abce36b5f88775df5d4de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b506e23c2abce36b5f88775df5d4de4">&#9670;&#160;</a></span>semantic_analysis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ast::binary_expr::semantic_analysis </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
 
 </div>
 </div>
