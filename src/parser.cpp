@@ -114,9 +114,8 @@ namespace parser {
 
       @code
         else {
-            if (lexer::stored_values.at(current_token_index - 2).has_value()) {
-                lexer::lexer_stored_values value = lexer::stored_values.at(current_token_index - 2).value();
-                return std::move(parse_primary_expression(first_tok, true, value));
+            if (current_expr_val.has_value()) {
+                return std::move(parse_primary_expression(first_tok, current_expr_val.value()));
             } else {
                 utility::parser_error("No value stored for the current token", current_line);
             }
@@ -777,6 +776,9 @@ namespace parser {
                     var_names.insert(var_name);
                     break;
                 }
+                case lexer::tok_identifier:
+                    current_expr = parse_var_assign();
+                    break;
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
@@ -902,6 +904,9 @@ namespace parser {
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;
+                    break;
+                case lexer::tok_identifier:
+                    current_expr = parse_var_assign();
                     break;
                 case lexer::tok_if:
                     current_expr = parse_if();

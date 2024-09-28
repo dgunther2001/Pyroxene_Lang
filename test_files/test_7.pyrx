@@ -1,12 +1,13 @@
 
 int b;
 
-int c = 44;
+//b = 2;
 
-b = c;
-
-
-c = b;
+def int my_func(float c, char d) {
+    int e = b;
+    e = 3;
+    return 10;
+}
 
 
 

@@ -25,7 +25,14 @@ namespace scope {
      * TODO: docs
      */
     void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type, bool is_init) {
-        scoping_stack.back()[name] = {allocation, type, is_init};
+        scoping_stack.back()[name] = {allocation, Variable, type, is_init};
+    }
+
+    /**
+     * TODO: docs
+     */
+    void add_var_to_current_scope(const std::string &name, llvm::Argument* allocation, llvm::Type* type) {
+        scoping_stack.back()[name] = {allocation, Argument, type, true};
     }
 
     /**

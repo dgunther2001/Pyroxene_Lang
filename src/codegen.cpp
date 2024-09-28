@@ -14,7 +14,6 @@ namespace codegen {
     std::unique_ptr<llvm::LLVMContext> LLVM_Context;
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
-    std::map<std::string, llvm::AllocaInst*> symbol_table;
     llvm::BasicBlock* top_level_entry;
 
     /**
@@ -155,9 +154,12 @@ namespace ast {
             utility::codegen_error("Variable '" + identifier_name + "' has not been initialized.", parser::current_line);
         }
 
-        llvm::AllocaInst *variable_allocation = var_alloca_type->allocation;
-        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(variable_allocation->getAllocatedType(), variable_allocation, identifier_name);
-        return load;
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->allocation->getType(), var_alloca_and_type->allocation, identifier_name);
+        if ( var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
+            load->setAlignment(llvm::Align(8));
+        }
+
+        return load; 
      * @endcode
      */
     llvm::Value* ast::identifier_expr::codegen() {
@@ -171,15 +173,12 @@ namespace ast {
             utility::codegen_error("Variable '" + identifier_name + "' has not been initialized.", parser::current_line);
         }
 
-        llvm::AllocaInst *variable_allocation = var_alloca_and_type->allocation;
-        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(variable_allocation->getAllocatedType(), variable_allocation, identifier_name);
-
-        if (variable_allocation->getAllocatedType()->isIntegerTy(64)) {
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->allocation->getType(), var_alloca_and_type->allocation, identifier_name);
+        if ( var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
             load->setAlignment(llvm::Align(8));
         }
 
-        return load;
-
+        return load;  
     }
 
     /**
@@ -254,7 +253,7 @@ namespace ast {
 
         llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, codegen::symbol_table[identifier_name]);
 
-        if (var_alloca_and_type->allocation->getAllocatedType()->isIntegerTy(64)) {
+        if (var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
             store->setAlignment(llvm::Align(8));
         }
 
@@ -274,7 +273,8 @@ namespace ast {
 
         llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, var_alloca_and_type->allocation);
 
-        if (var_alloca_and_type->allocation->getAllocatedType()->isIntegerTy(64)) {
+
+        if (var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
             store->setAlignment(llvm::Align(8));
         }
 
@@ -397,6 +397,7 @@ namespace ast {
      * 
      * @par Grab the return type, as well as the types of all of the paramters.
      * @code
+     * scope::create_scope();
      * llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
 
         std::vector<llvm::Type*> parameter_types;
@@ -426,6 +427,7 @@ namespace ast {
         for (int i = 0; i < parameters.size(); i++) {
             llvm::Argument* argument = function_decl->getArg(i); 
             argument->setName(parameters.at(i)->get_name());
+            scope::add_var_to_current_scope(argument->getName().str(), argument, argument->getType());
         }
        @endcode
        @par Then iterate over the array of expressions, and generate IR in the new control block. If it is a return type, we validate that the expression type matches, and break out of the loop to avoid parsing unreachable code.
@@ -461,10 +463,12 @@ namespace ast {
        @par Reset the IR insertion point back to the global insertion point and return control back to the global block. Then return the llvm::Function*.
        @code
         codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
+        scope::exit_scope();
         return function_decl;
        @endcode
      */
     llvm::Value* ast::func_defn::codegen() {
+        scope::create_scope();
         llvm::Type* func_return_type = codegen::get_llvm_type(return_type);
         std::vector<llvm::Type*> parameter_types;
         for (auto const& parameter : parameters) {
@@ -482,6 +486,7 @@ namespace ast {
         for (int i = 0; i < parameters.size(); i++) {
             llvm::Argument* argument = function_decl->getArg(i); 
             argument->setName(parameters.at(i)->get_name());
+            scope::add_var_to_current_scope(argument->getName().str(), argument, argument->getType());
         }
 
         for (auto const& expression : expressions) {
@@ -511,6 +516,7 @@ namespace ast {
 
         codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
 
+        scope::exit_scope();
         return function_decl;
     }
 
@@ -521,5 +527,7 @@ namespace ast {
     llvm::Value* ast::else_expr::codegen() {
         return nullptr;
     }
+
+
 
 }
