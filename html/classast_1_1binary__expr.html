@@ -173,7 +173,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">};</div>
 <div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:171</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a199170e86e3e23705bc4cdf54574fce3"><div class="ttname"><a href="#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:192</div></div>
-<div class="ttc" id="aclassast_1_1binary__expr_html_a2b506e23c2abce36b5f88775df5d4de4"><div class="ttname"><a href="#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_a2b506e23c2abce36b5f88775df5d4de4"><div class="ttname"><a href="#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:23</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a2cbae213c42ea65d7eaa3dc484faf9ec"><div class="ttname"><a href="#a2cbae213c42ea65d7eaa3dc484faf9ec">ast::binary_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a53744a84ceb698cd63dfd9b321aca208"><div class="ttname"><a href="#a53744a84ceb698cd63dfd9b321aca208">ast::binary_expr::get_op</a></div><div class="ttdeci">char get_op()</div><div class="ttdef"><b>Definition</b> ast.h:191</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_aa369667002ee0f6554fb319778ddae60"><div class="ttname"><a href="#aa369667002ee0f6554fb319778ddae60">ast::binary_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:188</div></div>
@@ -390,6 +390,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section user"><dt>Validate that the left and right expressions in a binary expression match types.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> ((left-&gt;get_expr_type() != type) || right-&gt;get_expr_type() != type) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Invalid types connected in binary expression&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:23</div></div>
+<div class="ttc" id="anamespaceutility_html_a9268449c45b475023dde39f4010b698a"><div class="ttname"><a href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a></div><div class="ttdeci">void parser_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:68</div></div>
+</div><!-- fragment --> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
 
@@ -397,6 +403,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/ast/<a class="el" href="ast_8h_source.html">ast.h</a></li>
+<li>src/<a class="el" href="type__checker_8cpp.html">type_checker.cpp</a></li>
 <li>src/<a class="el" href="codegen_8cpp.html">codegen.cpp</a></li>
 </ul>
 </div><!-- contents -->
