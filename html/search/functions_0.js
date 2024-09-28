@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['binary_5fexpr_0',['binary_expr',['../classast_1_1binary__expr.html#afb187597aaada1ebc887801fa78c33a9',1,'ast::binary_expr']]],
-  ['bool_5fexpression_1',['bool_expression',['../classast_1_1bool__expression.html#ab026002cda4897953e3c33cabb92ce2e',1,'ast::bool_expression']]]
+  ['add_5fvar_5fto_5fcurrent_5fscope_0',['add_var_to_current_scope',['../namespacescope.html#a41c16319bb03f7679d147493ef074514',1,'scope::add_var_to_current_scope(const std::string &amp;name, llvm::AllocaInst *allocation, llvm::Type *type, bool is_init)'],['../namespacescope.html#a2e1c0cc070a8f8f8931bb03fe2300420',1,'scope::add_var_to_current_scope(const std::string &amp;name, llvm::Argument *allocation, llvm::Type *type)']]]
 ];

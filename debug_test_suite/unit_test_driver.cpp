@@ -114,8 +114,6 @@ int main(int argc, char** argv) {
 
         utility::end_llvm_mods();
 
-        std::cout << "\nLLVM Symbol Table Size: " << codegen::symbol_table.size() << "\n";
-
         file.close();
 
     #else

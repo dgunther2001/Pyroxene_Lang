@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['string_5ftype_0',['string_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622',1,'ast']]]
+  ['int_5ftype_0',['int_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6',1,'ast']]]
 ];

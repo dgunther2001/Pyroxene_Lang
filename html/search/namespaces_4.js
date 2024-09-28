@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utility_0',['utility',['../namespaceutility.html',1,'']]]
+  ['scope_0',['scope',['../namespacescope.html',1,'']]]
 ];
