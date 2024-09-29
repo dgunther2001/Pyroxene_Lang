@@ -161,7 +161,7 @@ namespace ast {
       * @endcode
       */
      void ast::func_call_expr::debug_output() {
-          std::cout << "Parsed function call (" << func_name << "\n";
+          std::cout << "Parsed function call (" << func_name << ")\n";
      }
 }
 

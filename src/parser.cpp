@@ -177,7 +177,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (scope::global_contains_func_defn(value)) {
+            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -193,7 +193,7 @@ namespace parser {
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
             if (scope::global_contains_func_defn(std::get<std::string>(value))) {
-                return std::move(parse_func_call(value));
+                return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
         }
@@ -557,26 +557,26 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value) {
         std::string func_name = std::get<std::string>(value);
 
-        get_next_token(); // consume the name
-
-        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
         if (current_token != lexer::tok_open_paren) {
             utility::parser_error("Expected '(' before function arguments", current_line);
         }
 
-        while(true) {
+        get_next_token();
+
+        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
+
+        while(current_token != lexer::tok_close_paren) {
 
             auto current_expression = parse_expression();
             arguments.emplace_back(std::move(current_expression));
 
-            if (current_token != lexer::tok_comma || current_token != lexer::tok_close_paren) {
+            if (current_token != lexer::tok_comma && current_token != lexer::tok_close_paren) {
                 utility::parser_error("Expected ',' delimiter between arguments, or a closing ')'", current_line);
             }
 
-            if (current_token == lexer::tok_close_paren) {
-                break;
+            if (current_token == lexer::tok_comma) {
+                get_next_token();
             }
-            get_next_token();
         }
 
         if (current_token != lexer::tok_close_paren) {
@@ -585,6 +585,10 @@ namespace parser {
         get_next_token(); // consume the closing parenthesis
 
         auto ast_node = std::make_unique<ast::func_call_expr>(func_name, std::move(arguments));
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
 
         return std::move(ast_node);
 
@@ -833,8 +837,13 @@ namespace parser {
                     break;
                 }
                 case lexer::tok_identifier:
-                    current_expr = parse_var_assign();
-                    break;
+                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                        current_expr = parser::parse_var_assign();
+                        break;
+                    } else {
+                        current_expr = parser::parse_expression();
+                        break;
+                    }
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
@@ -968,8 +977,13 @@ namespace parser {
                     current_expr = nullptr;
                     break;
                 case lexer::tok_identifier:
-                    current_expr = parse_var_assign();
-                    break;
+                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                        current_expr = parser::parse_var_assign();
+                        break;
+                    } else {
+                        current_expr = parser::parse_expression();
+                        break;
+                    }
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
@@ -1076,6 +1090,14 @@ namespace parser {
                 case lexer::tok_return: 
                     current_expr = parse_return();
                     break;
+                case lexer::tok_identifier:
+                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                        current_expr = parser::parse_var_assign();
+                        break;
+                    } else {
+                        current_expr = parser::parse_expression();
+                        break;
+                    }
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;
@@ -1139,6 +1161,14 @@ namespace parser {
                 case lexer::tok_return: // validate we are in a function here
                     current_expr = parse_return();
                     break;
+                case lexer::tok_identifier:
+                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                        current_expr = parser::parse_var_assign();
+                        break;
+                    } else {
+                        current_expr = parser::parse_expression();
+                        break;
+                    }
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;

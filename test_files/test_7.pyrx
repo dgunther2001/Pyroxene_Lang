@@ -8,7 +8,12 @@ def int my_func(float c, char d) {
     return 10;
 }
 
-my_func(33.3, 'c');
+my_func(33.3, 4);
+
+my_func();
+
+my_func(55);
+
 
   
 
