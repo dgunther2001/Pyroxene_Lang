@@ -6,15 +6,20 @@ For the full license text, see the LICENSE.md file in the root directory.
 If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 */
 
-if (55 + 11) {
-    int i = 55;
-    int j = 33;
-    i + j * 88;
-} 
+int l = 66;
 
 def int my_func(int a, float b, char c) {
     int d = 33;
-    if (55+33) {
-        string e = "Daniel";
-    }
+    int e = 66 + d;
+
+    return d + e;
 }
+
+string g = "Daniel"
+
+def char my_func_2(string d) {
+    l = 44;
+    return 'c';
+}
+
+
