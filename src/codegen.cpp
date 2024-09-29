@@ -528,6 +528,9 @@ namespace ast {
         return nullptr;
     }
 
+    llvm::Value* ast::func_call_expr::codegen() {
+        return nullptr;
+    }
 
 
 }

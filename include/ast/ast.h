@@ -635,7 +635,21 @@ namespace ast {
         llvm::Value* codegen() override;
     };
 
+    class func_call_expr : public top_level_expr {
+    private:
+        std::string func_name;
+        std::vector<std::unique_ptr<top_level_expr>> arguments;
 
+    public:
+        func_call_expr(std::string func_name, std::vector<std::unique_ptr<top_level_expr>> args) :
+            func_name(func_name),
+            arguments(std::move(args))
+            {}
+        std::string get_ast_class() const override { return "func_call"; }
+        void debug_output();
+        llvm::Value* codegen() override;
+
+    };
     
     
     extern std::string get_type_as_string(types type);

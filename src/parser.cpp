@@ -176,7 +176,12 @@ namespace parser {
         if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr(value));
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
-        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(value)); 
+        if (prev_tok == lexer::tok_identifier) {
+            if (scope::global_contains_func_defn(value)) {
+                return std::move(parse_func_call(std::get<std::string>(value)));
+            }
+            return std::move(parse_identifier_expr(value)); 
+        }
      * @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_primary_expression(lexer::Token_Type prev_tok, lexer::lexer_stored_values value) {
@@ -186,7 +191,13 @@ namespace parser {
         if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr(value));
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
-        if (prev_tok == lexer::tok_identifier) return std::move(parse_identifier_expr(value)); 
+        if (prev_tok == lexer::tok_identifier) {
+            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
+                return std::move(parse_func_call(value));
+            }
+            return std::move(parse_identifier_expr(value)); 
+        }
+        
 
         utility::parser_error("Primary expression not recognized", current_line);
         return nullptr;
@@ -541,6 +552,45 @@ namespace parser {
     }
 
     /**
+     * TODO: docs
+     */
+    std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value) {
+        std::string func_name = std::get<std::string>(value);
+
+        get_next_token(); // consume the name
+
+        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '(' before function arguments", current_line);
+        }
+
+        while(true) {
+
+            auto current_expression = parse_expression();
+            arguments.emplace_back(std::move(current_expression));
+
+            if (current_token != lexer::tok_comma || current_token != lexer::tok_close_paren) {
+                utility::parser_error("Expected ',' delimiter between arguments, or a closing ')'", current_line);
+            }
+
+            if (current_token == lexer::tok_close_paren) {
+                break;
+            }
+            get_next_token();
+        }
+
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')' after function arguments", current_line);
+        }
+        get_next_token(); // consume the closing parenthesis
+
+        auto ast_node = std::make_unique<ast::func_call_expr>(func_name, std::move(arguments));
+
+        return std::move(ast_node);
+
+    }
+
+    /**
      * @par This parses primary identifiers, and validates that they have been pre-defined
      * 
      * @param top_level Indicates whether this expresion is part of a binary subexpression.
@@ -725,7 +775,13 @@ namespace parser {
         get_next_token(); 
 
         std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
-
+        
+        if (scope::global_contains_func_defn(func_name)) {
+            utility::parser_error("Function name already used", current_line);
+        }
+        
+        scope::add_function_defn(func_name, ret_type);
+        
         get_next_token(); 
      * @endcode
 
@@ -848,6 +904,12 @@ namespace parser {
         get_next_token(); // consume the type
 
         std::string func_name = std::get<std::string>(current_value.value()); // grab the function name
+
+        if (scope::global_contains_func_defn(func_name)) {
+            utility::parser_error("Function name already used", current_line);
+        }
+
+        scope::add_function_defn(func_name, ret_type);
 
         get_next_token(); // consume the name
 

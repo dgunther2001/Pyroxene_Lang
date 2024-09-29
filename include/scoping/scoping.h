@@ -2,8 +2,13 @@
 #define SCOPING_H
 
 #include "../include/codegen/codegen.h"
+#include <map>
 
 namespace scope {
+    /**
+     * Holds the global list of defined functions.
+     */
+    extern std::map<std::string, ast::types> defined_functions;
 
     /**
      * @par Enum to indicate whether a scoped value is a variable or an argument
@@ -32,10 +37,10 @@ namespace scope {
      * Indicates whether the variable has been initialized with a value.
      */
     typedef struct {
-        llvm::Value* allocation; /**< The variable allocation (can be an llvm::Argument*, or llvm::AllocaInst*) */
-        var_or_arg var_arg; /**< Indicicates whether the variable is an argument, or variable */
-        llvm::Type* type; /**< Holds the type of the variable */
-        bool is_init; /**< Indicates whether the variable has been initialized with a value */
+        llvm::Value* allocation; 
+        var_or_arg var_arg; 
+        llvm::Type* type; 
+        bool is_init; 
     } llvm_var_info;
 
     /**
@@ -43,12 +48,15 @@ namespace scope {
      */
     extern std::vector<std::map<std::string, llvm_var_info>> scoping_stack;
     
-    void create_scope();
-    void exit_scope();
-    void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type, bool is_init);
-    void add_var_to_current_scope(const std::string &name, llvm::Argument* allocation, llvm::Type* type);
-    llvm_var_info* variable_lookup(const std::string &var_name);
-    bool variable_exists_in_current_scope(const std::string &name);
+    extern void create_scope();
+    extern void exit_scope();
+    extern void add_var_to_current_scope(const std::string &name, llvm::AllocaInst* allocation, llvm::Type* type, bool is_init);
+    extern void add_var_to_current_scope(const std::string &name, llvm::Argument* allocation, llvm::Type* type);
+    extern llvm_var_info* variable_lookup(const std::string &var_name);
+    extern bool variable_exists_in_current_scope(const std::string &name);
+
+    extern void add_function_defn(std::string name, ast::types ret_type);
+    extern bool global_contains_func_defn(std::string name);
 }
 
 #endif

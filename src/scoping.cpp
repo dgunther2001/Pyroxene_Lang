@@ -3,6 +3,8 @@
 namespace scope {
     std::vector<std::map<std::string, llvm_var_info>> scoping_stack;
 
+    std::map<std::string, ast::types> defined_functions;
+
     /**
      * @par Simply adds a new scope to the cope stack
      * @code
@@ -92,5 +94,27 @@ namespace scope {
             return current_scope.find(name) != current_scope.end();
         }
         return false;   
+    }
+
+    /**
+     * @par Inserts a function into the global symbol table of defined functions to validate before calls
+     * @code
+     * defined_functions.insert({name, ret_type});
+     * @endcode
+     */
+    void add_function_defn(std::string name, ast::types ret_type) {
+        defined_functions.insert({name, ret_type});
+    }
+
+    /**
+     * @par Simply returns whether a function already exists in the global symbol table.
+     * @code
+     * if (defined_functions.empty()) return false;
+       return defined_functions.find(name) != defined_functions.end();
+     * @endcode
+     */
+    bool global_contains_func_defn(std::string name) {
+        if (defined_functions.empty()) return false;
+        return defined_functions.find(name) != defined_functions.end();
     }
 }

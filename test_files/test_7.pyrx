@@ -1,13 +1,14 @@
 
 int b;
-
-//b = 2;
+b = 2;
 
 def int my_func(float c, char d) {
     int e = b;
     e = 3;
     return 10;
 }
+
+my_func(33.3, 'c');
 
   
 

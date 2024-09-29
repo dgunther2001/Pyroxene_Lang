@@ -153,5 +153,15 @@ namespace ast {
      void ast::else_expr::debug_output() {
           std::cout << "Parsed else statement\n";
      }
+
+     /**
+      * @fn ast::func_call_expr::debug_output()
+      * @code
+      * std::cout << "Parsed function call (" << func_name << "\n";
+      * @endcode
+      */
+     void ast::func_call_expr::debug_output() {
+          std::cout << "Parsed function call (" << func_name << "\n";
+     }
 }
 
