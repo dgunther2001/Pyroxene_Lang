@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['line_5fcount_0',['line_count',['../namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0',1,'lexer']]],
-  ['line_5fcount_5fvec_1',['line_count_vec',['../namespacelexer.html#a2236b4d9e5656f41e63b6a6aaf59a796',1,'lexer']]],
-  ['llvm_5fcontext_2',['LLVM_Context',['../namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a',1,'codegen']]],
-  ['llvm_5fmodule_3',['LLVM_Module',['../namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe',1,'codegen']]]
+  ['identifier_0',['identifier',['../namespacelexer.html#a0586f976980cc76c5600f1867c16c903',1,'lexer']]],
+  ['input_1',['input',['../namespacelexer.html#a094bf53953e31c419b3e6558322d5ecc',1,'lexer']]],
+  ['integer_5fvalue_2',['integer_value',['../namespacelexer.html#a2d316c268c0a2311fbf8e13114787596',1,'lexer']]],
+  ['ir_5fbuilder_3',['IR_Builder',['../namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c',1,'codegen']]],
+  ['is_5finit_4',['is_init',['../structscope_1_1llvm__var__info.html#a1d3e582c2957a37145994fde97631952',1,'scope::llvm_var_info']]]
 ];

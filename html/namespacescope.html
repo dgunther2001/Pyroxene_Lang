@@ -119,11 +119,17 @@ Functions</h2></td></tr>
 <tr class="separator:a9c951dd8834eed9c5c716c6412e71dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b81a86985cd2658a1edf02e95b2f0b" id="r_a09b81a86985cd2658a1edf02e95b2f0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09b81a86985cd2658a1edf02e95b2f0b">variable_exists_in_current_scope</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a09b81a86985cd2658a1edf02e95b2f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a822ec6f85e152759e54e5f4e9fcd747c" id="r_a822ec6f85e152759e54e5f4e9fcd747c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a822ec6f85e152759e54e5f4e9fcd747c">add_function_defn</a> (std::string name, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> ret_type)</td></tr>
+<tr class="separator:a822ec6f85e152759e54e5f4e9fcd747c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6eeeb6c1a455818f50e9ae0d7183c29b" id="r_a6eeeb6c1a455818f50e9ae0d7183c29b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6eeeb6c1a455818f50e9ae0d7183c29b">global_contains_func_defn</a> (std::string name)</td></tr>
+<tr class="separator:a6eeeb6c1a455818f50e9ae0d7183c29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a905f50d938f068b4696811a1868875d5" id="r_a905f50d938f068b4696811a1868875d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::map&lt; std::string, <a class="el" href="structscope_1_1llvm__var__info.html">llvm_var_info</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a></td></tr>
 <tr class="separator:a905f50d938f068b4696811a1868875d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d111d7bd13bced4e3466998cb826db4" id="r_a9d111d7bd13bced4e3466998cb826db4"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d111d7bd13bced4e3466998cb826db4">defined_functions</a></td></tr>
+<tr class="separator:a9d111d7bd13bced4e3466998cb826db4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ad04e3e2e2a5006b56b242b47bcca40cf" name="ad04e3e2e2a5006b56b242b47bcca40cf"></a>
@@ -148,6 +154,30 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a822ec6f85e152759e54e5f4e9fcd747c" name="a822ec6f85e152759e54e5f4e9fcd747c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a822ec6f85e152759e54e5f4e9fcd747c">&#9670;&#160;</a></span>add_function_defn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void scope::add_function_defn </td>
+          <td>(</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></td>          <td class="paramname"><span class="paramname"><em>ret_type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Inserts a function into the global symbol table of defined functions to validate before calls</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a9d111d7bd13bced4e3466998cb826db4">defined_functions</a>.insert({name, ret_type});</div>
+<div class="ttc" id="anamespacescope_html_a9d111d7bd13bced4e3466998cb826db4"><div class="ttname"><a href="#a9d111d7bd13bced4e3466998cb826db4">scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, ast::types &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:6</div></div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
 <a id="a41c16319bb03f7679d147493ef074514" name="a41c16319bb03f7679d147493ef074514"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41c16319bb03f7679d147493ef074514">&#9670;&#160;</a></span>add_var_to_current_scope() <span class="overload">[1/2]</span></h2>
 
@@ -178,7 +208,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section user"><dt>Takes in a variable allocation and adds it to the current scope.</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">Variable</a>, type, is_init};</div>
 <div class="ttc" id="anamespacescope_html_a905f50d938f068b4696811a1868875d5"><div class="ttname"><a href="#a905f50d938f068b4696811a1868875d5">scope::scoping_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, llvm_var_info &gt; &gt; scoping_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:4</div></div>
-<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">scope::Variable</a></div><div class="ttdeci">@ Variable</div><div class="ttdoc">Indicates a variable.</div><div class="ttdef"><b>Definition</b> scoping.h:12</div></div>
+<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">scope::Variable</a></div><div class="ttdeci">@ Variable</div><div class="ttdoc">Indicates a variable.</div><div class="ttdef"><b>Definition</b> scoping.h:17</div></div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -207,7 +237,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Takes a function argument and adds it to the current scope</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">Argument</a>, type, <span class="keyword">true</span>};</div>
-<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope::Argument</a></div><div class="ttdeci">@ Argument</div><div class="ttdoc">Indicates an argument.</div><div class="ttdef"><b>Definition</b> scoping.h:13</div></div>
+<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope::Argument</a></div><div class="ttdeci">@ Argument</div><div class="ttdoc">Indicates an argument.</div><div class="ttdef"><b>Definition</b> scoping.h:18</div></div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -252,6 +282,26 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:98</div></div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="a6eeeb6c1a455818f50e9ae0d7183c29b" name="a6eeeb6c1a455818f50e9ae0d7183c29b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6eeeb6c1a455818f50e9ae0d7183c29b">&#9670;&#160;</a></span>global_contains_func_defn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool scope::global_contains_func_defn </td>
+          <td>(</td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Simply returns whether a function already exists in the global symbol table.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a9d111d7bd13bced4e3466998cb826db4">defined_functions</a>.empty()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a9d111d7bd13bced4e3466998cb826db4">defined_functions</a>.find(name) != <a class="code hl_variable" href="#a9d111d7bd13bced4e3466998cb826db4">defined_functions</a>.end();</div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -306,6 +356,21 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a9d111d7bd13bced4e3466998cb826db4" name="a9d111d7bd13bced4e3466998cb826db4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d111d7bd13bced4e3466998cb826db4">&#9670;&#160;</a></span>defined_functions</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt; std::string, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> &gt; scope::defined_functions</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Holds the global list of defined functions. </p>
+
+</div>
+</div>
 <a id="a905f50d938f068b4696811a1868875d5" name="a905f50d938f068b4696811a1868875d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a905f50d938f068b4696811a1868875d5">&#9670;&#160;</a></span>scoping_stack</h2>
 

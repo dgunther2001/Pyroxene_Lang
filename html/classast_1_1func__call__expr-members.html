@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pyroxene: Welcome to Pyroxene</title>
+<title>Pyroxene: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -55,8 +55,6 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
-</div><!-- top -->
-<div id="doc-content">
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function(){ initResizable(false); });
@@ -83,36 +81,28 @@ $(function(){ initResizable(false); });
 </div>
 </div>
 
-<div><div class="header">
-  <div class="headertitle"><div class="title">Welcome to Pyroxene </div></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceast.html">ast</a></li><li class="navelem"><a class="el" href="classast_1_1func__call__expr.html">func_call_expr</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle"><div class="title">ast::func_call_expr Member List</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_docs_2landing"></a></p>
-<h3><a class="anchor" id="autotoc_md1"></a>
-To view the License, click <a class="el" href="md__l_i_c_e_n_s_e.html">here</a>.</h3>
-<h3><a class="anchor" id="autotoc_md2"></a>
-To run Pyroxene, click <a class="el" href="md_docs_2start.html">here</a>.</h3>
-<h3><a class="anchor" id="autotoc_md3"></a>
-Langauge Implementation Roadmap:</h3>
-<p><a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacelexer.html">Lexer</a>: where a .pyrx file is converted into tokens. <br  />
- <a class="el" href="md_docs_2cfg.html">CFG</a>: Pyroxene's context-free-grammar. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST</a>: the higher order grammar of Pyroxene (avoid codegen() and semantic_analysis() functions for now). <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceparser.html">Parser</a>: where a sequence of tokens is validated and converted to higher order gramattical structures. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacesem__analysis__scope.html">Semantic-Analysis-Scoping</a>: where we define all operations related to the scope stack that gets created and destroyed during the semantic analysis phase. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST-Semantic-Analysis</a>: back in the ast, but specifically the semantic_analysis() functions. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacescope.html">LLVM-Scoping</a>: where we define the scoping stack to allow for shadowing, and variable access limited to where they should be accessed. This operates specifically when generating LLVM IR, as it stores references to allocations. <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespacecodegen.html">Codegen</a>: where llvm backbone is setup (context, module, ir builder, etc). <br  />
- <a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceast.html">AST-Codegen</a>: back in AST, but specifically look at codegen() functions. <br  />
-</p>
-<p><a href="https://dgunther2001.github.io/Pyroxene_Lang/namespaceutility.html">Utility</a>: error handling and driver functions. <br  />
-</p>
-<h3><a class="anchor" id="autotoc_md4"></a>
-Using Pyroxene:</h3>
-<p><a class="el" href="md_docs_2syntax.html">Syntax</a>: a basic overview of Pyroxene syntax. <br  />
- </p>
-</div></div><!-- PageDoc -->
-<a href="doxygen_crawl.html"></a>
-</div><!-- contents -->
+
+<p>This is the complete list of members for <a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a>, including all inherited members.</p>
+<table class="directory">
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1func__call__expr.html#af3357c06ef9b736aff48e3efeefa34db">codegen</a>() override</td><td class="entry"><a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1func__call__expr.html#aa211bf83059c7add191834780a5aff96">debug_output</a>()</td><td class="entry"><a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1func__call__expr.html#aee29bb54b49f44235b02894f16b5974d">func_call_expr</a>(std::string func_name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; args)</td><td class="entry"><a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1func__call__expr.html#a2953a9997fd3e5f2d71b618659a24d46">get_ast_class</a>() const override</td><td class="entry"><a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a310f0586f8f80fde54a3d4ef829259e9">get_expr_type</a>() const</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a>() const</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a>()</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">inline</span><span class="mlabel">virtual</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a>()=default</td><td class="entry"><a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>
+</table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
