@@ -95,7 +95,7 @@ namespace scope {
 }
 
 namespace sem_analysis_scope {
-    std::map<std::string, ast::types> defined_functions;
+    std::map<std::string, type_enum::types> defined_functions;
     std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
 
     /**
@@ -122,7 +122,7 @@ namespace sem_analysis_scope {
      * defined_functions.insert({name, ret_type});
      * @endcode
      */
-    void add_function_defn(std::string name, ast::types ret_type) {
+    void add_function_defn(std::string name, type_enum::types ret_type) {
         defined_functions.insert({name, ret_type});
     }
 
@@ -141,7 +141,7 @@ namespace sem_analysis_scope {
     /**
      * TODO: docs
      */
-    ast::types get_var_type(const std::string &name) {
+    type_enum::types get_var_type(const std::string &name) {
         for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
             auto variable = it->find(name);  
             if (variable != it->end()) {
@@ -154,7 +154,7 @@ namespace sem_analysis_scope {
     /**
      * TODO: docs
      */
-    void add_var_to_current_scope(const std::string &name, ast::types type, bool is_init) {
+    void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init) {
         sem_analysis_stack.back()[name] = {type, is_init};
     }
 

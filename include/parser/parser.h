@@ -13,6 +13,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <map>
 #include <vector>
 #include "../ast/ast.h"
+#include "../types/types.h"
 #include "../lexer/lexer.h"
 #include "../utility/utility.h"
 
@@ -62,8 +63,8 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::vector<lexer::Token_Type> sub_tok_stream, std::vector<std::optional<lexer::lexer_stored_values>> sub_value_stream);
 
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn();
-    std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier);
-    std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier);
+    std::unique_ptr<ast::top_level_expr> parse_var_decl(type_enum::types type, std::string identifier);
+    std::unique_ptr<ast::top_level_expr> parse_var_defn(type_enum::types type, std::string identifier);
     std::unique_ptr<ast::top_level_expr> parse_var_assign();
 
     std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value);

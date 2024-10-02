@@ -13,6 +13,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "llvm/IR/Module.h"
 #include "../ast/ast.h"
 #include "../utility/utility.h"
+#include "../types/types.h"
 #include <map>
 
 namespace codegen {
@@ -37,7 +38,7 @@ namespace codegen {
      */
     extern llvm::BasicBlock* top_level_entry;
 
-    extern llvm::Type* get_llvm_type(ast::types current_type);
+    extern llvm::Type* get_llvm_type(type_enum::types current_type);
 }
 namespace ast {
 }

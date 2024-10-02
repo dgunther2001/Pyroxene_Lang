@@ -101,6 +101,12 @@ namespace utility {
         std::abort();
     }
 
+    void sem_analysis_error(const std::string& message, int line) {
+        std::cout <<"\033[1;31m";
+        std::cout << "Semantic analysis error: " << message << " on line " << line << "\n";
+        std::abort();
+    }
+
     /**
      * @par Spits out the current token to OStream.
      * 

@@ -58,14 +58,14 @@ namespace sem_analysis_scope {
          * TODO: docs
          */
         typedef struct {
-            ast::types type;
+            type_enum::types type;
             bool is_init;
         } sem_analysis_info;
 
         /**
          * TODO: docs
          */
-        extern std::map<std::string, ast::types> defined_functions;
+        extern std::map<std::string, type_enum::types> defined_functions;
         
         /**
          * TODO: docs
@@ -75,9 +75,9 @@ namespace sem_analysis_scope {
 
         extern void create_scope();
         extern void exit_scope();
-        extern void add_var_to_current_scope(const std::string &name, ast::types type, bool is_init);
-        extern ast::types get_var_type(const std::string &name);
-        extern void add_function_defn(std::string name, ast::types ret_type);
+        extern void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init);
+        extern type_enum::types get_var_type(const std::string &name);
+        extern void add_function_defn(std::string name, type_enum::types ret_type);
         extern bool global_contains_func_defn(std::string name);
         extern bool variable_exists_in_current_scope(const std::string &name);
 }

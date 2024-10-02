@@ -50,6 +50,7 @@ if(BUILD_DEBUG_DRIVER)
         src/type_checker.cpp 
         src/utility.cpp
         src/scoping.cpp
+        src/types.cpp
     )
 else()
     add_definitions(-DDEBUG_MODE=0)
@@ -62,6 +63,7 @@ else()
         src/type_checker.cpp 
         src/utility.cpp
         src/scoping.cpp
+        src/types.cpp
     )
 endif()
 

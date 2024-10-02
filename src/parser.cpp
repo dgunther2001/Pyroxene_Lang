@@ -256,7 +256,7 @@ namespace parser {
      * @par Validate that the types of each side match, and then store them in a binary expression ast node with type and operator information.
      * 
      * @code
-        ast::types bin_type;
+        type_enum::types bin_type;
         if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
             bin_type = left_expr->get_expr_type(); 
         } else {
@@ -310,7 +310,7 @@ namespace parser {
         
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
-        ast::types bin_type;
+        type_enum::types bin_type;
 
         bin_type = left_expr->get_expr_type(); 
 
@@ -329,23 +329,23 @@ namespace parser {
     * 
     * @par First we check the type
     * @code
-    *   ast::types type;
+    *   type_enum::types type;
         std::string identifier;
         switch (current_token) {
             case lexer::tok_int:
-                type = ast::int_type;
+                type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                type = ast::float_type;
+                type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                type = ast::char_type;
+                type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                type = ast::string_type;
+                type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                type = ast::bool_type;
+                type = type_enum::bool_type;
                 break;
             default:
                 utility::parser_error("Invalid type specified", current_line); 
@@ -385,23 +385,23 @@ namespace parser {
       @endcode
     */
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
-        ast::types type;
+        type_enum::types type;
         std::string identifier;
         switch (current_token) {
             case lexer::tok_int:
-                type = ast::int_type;
+                type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                type = ast::float_type;
+                type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                type = ast::char_type;
+                type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                type = ast::string_type;
+                type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                type = ast::bool_type;
+                type = type_enum::bool_type;
                 break;
             default:
                 utility::parser_error("Invalid type specified", current_line); 
@@ -443,7 +443,7 @@ namespace parser {
         return std::move(ast_node);
      * @endcode
      */
-    std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier) {
+    std::unique_ptr<ast::top_level_expr> parse_var_decl(type_enum::types type, std::string identifier) {
 
         auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
 
@@ -470,7 +470,7 @@ namespace parser {
         return std::move(ast_node);
      * @endcode
      */
-    std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier) {
+    std::unique_ptr<ast::top_level_expr> parse_var_defn(type_enum::types type, std::string identifier) {
 
         get_next_token(); // consume the '='
 
@@ -752,25 +752,25 @@ namespace parser {
      * @code
      *   get_next_token();
 
-        ast::types ret_type;
+        type_enum::types ret_type;
         switch (current_token) {
             case lexer::tok_int:
-                ret_type = ast::int_type;
+                ret_type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                ret_type = ast::float_type;
+                ret_type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                ret_type = ast::char_type;
+                ret_type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                ret_type = ast::string_type;
+                ret_type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                ret_type = ast::bool_type;
+                ret_type = type_enum:::bool_type;
                 break;
             case lexer::tok_void:
-                ret_type = ast::void_type;
+                ret_type = type_enum::void_type;
                 break;
             default:
                 utility::parser_error("Invalid return type provided to function", current_line);
@@ -886,25 +886,25 @@ namespace parser {
 
         get_next_token(); // eat def
 
-        ast::types ret_type;
+        type_enum::types ret_type;
         switch (current_token) {
             case lexer::tok_int:
-                ret_type = ast::int_type;
+                ret_type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                ret_type = ast::float_type;
+                ret_type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                ret_type = ast::char_type;
+                ret_type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                ret_type = ast::string_type;
+                ret_type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                ret_type = ast::bool_type;
+                ret_type = type_enum::bool_type;
                 break;
             case lexer::tok_void:
-                ret_type = ast::void_type;
+                ret_type = type_enum::void_type;
                 break;
             default:
                 utility::parser_error("Invalid return type provided to function", current_line);

@@ -21,11 +21,9 @@ namespace ast {
      * @endcode
      */
     void ast::binary_expr::semantic_analysis() {
-        /*
         if ((left->get_expr_type() != type) || right->get_expr_type() != type) {
-            utility::parser_error("Invalid types connected in binary expression", parser::current_line);
+            utility::sem_analysis_error("Invalid types connected in binary expression", parser::current_line);
         }
-        */
     }
 
     /**
@@ -39,16 +37,14 @@ namespace ast {
      */
     void ast::variable_definition::semantic_analysis() {
         if (sem_analysis_scope::variable_exists_in_current_scope(identifier_name)) {
-            utility::scoping_error("Variable already declared or defined in the current scope", parser::current_line);
+            utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
 
-        // WHAT ABOUT IDENTIFIERS???
         if (assigned_value->get_expr_type() != type) {
-
-        }
+            utility::sem_analysis_error("Invalid value provided to variable definition", parser::current_line);
+        }   
 
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
-
     }
 
     /**
@@ -61,15 +57,9 @@ namespace ast {
      * @endcode
      */
     void ast::variable_assignment::semantic_analysis() {
-        /*
         if (assigned_value->get_expr_type() != type) {
             utility::parser_error("Value of invalid type asssigned to '" + identifier_name + '"', parser::current_line);
         }
-        */
-    }
-
-    void ast::identifier_expr::semantic_analysis() {
-
     }
 
     void ast::if_expr::semantic_analysis() {

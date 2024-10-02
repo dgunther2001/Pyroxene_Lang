@@ -14,36 +14,36 @@ namespace ast {
      * <h4> This function maps types defined in the enumerator to string for debug use when parsing AST nodes. </h4>
      * @code
         switch (type) {
-            case (int_type):
+            case (type_enum::int_type):
                 return "int";
-            case (float_type):
+            case (type_enum::float_type):
                 return "float";
-            case (char_type):
+            case (type_enum::char_type):
                 return "char";
-            case (string_type):
+            case (type_enum::string_type):
                 return "string";
-            case (bool_type):
+            case (type_enum::bool_type):
                 return "bool";
-            case (void_type):
+            case (type_enum::void_type):
                 return "void";
-            default: 
+            default: // ADD ERROR HANDLING HERE
                 return "";
         }
      * @endcode
      */
-    std::string get_type_as_string(types type) {
+    std::string get_type_as_string(type_enum::types type) {
         switch (type) {
-            case (int_type):
+            case (type_enum::int_type):
                 return "int";
-            case (float_type):
+            case (type_enum::float_type):
                 return "float";
-            case (char_type):
+            case (type_enum::char_type):
                 return "char";
-            case (string_type):
+            case (type_enum::string_type):
                 return "string";
-            case (bool_type):
+            case (type_enum::bool_type):
                 return "bool";
-            case (void_type):
+            case (type_enum::void_type):
                 return "void";
             default: // ADD ERROR HANDLING HERE
                 return "";
