@@ -5,5 +5,5 @@ var searchData=
   ['enable_20docker_20and_20or_20docker_20desktop_2',['Install and enable Docker and/or Docker Desktop',['../md_docs_2start.html#autotoc_md7',1,'']]],
   ['end_5fllvm_5fmods_3',['end_llvm_mods',['../namespaceutility.html#a12d2eaa26c6991ec4653588c398402dd',1,'utility']]],
   ['execution_4',['Execution',['../md_docs_2start.html#autotoc_md8',1,'']]],
-  ['exit_5fscope_5',['exit_scope',['../namespacescope.html#a21cdb44f51a06d33c6537c7167270879',1,'scope']]]
+  ['exit_5fscope_5',['exit_scope',['../namespacescope.html#a21cdb44f51a06d33c6537c7167270879',1,'scope::exit_scope()'],['../namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8',1,'sem_analysis_scope::exit_scope()']]]
 ];

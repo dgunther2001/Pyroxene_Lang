@@ -7,10 +7,6 @@ def int my_func(float c, char d) {
     e = 3;
     return 12;
 }
-
-def int my_func() {
-    return 15;
-}
 //int c = b + 'c';
 
 

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['landing_2emd_0',['landing.md',['../landing_8md.html',1,'']]],
-  ['langauge_20implementation_20roadmap_1',['Langauge Implementation Roadmap',['../index.html#autotoc_md3',1,'']]],
+  ['langauge_20implementation_20roadmap_3a_1',['Langauge Implementation Roadmap:',['../index.html#autotoc_md3',1,'']]],
   ['language_20syntax_2',['Language Syntax',['../md_docs_2syntax.html',1,'']]],
   ['lexed_20tokens_20and_20output_20a_20program_20abstract_20syntax_20tree_20ast_20ast_20that_20can_20each_20hold_20their_20own_20llvm_20ir_20codegen_20function_3',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
   ['lexer_4',['lexer',['../namespacelexer.html',1,'']]],

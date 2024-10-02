@@ -93,8 +93,8 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:abb9b2b119e0c3d003dbeab964c1ef0cb" id="r_abb9b2b119e0c3d003dbeab964c1ef0cb"><td class="memItemLeft" align="right" valign="top">llvm::Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb9b2b119e0c3d003dbeab964c1ef0cb">get_llvm_type</a> (<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> current_type)</td></tr>
-<tr class="separator:abb9b2b119e0c3d003dbeab964c1ef0cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2c4cffdc7944921419d9b7d59a25aed" id="r_ad2c4cffdc7944921419d9b7d59a25aed"><td class="memItemLeft" align="right" valign="top">llvm::Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2c4cffdc7944921419d9b7d59a25aed">get_llvm_type</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> current_type)</td></tr>
+<tr class="separator:ad2c4cffdc7944921419d9b7d59a25aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -108,8 +108,8 @@ Variables</h2></td></tr>
 <tr class="separator:ae92ca0442631b7872f388e5917ce9b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="abb9b2b119e0c3d003dbeab964c1ef0cb" name="abb9b2b119e0c3d003dbeab964c1ef0cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb9b2b119e0c3d003dbeab964c1ef0cb">&#9670;&#160;</a></span>get_llvm_type()</h2>
+<a id="ad2c4cffdc7944921419d9b7d59a25aed" name="ad2c4cffdc7944921419d9b7d59a25aed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2c4cffdc7944921419d9b7d59a25aed">&#9670;&#160;</a></span>get_llvm_type()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -117,27 +117,32 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">llvm::Type * codegen::get_llvm_type </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a></td>          <td class="paramname"><span class="paramname"><em>current_type</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>current_type</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Helper function to return an llvm::Type* based on the type stored in the AST.</dt><dd></dd></dl>
 <div class="fragment"><div class="line"><span class="keywordflow">switch</span> (current_type) {</div>
-<div class="line">    <span class="keywordflow">case</span> int_type:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab">type_enum::int_type</a>:</div>
 <div class="line">        <span class="keywordflow">return</span> llvm::Type::getInt64Ty(*<a class="code hl_variable" href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>);</div>
-<div class="line">    <span class="keywordflow">case</span> float_type:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63">type_enum::float_type</a>:</div>
 <div class="line">        <span class="keywordflow">return</span> llvm::Type::getDoubleTy(*<a class="code hl_variable" href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>);</div>
-<div class="line">    <span class="keywordflow">case</span> char_type:</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa27f56d15ea0ee09d3f9fe1c10fe994e">type_enum::char_type</a>:</div>
 <div class="line">        <span class="keywordflow">return</span> llvm::Type::getInt8Ty(*<a class="code hl_variable" href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>);</div>
-<div class="line">    <span class="keywordflow">case</span> bool_type:</div>
-<div class="line">        <span class="keywordflow">return</span> llvm::Type::getInt1Ty(*<a class="code hl_variable" href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>);</div>
-<div class="line">    <span class="keywordflow">case</span> string_type:</div>
-<div class="line">        <span class="comment">// TODO Handle string type </span></div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7">type_enum::string_type</a>:</div>
+<div class="line">        <span class="comment">// TODO Handle string type</span></div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum::bool_type</a>:</div>
+<div class="line">        <span class="keywordflow">return</span> llvm::Type::getInt1Ty(*<a class="code hl_variable" href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>); </div>
 <div class="line">    <span class="keywordflow">default</span>:</div>
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; </div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacecodegen_html_a2ed9460a080f3ccd65a6b8afa232595a"><div class="ttname"><a href="#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::LLVMContext &gt; LLVM_Context</div><div class="ttdef"><b>Definition</b> codegen.cpp:14</div></div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> types.h:13</div></div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63">type_enum::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> types.h:10</div></div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67aa27f56d15ea0ee09d3f9fe1c10fe994e"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa27f56d15ea0ee09d3f9fe1c10fe994e">type_enum::char_type</a></div><div class="ttdeci">@ char_type</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> types.h:11</div></div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7">type_enum::string_type</a></div><div class="ttdeci">@ string_type</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> types.h:12</div></div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab">type_enum::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> types.h:9</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
