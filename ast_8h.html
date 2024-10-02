@@ -91,13 +91,13 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">ast.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;llvm/IR/Value.h&quot;</code><br />
 <code>#include &quot;<a class="el" href="lexer_8h_source.html">../lexer/lexer.h</a>&quot;</code><br />
+<code>#include &quot;../include/types/types.h&quot;</code><br />
 <code>#include &lt;memory&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
@@ -137,30 +137,18 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1else__expr.html">ast::else_expr</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1func__call__expr.html">ast::func_call_expr</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceast.html">ast</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a40c97931a3dcafde9769060c39123341" id="r_a40c97931a3dcafde9769060c39123341"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a> { <br />
-&#160;&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6">ast::int_type</a> = -1
-, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341acaa25528879491ecc1de296bd3660e95">ast::float_type</a> = -2
-, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341a16586f199d30eda48de7c7dbc218f9fb">ast::char_type</a> = -3
-, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341ac4420b814242e6d8a8600492b52e5622">ast::string_type</a> = -4
-, <br />
-&#160;&#160;<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341acbfcf28201aa6837df59a1ed0b17c679">ast::bool_type</a> = -5
-, <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341abbbd88e207839284206b4a1e624637c6">ast::void_type</a> = -6
-<br />
- }</td></tr>
-<tr class="separator:a40c97931a3dcafde9769060c39123341"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a5bd7f9340c66f7f097a1a3e81d52967b" id="r_a5bd7f9340c66f7f097a1a3e81d52967b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceast.html#a5bd7f9340c66f7f097a1a3e81d52967b">ast::get_type_as_string</a> (<a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">types</a> type)</td></tr>
-<tr class="separator:a5bd7f9340c66f7f097a1a3e81d52967b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a610cf906847e77d535becf6e18a5ea05" id="r_a610cf906847e77d535becf6e18a5ea05"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceast.html#a610cf906847e77d535becf6e18a5ea05">ast::get_type_as_string</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:a610cf906847e77d535becf6e18a5ea05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

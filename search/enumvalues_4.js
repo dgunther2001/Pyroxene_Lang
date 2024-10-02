@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['int_5ftype_0',['int_type',['../namespaceast.html#a40c97931a3dcafde9769060c39123341aa36ef690acc39cfacc306af4106bbbd6',1,'ast']]]
+  ['int_5ftype_0',['int_type',['../namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab',1,'type_enum']]]
 ];

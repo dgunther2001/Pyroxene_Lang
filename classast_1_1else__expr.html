@@ -110,6 +110,8 @@ Inheritance diagram for ast::else_expr:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a38437de9d067b04f3c73df293d860be2" id="r_a38437de9d067b04f3c73df293d860be2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38437de9d067b04f3c73df293d860be2">else_expr</a> (std::vector&lt; std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; &gt; expressions)</td></tr>
 <tr class="separator:a38437de9d067b04f3c73df293d860be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa087137908fa1db52f4617e59c079876" id="r_aa087137908fa1db52f4617e59c079876"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa087137908fa1db52f4617e59c079876">semantic_analysis</a> () override</td></tr>
+<tr class="separator:aa087137908fa1db52f4617e59c079876"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73e5a1f55f7ea917dc35d0b90d9c3a25" id="r_a73e5a1f55f7ea917dc35d0b90d9c3a25"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a73e5a1f55f7ea917dc35d0b90d9c3a25">get_ast_class</a> () const override</td></tr>
 <tr class="separator:a73e5a1f55f7ea917dc35d0b90d9c3a25"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fefe2fee2167d7a61772c4e9c2bbf50" id="r_a3fefe2fee2167d7a61772c4e9c2bbf50"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fefe2fee2167d7a61772c4e9c2bbf50">debug_output</a> ()</td></tr>
@@ -119,12 +121,10 @@ Public Member Functions</h2></td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a310f0586f8f80fde54a3d4ef829259e9 inherit pub_methods_classast_1_1top__level__expr" id="r_a310f0586f8f80fde54a3d4ef829259e9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespaceast.html#a40c97931a3dcafde9769060c39123341">ast::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a310f0586f8f80fde54a3d4ef829259e9">get_expr_type</a> () const</td></tr>
-<tr class="separator:a310f0586f8f80fde54a3d4ef829259e9 inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae35833709d7439c73abc3c5feecb594f inherit pub_methods_classast_1_1top__level__expr" id="r_ae35833709d7439c73abc3c5feecb594f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#ae35833709d7439c73abc3c5feecb594f">get_expr_type</a> () const</td></tr>
+<tr class="separator:ae35833709d7439c73abc3c5feecb594f inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr" id="r_a890040cc8ec1ed0bc8f7d1ff7802555b"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a> () const</td></tr>
 <tr class="separator:a890040cc8ec1ed0bc8f7d1ff7802555b inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr" id="r_a374b3a0999fd8ca026da623966fb5e9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a> ()</td></tr>
-<tr class="separator:a374b3a0999fd8ca026da623966fb5e9f inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a38437de9d067b04f3c73df293d860be2" name="a38437de9d067b04f3c73df293d860be2"></a>
@@ -221,6 +221,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a918298ba5ca74d15ea618d8ca6b188cb">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
+<a id="aa087137908fa1db52f4617e59c079876" name="aa087137908fa1db52f4617e59c079876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa087137908fa1db52f4617e59c079876">&#9670;&#160;</a></span>semantic_analysis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ast::else_expr::semantic_analysis </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
 
 </div>
 </div>

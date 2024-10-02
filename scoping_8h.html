@@ -97,6 +97,7 @@ $(function(){ initResizable(false); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;../include/codegen/codegen.h&quot;</code><br />
+<code>#include &lt;map&gt;</code><br />
 </div>
 <p><a href="scoping_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -104,10 +105,14 @@ $(function(){ initResizable(false); });
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structscope_1_1llvm__var__info.html">scope::llvm_var_info</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsem__analysis__scope_1_1sem__analysis__info.html">sem_analysis_scope::sem_analysis_info</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacescope.html">scope</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html">sem_analysis_scope</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
@@ -131,6 +136,26 @@ Functions</h2></td></tr>
 <tr class="separator:a9c951dd8834eed9c5c716c6412e71dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b81a86985cd2658a1edf02e95b2f0b" id="r_a09b81a86985cd2658a1edf02e95b2f0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacescope.html#a09b81a86985cd2658a1edf02e95b2f0b">scope::variable_exists_in_current_scope</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a09b81a86985cd2658a1edf02e95b2f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabe35ff7d69e8dcbf3d0b3e9b5c003af" id="r_aabe35ff7d69e8dcbf3d0b3e9b5c003af"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a> ()</td></tr>
+<tr class="separator:aabe35ff7d69e8dcbf3d0b3e9b5c003af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a743a1ef9b6ec895e1bdc779e84eefae8" id="r_a743a1ef9b6ec895e1bdc779e84eefae8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a> ()</td></tr>
+<tr class="separator:a743a1ef9b6ec895e1bdc779e84eefae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55b9d658ead7918240f330911400ab8b" id="r_a55b9d658ead7918240f330911400ab8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a55b9d658ead7918240f330911400ab8b">sem_analysis_scope::add_var_to_current_scope</a> (const std::string &amp;name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type, bool is_init)</td></tr>
+<tr class="separator:a55b9d658ead7918240f330911400ab8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba7cd957f36f78cbfdb7d5627d641a7c" id="r_aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope::get_var_type</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8adbd42bd2b774d42a52ccc241a9f91" id="r_ad8adbd42bd2b774d42a52ccc241a9f91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#ad8adbd42bd2b774d42a52ccc241a9f91">sem_analysis_scope::add_function_defn</a> (std::string name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> ret_type)</td></tr>
+<tr class="separator:ad8adbd42bd2b774d42a52ccc241a9f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a447e85e4f4f8a903511b08e70f47eeab" id="r_a447e85e4f4f8a903511b08e70f47eeab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a447e85e4f4f8a903511b08e70f47eeab">sem_analysis_scope::global_contains_func_defn</a> (std::string name)</td></tr>
+<tr class="separator:a447e85e4f4f8a903511b08e70f47eeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af24c35dac3bfa5a509b7c2bc1611fbf7" id="r_af24c35dac3bfa5a509b7c2bc1611fbf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#af24c35dac3bfa5a509b7c2bc1611fbf7">sem_analysis_scope::variable_exists_in_current_scope</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:af24c35dac3bfa5a509b7c2bc1611fbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1852a7f003144fbeff909d6e0027f491" id="r_a1852a7f003144fbeff909d6e0027f491"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope::var_initialized</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a1852a7f003144fbeff909d6e0027f491"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f4d2a09e7b557af2e1b57bc751e119f" id="r_a2f4d2a09e7b557af2e1b57bc751e119f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a2f4d2a09e7b557af2e1b57bc751e119f">sem_analysis_scope::var_exists</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a2f4d2a09e7b557af2e1b57bc751e119f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59072aaec4f59db2aefecbb279a44e31" id="r_a59072aaec4f59db2aefecbb279a44e31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacesem__analysis__scope.html#a59072aaec4f59db2aefecbb279a44e31">sem_analysis_scope::set_var_init</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a59072aaec4f59db2aefecbb279a44e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

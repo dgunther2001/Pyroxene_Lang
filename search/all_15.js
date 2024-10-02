@@ -52,9 +52,11 @@ var searchData=
   ['top_5flevel_5fentry_49',['top_level_entry',['../namespacecodegen.html#ae92ca0442631b7872f388e5917ce9b51',1,'codegen']]],
   ['top_5flevel_5fexpr_50',['top_level_expr',['../classast_1_1top__level__expr.html',1,'ast']]],
   ['tree_20ast_20ast_20that_20can_20each_20hold_20their_20own_20llvm_20ir_20codegen_20function_51',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
-  ['type_52',['type',['../structscope_1_1llvm__var__info.html#a7a1c613dcb8211165ae194a3b297568a',1,'scope::llvm_var_info']]],
+  ['type_52',['type',['../structscope_1_1llvm__var__info.html#a7a1c613dcb8211165ae194a3b297568a',1,'scope::llvm_var_info::type'],['../structsem__analysis__scope_1_1sem__analysis__info.html#aea1dca259b8312d87f0007e3b19b65a1',1,'sem_analysis_scope::sem_analysis_info::type']]],
   ['type_5fchecker_2ecpp_53',['type_checker.cpp',['../type__checker_8cpp.html',1,'']]],
   ['type_5fchecker_2eh_54',['type_checker.h',['../type__checker_8h.html',1,'']]],
-  ['types_55',['types',['../namespaceast.html#a40c97931a3dcafde9769060c39123341',1,'ast']]],
-  ['types_3a_56',['1. Supported Types:',['../md_docs_2syntax.html#autotoc_md12',1,'']]]
+  ['type_5fenum_55',['type_enum',['../namespacetype__enum.html',1,'']]],
+  ['types_56',['types',['../namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67',1,'type_enum']]],
+  ['types_2eh_57',['types.h',['../types_8h.html',1,'']]],
+  ['types_3a_58',['1. Supported Types:',['../md_docs_2syntax.html#autotoc_md12',1,'']]]
 ];
