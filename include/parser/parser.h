@@ -66,6 +66,7 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier);
     std::unique_ptr<ast::top_level_expr> parse_var_assign();
 
+    std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value);
     std::unique_ptr<ast::top_level_expr> parse_identifier_expr(lexer::lexer_stored_values value);
     std::unique_ptr<ast::top_level_expr> parse_int_expr(lexer::lexer_stored_values value);
     std::unique_ptr<ast::top_level_expr> parse_float_expr(lexer::lexer_stored_values value);

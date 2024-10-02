@@ -26,11 +26,11 @@ namespace ast {
      /**
       * @fn ast::identifier_expr::debug_output()
       * @code
-      * std::cout << "Identifier expression of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * std::cout << "Identifier expression (" << identifier_name << ")\n";
       * @endcode
       */
      void ast::identifier_expr::debug_output() {
-          std::cout << "Identifier expression (" << identifier_name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+          std::cout << "Identifier expression (" << identifier_name << ")\n";
      }
 
      /**
@@ -152,6 +152,16 @@ namespace ast {
       */
      void ast::else_expr::debug_output() {
           std::cout << "Parsed else statement\n";
+     }
+
+     /**
+      * @fn ast::func_call_expr::debug_output()
+      * @code
+      * std::cout << "Parsed function call (" << func_name << "\n";
+      * @endcode
+      */
+     void ast::func_call_expr::debug_output() {
+          std::cout << "Parsed function call (" << func_name << ")\n";
      }
 }
 

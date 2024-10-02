@@ -173,8 +173,8 @@ namespace ast {
             utility::codegen_error("Variable '" + identifier_name + "' has not been initialized.", parser::current_line);
         }
 
-        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->allocation->getType(), var_alloca_and_type->allocation, identifier_name);
-        if ( var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->type, var_alloca_and_type->allocation, identifier_name);
+        if (var_alloca_and_type->type->isIntegerTy(64)) {
             load->setAlignment(llvm::Align(8));
         }
 
@@ -495,7 +495,7 @@ namespace ast {
             if (expression->get_ast_class() == "return") {
                 if (func_return_type->isVoidTy()) {
                     // ADD ERROR HANDLING HERE
-                } else if(func_return_type != codegen::get_llvm_type(expression->get_expr_type())) {
+                } else if(func_return_type != current_expr->getType()) {
                     utility::codegen_error("Invalid return type", parser::current_line);
                 }
                 break;
@@ -528,6 +528,9 @@ namespace ast {
         return nullptr;
     }
 
+    llvm::Value* ast::func_call_expr::codegen() {
+        return nullptr;
+    }
 
 
 }
