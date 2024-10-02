@@ -253,16 +253,10 @@ namespace parser {
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
      * @endcode 
      *  
-     * @par Validate that the types of each side match, and then store them in a binary expression ast node with type and operator information.
+     * @par Store left and right expressions in a binary expression ast node with type and operator information.
      * 
      * @code
-        type_enum::types bin_type;
-        if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
-            bin_type = left_expr->get_expr_type(); 
-        } else {
-            utility::parser_error("Mismatched types in binary expression", current_line);
-        }
-        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr));
         return std::move(ast_node);
      * @endcode
      */
@@ -310,11 +304,7 @@ namespace parser {
         
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
-        type_enum::types bin_type;
-
-        bin_type = left_expr->get_expr_type(); 
-
-        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -511,7 +501,7 @@ namespace parser {
        @code
         auto assigned_expr = parse_expression();
 
-        auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+        auto ast_node = std::make_unique<ast::variable_assignment>(identifier, std::move(assigned_expr));
 
         return std::move(ast_node);
        @endcode
@@ -542,7 +532,7 @@ namespace parser {
 
         auto assigned_expr = parse_expression();
 
-        auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+        auto ast_node = std::make_unique<ast::variable_assignment>(identifier, std::move(assigned_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -1024,7 +1014,7 @@ namespace parser {
             get_next_token();
         }
 
-        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+        auto ast_node = std::make_unique<ast::return_expr>(std::move(expr_node));
         return std::move(ast_node);
      * @endcode
      */
@@ -1032,7 +1022,7 @@ namespace parser {
         get_next_token();
         auto expr_node = parse_expression();
 
-        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+        auto ast_node = std::make_unique<ast::return_expr>(std::move(expr_node));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();

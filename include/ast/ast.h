@@ -16,7 +16,6 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include "llvm/IR/Value.h"
 #include "../lexer/lexer.h"
-#include "../include/scoping/scoping.h"
 #include "../include/types/types.h"
 #include <memory>
 #include <string>
@@ -131,16 +130,16 @@ namespace ast {
             type_enum::types type;
 
         public:
-            binary_expr(lexer::Token_Type op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, type_enum::types type) :
+            binary_expr(lexer::Token_Type op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right) :
                 op(op),
                 left(std::move(left)),
                 right(std::move(right)),
-                type(type)
                 {}
             
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "binary"; }
             type_enum::types get_expr_type() const override {return type;}
+            void set_expr_type(type_enum::types new_type) { type = new_type; }
             void debug_output();
             char get_op() { 
                 switch (op) {
@@ -171,16 +170,16 @@ namespace ast {
         type_enum::types type;
 
     public:
-        binary_expr(lexer::Token_Type op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right, type_enum::types type) :
+        binary_expr(lexer::Token_Type op, std::unique_ptr<top_level_expr> left, std::unique_ptr<top_level_expr> right) :
             op(op),
             left(std::move(left)),
-            right(std::move(right)),
-            type(type)
+            right(std::move(right))
             {}
         
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "binary"; }
         type_enum::types get_expr_type() const override {return type;}
+        void set_expr_type(type_enum::types new_type) { type = new_type; }
         void debug_output();
         char get_op() { 
             switch (op) {
@@ -210,14 +209,16 @@ namespace ast {
         class identifier_expr : public top_level_expr {
         private:
             std::string identifier_name;
+            type_enum::types type;
 
         public:
             identifier_expr(const std::string& identifier_name) :
-                identifier_name(identifier_name),
+                identifier_name(identifier_name)
                 {}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "identifier"; }   
-            type_enum::types get_expr_type() const override {return sem_analysis_scope::get_var_type(identifier_name);}
+            void set_expr_type(type_enum::types new_type) { type = new_type; }
+            type_enum::types get_expr_type() const override {return type;}
             std::string get_name() const override {return identifier_name;}
             void debug_output();
             llvm::Value* codegen() override;
@@ -228,13 +229,16 @@ namespace ast {
     class identifier_expr : public top_level_expr {
     private:
         std::string identifier_name;
+        type_enum::types type;
 
     public:
         identifier_expr(const std::string& identifier_name) :
             identifier_name(identifier_name)
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "identifier"; }   
-        type_enum::types get_expr_type() const override {return sem_analysis_scope::get_var_type(identifier_name);}
+        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        type_enum::types get_expr_type() const override {return type;}
         std::string get_name() const override {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
@@ -362,7 +366,7 @@ namespace ast {
     class string_expression : public top_level_expr {
     private:
         std::string held_value;
-        type_enum::types type =  type_enum::string_type;
+        type_enum::types type = type_enum::string_type;
 
     public:
         string_expression(std::string held_value) : held_value(held_value) {}
@@ -380,7 +384,7 @@ namespace ast {
         class bool_expression : public top_level_expr {
         private:
             bool held_value;
-            type_enum::types type =  type_enum::bool_type;
+            type_enum::types type = bool_type;
 
         public:
             bool_expression(bool held_value) : held_value(held_value) {}
@@ -430,6 +434,7 @@ namespace ast {
                 type(var_type),
                 identifier_name(identifier_name)
                 {}
+            void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_decl"; }
             type_enum::types get_expr_type() const override {return type;} 
             std::string get_name() const override {return identifier_name;}
@@ -448,6 +453,7 @@ namespace ast {
             type(var_type),
             identifier_name(identifier_name)
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_decl"; }
         type_enum::types get_expr_type() const override {return type;} 
         std::string get_name() const override {return identifier_name;}
@@ -508,20 +514,17 @@ namespace ast {
      * @code
         class variable_assignment : public top_level_expr {
         private:
-            type_enum::types type; // maybe remove as i want to do type resolution later
             std::string identifier_name;
             std::unique_ptr<top_level_expr> assigned_value;
 
         public:
             variable_assignment(type_enum::types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
-                type(var_type),
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
                 {}
 
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_assign"; }
-            type_enum::types get_expr_type() const override {return type;} 
             std::string get_name() const override {return identifier_name;}
             void debug_output();
             llvm::Value* codegen() override;
@@ -530,20 +533,17 @@ namespace ast {
      */
     class variable_assignment : public top_level_expr {
     private:
-        type_enum::types type; // maybe remove as i want to do type resolution later
         std::string identifier_name;
         std::unique_ptr<top_level_expr> assigned_value;
 
     public:
-        variable_assignment(type_enum::types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
-            type(var_type),
+        variable_assignment(const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
             identifier_name(identifier_name),
             assigned_value(std::move(assigned_value))
             {}
 
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_assign"; }
-        type_enum::types get_expr_type() const override {return type;} 
         std::string get_name() const override {return identifier_name;}
         void debug_output();
         llvm::Value* codegen() override;
@@ -554,16 +554,16 @@ namespace ast {
      * @code
         class return_expr : public top_level_expr {
         private:
-            type_enum::types type;
             std::unique_ptr<top_level_expr> returned_value;
-        
+            type_enum::types type;
         public:
-            return_expr(type_enum::types type, std::unique_ptr<top_level_expr> return_val) : 
-                type(type),
+            return_expr(std::unique_ptr<top_level_expr> return_val) : 
                 returned_value(std::move(return_val)) 
                 {}
-            std::string get_ast_class() const override { return "return"; }
+            void semantic_analysis() override;
             type_enum::types get_expr_type() const override {return type;} 
+            void set_expr_type(type_enum::types new_type) { type = new_type; }
+            std::string get_ast_class() const override { return "return"; }
             void debug_output();
             llvm::Value* codegen() override;
         };
@@ -571,17 +571,17 @@ namespace ast {
      */
     class return_expr : public top_level_expr {
     private:
-        type_enum::types type;
         std::unique_ptr<top_level_expr> returned_value;
+        type_enum::types type;
     
     public:
-        return_expr(type_enum::types type, std::unique_ptr<top_level_expr> return_val) : 
-            type(type),
+        return_expr(std::unique_ptr<top_level_expr> return_val) : 
             returned_value(std::move(return_val)) 
             {}
-
-        std::string get_ast_class() const override { return "return"; }
+        void semantic_analysis() override;
         type_enum::types get_expr_type() const override {return type;} 
+        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        std::string get_ast_class() const override { return "return"; }
         void debug_output();
         llvm::Value* codegen() override;
     };
@@ -650,6 +650,7 @@ namespace ast {
             func_name(func_name),
             arguments(std::move(args))
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "func_call"; }
         void debug_output();
         llvm::Value* codegen() override;

@@ -5,16 +5,11 @@ b = 2;
 def int my_func(float c, char d) {
     int e = b;
     e = 3;
-    return 10;
+    return 12;
 }
 
-int c = b + 'c';
+//int c = b + 'c';
 
-my_func(33.3, 4);
-
-my_func();
-
-my_func(55);
 
 
   

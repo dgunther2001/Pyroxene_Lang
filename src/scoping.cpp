@@ -155,17 +155,62 @@ namespace sem_analysis_scope {
      * TODO: docs
      */
     void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init) {
+        if (sem_analysis_stack.empty()) {
+            utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
+        }
         sem_analysis_stack.back()[name] = {type, is_init};
     }
 
     /**
      * TODO: docs
      */
-    bool variable_exists_in_current_scope(const std::string &name) {
+    bool variable_exists_in_current_scope(const std::string& name) {
         if (!sem_analysis_stack.empty()) {
             const auto& current_scope = sem_analysis_stack.back();
             return current_scope.find(name) != current_scope.end();
         }
         return false;   
+    }
+
+    /**
+     * TODO: docs
+     */
+    bool var_initialized(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.is_init;  
+            }
+        }
+
+        utility::scoping_error("Variable does not exist in current scope", parser::current_line);
+    }
+
+    /**
+     * TODO: docs
+     */
+    bool var_exists(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return true;  
+            }
+        }
+        return false;
+    }
+
+    /**
+     * TODO: docs
+     */
+    void set_var_init(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                variable->second.is_init = true;
+                return;
+            } 
+        }
+
+        utility::scoping_error("Variabale not found", parser::current_line);
     }
 }

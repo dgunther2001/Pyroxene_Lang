@@ -80,6 +80,9 @@ namespace sem_analysis_scope {
         extern void add_function_defn(std::string name, type_enum::types ret_type);
         extern bool global_contains_func_defn(std::string name);
         extern bool variable_exists_in_current_scope(const std::string &name);
+        extern bool var_initialized(const std::string& name);
+        extern bool var_exists(const std::string& name);
+        extern void set_var_init(const std::string& name);
 }
 
 #endif

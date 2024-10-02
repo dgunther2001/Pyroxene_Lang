@@ -267,6 +267,38 @@ namespace utility {
                     break;
             }
         }
+
+        for (auto const& ast_node : parsing_output) {
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool") 
+                {
+                    std::get<0>(ast_node)->semantic_analysis();
+                }
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->semantic_analysis();
+            }
+        }
+
+        sem_analysis_scope::exit_scope();
+
+        for (auto const& ast_node : parsing_output) {
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool")
+                {
+                    std::get<0>(ast_node)->codegen();
+                }
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->codegen();
+            }
+        }
      * @endcode
      */
 
@@ -334,13 +366,39 @@ namespace utility {
 
         for (auto const& ast_node : parsing_output) {
             if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
-                std::get<0>(ast_node)->semantic_analysis();
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool") 
+                {
+                    std::get<0>(ast_node)->semantic_analysis();
+                }
             } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
                 std::get<1>(ast_node)->semantic_analysis();
             }
         }
 
         sem_analysis_scope::exit_scope();
+
+        scope::create_scope();
+        for (auto const& ast_node : parsing_output) {
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool")
+                {
+                    std::get<0>(ast_node)->codegen();
+                }
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->codegen();
+            }
+        }
+        scope::exit_scope();
+
+        
     }
 
 }
