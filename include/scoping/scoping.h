@@ -55,7 +55,14 @@ namespace scope {
 
 namespace sem_analysis_scope {
         /**
-         * TODO: docs
+         * @struct sem_analysis_info
+         * @par Holds type and boolean indicating whether a variable has been initialized.
+         * 
+         * @var type
+         * The type of the variable.
+         * 
+         * @var is_init
+         * Indicates whether the variable has been assigned a value.
          */
         typedef struct {
             type_enum::types type;
@@ -63,12 +70,12 @@ namespace sem_analysis_scope {
         } sem_analysis_info;
 
         /**
-         * TODO: docs
+         * @par A map of defined functions that holds the name as well as the function return type.
          */
         extern std::map<std::string, type_enum::types> defined_functions;
         
         /**
-         * TODO: docs
+         * @par A stack of hashmaps, where each map indicates the current level of scope. The map is of identifier names and related type and initialization information.
          */
         extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
 

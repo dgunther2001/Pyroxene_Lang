@@ -770,12 +770,6 @@ namespace parser {
 
         std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
         
-        if (sem_analysis_scope::global_contains_func_defn(func_name)) {
-            utility::parser_error("Function name already used", current_line);
-        }
-        
-        sem_analysis_scope::add_function_defn(func_name, ret_type);
-        
         get_next_token(); 
      * @endcode
 
@@ -903,12 +897,6 @@ namespace parser {
         get_next_token(); // consume the type
 
         std::string func_name = std::get<std::string>(current_value.value()); // grab the function name
-
-        if (sem_analysis_scope::global_contains_func_defn(func_name)) {
-            utility::parser_error("Function name already used", current_line);
-        }
-
-        sem_analysis_scope::add_function_defn(func_name, ret_type);
 
         get_next_token(); // consume the name
 

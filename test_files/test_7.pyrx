@@ -8,6 +8,9 @@ def int my_func(float c, char d) {
     return 12;
 }
 
+def int my_func() {
+    return 15;
+}
 //int c = b + 'c';
 
 
