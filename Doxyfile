@@ -965,7 +965,7 @@ WARN_LOGFILE           =
 # spaces. See also FILE_PATTERNS and EXTENSION_MAPPING
 # Note: If this tag is empty the current directory is searched.
 
-INPUT                  = docs/landing.md docs/start.md LICENSE.md docs/syntax.md docs/cfg.md src/lexer.cpp src/ast.cpp src/parser.cpp src/utility.cpp src/type_checker.cpp src/scoping.cpp src/codegen.cpp include/lexer/lexer.h include/ast/ast.h include/parser/parser.h include/utility/utility.h include/type_checker/type_checker.h include/scoping/scoping.h include/codegen/codegen.h unit_tests/parser_tests/parser_tests.cpp images/system_overview_diagram.png
+INPUT                  = docs/landing.md docs/start.md LICENSE.md docs/syntax.md docs/cfg.md src/lexer.cpp src/ast.cpp src/parser.cpp src/utility.cpp src/type_checker.cpp src/scoping.cpp src/codegen.cpp include/lexer/lexer.h include/ast/ast.h include/types/types.h include/parser/parser.h include/utility/utility.h include/type_checker/type_checker.h include/scoping/scoping.h include/codegen/codegen.h unit_tests/parser_tests/parser_tests.cpp images/system_overview_diagram.png
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses

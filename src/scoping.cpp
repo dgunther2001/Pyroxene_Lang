@@ -3,10 +3,8 @@
 namespace scope {
     std::vector<std::map<std::string, llvm_var_info>> scoping_stack;
 
-    std::map<std::string, ast::types> defined_functions;
-
     /**
-     * @par Simply adds a new scope to the cope stack
+     * @par Simply adds a new scope to the scope stack
      * @code
      * scoping_stack.emplace_back();
      * @endcode
@@ -35,7 +33,11 @@ namespace scope {
 
     /**
      * @par Takes in a variable allocation and adds it to the current scope.
-     * @code
+     * @param name The name of the variable.
+     * @param allocation A pointer to the llvm variable allocation.
+     * @param type A pointer to the variable type.
+     * @param is_init Indicates whether the variable has been initialized yet.
+     * @code 
      * scoping_stack.back()[name] = {allocation, Variable, type, is_init};
      * @endcode
      */
@@ -44,7 +46,10 @@ namespace scope {
     }
 
     /**
-     * @par Takes a function argument and adds it to the current scope
+     * @par Takes a function argument and adds it to the current scope.
+     * @param name The name of the variable.
+     * @param allocation A pointer to the llvm argument allocation.
+     * @param type A pointer to the variable type.
      * @code
      * scoping_stack.back()[name] = {allocation, Argument, type, true};
      * @endcode
@@ -55,6 +60,7 @@ namespace scope {
 
     /**
      * @par Checks if a variable exists in scope. Does implicit variable shadowing by selecting the highest entry on the stack.
+     * @param var_name The name of the variable being searched for in the stack.
      * @code
      * for (auto it = scoping_stack.rbegin(); it != scoping_stack.rend(); ++it) {
             auto variable = it->find(var_name);  
@@ -63,7 +69,7 @@ namespace scope {
             }
         }
 
-        return nullptr;
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
      * @endcode
      */
     llvm_var_info* variable_lookup(const std::string &var_name) {
@@ -74,12 +80,12 @@ namespace scope {
                 return &variable->second;  
             }
         }
-
-        return nullptr;
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
     }
 
     /**
      * @par Checks if the variable exists in the current scope
+     * @param name The name of the variable being checked.
      * @code
      *  if (!scoping_stack.empty()) {
             const auto& current_scope = scoping_stack.back();
@@ -95,19 +101,55 @@ namespace scope {
         }
         return false;   
     }
+}
+
+namespace sem_analysis_scope {
+    std::map<std::string, type_enum::types> defined_functions;
+    std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
+
+    /**
+     * @par Generates a new scope (crreates and adds a new hashmap) to the semantic analysis stack.
+     * @code
+     * sem_analysis_stack.emplace_back();  
+     * @endcode
+     */
+    void create_scope() {
+        sem_analysis_stack.emplace_back();   
+    }
+
+    /**
+     * @par Exits a semantic analysis scope frame by popping from the stack.
+     * @code
+     *  if (!sem_analysis_stack.empty()) {
+            sem_analysis_stack.pop_back();
+        } else {
+            utility::scoping_error("Attempted to exit scope when no scopes exist", parser::current_line);
+        }
+     * @endcode
+     */
+    void exit_scope() {
+        if (!sem_analysis_stack.empty()) {
+            sem_analysis_stack.pop_back();
+        } else {
+            utility::scoping_error("Attempted to exit scope when no scopes exist", parser::current_line);
+        }
+    }
 
     /**
      * @par Inserts a function into the global symbol table of defined functions to validate before calls
+     * @param name The name of the function.
+     * @param ret_type The return type of the function.
      * @code
      * defined_functions.insert({name, ret_type});
      * @endcode
      */
-    void add_function_defn(std::string name, ast::types ret_type) {
+    void add_function_defn(std::string name, type_enum::types ret_type) {
         defined_functions.insert({name, ret_type});
     }
 
     /**
      * @par Simply returns whether a function already exists in the global symbol table.
+     * @param name The name of the function.
      * @code
      * if (defined_functions.empty()) return false;
        return defined_functions.find(name) != defined_functions.end();
@@ -116,5 +158,141 @@ namespace scope {
     bool global_contains_func_defn(std::string name) {
         if (defined_functions.empty()) return false;
         return defined_functions.find(name) != defined_functions.end();
+    }
+
+    /**
+     * @par Grabs the type of the top most decl/defn of a variable on the scope stack.
+     * @param name The name of the variable.
+     * @code
+     *  for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.type;  
+            }
+        }
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
+     * @endcode
+     */
+    type_enum::types get_var_type(const std::string &name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.type;  
+            }
+        }
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
+    }
+
+    /**
+     * @par Adds a variable to the current scope on the semantic analysis stack.
+     * @param name The name of the new variable.
+     * @param type The type of the variable.
+     * @param is_init Has the variable just been declared or defined.
+     * @code
+     *  if (sem_analysis_stack.empty()) {
+            utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
+        }
+        sem_analysis_stack.back()[name] = {type, is_init};
+     * @endcode
+     */
+    void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init) {
+        if (sem_analysis_stack.empty()) {
+            utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
+        }
+        sem_analysis_stack.back()[name] = {type, is_init};
+    }
+
+    /**
+     * @par Checks whether the variable has been declared in the current scope.
+     * @param name The name of the variable.
+     * @code
+     *  if (!sem_analysis_stack.empty()) {
+            const auto& current_scope = sem_analysis_stack.back();
+            return current_scope.find(name) != current_scope.end();
+        }
+        return false;  
+     * @endcode
+     */
+    bool variable_exists_in_current_scope(const std::string& name) {
+        if (!sem_analysis_stack.empty()) {
+            const auto& current_scope = sem_analysis_stack.back();
+            return current_scope.find(name) != current_scope.end();
+        }
+        return false;   
+    }
+
+    /**
+     * @par Checks if a variable (the highest in the scope stack) has been initialized with a value.
+     * @param name The name of the variable.
+     * @code
+     *  for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.is_init;  
+            }
+        }
+
+        utility::scoping_error("Variable does not exist in current scope", parser::current_line);
+     * @endcode
+     */
+    bool var_initialized(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.is_init;  
+            }
+        }
+
+        utility::scoping_error("Variable does not exist in current scope", parser::current_line);
+    }
+
+    /**
+     * @par Check if the variable exists at all in the entire semantic analysis scope stack.
+     * @param name The name of the variable.
+     * @code
+     *  for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return true;  
+            }
+        }
+        return false;
+     * @endcode
+     */
+    bool var_exists(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return true;  
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @par When a variable is assigned a value after declaration, we can change it's initialization value (boolean) on the scope stack.
+     * @param name The name of the variable.
+     * @code
+     *  for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                variable->second.is_init = true;
+                return;
+            } 
+        }
+
+        utility::scoping_error("Variabale not found", parser::current_line);
+     * @endcode
+     */
+    void set_var_init(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                variable->second.is_init = true;
+                return;
+            } 
+        }
+
+        utility::scoping_error("Variabale not found", parser::current_line);
     }
 }

@@ -176,10 +176,19 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Takes in a variable allocation and adds it to the current scope.</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">Variable</a>, type, is_init};</div>
+<dl class="section user"><dt>Takes in a variable allocation and adds it to the current scope.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the variable. </td></tr>
+    <tr><td class="paramname">allocation</td><td>A pointer to the llvm variable allocation. </td></tr>
+    <tr><td class="paramname">type</td><td>A pointer to the variable type. </td></tr>
+    <tr><td class="paramname">is_init</td><td>Indicates whether the variable has been initialized yet. <div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">Variable</a>, type, is_init};</div>
 <div class="ttc" id="anamespacescope_html_a905f50d938f068b4696811a1868875d5"><div class="ttname"><a href="#a905f50d938f068b4696811a1868875d5">scope::scoping_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, llvm_var_info &gt; &gt; scoping_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:4</div></div>
-<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">scope::Variable</a></div><div class="ttdeci">@ Variable</div><div class="ttdoc">Indicates a variable.</div><div class="ttdef"><b>Definition</b> scoping.h:12</div></div>
-</div><!-- fragment --> </dd></dl>
+<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaf4426c23d31ae77c151fdad9e1dd1404">scope::Variable</a></div><div class="ttdeci">@ Variable</div><div class="ttdoc">Indicates a variable.</div><div class="ttdef"><b>Definition</b> scoping.h:13</div></div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -206,9 +215,17 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Takes a function argument and adds it to the current scope</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">Argument</a>, type, <span class="keyword">true</span>};</div>
-<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope::Argument</a></div><div class="ttdeci">@ Argument</div><div class="ttdoc">Indicates an argument.</div><div class="ttdef"><b>Definition</b> scoping.h:13</div></div>
-</div><!-- fragment --> </dd></dl>
+<dl class="section user"><dt>Takes a function argument and adds it to the current scope.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the variable. </td></tr>
+    <tr><td class="paramname">allocation</td><td>A pointer to the llvm argument allocation. </td></tr>
+    <tr><td class="paramname">type</td><td>A pointer to the variable type. <div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back()[name] = {allocation, <a class="code hl_enumvalue" href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">Argument</a>, type, <span class="keyword">true</span>};</div>
+<div class="ttc" id="anamespacescope_html_ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62"><div class="ttname"><a href="#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope::Argument</a></div><div class="ttdeci">@ Argument</div><div class="ttdoc">Indicates an argument.</div><div class="ttdef"><b>Definition</b> scoping.h:14</div></div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -226,7 +243,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Simply adds a new scope to the cope stack</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.emplace_back();</div>
+<dl class="section user"><dt>Simply adds a new scope to the scope stack</dt><dd><div class="fragment"><div class="line"><a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.emplace_back();</div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -270,12 +287,18 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Checks if the variable exists in the current scope</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.empty()) {</div>
+<dl class="section user"><dt>Checks if the variable exists in the current scope</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the variable being checked. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (!<a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.empty()) {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span>&amp; current_scope = <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.back();</div>
 <div class="line">    <span class="keywordflow">return</span> current_scope.find(name) != current_scope.end();</div>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">return</span> <span class="keyword">false</span>; </div>
-</div><!-- fragment --> </dd></dl>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -293,15 +316,21 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Checks if a variable exists in scope. Does implicit variable shadowing by selecting the highest entry on the stack.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.rbegin(); it != <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.rend(); ++it) {</div>
+<dl class="section user"><dt>Checks if a variable exists in scope. Does implicit variable shadowing by selecting the highest entry on the stack.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">var_name</td><td>The name of the variable being searched for in the stack. <div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.rbegin(); it != <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.rend(); ++it) {</div>
 <div class="line">     <span class="keyword">auto</span> variable = it-&gt;find(var_name);  </div>
 <div class="line">     <span class="keywordflow">if</span> (variable != it-&gt;end()) {</div>
 <div class="line">         <span class="keywordflow">return</span> &amp;variable-&gt;second;  </div>
 <div class="line">     }</div>
 <div class="line"> }</div>
 <div class="line"> </div>
-<div class="line"> <span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-</div><!-- fragment --> </dd></dl>
+<div class="line"> <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Variable not found in current scope&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['token_5findex_5fmax_0',['token_index_max',['../namespaceparser.html#af3cca1f356156561be5d841ec961468f',1,'parser']]],
-  ['token_5fstream_1',['token_stream',['../namespacelexer.html#a1ea36c4da63a34511efba62b615b4f44',1,'lexer']]],
-  ['top_5flevel_5fentry_2',['top_level_entry',['../namespacecodegen.html#ae92ca0442631b7872f388e5917ce9b51',1,'codegen']]],
-  ['type_3',['type',['../structscope_1_1llvm__var__info.html#a7a1c613dcb8211165ae194a3b297568a',1,'scope::llvm_var_info']]]
+  ['scoping_5fstack_0',['scoping_stack',['../namespacescope.html#a905f50d938f068b4696811a1868875d5',1,'scope']]],
+  ['sem_5fanalysis_5fstack_1',['sem_analysis_stack',['../namespacesem__analysis__scope.html#ad2c053af597be8788e4fbb82d2456073',1,'sem_analysis_scope']]],
+  ['stored_5fvalues_2',['stored_values',['../namespacelexer.html#ac762e6415092515d1673f9ebd161bfcc',1,'lexer']]],
+  ['string_5fvalue_3',['string_value',['../namespacelexer.html#ac6c312257777281ee94e7ff466400568',1,'lexer']]]
 ];

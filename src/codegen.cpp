@@ -20,33 +20,33 @@ namespace codegen {
      * @par Helper function to return an llvm::Type* based on the type stored in the AST.
      * 
      * @code
-     *  switch (current_type) {
-            case int_type:
+        switch (current_type) {
+            case type_enum::int_type:
                 return llvm::Type::getInt64Ty(*codegen::LLVM_Context);
-            case float_type:
+            case type_enum::float_type:
                 return llvm::Type::getDoubleTy(*codegen::LLVM_Context);
-            case char_type:
+            case type_enum::char_type:
                 return llvm::Type::getInt8Ty(*codegen::LLVM_Context);
-            case bool_type:
-                return llvm::Type::getInt1Ty(*codegen::LLVM_Context);
-            case string_type:
-                // TODO Handle string type 
+            case type_enum::string_type:
+                // TODO Handle string type
+            case type_enum::bool_type:
+                return llvm::Type::getInt1Ty(*codegen::LLVM_Context); 
             default:
                 return nullptr; 
         }
      * @endcode
      */
-    llvm::Type* get_llvm_type(ast::types current_type) {
+    llvm::Type* get_llvm_type(type_enum::types current_type) {
         switch (current_type) {
-            case ast::int_type:
+            case type_enum::int_type:
                 return llvm::Type::getInt64Ty(*codegen::LLVM_Context);
-            case ast::float_type:
+            case type_enum::float_type:
                 return llvm::Type::getDoubleTy(*codegen::LLVM_Context);
-            case ast::char_type:
+            case type_enum::char_type:
                 return llvm::Type::getInt8Ty(*codegen::LLVM_Context);
-            case ast::string_type:
+            case type_enum::string_type:
                 // TODO Handle string type
-            case ast::bool_type:
+            case type_enum::bool_type:
                 return llvm::Type::getInt1Ty(*codegen::LLVM_Context); 
             default:
                 return nullptr; 
@@ -504,6 +504,7 @@ namespace ast {
             
         }
 
+    // TODO: add error message here instead
         if (!function_block->getTerminator()) {
             if (func_return_type->isVoidTy()) {
                 codegen::IR_Builder->CreateRetVoid(); 

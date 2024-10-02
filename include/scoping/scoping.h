@@ -5,10 +5,6 @@
 #include <map>
 
 namespace scope {
-    /**
-     * Holds the global list of defined functions.
-     */
-    extern std::map<std::string, ast::types> defined_functions;
 
     /**
      * @par Enum to indicate whether a scoped value is a variable or an argument
@@ -55,8 +51,45 @@ namespace scope {
     extern llvm_var_info* variable_lookup(const std::string &var_name);
     extern bool variable_exists_in_current_scope(const std::string &name);
 
-    extern void add_function_defn(std::string name, ast::types ret_type);
-    extern bool global_contains_func_defn(std::string name);
+}
+
+namespace sem_analysis_scope {
+        /**
+         * @struct sem_analysis_info
+         * @par Holds type and boolean indicating whether a variable has been initialized.
+         * 
+         * @var type
+         * The type of the variable.
+         * 
+         * @var is_init
+         * Indicates whether the variable has been assigned a value.
+         */
+        typedef struct {
+            type_enum::types type;
+            bool is_init;
+        } sem_analysis_info;
+
+        /**
+         * @par A map of defined functions that holds the name as well as the function return type.
+         */
+        extern std::map<std::string, type_enum::types> defined_functions;
+        
+        /**
+         * @par A stack of hashmaps, where each map indicates the current level of scope. The map is of identifier names and related type and initialization information.
+         */
+        extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
+
+
+        extern void create_scope();
+        extern void exit_scope();
+        extern void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init);
+        extern type_enum::types get_var_type(const std::string &name);
+        extern void add_function_defn(std::string name, type_enum::types ret_type);
+        extern bool global_contains_func_defn(std::string name);
+        extern bool variable_exists_in_current_scope(const std::string &name);
+        extern bool var_initialized(const std::string& name);
+        extern bool var_exists(const std::string& name);
+        extern void set_var_init(const std::string& name);
 }
 
 #endif

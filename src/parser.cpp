@@ -177,7 +177,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -192,7 +192,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -253,16 +253,10 @@ namespace parser {
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
      * @endcode 
      *  
-     * @par Validate that the types of each side match, and then store them in a binary expression ast node with type and operator information.
+     * @par Store left and right expressions in a binary expression ast node with type and operator information.
      * 
      * @code
-        ast::types bin_type;
-        if (left_expr->get_expr_type() == right_expr->get_expr_type()) {
-            bin_type = left_expr->get_expr_type(); 
-        } else {
-            utility::parser_error("Mismatched types in binary expression", current_line);
-        }
-        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr));
         return std::move(ast_node);
      * @endcode
      */
@@ -310,11 +304,7 @@ namespace parser {
         
         lexer::Token_Type operator_token = sub_tok_stream.at(index_of_highest_prec_op);
 
-        ast::types bin_type;
-
-        bin_type = left_expr->get_expr_type(); 
-
-        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr), bin_type);
+        auto ast_node = std::make_unique<ast::binary_expr>(operator_token, std::move(left_expr), std::move(right_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -329,23 +319,23 @@ namespace parser {
     * 
     * @par First we check the type
     * @code
-    *   ast::types type;
+    *   type_enum::types type;
         std::string identifier;
         switch (current_token) {
             case lexer::tok_int:
-                type = ast::int_type;
+                type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                type = ast::float_type;
+                type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                type = ast::char_type;
+                type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                type = ast::string_type;
+                type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                type = ast::bool_type;
+                type = type_enum::bool_type;
                 break;
             default:
                 utility::parser_error("Invalid type specified", current_line); 
@@ -385,23 +375,23 @@ namespace parser {
       @endcode
     */
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
-        ast::types type;
+        type_enum::types type;
         std::string identifier;
         switch (current_token) {
             case lexer::tok_int:
-                type = ast::int_type;
+                type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                type = ast::float_type;
+                type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                type = ast::char_type;
+                type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                type = ast::string_type;
+                type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                type = ast::bool_type;
+                type = type_enum::bool_type;
                 break;
             default:
                 utility::parser_error("Invalid type specified", current_line); 
@@ -443,7 +433,7 @@ namespace parser {
         return std::move(ast_node);
      * @endcode
      */
-    std::unique_ptr<ast::top_level_expr> parse_var_decl(ast::types type, std::string identifier) {
+    std::unique_ptr<ast::top_level_expr> parse_var_decl(type_enum::types type, std::string identifier) {
 
         auto ast_node = std::make_unique<ast::variable_declaration>(type, identifier);
 
@@ -470,7 +460,7 @@ namespace parser {
         return std::move(ast_node);
      * @endcode
      */
-    std::unique_ptr<ast::top_level_expr> parse_var_defn(ast::types type, std::string identifier) {
+    std::unique_ptr<ast::top_level_expr> parse_var_defn(type_enum::types type, std::string identifier) {
 
         get_next_token(); // consume the '='
 
@@ -511,7 +501,7 @@ namespace parser {
        @code
         auto assigned_expr = parse_expression();
 
-        auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+        auto ast_node = std::make_unique<ast::variable_assignment>(identifier, std::move(assigned_expr));
 
         return std::move(ast_node);
        @endcode
@@ -542,7 +532,7 @@ namespace parser {
 
         auto assigned_expr = parse_expression();
 
-        auto ast_node = std::make_unique<ast::variable_assignment>(assigned_expr->get_expr_type(), identifier, std::move(assigned_expr));
+        auto ast_node = std::make_unique<ast::variable_assignment>(identifier, std::move(assigned_expr));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -752,25 +742,25 @@ namespace parser {
      * @code
      *   get_next_token();
 
-        ast::types ret_type;
+        type_enum::types ret_type;
         switch (current_token) {
             case lexer::tok_int:
-                ret_type = ast::int_type;
+                ret_type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                ret_type = ast::float_type;
+                ret_type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                ret_type = ast::char_type;
+                ret_type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                ret_type = ast::string_type;
+                ret_type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                ret_type = ast::bool_type;
+                ret_type = type_enum:::bool_type;
                 break;
             case lexer::tok_void:
-                ret_type = ast::void_type;
+                ret_type = type_enum::void_type;
                 break;
             default:
                 utility::parser_error("Invalid return type provided to function", current_line);
@@ -779,12 +769,6 @@ namespace parser {
         get_next_token(); 
 
         std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
-        
-        if (scope::global_contains_func_defn(func_name)) {
-            utility::parser_error("Function name already used", current_line);
-        }
-        
-        scope::add_function_defn(func_name, ret_type);
         
         get_next_token(); 
      * @endcode
@@ -837,7 +821,7 @@ namespace parser {
                     break;
                 }
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -886,25 +870,25 @@ namespace parser {
 
         get_next_token(); // eat def
 
-        ast::types ret_type;
+        type_enum::types ret_type;
         switch (current_token) {
             case lexer::tok_int:
-                ret_type = ast::int_type;
+                ret_type = type_enum::int_type;
                 break;
             case lexer::tok_float:
-                ret_type = ast::float_type;
+                ret_type = type_enum::float_type;
                 break;
             case lexer::tok_char:
-                ret_type = ast::char_type;
+                ret_type = type_enum::char_type;
                 break;
             case lexer::tok_string:
-                ret_type = ast::string_type;
+                ret_type = type_enum::string_type;
                 break;
             case lexer::tok_bool:
-                ret_type = ast::bool_type;
+                ret_type = type_enum::bool_type;
                 break;
             case lexer::tok_void:
-                ret_type = ast::void_type;
+                ret_type = type_enum::void_type;
                 break;
             default:
                 utility::parser_error("Invalid return type provided to function", current_line);
@@ -913,12 +897,6 @@ namespace parser {
         get_next_token(); // consume the type
 
         std::string func_name = std::get<std::string>(current_value.value()); // grab the function name
-
-        if (scope::global_contains_func_defn(func_name)) {
-            utility::parser_error("Function name already used", current_line);
-        }
-
-        scope::add_function_defn(func_name, ret_type);
 
         get_next_token(); // consume the name
 
@@ -977,7 +955,7 @@ namespace parser {
                     current_expr = nullptr;
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -1024,7 +1002,7 @@ namespace parser {
             get_next_token();
         }
 
-        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+        auto ast_node = std::make_unique<ast::return_expr>(std::move(expr_node));
         return std::move(ast_node);
      * @endcode
      */
@@ -1032,7 +1010,7 @@ namespace parser {
         get_next_token();
         auto expr_node = parse_expression();
 
-        auto ast_node = std::make_unique<ast::return_expr>(expr_node->get_expr_type(), std::move(expr_node));
+        auto ast_node = std::make_unique<ast::return_expr>(std::move(expr_node));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -1091,7 +1069,7 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -1162,7 +1140,7 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {

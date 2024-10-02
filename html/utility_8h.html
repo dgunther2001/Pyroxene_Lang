@@ -97,6 +97,7 @@ $(function(){ initResizable(false); });
 <div class="contents">
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;variant&gt;</code><br />
 <code>#include &quot;<a class="el" href="parser_8h_source.html">../parser/parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="lexer_8h_source.html">../lexer/lexer.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="ast_8h_source.html">../ast/ast.h</a>&quot;</code><br />
@@ -112,7 +113,7 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ad464fca74d8f128360f34d9d4b252264" id="r_ad464fca74d8f128360f34d9d4b252264"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad464fca74d8f128360f34d9d4b252264">PARSER_PRINT_UTIL</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:ad464fca74d8f128360f34d9d4b252264" id="r_ad464fca74d8f128360f34d9d4b252264"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad464fca74d8f128360f34d9d4b252264">PARSER_PRINT_UTIL</a>&#160;&#160;&#160;0</td></tr>
 <tr class="separator:ad464fca74d8f128360f34d9d4b252264"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -129,6 +130,8 @@ Functions</h2></td></tr>
 <tr class="separator:aa5b0ff65b17cd9e070c16f1a9348c71b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f96e9c6c20fb8355b098d78ed594ea7" id="r_a6f96e9c6c20fb8355b098d78ed594ea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a> (const std::string &amp;message, int line)</td></tr>
 <tr class="separator:a6f96e9c6c20fb8355b098d78ed594ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c446b9b76a434629e0d79dff862a81" id="r_a74c446b9b76a434629e0d79dff862a81"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a> (const std::string &amp;message, int line)</td></tr>
+<tr class="separator:a74c446b9b76a434629e0d79dff862a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9a9bb4b8fecdcdc3959e007c2f94b125" id="r_a9a9bb4b8fecdcdc3959e007c2f94b125"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutility.html#a9a9bb4b8fecdcdc3959e007c2f94b125">utility::output_current_token</a> ()</td></tr>
 <tr class="separator:a9a9bb4b8fecdcdc3959e007c2f94b125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d75c24cf0cb3411a4b4709554030eb3" id="r_a1d75c24cf0cb3411a4b4709554030eb3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceutility.html#a1d75c24cf0cb3411a4b4709554030eb3">utility::initialize_operator_precendence</a> ()</td></tr>
@@ -150,7 +153,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define PARSER_PRINT_UTIL&#160;&#160;&#160;1</td>
+          <td class="memname">#define PARSER_PRINT_UTIL&#160;&#160;&#160;0</td>
         </tr>
       </table>
 </div><div class="memdoc">
