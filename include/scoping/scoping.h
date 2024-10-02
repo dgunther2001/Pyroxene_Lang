@@ -55,8 +55,34 @@ namespace scope {
     extern llvm_var_info* variable_lookup(const std::string &var_name);
     extern bool variable_exists_in_current_scope(const std::string &name);
 
-    extern void add_function_defn(std::string name, ast::types ret_type);
-    extern bool global_contains_func_defn(std::string name);
+}
+
+namespace sem_analysis_scope {
+        /**
+         * TODO: docs
+         */
+        extern std::map<std::string, ast::types> defined_functions;
+        
+        /**
+         * TODO: docs
+         */
+        extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
+
+        /**
+         * TODO: docs
+         */
+        typedef struct {
+            ast::types type;
+            bool is_init;
+        } sem_analysis_info;
+
+
+        extern void create_scope();
+        extern void exit_scope();
+        extern void add_var_to_current_scope(const std::string &name, ast::types type, bool is_init);
+        extern ast::types get_var_type(const std::string &name);
+        extern void add_function_defn(std::string name, ast::types ret_type);
+        extern bool global_contains_func_defn(std::string name);
 }
 
 #endif

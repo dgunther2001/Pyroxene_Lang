@@ -177,7 +177,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -192,7 +192,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -780,11 +780,11 @@ namespace parser {
 
         std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
         
-        if (scope::global_contains_func_defn(func_name)) {
+        if (sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::parser_error("Function name already used", current_line);
         }
         
-        scope::add_function_defn(func_name, ret_type);
+        sem_analysis_scope::add_function_defn(func_name, ret_type);
         
         get_next_token(); 
      * @endcode
@@ -837,7 +837,7 @@ namespace parser {
                     break;
                 }
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -914,11 +914,11 @@ namespace parser {
 
         std::string func_name = std::get<std::string>(current_value.value()); // grab the function name
 
-        if (scope::global_contains_func_defn(func_name)) {
+        if (sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::parser_error("Function name already used", current_line);
         }
 
-        scope::add_function_defn(func_name, ret_type);
+        sem_analysis_scope::add_function_defn(func_name, ret_type);
 
         get_next_token(); // consume the name
 
@@ -977,7 +977,7 @@ namespace parser {
                     current_expr = nullptr;
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -1091,7 +1091,7 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {
@@ -1162,7 +1162,7 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         current_expr = parser::parse_var_assign();
                         break;
                     } else {

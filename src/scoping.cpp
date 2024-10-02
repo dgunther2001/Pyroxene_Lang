@@ -3,10 +3,8 @@
 namespace scope {
     std::vector<std::map<std::string, llvm_var_info>> scoping_stack;
 
-    std::map<std::string, ast::types> defined_functions;
-
     /**
-     * @par Simply adds a new scope to the cope stack
+     * @par Simply adds a new scope to the scope stack
      * @code
      * scoping_stack.emplace_back();
      * @endcode
@@ -63,7 +61,7 @@ namespace scope {
             }
         }
 
-        return nullptr;
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
      * @endcode
      */
     llvm_var_info* variable_lookup(const std::string &var_name) {
@@ -74,8 +72,7 @@ namespace scope {
                 return &variable->second;  
             }
         }
-
-        return nullptr;
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
     }
 
     /**
@@ -94,6 +91,29 @@ namespace scope {
             return current_scope.find(name) != current_scope.end();
         }
         return false;   
+    }
+}
+
+namespace sem_analysis_scope {
+    std::map<std::string, ast::types> defined_functions;
+    std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
+
+    /**
+     * TODO: docs
+     */
+    void create_scope() {
+        sem_analysis_stack.emplace_back();   
+    }
+
+    /**
+     * TODO: docs
+     */
+    void exit_scope() {
+        if (!sem_analysis_stack.empty()) {
+            sem_analysis_stack.pop_back();
+        } else {
+            utility::scoping_error("Attempted to exit scope when no scopes exist", parser::current_line);
+        }
     }
 
     /**
@@ -116,5 +136,25 @@ namespace scope {
     bool global_contains_func_defn(std::string name) {
         if (defined_functions.empty()) return false;
         return defined_functions.find(name) != defined_functions.end();
+    }
+
+    /**
+     * TODO: docs
+     */
+    ast::types get_var_type(const std::string &name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(var_name);  
+            if (variable != it->end()) {
+                return &variable->first;  
+            }
+        }
+        utility::scoping_error("Variable not found in current scope", parser::current_line);
+    }
+
+    /**
+     * TODO: docs
+     */
+    void add_var_to_current_scope(const std::string &name, ast::types type, bool is_init) {
+        scoping_stack.back()[name] = {type, is_init};
     }
 }

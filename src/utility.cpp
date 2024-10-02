@@ -227,7 +227,7 @@ namespace utility {
                     expr->codegen();
                     break;
                 case lexer::tok_identifier:
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope:::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         expr = parser::parse_var_assign();
                         expr->codegen();
                         break;
@@ -285,7 +285,7 @@ namespace utility {
                     expr->codegen();
                     break;
                 case lexer::tok_identifier: 
-                    if (!scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         expr = parser::parse_var_assign();
                         expr->codegen();
                         break;
