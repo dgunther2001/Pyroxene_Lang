@@ -11,13 +11,14 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include <string>
 #include <iostream>
+#include <variant>
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../ast/ast.h"
 #include "../codegen/codegen.h"
 #include "../scoping/scoping.h"
 
-#define PARSER_PRINT_UTIL 1
+#define PARSER_PRINT_UTIL 0
 
 namespace utility {
 

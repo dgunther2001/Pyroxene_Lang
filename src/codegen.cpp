@@ -504,6 +504,7 @@ namespace ast {
             
         }
 
+    // TODO: add error message here instead
         if (!function_block->getTerminator()) {
             if (func_return_type->isVoidTy()) {
                 codegen::IR_Builder->CreateRetVoid(); 

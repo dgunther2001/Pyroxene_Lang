@@ -204,61 +204,10 @@ namespace utility {
      * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
      * 
      * @code
-
-     *  scope::create_scope();
-
-        while (true) {
-            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
-                } else if (parser::current_token == lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
-                }
-            #endif
-
-            switch(parser::current_token) {
-                case lexer::tok_eof: // if its the end of the file, exit the loop
-                    return;
-                case lexer::tok_semicolon:
-                    parser::get_next_token(); // ignore semicolons and get the next token...
-                    break; 
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
-                    expr = parser::parse_var_decl_defn();
-                    expr->codegen();
-                    break;
-                case lexer::tok_identifier:
-                    if (!sem_analysis_scope:::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
-                        expr = parser::parse_var_assign();
-                        expr->codegen();
-                        break;
-                    } else{
-                        expr = parser::parse_expression();
-                        expr->codegen();
-                        break;
-                    }
-                case lexer::tok_def:
-                    func = parser::parse_function();
-                    func->codegen();
-                    break;
-                case lexer::tok_return:
-                    expr = parser::parse_return();
-                    expr->codegen();
-                    break;
-                case lexer::tok_if:
-                    expr = parser::parse_if();
-                    expr->codegen();
-                    break;
-                default:
-                    expr = parser::parse_expression();
-                    expr->codegen();
-                    break;
-            }
-        }
-     * @endcode
-     */
-    void primary_driver_loop() {
         scope::create_scope();
         parser::get_next_token();
+
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
 
         while (true) {
             
@@ -282,36 +231,110 @@ namespace utility {
                     break; 
                 case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
                     expr = parser::parse_var_decl_defn();
-                    expr->codegen();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 case lexer::tok_identifier: 
                     if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
                         expr = parser::parse_var_assign();
-                        expr->codegen();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
                     } else{
                         expr = parser::parse_expression();
-                        expr->codegen();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
                     }
                 case lexer::tok_def:
                     func = parser::parse_function();
-                    func->codegen();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
                     break;
                 case lexer::tok_return:
                     expr = parser::parse_return();
-                    expr->codegen();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 case lexer::tok_if:
                     expr = parser::parse_if();
-                    expr->codegen();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 default:
                     expr = parser::parse_expression();
-                    expr->codegen();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
             }
         }
+     * @endcode
+     */
+
+    void primary_driver_loop() {
+        sem_analysis_scope::create_scope();
+        parser::get_next_token();
+
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
+
+        bool not_eof = true;
+
+        while (not_eof) {
+            
+
+            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
+                    std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                } else if (parser::current_token == lexer::tok_def) {
+                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
+                }
+            #endif
+            
+            std::unique_ptr<ast::top_level_expr> expr = nullptr;  
+            std::unique_ptr<ast::func_defn> func = nullptr;  
+
+            switch(parser::current_token) {
+                case lexer::tok_eof: // if its the end of the file, exit the loop
+                    not_eof = false;
+                    break;
+                case lexer::tok_semicolon:
+                    parser::get_next_token(); // ignore semicolons and get the next token...
+                    break; 
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
+                    expr = parser::parse_var_decl_defn();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;
+                case lexer::tok_identifier: 
+                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                        expr = parser::parse_var_assign();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    } else{
+                        expr = parser::parse_expression();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    }
+                case lexer::tok_def:
+                    func = parser::parse_function();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
+                    break;
+                case lexer::tok_return:
+                    expr = parser::parse_return();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;
+                case lexer::tok_if:
+                    expr = parser::parse_if();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;
+                default:
+                    expr = parser::parse_expression();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;
+            }
+        }
+
+        for (auto const& ast_node : parsing_output) {
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                std::get<0>(ast_node)->semantic_analysis();
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->semantic_analysis();
+            }
+        }
+
+        sem_analysis_scope::exit_scope();
     }
 
 }

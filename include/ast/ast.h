@@ -94,6 +94,7 @@ namespace ast {
                 parameters(std::move(parameters))
                 {}
 
+            void semantic_analysis()
             ~func_defn() = default;
             void debug_output();
             llvm::Value* codegen();
@@ -116,6 +117,7 @@ namespace ast {
             parameters(std::move(parameters))
             {}
 
+        void semantic_analysis();
         ~func_defn() = default;
         void debug_output();
         llvm::Value* codegen();
@@ -217,6 +219,7 @@ namespace ast {
             identifier_expr(const std::string& identifier_name) :
                 identifier_name(identifier_name),
                 {}
+            void semantic_analysis() override;
             std::string get_ast_class() const override { return "identifier"; }    
             std::string get_name() const override {return identifier_name;}
             void debug_output();
@@ -233,6 +236,7 @@ namespace ast {
         identifier_expr(const std::string& identifier_name) :
             identifier_name(identifier_name)
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "identifier"; }    
         std::string get_name() const override {return identifier_name;}
         void debug_output();
@@ -578,6 +582,7 @@ namespace ast {
             type(type),
             returned_value(std::move(return_val)) 
             {}
+
         std::string get_ast_class() const override { return "return"; }
         types get_expr_type() const override {return type;} 
         void debug_output();
@@ -599,6 +604,7 @@ namespace ast {
                 expressions(std::move(expressions)),
                 else_stmt(std::move(else_stmt))
                 {}
+            void semantic_analysis() override;
             std::string get_ast_class() const override { return "if"; }
             void debug_output();
             llvm::Value* codegen() override;
@@ -617,6 +623,7 @@ namespace ast {
             expressions(std::move(expressions)),
             else_stmt(std::move(else_stmt))
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "if"; }
         void debug_output();
         llvm::Value* codegen() override;
@@ -630,6 +637,7 @@ namespace ast {
         else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions) :
             expressions(std::move(expressions))
             {}
+        void semantic_analysis() override;
         std::string get_ast_class() const override { return "else"; }
         void debug_output();
         llvm::Value* codegen() override;

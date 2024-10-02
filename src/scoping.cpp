@@ -143,9 +143,9 @@ namespace sem_analysis_scope {
      */
     ast::types get_var_type(const std::string &name) {
         for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
-            auto variable = it->find(var_name);  
+            auto variable = it->find(name);  
             if (variable != it->end()) {
-                return &variable->first;  
+                return variable->second.type;  
             }
         }
         utility::scoping_error("Variable not found in current scope", parser::current_line);
@@ -155,6 +155,17 @@ namespace sem_analysis_scope {
      * TODO: docs
      */
     void add_var_to_current_scope(const std::string &name, ast::types type, bool is_init) {
-        scoping_stack.back()[name] = {type, is_init};
+        sem_analysis_stack.back()[name] = {type, is_init};
+    }
+
+    /**
+     * TODO: docs
+     */
+    bool variable_exists_in_current_scope(const std::string &name) {
+        if (!sem_analysis_stack.empty()) {
+            const auto& current_scope = sem_analysis_stack.back();
+            return current_scope.find(name) != current_scope.end();
+        }
+        return false;   
     }
 }

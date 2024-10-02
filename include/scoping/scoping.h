@@ -5,10 +5,6 @@
 #include <map>
 
 namespace scope {
-    /**
-     * Holds the global list of defined functions.
-     */
-    extern std::map<std::string, ast::types> defined_functions;
 
     /**
      * @par Enum to indicate whether a scoped value is a variable or an argument
@@ -61,20 +57,20 @@ namespace sem_analysis_scope {
         /**
          * TODO: docs
          */
+        typedef struct {
+            ast::types type;
+            bool is_init;
+        } sem_analysis_info;
+
+        /**
+         * TODO: docs
+         */
         extern std::map<std::string, ast::types> defined_functions;
         
         /**
          * TODO: docs
          */
         extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
-
-        /**
-         * TODO: docs
-         */
-        typedef struct {
-            ast::types type;
-            bool is_init;
-        } sem_analysis_info;
 
 
         extern void create_scope();
@@ -83,6 +79,7 @@ namespace sem_analysis_scope {
         extern ast::types get_var_type(const std::string &name);
         extern void add_function_defn(std::string name, ast::types ret_type);
         extern bool global_contains_func_defn(std::string name);
+        extern bool variable_exists_in_current_scope(const std::string &name);
 }
 
 #endif
