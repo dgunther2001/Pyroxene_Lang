@@ -141,7 +141,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Thrown to abort if codegen fails.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Codegen error: &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot; on line &quot;</span> &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -162,7 +162,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Gets called to abort if the number of arguments provided in CMD line is invalid.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Driver error: &quot;</span> &lt;&lt; num_args - 1 &lt;&lt; <span class="stringliteral">&quot; provided, but only expected relative path to .pyrx file.\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -187,7 +187,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Gets called to abort if input file does not have a .pyrx extension.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Driver error: &quot;</span> &lt;&lt; message &lt;&lt; file_name &lt;&lt; <span class="stringliteral">&quot; please add a .pyrx extension.\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -322,7 +322,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Thrown to abort if lexing fails.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Lexer error: &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot; on line &quot;</span> &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -366,7 +366,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Thrown to abort if parsing fails.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Parser error: &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot; on line &quot;</span> &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -415,7 +415,7 @@ Functions</h2></td></tr>
 <div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a>: </div>
-<div class="line">            <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespacesem__analysis__scope.html#a447e85e4f4f8a903511b08e70f47eeab">sem_analysis_scope::global_contains_func_defn</a>(std::get&lt;std::string&gt;(<a class="code hl_variable" href="namespaceparser.html#a9d43579e90ab162c772408c1c7292f14">parser::current_value</a>.value()))) {</div>
+<div class="line">            <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a>(std::get&lt;std::string&gt;(<a class="code hl_variable" href="namespaceparser.html#a9d43579e90ab162c772408c1c7292f14">parser::current_value</a>.value()))) {</div>
 <div class="line">                expr = <a class="code hl_function" href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a>();</div>
 <div class="line">                parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
@@ -485,16 +485,16 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a></div><div class="ttdeci">@ tok_bool</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> lexer.h:35</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a></div><div class="ttdeci">@ tok_eof</div><div class="ttdoc">End of file.</div><div class="ttdef"><b>Definition</b> lexer.h:29</div></div>
-<div class="ttc" id="anamespaceparser_html_a1f767dfcc1be892fc82b040af56dbcfb"><div class="ttname"><a href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_return()</div><div class="ttdef"><b>Definition</b> parser.cpp:1009</div></div>
+<div class="ttc" id="anamespaceparser_html_a1f767dfcc1be892fc82b040af56dbcfb"><div class="ttname"><a href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_return()</div><div class="ttdef"><b>Definition</b> parser.cpp:1054</div></div>
 <div class="ttc" id="anamespaceparser_html_a5ae126257d31d8a2193a9505a63c3cb3"><div class="ttname"><a href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a></div><div class="ttdeci">int get_next_token()</div><div class="ttdef"><b>Definition</b> parser.cpp:49</div></div>
-<div class="ttc" id="anamespaceparser_html_a691c692362f5d306ae67c563c0c05ccb"><div class="ttname"><a href="namespaceparser.html#a691c692362f5d306ae67c563c0c05ccb">parser::parse_function</a></div><div class="ttdeci">std::unique_ptr&lt; ast::func_defn &gt; parse_function()</div><div class="ttdef"><b>Definition</b> parser.cpp:856</div></div>
-<div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:125</div></div>
-<div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:377</div></div>
-<div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:509</div></div>
-<div class="ttc" id="anamespaceparser_html_ad38bbdbfcfa59d1beb97bfddc5f7a719"><div class="ttname"><a href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser::parse_if</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_if()</div><div class="ttdef"><b>Definition</b> parser.cpp:1107</div></div>
+<div class="ttc" id="anamespaceparser_html_a691c692362f5d306ae67c563c0c05ccb"><div class="ttname"><a href="namespaceparser.html#a691c692362f5d306ae67c563c0c05ccb">parser::parse_function</a></div><div class="ttdeci">std::unique_ptr&lt; ast::func_defn &gt; parse_function()</div><div class="ttdef"><b>Definition</b> parser.cpp:901</div></div>
+<div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:148</div></div>
+<div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:347</div></div>
+<div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:479</div></div>
+<div class="ttc" id="anamespaceparser_html_ad38bbdbfcfa59d1beb97bfddc5f7a719"><div class="ttname"><a href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser::parse_if</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_if()</div><div class="ttdef"><b>Definition</b> parser.cpp:1152</div></div>
 <div class="ttc" id="anamespacescope_html_a1a6b7d5eedb10b30e8db49c791b917d5"><div class="ttname"><a href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:12</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a447e85e4f4f8a903511b08e70f47eeab"><div class="ttname"><a href="namespacesem__analysis__scope.html#a447e85e4f4f8a903511b08e70f47eeab">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(std::string name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:158</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:130</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aab208518ea2ad4c6733d64a91fa42e15"><div class="ttname"><a href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:186</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -519,7 +519,7 @@ Functions</h2></td></tr>
 <dl class="section user"><dt>Thrown to abort if scoping fails.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::cout &lt;&lt;<span class="stringliteral">&quot;\033[1;31m&quot;</span>;</div>
 <div class="line">std::cout &lt;&lt; <span class="stringliteral">&quot;Scoping error: &quot;</span> &lt;&lt; message &lt;&lt; <span class="stringliteral">&quot; on line &quot;</span> &lt;&lt; line &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line">std::abort();</div>
+<div class="line">exit(1);</div>
 </div><!-- fragment --> 
 </div>
 </div>

@@ -72,55 +72,78 @@ namespace parser {
    /**
     * @par When called, figures out whether we are dealing with a unary, or binary expression, and calls the respective function.
     * 
-    * @par Initialize the vector of tokens and values.
-    * Stores the first token and value in a vector, and then consumes it. This happens regardless of whether the expression is unary, or binary.
-    * 
+    * @par Initialize all intermediary storage units.
     * @code
-        lexer::Token_Type first_tok = current_token_as_token; 
-        std::vector<lexer::Token_Type> single_nested_expr_tokens;
-        std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values;
-        single_nested_expr_tokens.emplace_back(current_token_as_token);
-        single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
-        get_next_token(); 
+    *   std::vector<lexer::Token_Type> single_nested_expr_tokens; 
+        std::vector<std::optional<lexer::lexer_stored_values>> single_nested_expr_values; 
+        std::vector<std::unique_ptr<ast::top_level_expr>> parsed_expressions; 
+        std::vector<lexer::Token_Type> operators; 
+
+        int paren_count = 0;
+        std::unique_ptr<ast::top_level_expr> current_expr = nullptr;
     * @endcode
 
-      @par Check if we have a binary operator
-      If we have a binary op, store all of those tokens and values in the vectors and consume them until we reach a semicolon. Then return a call to the binary expression parser.
-      We also need to store a count of parenthesis, as we need to allow subexpressions to be contained within parenthesis, but properly terminate for things like if statements
+    @par Iterate over the token stream until we encounter a semicolon, or a closing parenthesis, and the number of nested parenthesis is 0.
+    Functionally, we then parse each individual primary expression in the binary expression, and store operators in an adjacent vector. We build the tree up from there.
+    @code 
+        while ((current_token_as_token != lexer::tok_semicolon) && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression.. 
 
-      @code
-        if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
+            current_expr = parse_primary_expression(current_token_as_token, current_value.value());
 
-            int paren_count = 0;
+            if (current_expr == nullptr) {
+                utility::parser_error("Parsed expression is null", current_line);
+            }
 
-            while ((current_token_as_token != lexer::tok_semicolon)  && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression...
-                if (current_token == lexer::tok_open_paren) {
-                    paren_count++;
-                } else if (current_token == lexer::tok_close_paren) {
-                    paren_count--;
+            parsed_expressions.push_back(std::move(current_expr));
+
+            if ((current_token_as_token == lexer::tok_semicolon) || (current_token_as_token == lexer::tok_close_paren && paren_count <= 0) || (current_token_as_token == lexer::tok_comma)) break;
+
+            if (!lexer::is_operator(current_token_as_token)) {
+                utility::parser_error("Expected infix operator in expression", current_line);
+            }
+
+            operators.push_back(current_token_as_token);
+
+            get_next_token(); 
+        }
+    @endcode
+
+    @par Keep building up binary expression until the number of operators in the operator vector is 0. Then return the singular expression stored in the vecotr (allowed to be primary or unary).
+    @code
+        int index_of_highest_prec_op = -1;
+        int highest_prec = -1;
+        lexer::Token_Type current_op;
+        while (operators.size() != 0) {
+
+            for (int i = 0; i < operators.size(); i++) {
+                current_op = operators.at(i);
+                if (operator_precedence.find(current_op) != operator_precedence.end()) {
+                    if (operator_precedence[current_op] > highest_prec) {
+                        highest_prec = operator_precedence[current_op];
+                        index_of_highest_prec_op = i;
+                    }
                 }
-                
-                single_nested_expr_tokens.emplace_back(current_token_as_token);
-                single_nested_expr_values.emplace_back(lexer::stored_values.at(current_token_index - 1));
-    
-
-                get_next_token();
             }
-            return std::move(parse_binary_expr(single_nested_expr_tokens, single_nested_expr_values));
-        }
-      @endcode
 
-      @par If there is no operator, it is a primary expression, so call the function that parses primary expressions with that initial token.
-
-      @code
-        else {
-            if (current_expr_val.has_value()) {
-                return std::move(parse_primary_expression(first_tok, current_expr_val.value()));
-            } else {
-                utility::parser_error("No value stored for the current token", current_line);
+            if (index_of_highest_prec_op == -1) {
+                utility::parser_error("Operator not found in operator map", current_line);
             }
+
+            current_op = current_op = operators.at(index_of_highest_prec_op);
+            operators.erase(operators.begin() + index_of_highest_prec_op);
+
+            auto left_expr = std::move(parsed_expressions.at(index_of_highest_prec_op));
+            auto right_expr = std::move(parsed_expressions.at(index_of_highest_prec_op + 1));
+
+            parsed_expressions.at(index_of_highest_prec_op) = parse_binary_expr(std::move(left_expr), std::move(right_expr), current_op);
+            parsed_expressions.erase(parsed_expressions.begin() + index_of_highest_prec_op + 1);
+
+            index_of_highest_prec_op = -1;
+            highest_prec = -1;
         }
-      @endcode
+
+        return std::move(parsed_expressions.at(0));
+    @endcode
     */
     std::unique_ptr<ast::top_level_expr> parse_expression() {
 
@@ -152,6 +175,10 @@ namespace parser {
             operators.push_back(current_token_as_token);
 
             get_next_token(); // consume the operator
+        }
+
+        if (paren_count != 0) {
+            utility::parser_error("Number of parenthesis do not match", current_line);
         }
 
         if (operators.size() != parsed_expressions.size() -1) {
@@ -485,7 +512,52 @@ namespace parser {
     }
 
     /**
-     * TODO: docs
+     * @par Parse function calls.
+     * @param value The value corresponding to the identifier.
+     * 
+     * @par Grab the name, and consume the opening '('.
+     * @code
+     *  std::string func_name = std::get<std::string>(value);
+
+        get_next_token(); 
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '(' before function arguments", current_line);
+        }
+
+        get_next_token(); 
+     * @endcode
+
+       @par Iterate over arguments until a ')' is reached, and parse them each as an expression.
+       @code
+        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
+
+        while(current_token != lexer::tok_close_paren) {
+
+            auto current_expression = parse_expression();
+            arguments.emplace_back(std::move(current_expression));
+
+            if (current_token != lexer::tok_comma && current_token != lexer::tok_close_paren) {
+                utility::parser_error("Expected ',' delimiter between arguments, or a closing ')'", current_line);
+            }
+
+            if (current_token == lexer::tok_comma) {
+                get_next_token();
+            }
+        }
+       @endcode
+
+       @par Consume the closing ')', create the ASt node, and return it.
+       @code
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')' after function arguments", current_line);
+        }
+        get_next_token(); // consume the ')'
+
+        auto ast_node = std::make_unique<ast::func_call_expr>(func_name, std::move(arguments));
+
+        return std::move(ast_node);
+       @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value) {
         std::string func_name = std::get<std::string>(value);
