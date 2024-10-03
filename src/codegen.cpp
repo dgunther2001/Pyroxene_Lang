@@ -530,7 +530,18 @@ namespace ast {
     }
 
     llvm::Value* ast::func_call_expr::codegen() {
-        return nullptr;
+        std::vector<llvm::Value*> llvm_arguments;
+        for (auto const& argument : arguments) {
+            llvm::Value* argument_value = argument->codegen();
+            llvm_arguments.push_back(argument_value);
+        }
+
+        llvm::Function* callee = codegen::LLVM_Module->getFunction(func_name);
+        if (callee == nullptr) {
+            utility::codegen_error("Undefined function: " + func_name, parser::current_line);
+        }
+
+        return codegen::IR_Builder->CreateCall(callee, llvm_arguments, "__" + func_name + "_call__");
     }
 
 
