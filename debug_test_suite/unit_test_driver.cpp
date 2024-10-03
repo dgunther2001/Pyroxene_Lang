@@ -19,7 +19,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <iostream>
 #include <fstream>
 
-#define DEBUG_OPTION 5
+#define DEBUG_OPTION 3
 
 
 int main(int argc, char** argv) {

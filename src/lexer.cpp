@@ -674,4 +674,27 @@ namespace lexer {
 
     }
 
+    /**
+     * @par Allows the user to grab a token based on the index of the desired token in the token stream.
+     * @param token_number The desired index in the token stream.
+     * @code
+     *  if (token_stream.empty()) {
+            utility::lexer_error("Token stream not yet initialized", parser::current_line);
+        } 
+        if (token_number >= token_stream.size()) {
+            utility::lexer_error("Number greater than token stream size", parser::current_line);
+        }
+        return token_stream.at(token_number);
+     * @endcode
+     */
+    Token_Type peek_token(int token_number) {
+        if (token_stream.empty()) {
+            utility::lexer_error("Token stream not yet initialized", parser::current_line);
+        } 
+        if (token_number >= token_stream.size()) {
+            utility::lexer_error("Number greater than token stream size", parser::current_line);
+        }
+        return token_stream.at(token_number);
+    }
+
 }

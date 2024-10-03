@@ -640,10 +640,14 @@ namespace ast {
         llvm::Value* codegen() override;
     };
 
+    /**
+     * TODO: docs
+     */
     class func_call_expr : public top_level_expr {
     private:
         std::string func_name;
         std::vector<std::unique_ptr<top_level_expr>> arguments;
+        type_enum::types type;
 
     public:
         func_call_expr(std::string func_name, std::vector<std::unique_ptr<top_level_expr>> args) :
@@ -651,6 +655,8 @@ namespace ast {
             arguments(std::move(args))
             {}
         void semantic_analysis() override;
+        type_enum::types get_expr_type() {return type;}
+        void set_expr_type(type_enum::types new_type) { type = new_type; }
         std::string get_ast_class() const override { return "func_call"; }
         void debug_output();
         llvm::Value* codegen() override;
