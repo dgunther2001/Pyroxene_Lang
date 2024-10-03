@@ -44,6 +44,8 @@ WORKDIR /
 
 COPY . .
 
+RUN chmod -R +rx /test_files
+
 ARG DEBUG_MODE
 
 ARG FILE_PATH

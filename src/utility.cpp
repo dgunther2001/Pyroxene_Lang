@@ -8,8 +8,49 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 
 #include "../include/utility/utility.h"
+#include <csignal>
+#include <unistd.h>
+#include <cstdlib>  
+#include <iostream> 
 
 namespace utility {
+
+    std::string file_name;
+
+    /**
+     * @par Automatically runs the Valgrind tool inside of Docker if a segfault is detected.
+     * @param signal The signal code.
+     * @code
+     *  if (signal == SIGSEGV) {
+            std::cout << "\033[1;31mSegmentation fault detected. Running Valgrind....\033[0m\n";
+
+
+            execlp("valgrind", "valgrind", "--leak-check=full", "--track-origins=yes", file_exec_name.c_str(), nullptr);
+
+            std::exit(signal);
+        }
+     * @endcode
+     */
+    void segfault_handler(int signal) {
+        if (signal == SIGSEGV) {
+            std::cout << "\033[1;31mSegmentation fault detected. Running Valgrind....\033[0m\n";
+
+            execlp("valgrind", "valgrind", "--leak-check=full", "--track-origins=yes", file_name.c_str(), nullptr);
+
+            std::exit(signal);
+        }
+    }
+
+    /**
+     * @par Set the name of the file in utility class.
+     * @param The name of the current file.
+     * @code
+     * file_name = name;
+     * @endcode
+     */
+    void set_file_name(const std::string& name) {
+        file_name = name;
+    }
 
     /**
      * @par Gets called to abort if input file does not have a .pyrx extension.

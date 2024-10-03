@@ -18,6 +18,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include <iostream>
 #include <fstream>
+#include <csignal>
 
 #define DEBUG_OPTION 5
 
@@ -47,6 +48,8 @@ int main(int argc, char** argv) {
         fprintf(stderr, ">> "); // prime the inital token
         lexer::input = &std::cin;
     }
+
+    utility::set_file_name(file_name);
     
     #if (DEBUG_OPTION == 1)
         lexer::tokenize_file();
@@ -96,6 +99,7 @@ int main(int argc, char** argv) {
             */
         }
     #elif (DEBUG_OPTION == 5)
+        signal(SIGSEGV, utility::segfault_handler);
         lexer::tokenize_file();
 
         utility::initialize_operator_precendence();
