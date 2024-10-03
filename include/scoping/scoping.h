@@ -70,9 +70,9 @@ namespace sem_analysis_scope {
         } sem_analysis_info;
 
         /**
-         * @par A map of defined functions that holds the name as well as the function return type.
+         * @par A map of defined functions that holds the name, the function return type, and a mpa of arguments as well as their return type
          */
-        extern std::map<std::string, type_enum::types> defined_functions;
+        extern std::map<std::string, std::pair<type_enum::types /* return type */, std::map<int /* arg number */, type_enum::types /* arg type */>>> defined_functions;
         
         /**
          * @par A stack of hashmaps, where each map indicates the current level of scope. The map is of identifier names and related type and initialization information.
@@ -84,8 +84,12 @@ namespace sem_analysis_scope {
         extern void exit_scope();
         extern void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init);
         extern type_enum::types get_var_type(const std::string &name);
-        extern void add_function_defn(std::string name, type_enum::types ret_type);
-        extern bool global_contains_func_defn(std::string name);
+        extern void add_function_defn(std::string name, type_enum::types ret_type, std::vector<type_enum::types> argument_types);
+        extern type_enum::types get_func_ret_type(const std::string& name);
+        extern bool global_contains_func_defn(const std::string& name);
+        extern const std::map<int, type_enum::types>& get_arg_type_map(const std::string& name);
+        extern type_enum::types get_param_type(const std::string& name, int arg_number);
+        extern int get_num_params(const std::string& name);
         extern bool variable_exists_in_current_scope(const std::string &name);
         extern bool var_initialized(const std::string& name);
         extern bool var_exists(const std::string& name);

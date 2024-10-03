@@ -104,7 +104,7 @@ namespace scope {
 }
 
 namespace sem_analysis_scope {
-    std::map<std::string, type_enum::types> defined_functions;
+    std::map<std::string, std::pair<type_enum::types /* return type */, std::map<int /* arg number */, type_enum::types /* arg type */>>> defined_functions;
     std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
 
     /**
@@ -139,12 +139,40 @@ namespace sem_analysis_scope {
      * @par Inserts a function into the global symbol table of defined functions to validate before calls
      * @param name The name of the function.
      * @param ret_type The return type of the function.
+     * @param argument_types The argument types of a function definitions
      * @code
-     * defined_functions.insert({name, ret_type});
+     *  std::map<int, type_enum::types> argument_type_map;
+        for (int i = 0; i < argument_types.size(); i++) {
+            argument_type_map.insert({i + 1, argument_types.at(i)});
+        }
+
+        defined_functions[name] = std::make_pair(ret_type, argument_type_map);
      * @endcode
      */
-    void add_function_defn(std::string name, type_enum::types ret_type) {
-        defined_functions.insert({name, ret_type});
+    void add_function_defn(std::string name, type_enum::types ret_type, std::vector<type_enum::types> argument_types) {
+        std::map<int, type_enum::types> argument_type_map;
+        for (int i = 0; i < argument_types.size(); i++) {
+            argument_type_map.insert({i + 1, argument_types.at(i)});
+        }
+
+        defined_functions[name] = std::make_pair(ret_type, argument_type_map);
+    }
+
+    /**
+     * @par Grabs the return type of a function.
+     * @param name The name of the function
+     * @code
+     *  if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function type unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].first;
+     * @endcode
+     */
+    type_enum::types get_func_ret_type(const std::string& name) {
+        if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function type unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].first;
     }
 
     /**
@@ -155,9 +183,71 @@ namespace sem_analysis_scope {
        return defined_functions.find(name) != defined_functions.end();
      * @endcode
      */
-    bool global_contains_func_defn(std::string name) {
+    bool global_contains_func_defn(const std::string& name) {
         if (defined_functions.empty()) return false;
         return defined_functions.find(name) != defined_functions.end();
+    }
+
+    /**
+     * @par Returns the map corresponding to the arguments and their respective types from the defined functions map.
+     * @param name Simply the name of the function
+     * @code
+     *  if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function type unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].second;
+     * @endcode
+     */
+    const std::map<int, type_enum::types>& get_arg_type_map(const std::string& name) {
+        if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function type unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].second;
+    }
+
+    /**
+     * @par Returns the type of the arg_numberth parameter in the parameter map.
+     * @param name The name of the function.
+     * @param arg_number The parameter whose type we are trying to access.
+     * @code
+     *  if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Parameter type unaquirable as the function is undeclared", parser::current_line);
+        }
+
+        if (arg_number > get_num_params(name) + 1 || arg_number <= 0) {
+            utility::scoping_error("Argument number inaccessible as function does not specify " + arg_number + " arguments, or argument number less than or equal to 0", parser::current_line);
+        }
+
+        return defined_functions[name].second[arg_number];
+     * @endcode
+     */
+    type_enum::types get_param_type(const std::string& name, int arg_number) {
+        if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Parameter type unaquirable as the function is undeclared", parser::current_line);
+        }
+
+        if (arg_number > get_num_params(name) + 1 || arg_number <= 0) {
+            utility::scoping_error("Argument number inaccessible, as it is <= 0, or it does not exist", parser::current_line);
+        }
+
+        return defined_functions[name].second[arg_number];
+    }
+
+    /**
+     * @par Returns the number of arguments in a function definition.
+     * @param name The name of the function.
+     * @code
+     *  if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function parameters unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].second.size();
+        @endcode
+     */
+    int get_num_params(const std::string& name) {
+        if (defined_functions.find(name) == defined_functions.end()) {
+            utility::scoping_error("Function parameters unaquirable as the function is undeclared", parser::current_line);
+        }
+        return defined_functions[name].second.size();
     }
 
     /**

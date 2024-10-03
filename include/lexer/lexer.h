@@ -123,6 +123,8 @@ namespace lexer {
     extern Token_Type get_token(); 
 
     extern void tokenize_file();
+
+    extern Token_Type peek_token(int token_number);
 }
 
 #endif // LEXER_H

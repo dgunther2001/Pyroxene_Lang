@@ -196,14 +196,17 @@ namespace ast {
         sem_analysis_scope::add_function_defn(func_name, return_type);
 
         sem_analysis_scope::create_scope();
+
+        std::vector<type_enum::types> arg_types;
         for (auto const& paramter : parameters) {
             if (sem_analysis_scope::variable_exists_in_current_scope(paramter->get_name())) {
                 utility::sem_analysis_error("Parameter already exists in current scope", parser::current_line);
             }
-
+            arg_types.emplace_back(paramter->get_expr_type());
             sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true);
         }
 
+        sem_analysis_scope::add_function_defn(func_name, return_type, arg_types);
 
         for (auto const& ast_node : expressions) {
             if (ast_node->get_ast_class() == "return") {
@@ -223,16 +226,18 @@ namespace ast {
             utility::sem_analysis_error("Function already defined", parser::current_line);
         }
 
-        sem_analysis_scope::add_function_defn(func_name, return_type);
-
         sem_analysis_scope::create_scope();
+
+        std::vector<type_enum::types> arg_types;
         for (auto const& paramter : parameters) {
             if (sem_analysis_scope::variable_exists_in_current_scope(paramter->get_name())) {
                 utility::sem_analysis_error("Parameter already exists in current scope", parser::current_line);
             }
-
+            arg_types.emplace_back(paramter->get_expr_type());
             sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true);
         }
+
+        sem_analysis_scope::add_function_defn(func_name, return_type, arg_types);
 
 
         for (auto const& ast_node : expressions) {
@@ -252,6 +257,33 @@ namespace ast {
      * TODO: docs
      */
     void ast::func_call_expr::semantic_analysis() {
+        if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
+            utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
+        }
 
+        set_expr_type(sem_analysis_scope::get_func_ret_type(func_name)); // set the type of the expression correctly
+
+        if (arguments.size() != sem_analysis_scope::get_num_params(func_name)) {
+            utility::sem_analysis_error("Number of arguments in function call do not match number of arguments in function definition", parser::current_line);
+        }
+
+        int current_param = 1;
+
+        for (auto const& argument : arguments) {
+            if (argument->get_ast_class() != "int" && 
+                argument->get_ast_class() != "float" && 
+                argument->get_ast_class() != "char" && 
+                argument->get_ast_class() != "string" && 
+                argument->get_ast_class() != "bool") 
+            {
+                argument->semantic_analysis();
+            }
+
+            if(argument->get_expr_type() != sem_analysis_scope::get_num_params(func_name)) {
+                utility::sem_analysis_error("Argument in function call does not match exprected parameter type", parser::current_line);
+            }
+
+            current_param++;
+        }
     }
 }
