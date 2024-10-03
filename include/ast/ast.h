@@ -58,6 +58,8 @@ namespace ast {
             return "top";
         }
 
+        virtual void set_expr_type(type_enum::types new_type) {}
+
         virtual type_enum::types get_expr_type() const { // PLACEHOLDER
             return type_enum::types::float_type;
         }
@@ -139,7 +141,7 @@ namespace ast {
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "binary"; }
             type_enum::types get_expr_type() const override {return type;}
-            void set_expr_type(type_enum::types new_type) { type = new_type; }
+            void set_expr_type(type_enum::types new_type) override { type = new_type; }
             void debug_output();
             char get_op() { 
                 switch (op) {
@@ -179,7 +181,7 @@ namespace ast {
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "binary"; }
         type_enum::types get_expr_type() const override {return type;}
-        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        void set_expr_type(type_enum::types new_type) override { type = new_type; }
         void debug_output();
         char get_op() { 
             switch (op) {
@@ -217,7 +219,7 @@ namespace ast {
                 {}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "identifier"; }   
-            void set_expr_type(type_enum::types new_type) { type = new_type; }
+            void set_expr_type(type_enum::types new_type) override { type = new_type; }
             type_enum::types get_expr_type() const override {return type;}
             std::string get_name() const override {return identifier_name;}
             void debug_output();
@@ -237,7 +239,7 @@ namespace ast {
             {}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "identifier"; }   
-        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        void set_expr_type(type_enum::types new_type) override { type = new_type; }
         type_enum::types get_expr_type() const override {return type;}
         std::string get_name() const override {return identifier_name;}
         void debug_output();
@@ -562,7 +564,7 @@ namespace ast {
                 {}
             void semantic_analysis() override;
             type_enum::types get_expr_type() const override {return type;} 
-            void set_expr_type(type_enum::types new_type) { type = new_type; }
+            void set_expr_type(type_enum::types new_type) override { type = new_type; }
             std::string get_ast_class() const override { return "return"; }
             void debug_output();
             llvm::Value* codegen() override;
@@ -580,7 +582,7 @@ namespace ast {
             {}
         void semantic_analysis() override;
         type_enum::types get_expr_type() const override {return type;} 
-        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        void set_expr_type(type_enum::types new_type) override { type = new_type; }
         std::string get_ast_class() const override { return "return"; }
         void debug_output();
         llvm::Value* codegen() override;
@@ -655,8 +657,8 @@ namespace ast {
             arguments(std::move(args))
             {}
         void semantic_analysis() override;
-        type_enum::types get_expr_type() {return type;}
-        void set_expr_type(type_enum::types new_type) { type = new_type; }
+        type_enum::types get_expr_type() const override {return type;}
+        void set_expr_type(type_enum::types new_type) override { type = new_type; }
         std::string get_ast_class() const override { return "func_call"; }
         void debug_output();
         llvm::Value* codegen() override;
