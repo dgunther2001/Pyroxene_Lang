@@ -529,6 +529,28 @@ namespace ast {
         return nullptr;
     }
 
+    /**
+     * @par Generates ir for function calls.
+     * 
+     * @par Iterate over the aarguments, abd convert them to ir.
+     * @code
+     *  std::vector<llvm::Value*> llvm_arguments;
+        for (auto const& argument : arguments) {
+            llvm::Value* argument_value = argument->codegen();
+            llvm_arguments.push_back(argument_value);
+        }
+     * @endcode
+
+     @par Grab a reference to the called function from the module, and then return a call to it.
+     @code
+        llvm::Function* callee = codegen::LLVM_Module->getFunction(func_name);
+        if (callee == nullptr) {
+            utility::codegen_error("Undefined function: " + func_name, parser::current_line);
+        }
+
+        return codegen::IR_Builder->CreateCall(callee, llvm_arguments, "__" + func_name + "_call__");
+     @endcode
+     */
     llvm::Value* ast::func_call_expr::codegen() {
         std::vector<llvm::Value*> llvm_arguments;
         for (auto const& argument : arguments) {

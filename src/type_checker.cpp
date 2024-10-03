@@ -256,7 +256,39 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @par Validate the the function exists in the global symbol table, and that the number of arguments and argument types match what is expected.
+     * @code
+        if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
+            utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
+        }
+
+        set_expr_type(sem_analysis_scope::get_func_ret_type(func_name)); // set the type of the expression correctly
+        //std::cout << ast::get_type_as_string(get_expr_type()) << "\n";
+
+
+        if (arguments.size() != sem_analysis_scope::get_num_params(func_name)) {
+            utility::sem_analysis_error("Number of arguments in function call do not match number of arguments in function definition", parser::current_line);
+        }
+
+        int current_param = 1;
+
+        for (auto const& argument : arguments) {
+            if (argument->get_ast_class() != "int" && 
+                argument->get_ast_class() != "float" && 
+                argument->get_ast_class() != "char" && 
+                argument->get_ast_class() != "string" && 
+                argument->get_ast_class() != "bool") 
+            {
+                argument->semantic_analysis();
+            }
+
+            if(argument->get_expr_type() != sem_analysis_scope::get_param_type(func_name, current_param)) {
+                utility::sem_analysis_error("Argument in function call does not match exprected parameter type", parser::current_line);
+            }
+
+            current_param++;
+        }
+     * @endcode
      */
     void ast::func_call_expr::semantic_analysis() {
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
