@@ -22,14 +22,6 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 namespace utility {
 
-    /**
-     * @par The name of the current file.
-     */
-    extern std::string file_name;
-
-    extern void set_file_name(const std::string& name);
-    extern void segfault_handler(int signal);
-
     extern void driver_extension_error(const std::string& message, const std::string& file_name);
     extern void driver_args_error(const int num_args);
     extern void lexer_error(const std::string& message, int line);

@@ -15,56 +15,19 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 namespace utility {
 
-    std::string file_name;
-
-    /**
-     * @par Automatically runs the Valgrind tool inside of Docker if a segfault is detected.
-     * @param signal The signal code.
-     * @code
-     *  if (signal == SIGSEGV) {
-            std::cout << "\033[1;31mSegmentation fault detected. Running Valgrind....\033[0m\n";
-
-
-            execlp("valgrind", "valgrind", "--leak-check=full", "--track-origins=yes", file_exec_name.c_str(), nullptr);
-
-            std::exit(signal);
-        }
-     * @endcode
-     */
-    void segfault_handler(int signal) {
-        if (signal == SIGSEGV) {
-            std::cout << "\033[1;31mSegmentation fault detected. Running Valgrind....\033[0m\n";
-
-            execlp("valgrind", "valgrind", "--leak-check=full", "--track-origins=yes", file_name.c_str(), nullptr);
-
-            std::exit(signal);
-        }
-    }
-
-    /**
-     * @par Set the name of the file in utility class.
-     * @param The name of the current file.
-     * @code
-     * file_name = name;
-     * @endcode
-     */
-    void set_file_name(const std::string& name) {
-        file_name = name;
-    }
-
     /**
      * @par Gets called to abort if input file does not have a .pyrx extension.
      * 
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << message << file_name << " please add a .pyrx extension.\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void driver_extension_error(const std::string& message, const std::string& file_name) {
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << message << file_name << " please add a .pyrx extension.\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -73,13 +36,13 @@ namespace utility {
      * @code
      *  std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void driver_args_error(const int num_args) {
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n";
-        std::abort();
+        exit(1);
     }
     
     /**
@@ -88,13 +51,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Lexer error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void lexer_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Lexer error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -103,13 +66,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Parser error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void parser_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Parser error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -118,13 +81,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Codegen error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void codegen_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Codegen error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -133,19 +96,19 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Scoping error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void scoping_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Scoping error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     void sem_analysis_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Semantic analysis error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
