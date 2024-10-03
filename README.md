@@ -1,3 +1,8 @@
+![Lines of Code](https://tokei.rs/b1/github/dgunther2001/Pyroxene_Lang?category=code)
+![Lang](https://img.shields.io/github/languages/top/dgunther2001/Pyroxene_Lang)
+![Size](https://img.shields.io/github/repo-size/dgunther2001/Pyroxene_Lang)
+![Platform](https://img.shields.io/badge/platform-%20macOS%20|%20Linux-blue)
+
 <img src="images/pyroxene_icon.png" alt="Logo" width="200"/>
 
 **Hello!** My name is **Daniel Gunther**, and this is my first major excursion into the world of LLVM.
