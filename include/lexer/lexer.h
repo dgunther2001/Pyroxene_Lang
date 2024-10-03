@@ -125,6 +125,8 @@ namespace lexer {
     extern void tokenize_file();
 
     extern Token_Type peek_token(int token_number);
+
+    extern bool is_operator(Token_Type token);
 }
 
 #endif // LEXER_H

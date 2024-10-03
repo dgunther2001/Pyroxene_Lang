@@ -8,6 +8,10 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 
 #include "../include/utility/utility.h"
+#include <csignal>
+#include <unistd.h>
+#include <cstdlib>  
+#include <iostream> 
 
 namespace utility {
 
@@ -17,13 +21,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << message << file_name << " please add a .pyrx extension.\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void driver_extension_error(const std::string& message, const std::string& file_name) {
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << message << file_name << " please add a .pyrx extension.\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -32,13 +36,13 @@ namespace utility {
      * @code
      *  std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void driver_args_error(const int num_args) {
         std::cout <<"\033[1;31m";
         std::cout << "Driver error: " << num_args - 1 << " provided, but only expected relative path to .pyrx file.\n";
-        std::abort();
+        exit(1);
     }
     
     /**
@@ -47,13 +51,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Lexer error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void lexer_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Lexer error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -62,13 +66,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Parser error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void parser_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Parser error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -77,13 +81,13 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Codegen error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void codegen_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Codegen error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**
@@ -92,19 +96,19 @@ namespace utility {
      * @code
         std::cout <<"\033[1;31m";
         std::cout << "Scoping error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
      * @endcode
      */
     void scoping_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Scoping error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     void sem_analysis_error(const std::string& message, int line) {
         std::cout <<"\033[1;31m";
         std::cout << "Semantic analysis error: " << message << " on line " << line << "\n";
-        std::abort();
+        exit(1);
     }
 
     /**

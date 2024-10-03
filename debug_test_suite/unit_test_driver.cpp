@@ -18,8 +18,9 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include <iostream>
 #include <fstream>
+#include <csignal>
 
-#define DEBUG_OPTION 3
+#define DEBUG_OPTION -1
 
 
 int main(int argc, char** argv) {

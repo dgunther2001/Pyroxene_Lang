@@ -43,7 +43,9 @@ namespace ast {
         }
 
         type_enum::types left_type = left->get_expr_type();
+        //std::cout << ast::get_type_as_string(left_type) << " " << left->get_ast_class() << "\n";
         type_enum::types right_type = right->get_expr_type();
+        //std::cout << ast::get_type_as_string(right_type) << " " << right->get_ast_class() << "\n";
 
         if (left_type != right_type) {
             utility::sem_analysis_error("Invalid types connected in binary expression", parser::current_line);
@@ -262,6 +264,8 @@ namespace ast {
         }
 
         set_expr_type(sem_analysis_scope::get_func_ret_type(func_name)); // set the type of the expression correctly
+        //std::cout << ast::get_type_as_string(get_expr_type()) << "\n";
+
 
         if (arguments.size() != sem_analysis_scope::get_num_params(func_name)) {
             utility::sem_analysis_error("Number of arguments in function call do not match number of arguments in function definition", parser::current_line);
@@ -279,7 +283,7 @@ namespace ast {
                 argument->semantic_analysis();
             }
 
-            if(argument->get_expr_type() != sem_analysis_scope::get_num_params(func_name)) {
+            if(argument->get_expr_type() != sem_analysis_scope::get_param_type(func_name, current_param)) {
                 utility::sem_analysis_error("Argument in function call does not match exprected parameter type", parser::current_line);
             }
 

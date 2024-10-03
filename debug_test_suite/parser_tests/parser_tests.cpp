@@ -16,11 +16,11 @@ namespace ast {
      /**
       * @fn ast::binary_expr::debug_output()
       * @code
-      * std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
+      * std::cout << "Binary Expression " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
       * @endcode
       */
      void ast::binary_expr::debug_output() {
-          std::cout << "Binary Expression of type " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
+          std::cout << "Binary Expression " << ast::get_type_as_string(get_expr_type()) << " with operator " << get_op() << "\n"; 
      }
 
      /**

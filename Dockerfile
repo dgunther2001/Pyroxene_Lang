@@ -44,6 +44,8 @@ WORKDIR /
 
 COPY . .
 
+RUN chmod -R +rx /test_files
+
 ARG DEBUG_MODE
 
 ARG FILE_PATH
@@ -52,8 +54,22 @@ RUN mkdir build && cd build && \
     cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_DEBUG_DRIVER=${DEBUG_MODE} .. && \
     make
 
-ENTRYPOINT ["./build/driver"]
+RUN cat <<EOT > /valgrind_option.sh
+#!/bin/bash
+./build/driver "\$@"
+EXIT_CODE=\$?
+if [ \$EXIT_CODE -eq 139 ]; then
+    echo "Segmentation fault detected. Rerunning with Valgrind..."
+    valgrind --leak-check=full --track-origins=yes ./build/driver "\$@"
+fi
+EOT
 
+RUN chmod u+x valgrind_option.sh
+
+# Set the entrypoint to the script that handles the program and Valgrind reruns
+ENTRYPOINT ["./valgrind_option.sh"]
+
+# Default command to run a test file from your project
 CMD ["./test_files/test_1.pyrx"]
 
 
