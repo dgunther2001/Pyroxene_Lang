@@ -155,6 +155,10 @@ Functions</h2></td></tr>
 <tr class="separator:a6eeb74841871266bc4c8f7e00e7c3a4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20b0213c6365a3dd65d3bee1d031713d" id="r_a20b0213c6365a3dd65d3bee1d031713d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20b0213c6365a3dd65d3bee1d031713d">tokenize_file</a> ()</td></tr>
 <tr class="separator:a20b0213c6365a3dd65d3bee1d031713d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac61160966632ce4c33ea19a44f4c748d" id="r_ac61160966632ce4c33ea19a44f4c748d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac61160966632ce4c33ea19a44f4c748d">peek_token</a> (int token_number)</td></tr>
+<tr class="separator:ac61160966632ce4c33ea19a44f4c748d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55efa985ab2b766427ec200696607cab" id="r_a55efa985ab2b766427ec200696607cab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55efa985ab2b766427ec200696607cab">is_operator</a> (<a class="el" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a> token)</td></tr>
+<tr class="separator:a55efa985ab2b766427ec200696607cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -425,7 +429,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:314</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:59</div></div>
-<div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:53</div></div>
+<div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:57</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Keywords and Identifiers</dt><dd>Handles parsing alphanumeric input into keyword and identifier tokens: <div class="fragment"><div class="line"><span class="keywordflow">if</span> (isalpha(previous_character) || previous_character == <span class="charliteral">&#39;_&#39;</span>) { </div>
 <div class="line">    <a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> = previous_character; </div>
@@ -605,6 +609,64 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a55efa985ab2b766427ec200696607cab" name="a55efa985ab2b766427ec200696607cab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55efa985ab2b766427ec200696607cab">&#9670;&#160;</a></span>is_operator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool lexer::is_operator </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a></td>          <td class="paramname"><span class="paramname"><em>token</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Simply returns whether a token is an operator.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>The token in question <div class="fragment"><div class="line"><span class="keywordflow">return</span> (token == <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">tok_plus</a> || token == <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">tok_minus</a> || token == <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">tok_mult</a> || token == <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">tok_div</a>);</div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac61160966632ce4c33ea19a44f4c748d" name="ac61160966632ce4c33ea19a44f4c748d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac61160966632ce4c33ea19a44f4c748d">&#9670;&#160;</a></span>peek_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aba56b799cc10ddbcfff462adbb721175">Token_Type</a> lexer::peek_token </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>token_number</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Allows the user to grab a token based on the index of the desired token in the token stream.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token_number</td><td>The desired index in the token stream. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a1ea36c4da63a34511efba62b615b4f44">token_stream</a>.empty()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Token stream not yet initialized&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">} </div>
+<div class="line"><span class="keywordflow">if</span> (token_number &gt;= <a class="code hl_variable" href="#a1ea36c4da63a34511efba62b615b4f44">token_stream</a>.size()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a>(<span class="stringliteral">&quot;Number greater than token stream size&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a1ea36c4da63a34511efba62b615b4f44">token_stream</a>.at(token_number);</div>
+<div class="ttc" id="anamespacelexer_html_a1ea36c4da63a34511efba62b615b4f44"><div class="ttname"><a href="#a1ea36c4da63a34511efba62b615b4f44">lexer::token_stream</a></div><div class="ttdeci">std::vector&lt; Token_Type &gt; token_stream</div><div class="ttdef"><b>Definition</b> lexer.cpp:16</div></div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a20b0213c6365a3dd65d3bee1d031713d" name="a20b0213c6365a3dd65d3bee1d031713d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20b0213c6365a3dd65d3bee1d031713d">&#9670;&#160;</a></span>tokenize_file()</h2>
 
@@ -628,7 +690,6 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"><a class="code hl_variable" href="#a1ea36c4da63a34511efba62b615b4f44">token_stream</a>.emplace_back(token);</div>
 <div class="line"> <a class="code hl_variable" href="#a2236b4d9e5656f41e63b6a6aaf59a796">line_count_vec</a>.emplace_back(<a class="code hl_variable" href="#a3194f54b2efb03a1d7dd1c3071fc93e0">line_count</a>);</div>
-<div class="ttc" id="anamespacelexer_html_a1ea36c4da63a34511efba62b615b4f44"><div class="ttname"><a href="#a1ea36c4da63a34511efba62b615b4f44">lexer::token_stream</a></div><div class="ttdeci">std::vector&lt; Token_Type &gt; token_stream</div><div class="ttdef"><b>Definition</b> lexer.cpp:16</div></div>
 <div class="ttc" id="anamespacelexer_html_a2236b4d9e5656f41e63b6a6aaf59a796"><div class="ttname"><a href="#a2236b4d9e5656f41e63b6a6aaf59a796">lexer::line_count_vec</a></div><div class="ttdeci">std::vector&lt; int &gt; line_count_vec</div><div class="ttdef"><b>Definition</b> lexer.cpp:18</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175">lexer::Token_Type</a></div><div class="ttdeci">Token_Type</div><div class="ttdef"><b>Definition</b> lexer.h:28</div></div>
 <div class="ttc" id="anamespacelexer_html_ac762e6415092515d1673f9ebd161bfcc"><div class="ttname"><a href="#ac762e6415092515d1673f9ebd161bfcc">lexer::stored_values</a></div><div class="ttdeci">std::vector&lt; std::optional&lt; lexer_stored_values &gt; &gt; stored_values</div><div class="ttdef"><b>Definition</b> lexer.cpp:17</div></div>
