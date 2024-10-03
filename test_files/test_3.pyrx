@@ -9,9 +9,9 @@ If LICENSE.md is not included, this version of the source code is provided in br
 int b = 44;
 int c = 33 + 99;
 int d;
-66 + 33 * c;
+//66 + 33 * c;
 44;
 
-d = 77 / 99 + b;
+//d = 77 / 99 + b;
 
 bool y = true;

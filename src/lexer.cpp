@@ -697,4 +697,15 @@ namespace lexer {
         return token_stream.at(token_number);
     }
 
+    /**
+     * @par Simply returns whether a token is an operator.
+     * @param token The token in question
+     * @code
+     * return (token == tok_plus || token == tok_minus || token == tok_mult || token == tok_div);
+     * @endcode
+     */
+    bool is_operator(Token_Type token) {
+        return (token == tok_plus || token == tok_minus || token == tok_mult || token == tok_div);
+    }
+
 }
