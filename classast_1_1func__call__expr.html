@@ -183,6 +183,24 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section user"><dt>Generates ir for function calls.</dt><dd></dd></dl>
+<dl class="section user"><dt>Iterate over the aarguments, abd convert them to ir.</dt><dd><div class="fragment"><div class="line">std::vector&lt;llvm::Value*&gt; llvm_arguments;</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; argument : arguments) {</div>
+<div class="line">    llvm::Value* argument_value = argument-&gt;codegen();</div>
+<div class="line">    llvm_arguments.push_back(argument_value);</div>
+<div class="line">}</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Grab a reference to the called function from the module, and then return a call to it.</dt><dd><div class="fragment"><div class="line">llvm::Function* callee = <a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a>-&gt;getFunction(func_name);</div>
+<div class="line"><span class="keywordflow">if</span> (callee == <span class="keyword">nullptr</span>) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Undefined function: &quot;</span> + func_name, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateCall(callee, llvm_arguments, <span class="stringliteral">&quot;__&quot;</span> + func_name + <span class="stringliteral">&quot;_call__&quot;</span>);</div>
+<div class="ttc" id="anamespacecodegen_html_a0c83a7aa3f52eaf082b779f3a81166fe"><div class="ttname"><a href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::Module &gt; LLVM_Module</div><div class="ttdef"><b>Definition</b> codegen.cpp:15</div></div>
+<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
+<div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:87</div></div>
+</div><!-- fragment --> </dd></dl>
 
 <p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
 
@@ -281,6 +299,43 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<dl class="section user"><dt>Validate the the function exists in the global symbol table, and that the number of arguments and argument types match what is expected.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!<a class="code hl_function" href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a>(func_name)) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Function not found in the global symbol table&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="#ab3adee022c4e1a4037a26c3eb145308f">set_expr_type</a>(<a class="code hl_function" href="namespacesem__analysis__scope.html#a4821c01f78f92c043b74d1291ac86faf">sem_analysis_scope::get_func_ret_type</a>(func_name)); <span class="comment">// set the type of the expression correctly</span></div>
+<div class="line"><span class="comment">//std::cout &lt;&lt; ast::get_type_as_string(get_expr_type()) &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (arguments.size() != <a class="code hl_function" href="namespacesem__analysis__scope.html#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a>(func_name)) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Number of arguments in function call do not match number of arguments in function definition&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> current_param = 1;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; argument : arguments) {</div>
+<div class="line">    <span class="keywordflow">if</span> (argument-&gt;get_ast_class() != <span class="stringliteral">&quot;int&quot;</span> &amp;&amp; </div>
+<div class="line">        argument-&gt;get_ast_class() != <span class="stringliteral">&quot;float&quot;</span> &amp;&amp; </div>
+<div class="line">        argument-&gt;get_ast_class() != <span class="stringliteral">&quot;char&quot;</span> &amp;&amp; </div>
+<div class="line">        argument-&gt;get_ast_class() != <span class="stringliteral">&quot;string&quot;</span> &amp;&amp; </div>
+<div class="line">        argument-&gt;get_ast_class() != <span class="stringliteral">&quot;bool&quot;</span>) </div>
+<div class="line">    {</div>
+<div class="line">        argument-&gt;semantic_analysis();</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span>(argument-&gt;get_expr_type() != <a class="code hl_function" href="namespacesem__analysis__scope.html#acbda4c46c9f48bcf5c17c0e28c7f0e12">sem_analysis_scope::get_param_type</a>(func_name, current_param)) {</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Argument in function call does not match exprected parameter type&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    current_param++;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassast_1_1func__call__expr_html_ab3adee022c4e1a4037a26c3eb145308f"><div class="ttname"><a href="#ab3adee022c4e1a4037a26c3eb145308f">ast::func_call_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type) override</div><div class="ttdef"><b>Definition</b> ast.h:661</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="namespacesem__analysis__scope.html#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:246</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a4821c01f78f92c043b74d1291ac86faf"><div class="ttname"><a href="namespacesem__analysis__scope.html#a4821c01f78f92c043b74d1291ac86faf">sem_analysis_scope::get_func_ret_type</a></div><div class="ttdeci">type_enum::types get_func_ret_type(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:171</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aab208518ea2ad4c6733d64a91fa42e15"><div class="ttname"><a href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:186</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_acbda4c46c9f48bcf5c17c0e28c7f0e12"><div class="ttname"><a href="namespacesem__analysis__scope.html#acbda4c46c9f48bcf5c17c0e28c7f0e12">sem_analysis_scope::get_param_type</a></div><div class="ttdeci">type_enum::types get_param_type(const std::string &amp;name, int arg_number)</div><div class="ttdef"><b>Definition</b> scoping.cpp:224</div></div>
+<div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:108</div></div>
+</div><!-- fragment --> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
 
@@ -313,8 +368,10 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/ast/<a class="el" href="ast_8h_source.html">ast.h</a></li>
+<li>src/<a class="el" href="type__checker_8cpp.html">type_checker.cpp</a></li>
+<li>src/<a class="el" href="codegen_8cpp.html">codegen.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
