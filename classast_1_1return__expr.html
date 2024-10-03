@@ -114,8 +114,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac8518077fa6bbf3ab166b04468051bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a855531f5cec2c76a1189cfbcbfea5ff5" id="r_a855531f5cec2c76a1189cfbcbfea5ff5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a855531f5cec2c76a1189cfbcbfea5ff5">get_expr_type</a> () const override</td></tr>
 <tr class="separator:a855531f5cec2c76a1189cfbcbfea5ff5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d06014a5bbadcf4a8c07c89ba0e7c4e" id="r_a5d06014a5bbadcf4a8c07c89ba0e7c4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d06014a5bbadcf4a8c07c89ba0e7c4e">set_expr_type</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type)</td></tr>
-<tr class="separator:a5d06014a5bbadcf4a8c07c89ba0e7c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae29f0ebe19b0e397e667b70d70314ec3" id="r_ae29f0ebe19b0e397e667b70d70314ec3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae29f0ebe19b0e397e667b70d70314ec3">set_expr_type</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type) override</td></tr>
+<tr class="separator:ae29f0ebe19b0e397e667b70d70314ec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a686cf9378ab651c7b2f06c9f69c69cc1" id="r_a686cf9378ab651c7b2f06c9f69c69cc1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a686cf9378ab651c7b2f06c9f69c69cc1">get_ast_class</a> () const override</td></tr>
 <tr class="separator:a686cf9378ab651c7b2f06c9f69c69cc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa992887e7d2ab22a8cdca2d81abd62de" id="r_aa992887e7d2ab22a8cdca2d81abd62de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa992887e7d2ab22a8cdca2d81abd62de">debug_output</a> ()</td></tr>
@@ -139,19 +139,19 @@ Public Member Functions</h2></td></tr>
 <div class="line">        {}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#ac8518077fa6bbf3ab166b04468051bd7">semantic_analysis</a>() <span class="keyword">override</span>;</div>
 <div class="line">    <a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> <a class="code hl_function" href="#a855531f5cec2c76a1189cfbcbfea5ff5">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;} </div>
-<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a5d06014a5bbadcf4a8c07c89ba0e7c4e">set_expr_type</a>(<a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type) { type = new_type; }</div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#ae29f0ebe19b0e397e667b70d70314ec3">set_expr_type</a>(<a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type)<span class="keyword"> override </span>{ type = new_type; }</div>
 <div class="line">    std::string <a class="code hl_function" href="#a686cf9378ab651c7b2f06c9f69c69cc1">get_ast_class</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;return&quot;</span>; }</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#aa992887e7d2ab22a8cdca2d81abd62de">debug_output</a>();</div>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a22c6aa02def110f97a02dfaee58e7852">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1return__expr_html"><div class="ttname"><a href="classast_1_1return__expr.html">ast::return_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:572</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html"><div class="ttname"><a href="classast_1_1return__expr.html">ast::return_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:574</div></div>
 <div class="ttc" id="aclassast_1_1return__expr_html_a22c6aa02def110f97a02dfaee58e7852"><div class="ttname"><a href="#a22c6aa02def110f97a02dfaee58e7852">ast::return_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:388</div></div>
-<div class="ttc" id="aclassast_1_1return__expr_html_a5d06014a5bbadcf4a8c07c89ba0e7c4e"><div class="ttname"><a href="#a5d06014a5bbadcf4a8c07c89ba0e7c4e">ast::return_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type)</div><div class="ttdef"><b>Definition</b> ast.h:583</div></div>
-<div class="ttc" id="aclassast_1_1return__expr_html_a686cf9378ab651c7b2f06c9f69c69cc1"><div class="ttname"><a href="#a686cf9378ab651c7b2f06c9f69c69cc1">ast::return_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:584</div></div>
-<div class="ttc" id="aclassast_1_1return__expr_html_a855531f5cec2c76a1189cfbcbfea5ff5"><div class="ttname"><a href="#a855531f5cec2c76a1189cfbcbfea5ff5">ast::return_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:582</div></div>
-<div class="ttc" id="aclassast_1_1return__expr_html_a9364be755ca645a601c9052baba885f5"><div class="ttname"><a href="#a9364be755ca645a601c9052baba885f5">ast::return_expr::return_expr</a></div><div class="ttdeci">return_expr(std::unique_ptr&lt; top_level_expr &gt; return_val)</div><div class="ttdef"><b>Definition</b> ast.h:578</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html_a686cf9378ab651c7b2f06c9f69c69cc1"><div class="ttname"><a href="#a686cf9378ab651c7b2f06c9f69c69cc1">ast::return_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:586</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html_a855531f5cec2c76a1189cfbcbfea5ff5"><div class="ttname"><a href="#a855531f5cec2c76a1189cfbcbfea5ff5">ast::return_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:584</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html_a9364be755ca645a601c9052baba885f5"><div class="ttname"><a href="#a9364be755ca645a601c9052baba885f5">ast::return_expr::return_expr</a></div><div class="ttdeci">return_expr(std::unique_ptr&lt; top_level_expr &gt; return_val)</div><div class="ttdef"><b>Definition</b> ast.h:580</div></div>
 <div class="ttc" id="aclassast_1_1return__expr_html_aa992887e7d2ab22a8cdca2d81abd62de"><div class="ttname"><a href="#aa992887e7d2ab22a8cdca2d81abd62de">ast::return_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
-<div class="ttc" id="aclassast_1_1return__expr_html_ac8518077fa6bbf3ab166b04468051bd7"><div class="ttname"><a href="#ac8518077fa6bbf3ab166b04468051bd7">ast::return_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:179</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html_ac8518077fa6bbf3ab166b04468051bd7"><div class="ttname"><a href="#ac8518077fa6bbf3ab166b04468051bd7">ast::return_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:181</div></div>
+<div class="ttc" id="aclassast_1_1return__expr_html_ae29f0ebe19b0e397e667b70d70314ec3"><div class="ttname"><a href="#ae29f0ebe19b0e397e667b70d70314ec3">ast::return_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type) override</div><div class="ttdef"><b>Definition</b> ast.h:585</div></div>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:52</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> types.h:8</div></div>
 </div><!-- fragment --> </dd></dl>
@@ -311,15 +311,15 @@ Public Member Functions</h2></td></tr>
 <div class="line">    returned_value-&gt;semantic_analysis();</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_function" href="#a5d06014a5bbadcf4a8c07c89ba0e7c4e">set_expr_type</a>(returned_value-&gt;get_expr_type());</div>
+<div class="line"><a class="code hl_function" href="#ae29f0ebe19b0e397e667b70d70314ec3">set_expr_type</a>(returned_value-&gt;get_expr_type());</div>
 </div><!-- fragment --> </dd></dl>
 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
 
 </div>
 </div>
-<a id="a5d06014a5bbadcf4a8c07c89ba0e7c4e" name="a5d06014a5bbadcf4a8c07c89ba0e7c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d06014a5bbadcf4a8c07c89ba0e7c4e">&#9670;&#160;</a></span>set_expr_type()</h2>
+<a id="ae29f0ebe19b0e397e667b70d70314ec3" name="ae29f0ebe19b0e397e667b70d70314ec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae29f0ebe19b0e397e667b70d70314ec3">&#9670;&#160;</a></span>set_expr_type()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -336,10 +336,12 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a8ee2731fcd814b47a34026bbabb88b15">ast::top_level_expr</a>.</p>
 
 </div>
 </div>

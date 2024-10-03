@@ -127,6 +127,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3430477e06c9b7de405decf1466d8cc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a918298ba5ca74d15ea618d8ca6b188cb" id="r_a918298ba5ca74d15ea618d8ca6b188cb"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a918298ba5ca74d15ea618d8ca6b188cb">get_ast_class</a> () const</td></tr>
 <tr class="separator:a918298ba5ca74d15ea618d8ca6b188cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee2731fcd814b47a34026bbabb88b15" id="r_a8ee2731fcd814b47a34026bbabb88b15"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ee2731fcd814b47a34026bbabb88b15">set_expr_type</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type)</td></tr>
+<tr class="separator:a8ee2731fcd814b47a34026bbabb88b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae35833709d7439c73abc3c5feecb594f" id="r_ae35833709d7439c73abc3c5feecb594f"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae35833709d7439c73abc3c5feecb594f">get_expr_type</a> () const</td></tr>
 <tr class="separator:ae35833709d7439c73abc3c5feecb594f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a890040cc8ec1ed0bc8f7d1ff7802555b" id="r_a890040cc8ec1ed0bc8f7d1ff7802555b"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a890040cc8ec1ed0bc8f7d1ff7802555b">get_name</a> () const</td></tr>
@@ -263,7 +265,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a0a11b2ed58d0f238f55df31f016b91d7">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#a0c4c3398f90b32d1bc4db91c3e2a7aa6">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#ab856d183c9898a573f6edff0fe57919f">ast::char_expression</a>, <a class="el" href="classast_1_1float__expression.html#a29b150ac4041acc5e699ac18ebb857d7">ast::float_expression</a>, <a class="el" href="classast_1_1identifier__expr.html#a76243a7cd3b54bf9e0548fcfdbf857bf">ast::identifier_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a8a7346bf1fee95994555f26a2b4ad02a">ast::integer_expression</a>, <a class="el" href="classast_1_1return__expr.html#a855531f5cec2c76a1189cfbcbfea5ff5">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#a17240b7a339799815669a5e7f48a279b">ast::string_expression</a>, <a class="el" href="classast_1_1variable__declaration.html#a78a882d2ea37fe44eb0b64c15cae97aa">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#a9d823f9f1cc8432717e355692acd4d63">ast::variable_definition</a>.</p>
+<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a0a11b2ed58d0f238f55df31f016b91d7">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#a0c4c3398f90b32d1bc4db91c3e2a7aa6">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#ab856d183c9898a573f6edff0fe57919f">ast::char_expression</a>, <a class="el" href="classast_1_1float__expression.html#a29b150ac4041acc5e699ac18ebb857d7">ast::float_expression</a>, <a class="el" href="classast_1_1func__call__expr.html#a3edc45074bd6ca34242360f67226fa18">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a76243a7cd3b54bf9e0548fcfdbf857bf">ast::identifier_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a8a7346bf1fee95994555f26a2b4ad02a">ast::integer_expression</a>, <a class="el" href="classast_1_1return__expr.html#a855531f5cec2c76a1189cfbcbfea5ff5">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#a17240b7a339799815669a5e7f48a279b">ast::string_expression</a>, <a class="el" href="classast_1_1variable__declaration.html#a78a882d2ea37fe44eb0b64c15cae97aa">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#a9d823f9f1cc8432717e355692acd4d63">ast::variable_definition</a>.</p>
 
 </div>
 </div>
@@ -318,6 +320,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr</a>, <a class="el" href="classast_1_1else__expr.html#aa087137908fa1db52f4617e59c079876">ast::else_expr</a>, <a class="el" href="classast_1_1func__call__expr.html#a0de0163a435dd3a6fb4db5a9f1c4c5d4">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a3b470954692f6bc55be0df692c75a922">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#ae6e8c5f5345e01f596ae9fd6bf43a839">ast::if_expr</a>, <a class="el" href="classast_1_1return__expr.html#ac8518077fa6bbf3ab166b04468051bd7">ast::return_expr</a>, <a class="el" href="classast_1_1variable__assignment.html#ae8de91acd4a332190d79750a961d57be">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#aa544a6ff728e7049d6834738810311a2">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#aad1e785066e3107491d85dc303390248">ast::variable_definition</a>.</p>
+
+</div>
+</div>
+<a id="a8ee2731fcd814b47a34026bbabb88b15" name="a8ee2731fcd814b47a34026bbabb88b15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee2731fcd814b47a34026bbabb88b15">&#9670;&#160;</a></span>set_expr_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ast::top_level_expr::set_expr_type </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>new_type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a2a80451deabeacde556b80e5dcd7af80">ast::binary_expr</a>, <a class="el" href="classast_1_1func__call__expr.html#ab3adee022c4e1a4037a26c3eb145308f">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#aac9dfaae7c879ec13932ead7f1580e90">ast::identifier_expr</a>, and <a class="el" href="classast_1_1return__expr.html#ae29f0ebe19b0e397e667b70d70314ec3">ast::return_expr</a>.</p>
 
 </div>
 </div>

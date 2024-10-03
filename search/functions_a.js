@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parse_5fbinary_5fexpr_0',['parse_binary_expr',['../namespaceparser.html#ac756d1120bd62cb00478c41e97db78ae',1,'parser']]],
+  ['parse_5fbinary_5fexpr_0',['parse_binary_expr',['../namespaceparser.html#ac7e91fcf6ed5e22034b1a68cc2ea180b',1,'parser']]],
   ['parse_5fbool_5fexpr_1',['parse_bool_expr',['../namespaceparser.html#aee3ab7bd5f6587c96dbe98791386fef6',1,'parser']]],
   ['parse_5fchar_5fexpr_2',['parse_char_expr',['../namespaceparser.html#aab131acc1543920be2f70d320625ff64',1,'parser']]],
   ['parse_5felse_3',['parse_else',['../namespaceparser.html#a20afff1098c7150cbcc22cdf3335c1c8',1,'parser']]],
@@ -19,5 +19,6 @@ var searchData=
   ['parse_5fvar_5fdecl_5fdefn_16',['parse_var_decl_defn',['../namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989',1,'parser']]],
   ['parse_5fvar_5fdefn_17',['parse_var_defn',['../namespaceparser.html#a621bc2ac33c4ea14f48f6254515dcfd9',1,'parser']]],
   ['parser_5ferror_18',['parser_error',['../namespaceutility.html#a9268449c45b475023dde39f4010b698a',1,'utility']]],
-  ['primary_5fdriver_5floop_19',['primary_driver_loop',['../namespaceutility.html#afbb30e890b50ac29a9d9dbf1226bf39b',1,'utility']]]
+  ['peek_5ftoken_19',['peek_token',['../namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d',1,'lexer']]],
+  ['primary_5fdriver_5floop_20',['primary_driver_loop',['../namespaceutility.html#afbb30e890b50ac29a9d9dbf1226bf39b',1,'utility']]]
 ];

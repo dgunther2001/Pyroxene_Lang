@@ -135,13 +135,13 @@ Public Member Functions</h2></td></tr>
 <div class="line">        llvm::Value* <a class="code hl_function" href="#a9c9ba55826809ef75a41f1ae00a21ff7">codegen</a>();</div>
 <div class="line">        <a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> <a class="code hl_function" href="#a86d921f70d4afdf7182a8afd6ec0b5ed">get_return_type</a>() {<span class="keywordflow">return</span> return_type;}</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1func__defn_html"><div class="ttname"><a href="classast_1_1func__defn.html">ast::func_defn</a></div><div class="ttdef"><b>Definition</b> ast.h:99</div></div>
-<div class="ttc" id="aclassast_1_1func__defn_html_a2730d12b958eab449d73bd39cd71745c"><div class="ttname"><a href="#a2730d12b958eab449d73bd39cd71745c">ast::func_defn::func_defn</a></div><div class="ttdeci">func_defn(type_enum::types return_type, std::string name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; parameters)</div><div class="ttdef"><b>Definition</b> ast.h:107</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html"><div class="ttname"><a href="classast_1_1func__defn.html">ast::func_defn</a></div><div class="ttdef"><b>Definition</b> ast.h:101</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a2730d12b958eab449d73bd39cd71745c"><div class="ttname"><a href="#a2730d12b958eab449d73bd39cd71745c">ast::func_defn::func_defn</a></div><div class="ttdeci">func_defn(type_enum::types return_type, std::string name, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, std::set&lt; std::string &gt; var_names, std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; parameters)</div><div class="ttdef"><b>Definition</b> ast.h:109</div></div>
 <div class="ttc" id="aclassast_1_1func__defn_html_a4fb862ee8d338a91c74ee68e8b78ca61"><div class="ttname"><a href="#a4fb862ee8d338a91c74ee68e8b78ca61">ast::func_defn::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="aclassast_1_1func__defn_html_a56a2d270a7b54ef553db1f1e4fc6de6b"><div class="ttname"><a href="#a56a2d270a7b54ef553db1f1e4fc6de6b">ast::func_defn::~func_defn</a></div><div class="ttdeci">~func_defn()=default</div></div>
-<div class="ttc" id="aclassast_1_1func__defn_html_a86d921f70d4afdf7182a8afd6ec0b5ed"><div class="ttname"><a href="#a86d921f70d4afdf7182a8afd6ec0b5ed">ast::func_defn::get_return_type</a></div><div class="ttdeci">type_enum::types get_return_type()</div><div class="ttdef"><b>Definition</b> ast.h:119</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_a86d921f70d4afdf7182a8afd6ec0b5ed"><div class="ttname"><a href="#a86d921f70d4afdf7182a8afd6ec0b5ed">ast::func_defn::get_return_type</a></div><div class="ttdeci">type_enum::types get_return_type()</div><div class="ttdef"><b>Definition</b> ast.h:121</div></div>
 <div class="ttc" id="aclassast_1_1func__defn_html_a9c9ba55826809ef75a41f1ae00a21ff7"><div class="ttname"><a href="#a9c9ba55826809ef75a41f1ae00a21ff7">ast::func_defn::codegen</a></div><div class="ttdeci">llvm::Value * codegen()</div><div class="ttdef"><b>Definition</b> codegen.cpp:470</div></div>
-<div class="ttc" id="aclassast_1_1func__defn_html_ac21a30560d7e8af9100c601262fda35d"><div class="ttname"><a href="#ac21a30560d7e8af9100c601262fda35d">ast::func_defn::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis()</div><div class="ttdef"><b>Definition</b> type_checker.cpp:221</div></div>
+<div class="ttc" id="aclassast_1_1func__defn_html_ac21a30560d7e8af9100c601262fda35d"><div class="ttname"><a href="#ac21a30560d7e8af9100c601262fda35d">ast::func_defn::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis()</div><div class="ttdef"><b>Definition</b> type_checker.cpp:226</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> types.h:8</div></div>
 </div><!-- fragment --> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -270,7 +270,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
-<div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:83</div></div>
+<div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:87</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Check whether the current control flow block has a terminator (return and branch), and if not, generate one with the default value of return type.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (!function_block-&gt;getTerminator()) {</div>
 <div class="line">    <span class="keywordflow">if</span> (func_return_type-&gt;isVoidTy()) {</div>
@@ -348,21 +348,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Creates a new level of scope and then recursively analyzes the contained expressions. Also validate the type of all return expressions.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#a447e85e4f4f8a903511b08e70f47eeab">sem_analysis_scope::global_contains_func_defn</a>(func_name)) {</div>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a>(func_name)) {</div>
 <div class="line">    <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Function already defined&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#ad8adbd42bd2b774d42a52ccc241a9f91">sem_analysis_scope::add_function_defn</a>(func_name, return_type);</div>
+<div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#ab08cb83520e1470258f73ed9fbf40a48">sem_analysis_scope::add_function_defn</a>(func_name, return_type);</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a>();</div>
+<div class="line"> </div>
+<div class="line">std::vector&lt;type_enum::types&gt; arg_types;</div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; paramter : parameters) {</div>
 <div class="line">    <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#af24c35dac3bfa5a509b7c2bc1611fbf7">sem_analysis_scope::variable_exists_in_current_scope</a>(paramter-&gt;get_name())) {</div>
 <div class="line">        <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Parameter already exists in current scope&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">    }</div>
-<div class="line"> </div>
+<div class="line">    arg_types.emplace_back(paramter-&gt;get_expr_type());</div>
 <div class="line">    <a class="code hl_function" href="namespacesem__analysis__scope.html#a55b9d658ead7918240f330911400ab8b">sem_analysis_scope::add_var_to_current_scope</a>(paramter-&gt;get_name(), paramter-&gt;get_expr_type(), <span class="keyword">true</span>);</div>
 <div class="line">}</div>
 <div class="line"> </div>
+<div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#ab08cb83520e1470258f73ed9fbf40a48">sem_analysis_scope::add_function_defn</a>(func_name, return_type, arg_types);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; ast_node : expressions) {</div>
 <div class="line">    <span class="keywordflow">if</span> (ast_node-&gt;get_ast_class() == <span class="stringliteral">&quot;return&quot;</span>) {</div>
@@ -375,13 +378,13 @@ Public Member Functions</h2></td></tr>
 <div class="line">    }</div>
 <div class="line">}</div>
 <div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a>();</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a447e85e4f4f8a903511b08e70f47eeab"><div class="ttname"><a href="namespacesem__analysis__scope.html#a447e85e4f4f8a903511b08e70f47eeab">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(std::string name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:158</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a55b9d658ead7918240f330911400ab8b"><div class="ttname"><a href="namespacesem__analysis__scope.html#a55b9d658ead7918240f330911400ab8b">sem_analysis_scope::add_var_to_current_scope</a></div><div class="ttdeci">void add_var_to_current_scope(const std::string &amp;name, type_enum::types type, bool is_init)</div><div class="ttdef"><b>Definition</b> scoping.cpp:198</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a55b9d658ead7918240f330911400ab8b"><div class="ttname"><a href="namespacesem__analysis__scope.html#a55b9d658ead7918240f330911400ab8b">sem_analysis_scope::add_var_to_current_scope</a></div><div class="ttdeci">void add_var_to_current_scope(const std::string &amp;name, type_enum::types type, bool is_init)</div><div class="ttdef"><b>Definition</b> scoping.cpp:288</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:130</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aab208518ea2ad4c6733d64a91fa42e15"><div class="ttname"><a href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:186</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_aabe35ff7d69e8dcbf3d0b3e9b5c003af"><div class="ttname"><a href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:116</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_ad8adbd42bd2b774d42a52ccc241a9f91"><div class="ttname"><a href="namespacesem__analysis__scope.html#ad8adbd42bd2b774d42a52ccc241a9f91">sem_analysis_scope::add_function_defn</a></div><div class="ttdeci">void add_function_defn(std::string name, type_enum::types ret_type)</div><div class="ttdef"><b>Definition</b> scoping.cpp:146</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_af24c35dac3bfa5a509b7c2bc1611fbf7"><div class="ttname"><a href="namespacesem__analysis__scope.html#af24c35dac3bfa5a509b7c2bc1611fbf7">sem_analysis_scope::variable_exists_in_current_scope</a></div><div class="ttdeci">bool variable_exists_in_current_scope(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:216</div></div>
-<div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:104</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_ab08cb83520e1470258f73ed9fbf40a48"><div class="ttname"><a href="namespacesem__analysis__scope.html#ab08cb83520e1470258f73ed9fbf40a48">sem_analysis_scope::add_function_defn</a></div><div class="ttdeci">void add_function_defn(std::string name, type_enum::types ret_type, std::vector&lt; type_enum::types &gt; argument_types)</div><div class="ttdef"><b>Definition</b> scoping.cpp:152</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_af24c35dac3bfa5a509b7c2bc1611fbf7"><div class="ttname"><a href="namespacesem__analysis__scope.html#af24c35dac3bfa5a509b7c2bc1611fbf7">sem_analysis_scope::variable_exists_in_current_scope</a></div><div class="ttdeci">bool variable_exists_in_current_scope(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:306</div></div>
+<div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:108</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

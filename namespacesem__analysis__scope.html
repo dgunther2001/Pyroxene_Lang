@@ -103,10 +103,18 @@ Functions</h2></td></tr>
 <tr class="separator:aabe35ff7d69e8dcbf3d0b3e9b5c003af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a743a1ef9b6ec895e1bdc779e84eefae8" id="r_a743a1ef9b6ec895e1bdc779e84eefae8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a743a1ef9b6ec895e1bdc779e84eefae8">exit_scope</a> ()</td></tr>
 <tr class="separator:a743a1ef9b6ec895e1bdc779e84eefae8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8adbd42bd2b774d42a52ccc241a9f91" id="r_ad8adbd42bd2b774d42a52ccc241a9f91"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad8adbd42bd2b774d42a52ccc241a9f91">add_function_defn</a> (std::string name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> ret_type)</td></tr>
-<tr class="separator:ad8adbd42bd2b774d42a52ccc241a9f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a447e85e4f4f8a903511b08e70f47eeab" id="r_a447e85e4f4f8a903511b08e70f47eeab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a447e85e4f4f8a903511b08e70f47eeab">global_contains_func_defn</a> (std::string name)</td></tr>
-<tr class="separator:a447e85e4f4f8a903511b08e70f47eeab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab08cb83520e1470258f73ed9fbf40a48" id="r_ab08cb83520e1470258f73ed9fbf40a48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab08cb83520e1470258f73ed9fbf40a48">add_function_defn</a> (std::string name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> ret_type, std::vector&lt; <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; argument_types)</td></tr>
+<tr class="separator:ab08cb83520e1470258f73ed9fbf40a48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4821c01f78f92c043b74d1291ac86faf" id="r_a4821c01f78f92c043b74d1291ac86faf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4821c01f78f92c043b74d1291ac86faf">get_func_ret_type</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a4821c01f78f92c043b74d1291ac86faf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab208518ea2ad4c6733d64a91fa42e15" id="r_aab208518ea2ad4c6733d64a91fa42e15"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab208518ea2ad4c6733d64a91fa42e15">global_contains_func_defn</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:aab208518ea2ad4c6733d64a91fa42e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a956c2ae24551b0fd555b8e36cd01d819" id="r_a956c2ae24551b0fd555b8e36cd01d819"><td class="memItemLeft" align="right" valign="top">const std::map&lt; int, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a956c2ae24551b0fd555b8e36cd01d819">get_arg_type_map</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a956c2ae24551b0fd555b8e36cd01d819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbda4c46c9f48bcf5c17c0e28c7f0e12" id="r_acbda4c46c9f48bcf5c17c0e28c7f0e12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acbda4c46c9f48bcf5c17c0e28c7f0e12">get_param_type</a> (const std::string &amp;name, int arg_number)</td></tr>
+<tr class="separator:acbda4c46c9f48bcf5c17c0e28c7f0e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a011895e572b72d22ac7c40d633ddfaa7" id="r_a011895e572b72d22ac7c40d633ddfaa7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a011895e572b72d22ac7c40d633ddfaa7">get_num_params</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a011895e572b72d22ac7c40d633ddfaa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba7cd957f36f78cbfdb7d5627d641a7c" id="r_aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba7cd957f36f78cbfdb7d5627d641a7c">get_var_type</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a55b9d658ead7918240f330911400ab8b" id="r_a55b9d658ead7918240f330911400ab8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55b9d658ead7918240f330911400ab8b">add_var_to_current_scope</a> (const std::string &amp;name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type, bool is_init)</td></tr>
@@ -122,14 +130,14 @@ Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ab5149f105cf7e26b69a61a21bfb1b29c" id="r_ab5149f105cf7e26b69a61a21bfb1b29c"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5149f105cf7e26b69a61a21bfb1b29c">defined_functions</a></td></tr>
-<tr class="separator:ab5149f105cf7e26b69a61a21bfb1b29c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ff6a16ce4549696bf9f15df37fd5dd" id="r_a05ff6a16ce4549696bf9f15df37fd5dd"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::pair&lt; <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>, std::map&lt; int, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a></td></tr>
+<tr class="separator:a05ff6a16ce4549696bf9f15df37fd5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2c053af597be8788e4fbb82d2456073" id="r_ad2c053af597be8788e4fbb82d2456073"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::map&lt; std::string, <a class="el" href="structsem__analysis__scope_1_1sem__analysis__info.html">sem_analysis_info</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a></td></tr>
 <tr class="separator:ad2c053af597be8788e4fbb82d2456073"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ad8adbd42bd2b774d42a52ccc241a9f91" name="ad8adbd42bd2b774d42a52ccc241a9f91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8adbd42bd2b774d42a52ccc241a9f91">&#9670;&#160;</a></span>add_function_defn()</h2>
+<a id="ab08cb83520e1470258f73ed9fbf40a48" name="ab08cb83520e1470258f73ed9fbf40a48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab08cb83520e1470258f73ed9fbf40a48">&#9670;&#160;</a></span>add_function_defn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,7 +150,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>ret_type</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>ret_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>argument_types</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -150,8 +163,14 @@ Variables</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the function. </td></tr>
-    <tr><td class="paramname">ret_type</td><td>The return type of the function. <div class="fragment"><div class="line"><a class="code hl_variable" href="#ab5149f105cf7e26b69a61a21bfb1b29c">defined_functions</a>.insert({name, ret_type});</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_ab5149f105cf7e26b69a61a21bfb1b29c"><div class="ttname"><a href="#ab5149f105cf7e26b69a61a21bfb1b29c">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, type_enum::types &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:107</div></div>
+    <tr><td class="paramname">ret_type</td><td>The return type of the function. </td></tr>
+    <tr><td class="paramname">argument_types</td><td>The argument types of a function definitions <div class="fragment"><div class="line">std::map&lt;int, type_enum::types&gt; argument_type_map;</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; argument_types.size(); i++) {</div>
+<div class="line">    argument_type_map.insert({i + 1, argument_types.at(i)});</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name] = std::make_pair(ret_type, argument_type_map);</div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a05ff6a16ce4549696bf9f15df37fd5dd"><div class="ttname"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, std::pair&lt; type_enum::types, std::map&lt; int, type_enum::types &gt; &gt; &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:107</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -193,7 +212,7 @@ Variables</h2></td></tr>
 <div class="line"><a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.back()[name] = {type, is_init};</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_ad2c053af597be8788e4fbb82d2456073"><div class="ttname"><a href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_scope::sem_analysis_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, sem_analysis_info &gt; &gt; sem_analysis_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:108</div></div>
-<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:98</div></div>
+<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:102</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -243,6 +262,129 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a956c2ae24551b0fd555b8e36cd01d819" name="a956c2ae24551b0fd555b8e36cd01d819"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a956c2ae24551b0fd555b8e36cd01d819">&#9670;&#160;</a></span>get_arg_type_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::map&lt; int, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &amp; sem_analysis_scope::get_arg_type_map </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Returns the map corresponding to the arguments and their respective types from the defined functions map.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>Simply the name of the function <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.find(name) == <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.end()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Function type unaquirable as the function is undeclared&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].second;</div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4821c01f78f92c043b74d1291ac86faf" name="a4821c01f78f92c043b74d1291ac86faf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4821c01f78f92c043b74d1291ac86faf">&#9670;&#160;</a></span>get_func_ret_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> sem_analysis_scope::get_func_ret_type </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Grabs the return type of a function.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the function <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.find(name) == <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.end()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Function type unaquirable as the function is undeclared&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].first;</div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a011895e572b72d22ac7c40d633ddfaa7" name="a011895e572b72d22ac7c40d633ddfaa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a011895e572b72d22ac7c40d633ddfaa7">&#9670;&#160;</a></span>get_num_params()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sem_analysis_scope::get_num_params </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Returns the number of arguments in a function definition.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the function. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.find(name) == <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.end()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Function parameters unaquirable as the function is undeclared&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].second.size();</div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbda4c46c9f48bcf5c17c0e28c7f0e12" name="acbda4c46c9f48bcf5c17c0e28c7f0e12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbda4c46c9f48bcf5c17c0e28c7f0e12">&#9670;&#160;</a></span>get_param_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> sem_analysis_scope::get_param_type </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>arg_number</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Returns the type of the arg_numberth parameter in the parameter map.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the function. </td></tr>
+    <tr><td class="paramname">arg_number</td><td>The parameter whose type we are trying to access. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.find(name) == <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.end()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Parameter type unaquirable as the function is undeclared&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (arg_number &gt; <a class="code hl_function" href="#a011895e572b72d22ac7c40d633ddfaa7">get_num_params</a>(name) + 1 || arg_number &lt;= 0) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Argument number inaccessible as function does not specify &quot;</span> + arg_number + <span class="stringliteral">&quot; arguments, or argument number less than or equal to 0&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].second[arg_number];</div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:246</div></div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aba7cd957f36f78cbfdb7d5627d641a7c" name="aba7cd957f36f78cbfdb7d5627d641a7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aba7cd957f36f78cbfdb7d5627d641a7c">&#9670;&#160;</a></span>get_var_type()</h2>
 
@@ -274,8 +416,8 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a447e85e4f4f8a903511b08e70f47eeab" name="a447e85e4f4f8a903511b08e70f47eeab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a447e85e4f4f8a903511b08e70f47eeab">&#9670;&#160;</a></span>global_contains_func_defn()</h2>
+<a id="aab208518ea2ad4c6733d64a91fa42e15" name="aab208518ea2ad4c6733d64a91fa42e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab208518ea2ad4c6733d64a91fa42e15">&#9670;&#160;</a></span>global_contains_func_defn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,7 +425,7 @@ Variables</h2></td></tr>
         <tr>
           <td class="memname">bool sem_analysis_scope::global_contains_func_defn </td>
           <td>(</td>
-          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -291,8 +433,8 @@ Variables</h2></td></tr>
 <dl class="section user"><dt>Simply returns whether a function already exists in the global symbol table.</dt><dd></dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the function. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#ab5149f105cf7e26b69a61a21bfb1b29c">defined_functions</a>.empty()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#ab5149f105cf7e26b69a61a21bfb1b29c">defined_functions</a>.find(name) != <a class="code hl_variable" href="#ab5149f105cf7e26b69a61a21bfb1b29c">defined_functions</a>.end();</div>
+    <tr><td class="paramname">name</td><td>The name of the function. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.empty()) <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.find(name) != <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>.end();</div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -426,18 +568,18 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="ab5149f105cf7e26b69a61a21bfb1b29c" name="ab5149f105cf7e26b69a61a21bfb1b29c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5149f105cf7e26b69a61a21bfb1b29c">&#9670;&#160;</a></span>defined_functions</h2>
+<a id="a05ff6a16ce4549696bf9f15df37fd5dd" name="a05ff6a16ce4549696bf9f15df37fd5dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">&#9670;&#160;</a></span>defined_functions</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::map&lt; std::string, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; sem_analysis_scope::defined_functions</td>
+          <td class="memname">std::map&lt; std::string, std::pair&lt; <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>, std::map&lt; int, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &gt; &gt; sem_analysis_scope::defined_functions</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section user"><dt>A map of defined functions that holds the name as well as the function return type.</dt><dd></dd></dl>
+<dl class="section user"><dt>A map of defined functions that holds the name, the function return type, and a mpa of arguments as well as their return type</dt><dd></dd></dl>
 
 </div>
 </div>
