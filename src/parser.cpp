@@ -134,10 +134,16 @@ namespace parser {
         
         while ((current_token_as_token != lexer::tok_semicolon) && (current_token_as_token != lexer::tok_close_paren || paren_count > 0)) { // while it is an expression.. 
             // need to aggregate tokens until we find an operator
+
             current_expr = parse_primary_expression(current_token_as_token, current_value.value());
+
+            if (current_expr == nullptr) {
+                utility::parser_error("Parsed expression is null", current_line);
+            }
+
             parsed_expressions.push_back(std::move(current_expr));
 
-            if ((current_token_as_token == lexer::tok_semicolon) || (current_token_as_token == lexer::tok_close_paren && paren_count <= 0)) break;
+            if ((current_token_as_token == lexer::tok_semicolon) || (current_token_as_token == lexer::tok_close_paren && paren_count <= 0) || (current_token_as_token == lexer::tok_comma)) break;
 
             if (!lexer::is_operator(current_token_as_token)) {
                 utility::parser_error("Expected infix operator in expression", current_line);
@@ -177,8 +183,11 @@ namespace parser {
 
             // overwrite the value with a parsed binary expression at index of highest prec op
             // delete the expression at index of highest prec op + 1
-            parsed_expressions.at(index_of_highest_prec_op) = parse_binary_expr(std::move(parsed_expressions.at(index_of_highest_prec_op)), std::move(parsed_expressions.at(index_of_highest_prec_op + 1)), current_op);
-            parsed_expressions.erase(parsed_expressions.begin() + index_of_highest_prec_op);
+            auto left_expr = std::move(parsed_expressions.at(index_of_highest_prec_op));
+            auto right_expr = std::move(parsed_expressions.at(index_of_highest_prec_op + 1));
+
+            parsed_expressions.at(index_of_highest_prec_op) = parse_binary_expr(std::move(left_expr), std::move(right_expr), current_op);
+            parsed_expressions.erase(parsed_expressions.begin() + index_of_highest_prec_op + 1);
 
             index_of_highest_prec_op = -1;
             highest_prec = -1;
@@ -215,8 +224,9 @@ namespace parser {
         if (prev_tok == lexer::tok_string_val) return std::move(parse_string_expr(value));
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
+
         if (prev_tok == lexer::tok_identifier) {
-            if (current_token_as_token == lexer::tok_open_paren) {
+            if (lexer::peek_token(current_token_index) == lexer::tok_open_paren) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -239,6 +249,11 @@ namespace parser {
      */
     std::unique_ptr<ast::top_level_expr> parse_binary_expr(std::unique_ptr<ast::top_level_expr> left, std::unique_ptr<ast::top_level_expr> right, lexer::Token_Type operand) {
         auto ast_node = std::make_unique<ast::binary_expr>(operand, std::move(left), std::move(right));
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
         return std::move(ast_node); 
     }
    
@@ -474,6 +489,8 @@ namespace parser {
      */
     std::unique_ptr<ast::top_level_expr> parse_func_call(lexer::lexer_stored_values value) {
         std::string func_name = std::get<std::string>(value);
+
+        get_next_token(); // consume the function call name
 
         if (current_token != lexer::tok_open_paren) {
             utility::parser_error("Expected '(' before function arguments", current_line);

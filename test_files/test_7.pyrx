@@ -8,7 +8,7 @@ def int my_func(float c, char d) {
     return 12;
 }
 
-int my_int = my_func(3.33, 'c');
+int my_int = b * my_func(3.33, 'c') + 9;
 
 
 

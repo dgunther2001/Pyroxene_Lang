@@ -7,7 +7,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 */
 
 int b = 44;
-int c = 33 + 99;
+int c = 33 + b;
 int d;
 //66 + 33 * c;
 44;
