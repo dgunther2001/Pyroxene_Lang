@@ -135,6 +135,7 @@ namespace parser {
 
         get_next_token(); 
 
+
         if (operator_precedence.find(current_token_as_token) != operator_precedence.end()) {
             int paren_count = 0;
 
@@ -177,7 +178,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (current_token_as_token == lexer::tok_open_paren) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
@@ -192,7 +193,7 @@ namespace parser {
         if (prev_tok == lexer::tok_true) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_false) return std::move(parse_bool_expr(value));
         if (prev_tok == lexer::tok_identifier) {
-            if (sem_analysis_scope::global_contains_func_defn(std::get<std::string>(value))) {
+            if (current_token_as_token == lexer::tok_open_paren) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
             return std::move(parse_identifier_expr(value)); 
