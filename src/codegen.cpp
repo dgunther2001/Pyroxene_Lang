@@ -530,6 +530,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::func_call_expr::codegen()
      * @par Generates ir for function calls.
      * 
      * @par Iterate over the aarguments, abd convert them to ir.
