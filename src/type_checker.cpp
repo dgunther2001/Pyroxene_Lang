@@ -256,6 +256,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::func_call_expr::semantic_analysis()
      * @par Validate the the function exists in the global symbol table, and that the number of arguments and argument types match what is expected.
      * @code
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
