@@ -16,5 +16,16 @@ def int my_func(float c, char d) {
 }
 
 int my_int = b * my_func(3.33, 'c') + 9;
-//int my_int2 = my_func(3.33, 'c');
-//int my_int3 = 33 * 44 + b;
+
+
+def float my_func2(string ml) {
+    int d;
+    d = 33;
+    int r = my_func(33.7, 'z');
+
+    return 44.7;
+}
+
+float z = my_func2("daniel");
+
+my_int + 65;

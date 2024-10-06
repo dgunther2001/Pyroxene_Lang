@@ -244,7 +244,7 @@ namespace utility {
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 case lexer::tok_identifier: 
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
                         expr = parser::parse_var_assign();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
@@ -340,7 +340,7 @@ namespace utility {
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 case lexer::tok_identifier: 
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
+                    if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
                         expr = parser::parse_var_assign();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;

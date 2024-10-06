@@ -866,11 +866,11 @@ namespace parser {
                     break;
                 }
                 case lexer::tok_identifier:
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
-                        current_expr = parser::parse_var_assign();
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        expr = parse_var_assign();
                         break;
-                    } else {
-                        current_expr = parser::parse_expression();
+                    } else{
+                        expr = parse_expression();
                         break;
                     }
                 case lexer::tok_return:
@@ -1000,11 +1000,11 @@ namespace parser {
                     current_expr = nullptr;
                     break;
                 case lexer::tok_identifier:
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
-                        current_expr = parser::parse_var_assign();
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
                         break;
-                    } else {
-                        current_expr = parser::parse_expression();
+                    } else{
+                        current_expr = parse_expression();
                         break;
                     }
                 case lexer::tok_if:
@@ -1114,11 +1114,11 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
-                        current_expr = parser::parse_var_assign();
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
                         break;
-                    } else {
-                        current_expr = parser::parse_expression();
+                    } else{
+                        current_expr = parse_expression();
                         break;
                     }
                 case lexer::tok_semicolon:
@@ -1185,11 +1185,11 @@ namespace parser {
                     current_expr = parse_return();
                     break;
                 case lexer::tok_identifier:
-                    if (!sem_analysis_scope::global_contains_func_defn(std::get<std::string>(parser::current_value.value()))) {
-                        current_expr = parser::parse_var_assign();
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
                         break;
-                    } else {
-                        current_expr = parser::parse_expression();
+                    } else{
+                        current_expr = parse_expression();
                         break;
                     }
                 case lexer::tok_semicolon:
