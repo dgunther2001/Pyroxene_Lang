@@ -75,6 +75,7 @@ CMD ["./test_files/test_1.pyrx"]
 
 ### THIS RUNS VALGRIND, YOUR SAVIOR
 
-#ENTRYPOINT ["valgrind", "--leak-check=full", "--track-origins=yes",  "./build/driver"]
+#ENTRYPOINT ["valgrind", "--leak-check=full", "--track-origins=yes", "./build/driver"] 
+# , "--show-reachable=yes", "--num-callers=3",
 
 #CMD ["./test_files/test_4.pyrx"]
