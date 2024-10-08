@@ -94,6 +94,8 @@ namespace sem_analysis_scope {
         extern bool var_initialized(const std::string& name);
         extern bool var_exists(const std::string& name);
         extern void set_var_init(const std::string& name);
+        extern int get_var_scope_level(const std::string& name);
+        extern int get_scope_stack_size();
 }
 
 #endif

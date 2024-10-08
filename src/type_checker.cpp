@@ -63,6 +63,11 @@ namespace ast {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
         set_expr_type(sem_analysis_scope::get_var_type(identifier_name));
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::identifier_expr::semantic_analysis() {
@@ -70,6 +75,13 @@ namespace ast {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
         set_expr_type(sem_analysis_scope::get_var_type(identifier_name));
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
+
+
     }
 
     /**
@@ -81,6 +93,11 @@ namespace ast {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_declaration::semantic_analysis() {
@@ -88,6 +105,11 @@ namespace ast {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
@@ -107,6 +129,11 @@ namespace ast {
         }   
 
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_definition::semantic_analysis() {
@@ -123,6 +150,11 @@ namespace ast {
         }   
 
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
@@ -142,6 +174,11 @@ namespace ast {
         }
 
         sem_analysis_scope::set_var_init(identifier_name);
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_assignment::semantic_analysis() {
@@ -158,6 +195,11 @@ namespace ast {
         }
 
         sem_analysis_scope::set_var_init(identifier_name);
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
