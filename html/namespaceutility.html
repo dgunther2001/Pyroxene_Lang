@@ -112,12 +112,12 @@ Functions</h2></td></tr>
 <tr class="separator:a1d75c24cf0cb3411a4b4709554030eb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a36e1ec31f9e08d3b039414e7fa1b9d2c" id="r_a36e1ec31f9e08d3b039414e7fa1b9d2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36e1ec31f9e08d3b039414e7fa1b9d2c">init_llvm_mods</a> ()</td></tr>
 <tr class="separator:a36e1ec31f9e08d3b039414e7fa1b9d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12d2eaa26c6991ec4653588c398402dd" id="r_a12d2eaa26c6991ec4653588c398402dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12d2eaa26c6991ec4653588c398402dd">end_llvm_mods</a> ()</td></tr>
-<tr class="separator:a12d2eaa26c6991ec4653588c398402dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1da3aeaa9534d9336040ec8f21bdcd7a" id="r_a1da3aeaa9534d9336040ec8f21bdcd7a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1da3aeaa9534d9336040ec8f21bdcd7a">init_parser</a> ()</td></tr>
 <tr class="separator:a1da3aeaa9534d9336040ec8f21bdcd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbb30e890b50ac29a9d9dbf1226bf39b" id="r_afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbb30e890b50ac29a9d9dbf1226bf39b">primary_driver_loop</a> ()</td></tr>
 <tr class="separator:afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12d2eaa26c6991ec4653588c398402dd" id="r_a12d2eaa26c6991ec4653588c398402dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a12d2eaa26c6991ec4653588c398402dd">end_llvm_mods</a> ()</td></tr>
+<tr class="separator:a12d2eaa26c6991ec4653588c398402dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="aa5b0ff65b17cd9e070c16f1a9348c71b" name="aa5b0ff65b17cd9e070c16f1a9348c71b"></a>
@@ -196,6 +196,9 @@ Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void utility::end_llvm_mods </td>
@@ -204,11 +207,13 @@ Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section user"><dt>Called after all IR has been generated. Creates return out of the top level function, and then exits.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateRetVoid();</div>
-<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
-</div><!-- fragment --> 
+
 </div>
 </div>
 <a id="a36e1ec31f9e08d3b039414e7fa1b9d2c" name="a36e1ec31f9e08d3b039414e7fa1b9d2c"></a>
@@ -231,15 +236,7 @@ Functions</h2></td></tr>
 <div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a> = std::make_unique&lt;llvm::IRBuilder&lt;&gt;&gt;(*codegen::LLVM_Context);</div>
 <div class="ttc" id="anamespacecodegen_html_a0c83a7aa3f52eaf082b779f3a81166fe"><div class="ttname"><a href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::Module &gt; LLVM_Module</div><div class="ttdef"><b>Definition</b> codegen.cpp:15</div></div>
 <div class="ttc" id="anamespacecodegen_html_a2ed9460a080f3ccd65a6b8afa232595a"><div class="ttname"><a href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::LLVMContext &gt; LLVM_Context</div><div class="ttdef"><b>Definition</b> codegen.cpp:14</div></div>
-</div><!-- fragment --><dl class="section user"><dt>We place the current module into a top level void function to avoid explicit global variables, and instead are able to place them on the stack. We then set the </dt><dd>entry point to the top level function, allowing the creation of load and store instructions on globals.</dd></dl>
-<div class="fragment"><div class="line">llvm::FunctionType* function_type = llvm::FunctionType::get(llvm::Type::getVoidTy(*<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>), <span class="keyword">false</span>);</div>
-<div class="line"> </div>
-<div class="line">llvm::Function* top_level_function = llvm::Function::Create(</div>
-<div class="line">    funcType, llvm::Function::ExternalLinkage, <span class="stringliteral">&quot;__file__&quot;</span>, *<a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div>
-<div class="line">);</div>
-<div class="line"> </div>
-<div class="line">llvm::BasicBlock* top_level_entry_point = llvm::BasicBlock::Create(*<a class="code hl_variable" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen::LLVM_Context</a>, <span class="stringliteral">&quot;__top_level_entry_point__&quot;</span>, top_level_function);</div>
-<div class="line"><a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;SetInsertPoint(top_level_entry_point);</div>
+<div class="ttc" id="anamespacecodegen_html_a79b39c1264ded17ff5cd25cd3b5f880c"><div class="ttname"><a href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::IRBuilder&lt;&gt; &gt; IR_Builder</div><div class="ttdef"><b>Definition</b> codegen.cpp:16</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -289,10 +286,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Where operator precednce map is defined (Higher values called later)</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a>, 1000});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a>, 900});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a>, 800});</div>
-<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a>, 700});</div>
+<div class="fragment"><div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a>, 100});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a>, 200});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a>, 300});</div>
+<div class="line"><a class="code hl_variable" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser::operator_precedence</a>.insert({<a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a>, 400});</div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a></div><div class="ttdeci">@ tok_plus</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition</b> lexer.h:58</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a></div><div class="ttdeci">@ tok_minus</div><div class="ttdoc">Minus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:57</div></div>
@@ -415,7 +412,7 @@ Functions</h2></td></tr>
 <div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
 <div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a>: </div>
-<div class="line">            <span class="keywordflow">if</span> (!<a class="code hl_function" href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a>(std::get&lt;std::string&gt;(<a class="code hl_variable" href="namespaceparser.html#a9d43579e90ab162c772408c1c7292f14">parser::current_value</a>.value()))) {</div>
+<div class="line">            <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d">lexer::peek_token</a>(<a class="code hl_variable" href="namespaceparser.html#a609514eca432c41bf023f4f23443a68c">parser::current_token_index</a>) == <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a>) {</div>
 <div class="line">                expr = <a class="code hl_function" href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a>();</div>
 <div class="line">                parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
 <div class="line">                <span class="keywordflow">break</span>;</div>
@@ -479,12 +476,14 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdoc">Semicolon.</div><div class="ttdef"><b>Definition</b> lexer.h:47</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a></div><div class="ttdeci">@ tok_int</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> lexer.h:33</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">lexer::tok_return</a></div><div class="ttdeci">@ tok_return</div><div class="ttdoc">Return statement.</div><div class="ttdef"><b>Definition</b> lexer.h:64</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a></div><div class="ttdeci">@ tok_assignment</div><div class="ttdoc">Assignment operator.</div><div class="ttdef"><b>Definition</b> lexer.h:61</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a></div><div class="ttdeci">@ tok_char</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> lexer.h:37</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">lexer::tok_def</a></div><div class="ttdeci">@ tok_def</div><div class="ttdoc">Function definition keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:38</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a></div><div class="ttdeci">@ tok_string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> lexer.h:41</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a></div><div class="ttdeci">@ tok_bool</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> lexer.h:35</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a></div><div class="ttdeci">@ tok_eof</div><div class="ttdoc">End of file.</div><div class="ttdef"><b>Definition</b> lexer.h:29</div></div>
+<div class="ttc" id="anamespacelexer_html_ac61160966632ce4c33ea19a44f4c748d"><div class="ttname"><a href="namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d">lexer::peek_token</a></div><div class="ttdeci">Token_Type peek_token(int token_number)</div><div class="ttdef"><b>Definition</b> lexer.cpp:688</div></div>
 <div class="ttc" id="anamespaceparser_html_a1f767dfcc1be892fc82b040af56dbcfb"><div class="ttname"><a href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_return()</div><div class="ttdef"><b>Definition</b> parser.cpp:1054</div></div>
 <div class="ttc" id="anamespaceparser_html_a5ae126257d31d8a2193a9505a63c3cb3"><div class="ttname"><a href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a></div><div class="ttdeci">int get_next_token()</div><div class="ttdef"><b>Definition</b> parser.cpp:49</div></div>
 <div class="ttc" id="anamespaceparser_html_a691c692362f5d306ae67c563c0c05ccb"><div class="ttname"><a href="namespaceparser.html#a691c692362f5d306ae67c563c0c05ccb">parser::parse_function</a></div><div class="ttdeci">std::unique_ptr&lt; ast::func_defn &gt; parse_function()</div><div class="ttdef"><b>Definition</b> parser.cpp:901</div></div>
@@ -493,8 +492,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:479</div></div>
 <div class="ttc" id="anamespaceparser_html_ad38bbdbfcfa59d1beb97bfddc5f7a719"><div class="ttname"><a href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser::parse_if</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_if()</div><div class="ttdef"><b>Definition</b> parser.cpp:1152</div></div>
 <div class="ttc" id="anamespacescope_html_a1a6b7d5eedb10b30e8db49c791b917d5"><div class="ttname"><a href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:12</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:130</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_aab208518ea2ad4c6733d64a91fa42e15"><div class="ttname"><a href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope::global_contains_func_defn</a></div><div class="ttdeci">bool global_contains_func_defn(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:186</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:140</div></div>
 </div><!-- fragment --> 
 </div>
 </div>

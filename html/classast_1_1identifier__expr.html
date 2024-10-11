@@ -110,6 +110,10 @@ Inheritance diagram for ast::identifier_expr:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad3efc3d7c5aca8970a348de3fb964078" id="r_ad3efc3d7c5aca8970a348de3fb964078"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3efc3d7c5aca8970a348de3fb964078">identifier_expr</a> (const std::string &amp;identifier_name)</td></tr>
 <tr class="separator:ad3efc3d7c5aca8970a348de3fb964078"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d1dc10f6182dd2e97f8396270309d13" id="r_a4d1dc10f6182dd2e97f8396270309d13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d1dc10f6182dd2e97f8396270309d13">set_is_global</a> (bool global)</td></tr>
+<tr class="separator:a4d1dc10f6182dd2e97f8396270309d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9ae10d5595906d2957c3712b848f19a" id="r_af9ae10d5595906d2957c3712b848f19a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9ae10d5595906d2957c3712b848f19a">get_is_global</a> ()</td></tr>
+<tr class="separator:af9ae10d5595906d2957c3712b848f19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b470954692f6bc55be0df692c75a922" id="r_a3b470954692f6bc55be0df692c75a922"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b470954692f6bc55be0df692c75a922">semantic_analysis</a> () override</td></tr>
 <tr class="separator:a3b470954692f6bc55be0df692c75a922"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acee8110ab6003fc68d557d7ad64445e2" id="r_acee8110ab6003fc68d557d7ad64445e2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acee8110ab6003fc68d557d7ad64445e2">get_ast_class</a> () const override</td></tr>
@@ -134,11 +138,15 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    std::string identifier_name;</div>
 <div class="line">    <a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type;</div>
+<div class="line">    <span class="keywordtype">bool</span> is_global;</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    <a class="code hl_function" href="#ad3efc3d7c5aca8970a348de3fb964078">identifier_expr</a>(<span class="keyword">const</span> std::string&amp; identifier_name) :</div>
 <div class="line">        identifier_name(identifier_name)</div>
 <div class="line">        {}</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a4d1dc10f6182dd2e97f8396270309d13">set_is_global</a>(<span class="keywordtype">bool</span> global) {is_global = global;}</div>
+<div class="line">    <span class="keywordtype">bool</span> <a class="code hl_function" href="#af9ae10d5595906d2957c3712b848f19a">get_is_global</a>() {<span class="keywordflow">return</span> is_global;}</div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#a3b470954692f6bc55be0df692c75a922">semantic_analysis</a>() <span class="keyword">override</span>;</div>
 <div class="line">    std::string <a class="code hl_function" href="#acee8110ab6003fc68d557d7ad64445e2">get_ast_class</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;identifier&quot;</span>; }   </div>
 <div class="line">    <span class="keywordtype">void</span> <a class="code hl_function" href="#aac9dfaae7c879ec13932ead7f1580e90">set_expr_type</a>(<a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> new_type)<span class="keyword"> override </span>{ type = new_type; }</div>
@@ -148,15 +156,17 @@ Public Member Functions</h2></td></tr>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a543793aa523839fd14545e637794416d">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line"> </div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html"><div class="ttname"><a href="classast_1_1identifier__expr.html">ast::identifier_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:231</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_a3b470954692f6bc55be0df692c75a922"><div class="ttname"><a href="#a3b470954692f6bc55be0df692c75a922">ast::identifier_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:68</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_a3e845213ac59e530579a65a0fe4d5aab"><div class="ttname"><a href="#a3e845213ac59e530579a65a0fe4d5aab">ast::identifier_expr::get_name</a></div><div class="ttdeci">std::string get_name() const override</div><div class="ttdef"><b>Definition</b> ast.h:244</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_a543793aa523839fd14545e637794416d"><div class="ttname"><a href="#a543793aa523839fd14545e637794416d">ast::identifier_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:165</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_a76243a7cd3b54bf9e0548fcfdbf857bf"><div class="ttname"><a href="#a76243a7cd3b54bf9e0548fcfdbf857bf">ast::identifier_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:243</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html"><div class="ttname"><a href="classast_1_1identifier__expr.html">ast::identifier_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:235</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_a3b470954692f6bc55be0df692c75a922"><div class="ttname"><a href="#a3b470954692f6bc55be0df692c75a922">ast::identifier_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:76</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_a3e845213ac59e530579a65a0fe4d5aab"><div class="ttname"><a href="#a3e845213ac59e530579a65a0fe4d5aab">ast::identifier_expr::get_name</a></div><div class="ttdeci">std::string get_name() const override</div><div class="ttdef"><b>Definition</b> ast.h:252</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_a4d1dc10f6182dd2e97f8396270309d13"><div class="ttname"><a href="#a4d1dc10f6182dd2e97f8396270309d13">ast::identifier_expr::set_is_global</a></div><div class="ttdeci">void set_is_global(bool global)</div><div class="ttdef"><b>Definition</b> ast.h:246</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_a543793aa523839fd14545e637794416d"><div class="ttname"><a href="#a543793aa523839fd14545e637794416d">ast::identifier_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:184</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_a76243a7cd3b54bf9e0548fcfdbf857bf"><div class="ttname"><a href="#a76243a7cd3b54bf9e0548fcfdbf857bf">ast::identifier_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:251</div></div>
 <div class="ttc" id="aclassast_1_1identifier__expr_html_aab94691a05eb79c7d5e1188bfc2c0746"><div class="ttname"><a href="#aab94691a05eb79c7d5e1188bfc2c0746">ast::identifier_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_aac9dfaae7c879ec13932ead7f1580e90"><div class="ttname"><a href="#aac9dfaae7c879ec13932ead7f1580e90">ast::identifier_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type) override</div><div class="ttdef"><b>Definition</b> ast.h:242</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_acee8110ab6003fc68d557d7ad64445e2"><div class="ttname"><a href="#acee8110ab6003fc68d557d7ad64445e2">ast::identifier_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:241</div></div>
-<div class="ttc" id="aclassast_1_1identifier__expr_html_ad3efc3d7c5aca8970a348de3fb964078"><div class="ttname"><a href="#ad3efc3d7c5aca8970a348de3fb964078">ast::identifier_expr::identifier_expr</a></div><div class="ttdeci">identifier_expr(const std::string &amp;identifier_name)</div><div class="ttdef"><b>Definition</b> ast.h:237</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_aac9dfaae7c879ec13932ead7f1580e90"><div class="ttname"><a href="#aac9dfaae7c879ec13932ead7f1580e90">ast::identifier_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type) override</div><div class="ttdef"><b>Definition</b> ast.h:250</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_acee8110ab6003fc68d557d7ad64445e2"><div class="ttname"><a href="#acee8110ab6003fc68d557d7ad64445e2">ast::identifier_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:249</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_ad3efc3d7c5aca8970a348de3fb964078"><div class="ttname"><a href="#ad3efc3d7c5aca8970a348de3fb964078">ast::identifier_expr::identifier_expr</a></div><div class="ttdeci">identifier_expr(const std::string &amp;identifier_name)</div><div class="ttdef"><b>Definition</b> ast.h:242</div></div>
+<div class="ttc" id="aclassast_1_1identifier__expr_html_af9ae10d5595906d2957c3712b848f19a"><div class="ttname"><a href="#af9ae10d5595906d2957c3712b848f19a">ast::identifier_expr::get_is_global</a></div><div class="ttdeci">bool get_is_global()</div><div class="ttdef"><b>Definition</b> ast.h:247</div></div>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:52</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> types.h:8</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -209,7 +219,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Generates IR for primary identifier expressions. Grabs the actualy pointer to the allocation, and creates a load instruction based on the pointer to the stack allocation.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_struct" href="structscope_1_1llvm__var__info.html">scope::llvm_var_info</a> *var_alloca_type = <a class="code hl_function" href="namespacescope.html#a9c951dd8834eed9c5c716c6412e71dfe">scope::variable_lookup</a>(identifier_name);</div>
+<dl class="section user"><dt>Handling of local variables.</dt><dd><div class="fragment"><div class="line"><a class="code hl_struct" href="structscope_1_1llvm__var__info.html">scope::llvm_var_info</a> *var_alloca_type = <a class="code hl_function" href="namespacescope.html#a9c951dd8834eed9c5c716c6412e71dfe">scope::variable_lookup</a>(identifier_name);</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">if</span> (!var_alloca_type)</div>
 <div class="line">{</div>
@@ -231,7 +241,24 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="anamespacescope_html_a9c951dd8834eed9c5c716c6412e71dfe"><div class="ttname"><a href="namespacescope.html#a9c951dd8834eed9c5c716c6412e71dfe">scope::variable_lookup</a></div><div class="ttdeci">llvm_var_info * variable_lookup(const std::string &amp;var_name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:75</div></div>
 <div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:87</div></div>
 <div class="ttc" id="astructscope_1_1llvm__var__info_html"><div class="ttname"><a href="structscope_1_1llvm__var__info.html">scope::llvm_var_info</a></div><div class="ttdef"><b>Definition</b> scoping.h:35</div></div>
-</div><!-- fragment --> 
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Handling of global variables.</dt><dd><div class="fragment"><div class="line">llvm::GlobalVariable* current_global = <a class="code hl_variable" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a>-&gt;getGlobalVariable(identifier_name);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (!current_global-&gt;hasInitializer()) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Global variable (&quot;</span> + identifier_name + <span class="stringliteral">&quot;) not initialized&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">llvm::Type* global_type = current_global-&gt;getValueType();</div>
+<div class="line">llvm::LoadInst* load = <a class="code hl_variable" href="namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c">codegen::IR_Builder</a>-&gt;CreateLoad(global_type, current_global, identifier_name);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (global_type-&gt;isIntegerTy(64)) {</div>
+<div class="line">    load-&gt;setAlignment(llvm::Align(8));</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">return</span> load;</div>
+<div class="ttc" id="anamespacecodegen_html_a0c83a7aa3f52eaf082b779f3a81166fe"><div class="ttname"><a href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen::LLVM_Module</a></div><div class="ttdeci">std::unique_ptr&lt; llvm::Module &gt; LLVM_Module</div><div class="ttdef"><b>Definition</b> codegen.cpp:15</div></div>
+</div><!-- fragment --> </dd></dl>
+
 <p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>
 
 </div>
@@ -307,6 +334,31 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="af9ae10d5595906d2957c3712b848f19a" name="af9ae10d5595906d2957c3712b848f19a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9ae10d5595906d2957c3712b848f19a">&#9670;&#160;</a></span>get_is_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ast::identifier_expr::get_is_global </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a3e845213ac59e530579a65a0fe4d5aab" name="a3e845213ac59e530579a65a0fe4d5aab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e845213ac59e530579a65a0fe4d5aab">&#9670;&#160;</a></span>get_name()</h2>
 
@@ -357,12 +409,22 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Grabs the identifier type from the semantic analysis scope stack, and stores the correct value in the AST </dt><dd></dd></dl>
-<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope::var_initialized</a>(identifier_name) == <span class="keyword">false</span>) {</div>
+<div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#a98b8a938b9d4e92e3ccc2c4bfe261758">sem_analysis_scope::get_scope_stack_size</a>() == 1) {</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Cannot assign identifier value to global variables&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope::var_initialized</a>(identifier_name) == <span class="keyword">false</span>) {</div>
 <div class="line">    <a class="code hl_function" href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a>(<span class="stringliteral">&quot;Value attempting to access not initialized&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">}</div>
 <div class="line"><a class="code hl_function" href="#aac9dfaae7c879ec13932ead7f1580e90">set_expr_type</a>(<a class="code hl_function" href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope::get_var_type</a>(identifier_name));</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a1852a7f003144fbeff909d6e0027f491"><div class="ttname"><a href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope::var_initialized</a></div><div class="ttdeci">bool var_initialized(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:328</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_aba7cd957f36f78cbfdb7d5627d641a7c"><div class="ttname"><a href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope::get_var_type</a></div><div class="ttdeci">type_enum::types get_var_type(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:266</div></div>
+<div class="line"><span class="keywordflow">if</span> (<a class="code hl_function" href="namespacesem__analysis__scope.html#a7ba557c2f1fb62bee9241626d80bfd53">sem_analysis_scope::get_var_scope_level</a>(identifier_name) == 0) {</div>
+<div class="line">    <a class="code hl_function" href="#a4d1dc10f6182dd2e97f8396270309d13">set_is_global</a>(<span class="keyword">true</span>);</div>
+<div class="line">} <span class="keywordflow">else</span> {</div>
+<div class="line">    <a class="code hl_function" href="#a4d1dc10f6182dd2e97f8396270309d13">set_is_global</a>(<span class="keyword">false</span>);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a1852a7f003144fbeff909d6e0027f491"><div class="ttname"><a href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope::var_initialized</a></div><div class="ttdeci">bool var_initialized(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:338</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a7ba557c2f1fb62bee9241626d80bfd53"><div class="ttname"><a href="namespacesem__analysis__scope.html#a7ba557c2f1fb62bee9241626d80bfd53">sem_analysis_scope::get_var_scope_level</a></div><div class="ttdeci">int get_var_scope_level(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:413</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a98b8a938b9d4e92e3ccc2c4bfe261758"><div class="ttname"><a href="namespacesem__analysis__scope.html#a98b8a938b9d4e92e3ccc2c4bfe261758">sem_analysis_scope::get_scope_stack_size</a></div><div class="ttdeci">int get_scope_stack_size()</div><div class="ttdef"><b>Definition</b> scoping.cpp:431</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aba7cd957f36f78cbfdb7d5627d641a7c"><div class="ttname"><a href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope::get_var_type</a></div><div class="ttdeci">type_enum::types get_var_type(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:276</div></div>
 <div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:108</div></div>
 </div><!-- fragment --> 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a374b3a0999fd8ca026da623966fb5e9f">ast::top_level_expr</a>.</p>
@@ -393,6 +455,31 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#a8ee2731fcd814b47a34026bbabb88b15">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
+<a id="a4d1dc10f6182dd2e97f8396270309d13" name="a4d1dc10f6182dd2e97f8396270309d13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d1dc10f6182dd2e97f8396270309d13">&#9670;&#160;</a></span>set_is_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ast::identifier_expr::set_is_global </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>global</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

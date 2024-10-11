@@ -127,6 +127,10 @@ Functions</h2></td></tr>
 <tr class="separator:a2f4d2a09e7b557af2e1b57bc751e119f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a59072aaec4f59db2aefecbb279a44e31" id="r_a59072aaec4f59db2aefecbb279a44e31"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59072aaec4f59db2aefecbb279a44e31">set_var_init</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a59072aaec4f59db2aefecbb279a44e31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ba557c2f1fb62bee9241626d80bfd53" id="r_a7ba557c2f1fb62bee9241626d80bfd53"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7ba557c2f1fb62bee9241626d80bfd53">get_var_scope_level</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:a7ba557c2f1fb62bee9241626d80bfd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98b8a938b9d4e92e3ccc2c4bfe261758" id="r_a98b8a938b9d4e92e3ccc2c4bfe261758"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98b8a938b9d4e92e3ccc2c4bfe261758">get_scope_stack_size</a> ()</td></tr>
+<tr class="separator:a98b8a938b9d4e92e3ccc2c4bfe261758"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -170,7 +174,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name] = std::make_pair(ret_type, argument_type_map);</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a05ff6a16ce4549696bf9f15df37fd5dd"><div class="ttname"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, std::pair&lt; type_enum::types, std::map&lt; int, type_enum::types &gt; &gt; &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:107</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a05ff6a16ce4549696bf9f15df37fd5dd"><div class="ttname"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, std::pair&lt; type_enum::types, std::map&lt; int, type_enum::types &gt; &gt; &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:117</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -211,7 +215,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"><a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.back()[name] = {type, is_init};</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_ad2c053af597be8788e4fbb82d2456073"><div class="ttname"><a href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_scope::sem_analysis_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, sem_analysis_info &gt; &gt; sem_analysis_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:108</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_ad2c053af597be8788e4fbb82d2456073"><div class="ttname"><a href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_scope::sem_analysis_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, sem_analysis_info &gt; &gt; sem_analysis_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:118</div></div>
 <div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:102</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
@@ -377,7 +381,58 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].second[arg_number];</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:246</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:256</div></div>
+</div><!-- fragment --> </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a98b8a938b9d4e92e3ccc2c4bfe261758" name="a98b8a938b9d4e92e3ccc2c4bfe261758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98b8a938b9d4e92e3ccc2c4bfe261758">&#9670;&#160;</a></span>get_scope_stack_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sem_analysis_scope::get_scope_stack_size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Returns the size of the scope stack. If the value is 0, we are currently operating in the global scope.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.size();</div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="a7ba557c2f1fb62bee9241626d80bfd53" name="a7ba557c2f1fb62bee9241626d80bfd53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ba557c2f1fb62bee9241626d80bfd53">&#9670;&#160;</a></span>get_var_scope_level()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sem_analysis_scope::get_var_scope_level </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Returns the scope level of a particular variable to set the global parameter (min scope is 0)</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the variable. <div class="fragment"><div class="line"><span class="keywordtype">int</span> loc = <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.size() - 1;</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.rbegin(); it != <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.rend(); ++it) {</div>
+<div class="line">    <span class="keyword">auto</span> variable = it-&gt;find(name);  </div>
+<div class="line">    <span class="keywordflow">if</span> (variable != it-&gt;end()) {</div>
+<div class="line">        <span class="keywordflow">return</span> loc;</div>
+<div class="line">    } </div>
+<div class="line">    loc--;</div>
+<div class="line">}  </div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
