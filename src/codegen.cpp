@@ -401,14 +401,28 @@ namespace ast {
         }
        @endcode
 
-       @par If our variable is in fact global, then we generate a global variable instead
+       @par If our variable is in fact global, then we generate a global variable instead and enforce an initializer on it.
        @code 
+        llvm::Constant* initializer = nullptr;
+        if (variable_type->isIntegerTy(64)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isDoubleTy()) {
+            initializer = llvm::ConstantFP::get(variable_type, 0.0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else {
+            utility::codegen_error("String types not yet suported", parser::current_line);
+        }
+
+
         llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
             *codegen::LLVM_Module, 
             variable_type,
             false,
             llvm::GlobalValue::ExternalLinkage,
-            0, 
+            initializer, 
             identifier_name);
 
         return global_variable;

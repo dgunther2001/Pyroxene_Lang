@@ -19,7 +19,7 @@ def int my_func_3() {
 //b = 2;
 
 def int my_func(float c, char d) {
-    int e = b;
+    int e = a;
     e = 3;
     int g = 33 * 44 - e;
     return 12;
