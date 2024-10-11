@@ -32,7 +32,7 @@ int l = 9 * 7 + 94;
 
 def float my_func2(string ml) {
     if (z) {
-
+        b = 77 * my_func_3();
     }
     return 44.7;
 }
