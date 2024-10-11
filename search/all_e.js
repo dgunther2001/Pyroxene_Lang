@@ -16,5 +16,6 @@ var searchData=
   ['ir_20codegen_20function_13',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md19',1,'']]],
   ['ir_5fbuilder_14',['IR_Builder',['../namespacecodegen.html#a79b39c1264ded17ff5cd25cd3b5f880c',1,'codegen']]],
   ['is_5finit_15',['is_init',['../structscope_1_1llvm__var__info.html#a1d3e582c2957a37145994fde97631952',1,'scope::llvm_var_info::is_init'],['../structsem__analysis__scope_1_1sem__analysis__info.html#ab3d3700bc1bad853f7217fea68968ad4',1,'sem_analysis_scope::sem_analysis_info::is_init']]],
-  ['is_5foperator_16',['is_operator',['../namespacelexer.html#a55efa985ab2b766427ec200696607cab',1,'lexer']]]
+  ['is_5fllvm_5fscope_5fglobal_16',['is_llvm_scope_global',['../namespacescope.html#ad49b1638f1fd7c73fa1039c39f780d01',1,'scope']]],
+  ['is_5foperator_17',['is_operator',['../namespacelexer.html#a55efa985ab2b766427ec200696607cab',1,'lexer']]]
 ];
