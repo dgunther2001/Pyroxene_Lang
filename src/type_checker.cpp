@@ -189,6 +189,9 @@ namespace ast {
      * @endcode
      */
     void ast::variable_assignment::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot reassign variables in the global scope", parser::current_line);
+        }
         if (sem_analysis_scope::var_exists(identifier_name) == false) {
             utility::sem_analysis_error("Variable being assigned does not exist in the current scope", parser::current_line);
         }
@@ -308,6 +311,9 @@ namespace ast {
      * @fn ast::func_call_expr::semantic_analysis()
      * @par Validate the the function exists in the global symbol table, and that the number of arguments and argument types match what is expected.
      * @code
+     *  if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign globals with function calls", parser::current_line);
+        }
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
         }
