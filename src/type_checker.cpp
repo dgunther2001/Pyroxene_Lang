@@ -213,10 +213,46 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @par Semantically analyze if expressions.
+     * 
+     * @par Validate we are not in the global scope, and create a new scope.
+     * @code
+     *  if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot have conditionals in the global scope", parser::current_line);
+        }
+        sem_analysis_scope::create_scope();
+     * @endcode
+
+     @par Semantically analyze the condition and verify that it is a boolean type.
+     @code
+        condition->semantic_analysis();
+        if (condition->get_expr_type() != type_enum::bool_type) {
+            utility::sem_analysis_error("If statement does not contain a boolean condition", parser::current_line);
+        }
+     @endcode
+
+     @par Semantically analyze each expression in the if block, and then exit the scope.
+     @code
+        for (auto const& ast_node : expressions) {
+            ast_node->semantic_analysis();
+        }
+        sem_analysis_scope::exit_scope(); 
+     @endcode
      */
     void ast::if_expr::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot have conditionals in the global scope", parser::current_line);
+        }
+        sem_analysis_scope::create_scope();
+        condition->semantic_analysis();
+        if (condition->get_expr_type() != type_enum::bool_type) {
+            utility::sem_analysis_error("If statement does not contain a boolean condition", parser::current_line);
+        }
 
+        for (auto const& ast_node : expressions) {
+            ast_node->semantic_analysis();
+        }
+        sem_analysis_scope::exit_scope();
     }
 
     /**

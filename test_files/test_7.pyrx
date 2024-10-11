@@ -8,6 +8,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 int b;
 int a = 33;
+bool z = true;
 
 def int my_func_3() {
     int a  = 4;
@@ -25,21 +26,16 @@ def int my_func(float c, char d) {
     return 12;
 }
 
-//int my_int = 44 * my_func(3.33, 'c') + 9;
 int l = 9 * 7 + 94;
 
 
-/*
 
 def float my_func2(string ml) {
-    int d;
-    d = 33;
-    int r = my_func(33.7, 'z');
+    if (z) {
 
+    }
     return 44.7;
 }
 
-float z = my_func2("daniel");
-*/
-//my_int + 65;
+
 
