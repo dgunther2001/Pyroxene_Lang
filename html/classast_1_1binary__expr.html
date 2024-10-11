@@ -172,7 +172,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">};</div>
 <div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:168</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a0a11b2ed58d0f238f55df31f016b91d7"><div class="ttname"><a href="#a0a11b2ed58d0f238f55df31f016b91d7">ast::binary_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:183</div></div>
-<div class="ttc" id="aclassast_1_1binary__expr_html_a199170e86e3e23705bc4cdf54574fce3"><div class="ttname"><a href="#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:212</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html_a199170e86e3e23705bc4cdf54574fce3"><div class="ttname"><a href="#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:275</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a1dbcaf1ae4ca7452a293dec8c0b045f1"><div class="ttname"><a href="#a1dbcaf1ae4ca7452a293dec8c0b045f1">ast::binary_expr::binary_expr</a></div><div class="ttdeci">binary_expr(lexer::Token_Type op, std::unique_ptr&lt; top_level_expr &gt; left, std::unique_ptr&lt; top_level_expr &gt; right)</div><div class="ttdef"><b>Definition</b> ast.h:175</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a2a80451deabeacde556b80e5dcd7af80"><div class="ttname"><a href="#a2a80451deabeacde556b80e5dcd7af80">ast::binary_expr::set_expr_type</a></div><div class="ttdeci">void set_expr_type(type_enum::types new_type) override</div><div class="ttdef"><b>Definition</b> ast.h:184</div></div>
 <div class="ttc" id="aclassast_1_1binary__expr_html_a2b506e23c2abce36b5f88775df5d4de4"><div class="ttname"><a href="#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:36</div></div>
@@ -245,6 +245,26 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Generates IR for binary expressions. As primary expressions are allocated during recursive calls of the codegen function, we just need to deal with the operator.</dt><dd></dd></dl>
+<dl class="section user"><dt>Handling of global binary exprressions.</dt><dd></dd></dl>
+<dl class="section user"><dt>Recursively grab constant expressions from the tree (not able to be non-constants as semantic analyzer throws an error).</dt><dd></dd></dl>
+<div class="fragment"><div class="line">llvm::Constant* left_const = llvm::dyn_cast&lt;llvm::Constant&gt;(left-&gt;codegen());</div>
+<div class="line">llvm::Constant* right_const = llvm::dyn_cast&lt;llvm::Constant&gt;(right-&gt;codegen());</div>
+</div><!-- fragment --><dl class="section user"><dt>Do the operation specified to generate a new constant expression.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">switch</span> (op) {</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a>:</div>
+<div class="line">        <span class="keywordflow">return</span> llvm::ConstantExpr::getAdd(left_const, right_const);</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer::tok_minus</a>:</div>
+<div class="line">        <span class="keywordflow">return</span> llvm::ConstantExpr::getSub(left_const, right_const);</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a>:</div>
+<div class="line">        <span class="keywordflow">return</span> llvm::ConstantExpr::getMul(left_const, right_const);</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a>:</div>
+<div class="line">        <span class="keywordflow">return</span> llvm::ConstantExpr::getSDiv(left_const, right_const);</div>
+<div class="line">    <span class="keywordflow">default</span>:</div>
+<div class="line">    <a class="code hl_function" href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a>(<span class="stringliteral">&quot;Unsupported operator in global var init.&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
+<div class="ttc" id="anamespaceutility_html_aa5b0ff65b17cd9e070c16f1a9348c71b"><div class="ttname"><a href="namespaceutility.html#aa5b0ff65b17cd9e070c16f1a9348c71b">utility::codegen_error</a></div><div class="ttdeci">void codegen_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:87</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Handling of local binary expressions.</dt><dd></dd></dl>
 <dl class="section user"><dt>Recursively generate IR for the left and right subtree.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">llvm::Value* left_value = left-&gt;codegen();</div>
 <div class="line">llvm::Value* right_value = right-&gt;codegen();</div>
@@ -401,7 +421,6 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="#a2a80451deabeacde556b80e5dcd7af80">set_expr_type</a>(left-&gt;get_expr_type());</div>
-<div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:108</div></div>
 </div><!-- fragment --> </dd></dl>
 

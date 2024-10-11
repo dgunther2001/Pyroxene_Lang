@@ -6,5 +6,6 @@ var searchData=
   ['init_5fparser_3',['init_parser',['../namespaceutility.html#a1da3aeaa9534d9336040ec8f21bdcd7a',1,'utility']]],
   ['initialize_5foperator_5fprecendence_4',['initialize_operator_precendence',['../namespaceutility.html#a1d75c24cf0cb3411a4b4709554030eb3',1,'utility']]],
   ['integer_5fexpression_5',['integer_expression',['../classast_1_1integer__expression.html#a14c83dab571b5b08d524594c46ab1de4',1,'ast::integer_expression']]],
-  ['is_5foperator_6',['is_operator',['../namespacelexer.html#a55efa985ab2b766427ec200696607cab',1,'lexer']]]
+  ['is_5fllvm_5fscope_5fglobal_6',['is_llvm_scope_global',['../namespacescope.html#ad49b1638f1fd7c73fa1039c39f780d01',1,'scope']]],
+  ['is_5foperator_7',['is_operator',['../namespacelexer.html#a55efa985ab2b766427ec200696607cab',1,'lexer']]]
 ];

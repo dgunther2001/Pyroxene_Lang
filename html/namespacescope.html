@@ -119,6 +119,8 @@ Functions</h2></td></tr>
 <tr class="separator:a9c951dd8834eed9c5c716c6412e71dfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a09b81a86985cd2658a1edf02e95b2f0b" id="r_a09b81a86985cd2658a1edf02e95b2f0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09b81a86985cd2658a1edf02e95b2f0b">variable_exists_in_current_scope</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:a09b81a86985cd2658a1edf02e95b2f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad49b1638f1fd7c73fa1039c39f780d01" id="r_ad49b1638f1fd7c73fa1039c39f780d01"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad49b1638f1fd7c73fa1039c39f780d01">is_llvm_scope_global</a> ()</td></tr>
+<tr class="separator:ad49b1638f1fd7c73fa1039c39f780d01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -269,6 +271,25 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:102</div></div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="ad49b1638f1fd7c73fa1039c39f780d01" name="ad49b1638f1fd7c73fa1039c39f780d01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad49b1638f1fd7c73fa1039c39f780d01">&#9670;&#160;</a></span>is_llvm_scope_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool scope::is_llvm_scope_global </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Informs the user if the we are in global scope.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a>.size() == 0;</div>
 </div><!-- fragment --> </dd></dl>
 
 </div>

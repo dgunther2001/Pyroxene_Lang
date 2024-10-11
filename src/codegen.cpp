@@ -699,8 +699,75 @@ namespace ast {
         return function_decl;
     }
 
+    /**
+     * @fn ast::if_expr::codegen()
+     * @par Code generation for if expressions (currently does not contain else blocks)
+     * 
+     * @par Create a scope, evaluate the condition, and set the parent function to the current function.
+     * 
+     * @code
+        scope::create_scope();
+        llvm::Value* cond_codegen = condition->codegen();
+        llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent(); 
+     * @endcode
+
+     @par Create blocks for the then block and the merge point back into the function.
+
+     @code
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
+        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
+     @endcode
+
+     @par Create a conditional branch instruction based on the boolean condition, and set the IR insertion point to the then block (inside of the if statement).
+
+     @code
+        codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
+        codegen::IR_Builder->SetInsertPoint(then_blk);
+     @endcode
+
+     @par Iterate over each expression in the AST within the if block, and generate IR for it.
+
+     @code
+        llvm::Value* current_expr = nullptr;
+        for (auto const& expression : expressions) {
+            current_expr = expression->codegen();
+        }
+     @endcode
+
+     @par Create an unconditional branch back to the merge block and set the IR insertion point to the merge point.
+     @code
+        codegen::IR_Builder->CreateBr(merge_to_func_blk);
+        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
+     @endcode
+
+     @par Exit the current scope, and return a placeholder null value.
+     @code
+        scope::exit_scope();
+        return llvm::Constant::getNullValue(llvm::Type::getInt32Ty(*codegen::LLVM_Context));
+     @endcode
+     */
     llvm::Value* ast::if_expr::codegen() {
-        return nullptr;
+        scope::create_scope();
+        llvm::Value* cond_codegen = condition->codegen();
+        llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
+
+        //llvm::BasicBlock* else_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "else");
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
+        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
+
+        codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk); // fix later and allow branching to else blocks...
+        codegen::IR_Builder->SetInsertPoint(then_blk);
+
+        llvm::Value* current_expr = nullptr;
+        for (auto const& expression : expressions) {
+            current_expr = expression->codegen();
+        }
+
+        codegen::IR_Builder->CreateBr(merge_to_func_blk);
+        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
+
+        scope::exit_scope();
+        return llvm::Constant::getNullValue(llvm::Type::getInt32Ty(*codegen::LLVM_Context)); // really just a placeholder
     }
 
     llvm::Value* ast::else_expr::codegen() {
