@@ -341,6 +341,9 @@ namespace ast {
      * @endcode
      */
     void ast::func_call_expr::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign globals with function calls", parser::current_line);
+        }
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
         }
