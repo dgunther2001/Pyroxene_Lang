@@ -477,6 +477,8 @@ namespace ast {
      * @fn ast::variable_definition::codegen()
      * @par Generates IR for variable definitions, where we declare a variable, and assign it a value.
      * 
+     * @par If the variable is local... 
+     * 
      * @par First, we generate IR for the expression assigned, and then set the insertion point to the top of the current block to insert allocation instruction.
      * 
      * @code
@@ -500,6 +502,21 @@ namespace ast {
         codegen::symbol_table.insert({identifier_name, variable_allocation});
         return variable_allocation;
      * @endcode
+
+       @par If the variable is in the global scope, we create an llvm global variable.
+
+       @code
+        llvm::Type* variable_type = codegen::get_llvm_type(type);
+        llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
+            *codegen::LLVM_Module, 
+            variable_type,
+            false,
+            llvm::GlobalValue::ExternalLinkage,
+            llvm::dyn_cast<llvm::Constant>(expression_value), 
+            identifier_name);
+
+        return global_variable;
+       @endcode
      */
     llvm::Value* ast::variable_definition::codegen() {
         llvm::Value* expression_value = assigned_value->codegen();
