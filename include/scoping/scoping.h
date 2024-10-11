@@ -50,6 +50,7 @@ namespace scope {
     extern void add_var_to_current_scope(const std::string &name, llvm::Argument* allocation, llvm::Type* type);
     extern llvm_var_info* variable_lookup(const std::string &var_name);
     extern bool variable_exists_in_current_scope(const std::string &name);
+    extern bool is_llvm_scope_global();
 
 }
 

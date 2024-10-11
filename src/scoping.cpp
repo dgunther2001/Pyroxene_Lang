@@ -80,7 +80,7 @@ namespace scope {
                 return &variable->second;  
             }
         }
-        utility::scoping_error("Variable not found in current scope", parser::current_line);
+        utility::scoping_error("(Lookup) Variable not found in current scope", parser::current_line);
     }
 
     /**
@@ -100,6 +100,16 @@ namespace scope {
             return current_scope.find(name) != current_scope.end();
         }
         return false;   
+    }
+
+    /**
+     * @par Informs the user if the we are in global scope.
+     * @code
+     * return scoping_stack.size() == 0;
+     * @endcode
+     */
+    bool is_llvm_scope_global() {
+        return scoping_stack.size() == 0;
     }
 }
 
@@ -270,7 +280,7 @@ namespace sem_analysis_scope {
                 return variable->second.type;  
             }
         }
-        utility::scoping_error("Variable not found in current scope", parser::current_line);
+        utility::scoping_error("(Type) Variable not found in current scope", parser::current_line);
     }
 
     /**

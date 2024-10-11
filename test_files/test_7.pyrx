@@ -7,16 +7,28 @@ If LICENSE.md is not included, this version of the source code is provided in br
 */
 
 int b;
-b = 2;
+int a = 33;
+
+def int my_func_3() {
+    int a  = 4;
+    a = 3;
+    b = 4;
+    a = b;
+    return 7;
+}
+//b = 2;
 
 def int my_func(float c, char d) {
-    //int e = b;
-    //e = 3;
+    int e = b;
+    e = 3;
+    int g = 33 * 44 - e;
     return 12;
 }
 
-int my_int = b * my_func(3.33, 'c') + 9;
+//int my_int = 44 * my_func(3.33, 'c') + 9;
+int l = 9 * 7 + 94;
 
+/*
 
 def float my_func2(string ml) {
     int d;
@@ -27,5 +39,6 @@ def float my_func2(string ml) {
 }
 
 float z = my_func2("daniel");
+*/
+//my_int + 65;
 
-my_int + 65;
