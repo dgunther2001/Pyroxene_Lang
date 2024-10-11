@@ -221,6 +221,33 @@ namespace ast {
      * @fn ast::binary_expr::codegen()
      * @par Generates IR for binary expressions. As primary expressions are allocated during recursive calls of the codegen function, we just need to deal with the operator.
      * 
+     * @par Handling of global binary exprressions.
+     * 
+     * @par Recursively grab constant expressions from the tree (not able to be non-constants as semantic analyzer throws an error).
+     * 
+     * @code
+     *  llvm::Constant* left_const = llvm::dyn_cast<llvm::Constant>(left->codegen());
+        llvm::Constant* right_const = llvm::dyn_cast<llvm::Constant>(right->codegen());
+     * @endcode
+
+       @par Do the operation specified to generate a new constant expression.
+       @code
+        switch (op) {
+            case lexer::tok_plus:
+                return llvm::ConstantExpr::getAdd(left_const, right_const);
+            case lexer::tok_minus:
+                return llvm::ConstantExpr::getSub(left_const, right_const);
+            case lexer::tok_mult:
+                return llvm::ConstantExpr::getMul(left_const, right_const);
+            case lexer::tok_div:
+                return llvm::ConstantExpr::getSDiv(left_const, right_const);
+            default:
+            utility::codegen_error("Unsupported operator in global var init.", parser::current_line);
+        }
+       @endcode
+     * 
+     * @par Handling of local binary expressions.
+     * 
      * @par Recursively generate IR for the left and right subtree.
      * 
      * @code
