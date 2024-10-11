@@ -126,17 +126,17 @@ namespace utility {
      * @par Where operator precednce map is defined (Higher values called later)
      * 
      * @code
-        parser::operator_precedence.insert({lexer::tok_plus, 1000});
-        parser::operator_precedence.insert({lexer::tok_minus, 900});
-        parser::operator_precedence.insert({lexer::tok_mult, 800});
-        parser::operator_precedence.insert({lexer::tok_div, 700});
+        parser::operator_precedence.insert({lexer::tok_plus, 100});
+        parser::operator_precedence.insert({lexer::tok_minus, 200});
+        parser::operator_precedence.insert({lexer::tok_mult, 300});
+        parser::operator_precedence.insert({lexer::tok_div, 400});
      * @endcode
      */
     void initialize_operator_precendence() {
-        parser::operator_precedence.insert({lexer::tok_plus, 1000});
-        parser::operator_precedence.insert({lexer::tok_minus, 900});
-        parser::operator_precedence.insert({lexer::tok_mult, 800});
-        parser::operator_precedence.insert({lexer::tok_div, 700});
+        parser::operator_precedence.insert({lexer::tok_plus, 100});
+        parser::operator_precedence.insert({lexer::tok_minus, 200});
+        parser::operator_precedence.insert({lexer::tok_mult, 300});
+        parser::operator_precedence.insert({lexer::tok_div, 400});
     }
 
     /**
@@ -147,49 +147,14 @@ namespace utility {
         codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
         codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
      * @endcode
-
-     * @par We place the current module into a top level void function to avoid explicit global variables, and instead are able to place them on the stack. We then set the 
-        entry point to the top level function, allowing the creation of load and store instructions on globals.
-     *
-       @code
-        llvm::FunctionType* function_type = llvm::FunctionType::get(llvm::Type::getVoidTy(*codegen::LLVM_Context), false);
-
-        llvm::Function* top_level_function = llvm::Function::Create(
-            funcType, llvm::Function::ExternalLinkage, "__file__", *codegen::LLVM_Module
-        );
-
-        llvm::BasicBlock* top_level_entry_point = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__top_level_entry_point__", top_level_function);
-        codegen::IR_Builder->SetInsertPoint(top_level_entry_point);
-       @endcode
      * 
      */
     void init_llvm_mods() {
-        
         codegen::LLVM_Context = std::make_unique<llvm::LLVMContext>();
         codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
         codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
-
-        llvm::FunctionType* function_type = llvm::FunctionType::get(llvm::Type::getVoidTy(*codegen::LLVM_Context), false);
-
-        llvm::Function* top_level_function = llvm::Function::Create(
-            function_type, llvm::Function::ExternalLinkage, "__file__", *codegen::LLVM_Module
-        );
-
-        codegen::top_level_entry = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__top_level_entry_point__", top_level_function);
-        
-        codegen::IR_Builder->SetInsertPoint(codegen::top_level_entry);
     }
 
-    /**
-     * @par Called after all IR has been generated. Creates return out of the top level function, and then exits.
-     * 
-     * @code
-     *  codegen::IR_Builder->CreateRetVoid();
-     * @endcode
-     */
-    void end_llvm_mods() {
-        codegen::IR_Builder->CreateRetVoid();
-    }
 
     /**
      * @par Initializes all values in the parser token getter method.
@@ -385,7 +350,6 @@ namespace utility {
 
         sem_analysis_scope::exit_scope();
 
-        scope::create_scope();
         for (auto const& ast_node : parsing_output) {
             if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
                 if (std::get<0>(ast_node)->get_ast_class() != "int" && 
@@ -400,7 +364,6 @@ namespace utility {
                 std::get<1>(ast_node)->codegen();
             }
         }
-        scope::exit_scope();
 
         
     }

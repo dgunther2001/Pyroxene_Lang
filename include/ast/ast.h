@@ -212,11 +212,15 @@ namespace ast {
         private:
             std::string identifier_name;
             type_enum::types type;
+            bool is_global;
 
         public:
             identifier_expr(const std::string& identifier_name) :
                 identifier_name(identifier_name)
                 {}
+            
+            void set_is_global(bool global) {is_global = global;}
+            bool get_is_global() {return is_global;}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "identifier"; }   
             void set_expr_type(type_enum::types new_type) override { type = new_type; }
@@ -232,11 +236,15 @@ namespace ast {
     private:
         std::string identifier_name;
         type_enum::types type;
+        bool is_global;
 
     public:
         identifier_expr(const std::string& identifier_name) :
             identifier_name(identifier_name)
             {}
+
+        void set_is_global(bool global) {is_global = global;}
+        bool get_is_global() {return is_global;}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "identifier"; }   
         void set_expr_type(type_enum::types new_type) override { type = new_type; }
@@ -430,12 +438,15 @@ namespace ast {
         private:
             type_enum::types type;
             std::string identifier_name;
+            bool is_global;
 
         public:
             variable_declaration(type_enum::types var_type, const std::string& identifier_name) :
                 type(var_type),
                 identifier_name(identifier_name)
                 {}
+            void set_is_global(bool global) {is_global = global;}
+            bool get_is_global() {return is_global;}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_decl"; }
             type_enum::types get_expr_type() const override {return type;} 
@@ -449,12 +460,15 @@ namespace ast {
     private:
         type_enum::types type;
         std::string identifier_name;
+        bool is_global;
 
     public:
         variable_declaration(type_enum::types var_type, const std::string& identifier_name) :
             type(var_type),
             identifier_name(identifier_name)
             {}
+        void set_is_global(bool global) {is_global = global;}
+        bool get_is_global() {return is_global;}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_decl"; }
         type_enum::types get_expr_type() const override {return type;} 
@@ -472,6 +486,7 @@ namespace ast {
             type_enum::types type;
             std::string identifier_name;
             std::unique_ptr<top_level_expr> assigned_value;
+            bool is_global;
 
         public:
             variable_definition(type_enum::types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
@@ -479,7 +494,8 @@ namespace ast {
                 identifier_name(identifier_name),
                 assigned_value(std::move(assigned_value))
                 {}
-        
+            void set_is_global(bool global) {is_global = global;}
+            bool get_is_global() {return is_global;}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_defn"; }
             type_enum::types get_expr_type() const override {return type;} 
@@ -494,6 +510,7 @@ namespace ast {
         type_enum::types type;
         std::string identifier_name;
         std::unique_ptr<top_level_expr> assigned_value;
+        bool is_global;
 
     public:
         variable_definition(type_enum::types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
@@ -502,6 +519,8 @@ namespace ast {
             assigned_value(std::move(assigned_value))
             {}
         
+        void set_is_global(bool global) {is_global = global;}
+        bool get_is_global() {return is_global;}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_defn"; }
         type_enum::types get_expr_type() const override {return type;} 
@@ -518,6 +537,7 @@ namespace ast {
         private:
             std::string identifier_name;
             std::unique_ptr<top_level_expr> assigned_value;
+            bool is_global;
 
         public:
             variable_assignment(type_enum::types var_type, const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
@@ -525,6 +545,8 @@ namespace ast {
                 assigned_value(std::move(assigned_value))
                 {}
 
+            void set_is_global(bool global) {is_global = global;}
+            bool get_is_global() {return is_global;}
             void semantic_analysis() override;
             std::string get_ast_class() const override { return "var_assign"; }
             std::string get_name() const override {return identifier_name;}
@@ -537,6 +559,7 @@ namespace ast {
     private:
         std::string identifier_name;
         std::unique_ptr<top_level_expr> assigned_value;
+        bool is_global;
 
     public:
         variable_assignment(const std::string& identifier_name, std::unique_ptr<top_level_expr> assigned_value) :
@@ -544,6 +567,8 @@ namespace ast {
             assigned_value(std::move(assigned_value))
             {}
 
+        void set_is_global(bool global) {is_global = global;}
+        bool get_is_global() {return is_global;}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "var_assign"; }
         std::string get_name() const override {return identifier_name;}

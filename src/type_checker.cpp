@@ -59,17 +59,36 @@ namespace ast {
      * @par Grabs the identifier type from the semantic analysis scope stack, and stores the correct value in the AST 
      * 
      * @code
+     *  if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign identifier value to global variables", parser::current_line);
+        }
      *  if (sem_analysis_scope::var_initialized(identifier_name) == false) {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
         set_expr_type(sem_analysis_scope::get_var_type(identifier_name));
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::identifier_expr::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign identifier value to global variables", parser::current_line);
+        }
+
         if (sem_analysis_scope::var_initialized(identifier_name) == false) {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
         set_expr_type(sem_analysis_scope::get_var_type(identifier_name));
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
+
+
     }
 
     /**
@@ -81,6 +100,11 @@ namespace ast {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_declaration::semantic_analysis() {
@@ -88,6 +112,11 @@ namespace ast {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
@@ -107,6 +136,11 @@ namespace ast {
         }   
 
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_definition::semantic_analysis() {
@@ -123,6 +157,11 @@ namespace ast {
         }   
 
         sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
@@ -142,9 +181,17 @@ namespace ast {
         }
 
         sem_analysis_scope::set_var_init(identifier_name);
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
      * @endcode
      */
     void ast::variable_assignment::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot reassign variables in the global scope", parser::current_line);
+        }
         if (sem_analysis_scope::var_exists(identifier_name) == false) {
             utility::sem_analysis_error("Variable being assigned does not exist in the current scope", parser::current_line);
         }
@@ -158,6 +205,11 @@ namespace ast {
         }
 
         sem_analysis_scope::set_var_init(identifier_name);
+        if (sem_analysis_scope::get_var_scope_level(identifier_name) == 0) {
+            set_is_global(true);
+        } else {
+            set_is_global(false);
+        }
     }
 
     /**
@@ -259,6 +311,9 @@ namespace ast {
      * @fn ast::func_call_expr::semantic_analysis()
      * @par Validate the the function exists in the global symbol table, and that the number of arguments and argument types match what is expected.
      * @code
+     *  if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign globals with function calls", parser::current_line);
+        }
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
         }
@@ -292,6 +347,9 @@ namespace ast {
      * @endcode
      */
     void ast::func_call_expr::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign globals with function calls", parser::current_line);
+        }
         if (!sem_analysis_scope::global_contains_func_defn(func_name)) {
             utility::sem_analysis_error("Function not found in the global symbol table", parser::current_line);
         }

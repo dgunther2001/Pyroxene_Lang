@@ -141,7 +141,8 @@ namespace ast {
     /**
      * @fn ast::identifier_expr::codegen()
      * @par Generates IR for primary identifier expressions. Grabs the actualy pointer to the allocation, and creates a load instruction based on the pointer to the stack allocation.
-     * 
+     *
+     * @par Handling of local variables.
      * @code
      *  scope::llvm_var_info *var_alloca_type = scope::variable_lookup(identifier_name);
 
@@ -161,29 +162,91 @@ namespace ast {
 
         return load; 
      * @endcode
-     */
-    llvm::Value* ast::identifier_expr::codegen() {
-        scope::llvm_var_info* var_alloca_and_type = scope::variable_lookup(identifier_name);
 
-        if (var_alloca_and_type == nullptr) {
-            utility::codegen_error("Variable '" + identifier_name + "' not found in current or outer scopes.", parser::current_line);
+       @par Handling of global variables.
+       @code
+        llvm::GlobalVariable* current_global = codegen::LLVM_Module->getGlobalVariable(identifier_name);
+
+        if (!current_global->hasInitializer()) {
+            utility::codegen_error("Global variable (" + identifier_name + ") not initialized", parser::current_line);
         }
+        
+        llvm::Type* global_type = current_global->getValueType();
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(global_type, current_global, identifier_name);
 
-        if (var_alloca_and_type->is_init == false) {
-            utility::codegen_error("Variable '" + identifier_name + "' has not been initialized.", parser::current_line);
-        }
-
-        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->type, var_alloca_and_type->allocation, identifier_name);
-        if (var_alloca_and_type->type->isIntegerTy(64)) {
+        if (global_type->isIntegerTy(64)) {
             load->setAlignment(llvm::Align(8));
         }
 
-        return load;  
+        return load;
+       @endcode
+     */
+    llvm::Value* ast::identifier_expr::codegen() {
+        if (!get_is_global()) {
+            scope::llvm_var_info* var_alloca_and_type = scope::variable_lookup(identifier_name);
+
+            if (var_alloca_and_type == nullptr) {
+                utility::codegen_error("Variable '" + identifier_name + "' not found in current or outer scopes.", parser::current_line);
+            }
+
+            if (var_alloca_and_type->is_init == false) {
+                utility::codegen_error("Variable '" + identifier_name + "' has not been initialized.", parser::current_line);
+            }
+
+            llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(var_alloca_and_type->type, var_alloca_and_type->allocation, identifier_name);
+            if (var_alloca_and_type->type->isIntegerTy(64)) {
+                load->setAlignment(llvm::Align(8));
+            }
+
+            return load;  
+        }
+        llvm::GlobalVariable* current_global = codegen::LLVM_Module->getGlobalVariable(identifier_name);
+
+        if (!current_global->hasInitializer()) {
+            utility::codegen_error("Global variable (" + identifier_name + ") not initialized", parser::current_line);
+        }
+        
+        llvm::Type* global_type = current_global->getValueType();
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(global_type, current_global, identifier_name);
+
+        if (global_type->isIntegerTy(64)) {
+            load->setAlignment(llvm::Align(8));
+        }
+
+        return load;
+
     }
 
     /**
      * @fn ast::binary_expr::codegen()
      * @par Generates IR for binary expressions. As primary expressions are allocated during recursive calls of the codegen function, we just need to deal with the operator.
+     * 
+     * @par Handling of global binary exprressions.
+     * 
+     * @par Recursively grab constant expressions from the tree (not able to be non-constants as semantic analyzer throws an error).
+     * 
+     * @code
+     *  llvm::Constant* left_const = llvm::dyn_cast<llvm::Constant>(left->codegen());
+        llvm::Constant* right_const = llvm::dyn_cast<llvm::Constant>(right->codegen());
+     * @endcode
+
+       @par Do the operation specified to generate a new constant expression.
+       @code
+        switch (op) {
+            case lexer::tok_plus:
+                return llvm::ConstantExpr::getAdd(left_const, right_const);
+            case lexer::tok_minus:
+                return llvm::ConstantExpr::getSub(left_const, right_const);
+            case lexer::tok_mult:
+                return llvm::ConstantExpr::getMul(left_const, right_const);
+            case lexer::tok_div:
+                return llvm::ConstantExpr::getSDiv(left_const, right_const);
+            default:
+            utility::codegen_error("Unsupported operator in global var init.", parser::current_line);
+        }
+       @endcode
+     * 
+     * @par Handling of local binary expressions.
      * 
      * @par Recursively generate IR for the left and right subtree.
      * 
@@ -210,6 +273,24 @@ namespace ast {
        @endcode
      */
     llvm::Value* ast::binary_expr::codegen() {
+        if (scope::is_llvm_scope_global()) {
+            llvm::Constant* left_const = llvm::dyn_cast<llvm::Constant>(left->codegen());
+            llvm::Constant* right_const = llvm::dyn_cast<llvm::Constant>(right->codegen());
+
+            switch (op) {
+                case lexer::tok_plus:
+                    return llvm::ConstantExpr::getAdd(left_const, right_const);
+                case lexer::tok_minus:
+                    return llvm::ConstantExpr::getSub(left_const, right_const);
+                case lexer::tok_mult:
+                    return llvm::ConstantExpr::getMul(left_const, right_const);
+                case lexer::tok_div:
+                    return llvm::ConstantExpr::getSDiv(left_const, right_const);
+                default:
+                    utility::codegen_error("Unsupported operator in global var init.", parser::current_line);
+            }
+        }
+
         llvm::Value* left_value = left->codegen();
         llvm::Value* right_value = right->codegen();
 
@@ -261,73 +342,142 @@ namespace ast {
      * @endcode
      */
     llvm::Value* ast::variable_assignment::codegen() {
-        scope::llvm_var_info* var_alloca_and_type = scope::variable_lookup(identifier_name);
+        if (!get_is_global()) {
+            scope::llvm_var_info* var_alloca_and_type = scope::variable_lookup(identifier_name);
 
-        if (var_alloca_and_type->allocation == nullptr) {
-            utility::codegen_error("Variable '" + identifier_name + "' not found in current or outer scopes.", parser::current_line);
+            if (var_alloca_and_type->allocation == nullptr) {
+                utility::codegen_error("Variable '" + identifier_name + "' not found in current or outer scopes.", parser::current_line);
+            }
+
+            var_alloca_and_type->is_init = true;
+
+            llvm::Value* expression_value = assigned_value->codegen();
+
+            llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, var_alloca_and_type->allocation);
+
+
+            if (expression_value->getType()->isIntegerTy(64)) {
+                store->setAlignment(llvm::Align(8));
+            }
+
+            return store;
         }
 
-        var_alloca_and_type->is_init = true;
-
+        llvm::GlobalVariable* current_global = codegen::LLVM_Module->getGlobalVariable(identifier_name);
         llvm::Value* expression_value = assigned_value->codegen();
+        llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, current_global);
 
-        llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, var_alloca_and_type->allocation);
-
-
-        if (var_alloca_and_type->allocation->getType()->isIntegerTy(64)) {
+        if (expression_value->getType()->isIntegerTy(64)) {
             store->setAlignment(llvm::Align(8));
         }
-
         return store;
     }
 
     /**
      * @fn ast::variable_declaration::codegen()
-     * @par Allows us to declare variables into the symbol table and onto the stack without defining them.
+     * @par Allows us to declare variables and differentiate between globals and non-global declarations.
      * 
-     * @par Convert the AST tyope to an LLVM type, and create a temporary IR builder that places the current entry point at the start of the current function block.
+     * @par If we are within a scope, then convert the AST type to an LLVM type, and create a temporary IR builder that places the current entry point at the start of the current function block.
      * 
      * @code
      *  llvm::Type* variable_type = codegen::get_llvm_type(type);
-        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
-        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
+     *  if (!get_is_global()) {
+            llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
+            llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
      * @endcode
 
        @par Create the variable allocation with a nullptr value, and insert it into the current scope, then return the allocation.
 
        @code
-        llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
-        
-        if (scope::variable_exists_in_current_scope(identifier_name)) {
-            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope", current_line);
-        }
-        
-        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type, false);
+            llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
+            
+            if (scope::variable_exists_in_current_scope(identifier_name)) {
+                utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope", current_line);
+            }
+            
+            scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type, false);
 
-        return variable_allocation;    
+            return variable_allocation;    
+        }
        @endcode
+
+       @par If our variable is in fact global, then we generate a global variable instead and enforce an initializer on it.
+       @code 
+        llvm::Constant* initializer = nullptr;
+        if (variable_type->isIntegerTy(64)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isDoubleTy()) {
+            initializer = llvm::ConstantFP::get(variable_type, 0.0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else {
+            utility::codegen_error("String types not yet suported", parser::current_line);
+        }
+
+
+        llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
+            *codegen::LLVM_Module, 
+            variable_type,
+            false,
+            llvm::GlobalValue::ExternalLinkage,
+            initializer, 
+            identifier_name);
+
+        return global_variable;
+       @endcode
+
+
      * 
      */
     llvm::Value* ast::variable_declaration::codegen() {
         llvm::Type* variable_type = codegen::get_llvm_type(type);
+        if (!get_is_global()) {
+            llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
 
-        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
+            llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
+            llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
 
-        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
-        llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(variable_type, nullptr, identifier_name);
+            if (scope::variable_exists_in_current_scope(identifier_name)) {
+                utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+            }
 
-        if (scope::variable_exists_in_current_scope(identifier_name)) {
-            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+            scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type, false);
+
+            return variable_allocation;    
         }
 
-        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_type, false);
+        llvm::Constant* initializer = nullptr;
+        if (variable_type->isIntegerTy(64)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isDoubleTy()) {
+            initializer = llvm::ConstantFP::get(variable_type, 0.0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else if (variable_type->isIntegerTy(8)) {
+            initializer = llvm::ConstantInt::get(variable_type, 0);
+        } else {
+            utility::codegen_error("String types not yet suported", parser::current_line);
+        }
 
-        return variable_allocation;    
+
+        llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
+            *codegen::LLVM_Module, 
+            variable_type,
+            false,
+            llvm::GlobalValue::ExternalLinkage,
+            initializer, 
+            identifier_name);
+
+        return global_variable;
     }
 
     /**
      * @fn ast::variable_definition::codegen()
      * @par Generates IR for variable definitions, where we declare a variable, and assign it a value.
+     * 
+     * @par If the variable is local... 
      * 
      * @par First, we generate IR for the expression assigned, and then set the insertion point to the top of the current block to insert allocation instruction.
      * 
@@ -352,28 +502,56 @@ namespace ast {
         codegen::symbol_table.insert({identifier_name, variable_allocation});
         return variable_allocation;
      * @endcode
+
+       @par If the variable is in the global scope, we create an llvm global variable.
+
+       @code
+        llvm::Type* variable_type = codegen::get_llvm_type(type);
+        llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
+            *codegen::LLVM_Module, 
+            variable_type,
+            false,
+            llvm::GlobalValue::ExternalLinkage,
+            llvm::dyn_cast<llvm::Constant>(expression_value), 
+            identifier_name);
+
+        return global_variable;
+       @endcode
      */
     llvm::Value* ast::variable_definition::codegen() {
         llvm::Value* expression_value = assigned_value->codegen();
 
-        llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
+        if (!get_is_global()) {
+            llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
 
-        llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
-        llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(expression_value->getType(), nullptr, identifier_name);
+            llvm::IRBuilder<> tempBuilder(&currentFunction->getEntryBlock(), currentFunction->getEntryBlock().begin());
+            llvm::AllocaInst* variable_allocation = tempBuilder.CreateAlloca(expression_value->getType(), nullptr, identifier_name);
 
-        if (scope::variable_exists_in_current_scope(identifier_name)) {
-            utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
-        }
+            if (scope::variable_exists_in_current_scope(identifier_name)) {
+                utility::codegen_error("Variable '" + identifier_name + "' already declared in this scope. Redeclaration", parser::current_line);
+            }
 
-        scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_allocation->getAllocatedType(), true);
+            scope::add_var_to_current_scope(identifier_name, variable_allocation, variable_allocation->getAllocatedType(), true);
 
-        llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, variable_allocation);
+            llvm::StoreInst* store = codegen::IR_Builder->CreateStore(expression_value, variable_allocation);
 
-        if (variable_allocation->getAllocatedType()->isIntegerTy(64)) {
-            store->setAlignment(llvm::Align(8));
-        }
+            if (variable_allocation->getAllocatedType()->isIntegerTy(64)) {
+                store->setAlignment(llvm::Align(8));
+            }
 
-        return variable_allocation;
+            return variable_allocation;
+        } 
+
+        llvm::Type* variable_type = codegen::get_llvm_type(type);
+        llvm::GlobalVariable* global_variable = new llvm::GlobalVariable(
+            *codegen::LLVM_Module, 
+            variable_type,
+            false,
+            llvm::GlobalValue::ExternalLinkage,
+            llvm::dyn_cast<llvm::Constant>(expression_value), 
+            identifier_name);
+
+        return global_variable;
     }
 
     /**

@@ -80,7 +80,7 @@ namespace scope {
                 return &variable->second;  
             }
         }
-        utility::scoping_error("Variable not found in current scope", parser::current_line);
+        utility::scoping_error("(Lookup) Variable not found in current scope", parser::current_line);
     }
 
     /**
@@ -100,6 +100,16 @@ namespace scope {
             return current_scope.find(name) != current_scope.end();
         }
         return false;   
+    }
+
+    /**
+     * @par Informs the user if the we are in global scope.
+     * @code
+     * return scoping_stack.size() == 0;
+     * @endcode
+     */
+    bool is_llvm_scope_global() {
+        return scoping_stack.size() == 0;
     }
 }
 
@@ -270,7 +280,7 @@ namespace sem_analysis_scope {
                 return variable->second.type;  
             }
         }
-        utility::scoping_error("Variable not found in current scope", parser::current_line);
+        utility::scoping_error("(Type) Variable not found in current scope", parser::current_line);
     }
 
     /**
@@ -384,5 +394,41 @@ namespace sem_analysis_scope {
         }
 
         utility::scoping_error("Variabale not found", parser::current_line);
+    }
+
+    /**
+     * @par Returns the scope level of a particular variable to set the global parameter (min scope is 0)
+     * @param name The name of the variable.
+     * @code
+     *  int loc = sem_analysis_stack.size() - 1;
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return loc;
+            } 
+            loc--;
+        }  
+     * @endcode
+     */
+    int get_var_scope_level(const std::string& name) {
+        int loc = sem_analysis_stack.size() - 1;
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return loc;
+            } 
+            loc--;
+        }  
+    }
+
+    /**
+     * @par Returns the size of the scope stack. If the value is 0, we are currently operating in the global scope.
+     * @code
+     * return sem_analysis_stack.size();
+     * @endcode
+     * 
+     */
+    int get_scope_stack_size() {
+        return sem_analysis_stack.size();
     }
 }
