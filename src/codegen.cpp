@@ -141,7 +141,8 @@ namespace ast {
     /**
      * @fn ast::identifier_expr::codegen()
      * @par Generates IR for primary identifier expressions. Grabs the actualy pointer to the allocation, and creates a load instruction based on the pointer to the stack allocation.
-     * 
+     *
+     * @par Handling of local variables.
      * @code
      *  scope::llvm_var_info *var_alloca_type = scope::variable_lookup(identifier_name);
 
@@ -161,6 +162,24 @@ namespace ast {
 
         return load; 
      * @endcode
+
+       @par Handling of global variables.
+       @code
+        llvm::GlobalVariable* current_global = codegen::LLVM_Module->getGlobalVariable(identifier_name);
+
+        if (!current_global->hasInitializer()) {
+            utility::codegen_error("Global variable (" + identifier_name + ") not initialized", parser::current_line);
+        }
+        
+        llvm::Type* global_type = current_global->getValueType();
+        llvm::LoadInst* load = codegen::IR_Builder->CreateLoad(global_type, current_global, identifier_name);
+
+        if (global_type->isIntegerTy(64)) {
+            load->setAlignment(llvm::Align(8));
+        }
+
+        return load;
+       @endcode
      */
     llvm::Value* ast::identifier_expr::codegen() {
         if (!get_is_global()) {
