@@ -26,7 +26,7 @@ def int my_func(float c, char d) {
 }
 
 //int my_int = 44 * my_func(3.33, 'c') + 9;
-int l = 9 * 7 + 94;
+int l = 9 * 7 + 94 + a;
 
 /*
 

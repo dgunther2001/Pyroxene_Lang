@@ -59,6 +59,9 @@ namespace ast {
      * @par Grabs the identifier type from the semantic analysis scope stack, and stores the correct value in the AST 
      * 
      * @code
+     *  if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign identifier value to global variables", parser::current_line);
+        }
      *  if (sem_analysis_scope::var_initialized(identifier_name) == false) {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
@@ -71,6 +74,10 @@ namespace ast {
      * @endcode
      */
     void ast::identifier_expr::semantic_analysis() {
+        if (sem_analysis_scope::get_scope_stack_size() == 1) {
+            utility::sem_analysis_error("Cannot assign identifier value to global variables", parser::current_line);
+        }
+
         if (sem_analysis_scope::var_initialized(identifier_name) == false) {
             utility::sem_analysis_error("Value attempting to access not initialized", parser::current_line);
         }
