@@ -73,7 +73,6 @@ namespace scope {
      * @endcode
      */
     llvm_var_info* variable_lookup(const std::string &var_name) {
-
         for (auto it = scoping_stack.rbegin(); it != scoping_stack.rend(); ++it) {
             auto variable = it->find(var_name);  
             if (variable != it->end()) {

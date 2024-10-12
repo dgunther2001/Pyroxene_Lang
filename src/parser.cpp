@@ -1154,7 +1154,6 @@ namespace parser {
        @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_if() {
-        
         get_next_token(); // consume the if
 
         if (current_token != lexer::tok_open_paren) {
@@ -1173,7 +1172,7 @@ namespace parser {
         get_next_token(); // consume the )
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Exprected '{'", current_line);
+            utility::parser_error("Expected '{'", current_line);
         }
 
         get_next_token(); // consume the {
@@ -1238,7 +1237,7 @@ namespace parser {
         if (current_token != lexer::tok_else) {
             utility::parser_error("Exprected else keyword in else expression", current_line);
         }
-        get_next_token();
+        get_next_token(); // consume the else
 
         if (current_token == lexer::tok_if) {
             std::vector<std::unique_ptr<ast::top_level_expr>> if_expression;
@@ -1249,6 +1248,8 @@ namespace parser {
         if (current_token != lexer::tok_open_brack) {
             utility::parser_error("Expected opening bracket for else expression", current_line);
         }
+
+        get_next_token(); // consume the '{'
 
         std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
         std::unique_ptr<ast::top_level_expr> current_expr;
@@ -1271,6 +1272,9 @@ namespace parser {
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;
+                    break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
                     break;
                 default:
                     current_expr = parse_expression();

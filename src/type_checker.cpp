@@ -87,8 +87,6 @@ namespace ast {
         } else {
             set_is_global(false);
         }
-
-
     }
 
     /**
@@ -249,6 +247,23 @@ namespace ast {
             utility::sem_analysis_error("If statement does not contain a boolean condition", parser::current_line);
         }
 
+        for (auto const& ast_node : expressions) {
+            ast_node->semantic_analysis();
+        }
+
+        sem_analysis_scope::exit_scope();
+
+        if (else_stmt != nullptr) {
+            else_stmt->semantic_analysis();
+        }
+
+    }
+
+    /**
+     * TODO: docs
+     */
+    void ast::else_expr::semantic_analysis() {
+        sem_analysis_scope::create_scope();
         for (auto const& ast_node : expressions) {
             ast_node->semantic_analysis();
         }
