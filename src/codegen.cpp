@@ -743,7 +743,7 @@ namespace ast {
      @par Exit the current scope, and return a placeholder null value.
      @code
         scope::exit_scope();
-        return llvm::Constant::getNullValue(llvm::Type::getInt32Ty(*codegen::LLVM_Context));
+        return nullptr;
      @endcode
      */
     llvm::Value* ast::if_expr::codegen() {
@@ -752,14 +752,19 @@ namespace ast {
 
         llvm::BasicBlock* else_blk = nullptr;
         llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
-        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
 
         if (else_stmt != nullptr) {
             else_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else_do__", parent_function);
+        }
+
+        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
+
+        if (else_blk != nullptr) {
             codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, else_blk);
         } else {
             codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
-        } 
+        }
+
         codegen::IR_Builder->SetInsertPoint(then_blk);
         scope::create_scope();
 
@@ -779,9 +784,12 @@ namespace ast {
 
         codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
 
-        return llvm::Constant::getNullValue(llvm::Type::getInt32Ty(*codegen::LLVM_Context)); // really just a placeholder
+        return nullptr;
     }
 
+    /**
+     * TODO: docs
+     */
     llvm::Value* ast::else_expr::codegen() {
         scope::create_scope();
 
@@ -792,7 +800,7 @@ namespace ast {
 
         scope::exit_scope();
 
-        return llvm::Constant::getNullValue(llvm::Type::getInt32Ty(*codegen::LLVM_Context)); // really just a placeholder
+        return nullptr;
     }
 
     /**
