@@ -1134,6 +1134,10 @@ namespace parser {
             }
         }
 
+        if (current_token != lexer::tok_close_brack) {
+            utility::parser_error("Expected closing bracket for if expression", current_line);
+        }
+
         get_next_token(); 
        @endcode
 
@@ -1150,7 +1154,6 @@ namespace parser {
        @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_if() {
-        
         get_next_token(); // consume the if
 
         if (current_token != lexer::tok_open_paren) {
@@ -1169,7 +1172,7 @@ namespace parser {
         get_next_token(); // consume the )
 
         if (current_token != lexer::tok_open_brack) {
-            utility::parser_error("Exprected '{'", current_line);
+            utility::parser_error("Expected '{'", current_line);
         }
 
         get_next_token(); // consume the {
@@ -1206,6 +1209,10 @@ namespace parser {
 
         }
 
+        if (current_token != lexer::tok_close_brack) {
+            utility::parser_error("Expected closing bracket for if expression", current_line);
+        }
+
         get_next_token(); // consume the '}'
 
         std::unique_ptr<ast::top_level_expr> else_stmt = nullptr;
@@ -1223,8 +1230,63 @@ namespace parser {
         return std::move(if_node);
     }
     
+    /**
+     * TODO: docs
+     */
     std::unique_ptr<ast::top_level_expr> parse_else() {
-        return nullptr;
+        if (current_token != lexer::tok_else) {
+            utility::parser_error("Exprected else keyword in else expression", current_line);
+        }
+        get_next_token(); // consume the else
+
+        if (current_token == lexer::tok_if) {
+            std::vector<std::unique_ptr<ast::top_level_expr>> if_expression;
+            if_expression.emplace_back(parse_if());
+            return std::move(std::make_unique<ast::else_expr>(std::move(if_expression)));
+        }
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Expected opening bracket for else expression", current_line);
+        }
+
+        get_next_token(); // consume the '{'
+
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        std::unique_ptr<ast::top_level_expr> current_expr;
+        while (current_token != lexer::tok_close_brack) {
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                    current_expr = parse_var_decl_defn();
+                    break;
+                case lexer::tok_return: 
+                    current_expr = parse_return();
+                    break;
+                case lexer::tok_identifier:
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
+                        break;
+                    } else{
+                        current_expr = parse_expression();
+                        break;
+                    }
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    current_expr = nullptr;
+                    break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
+        }
+
+        get_next_token(); // consume the closing bracket
+        return std::move(std::make_unique<ast::else_expr>(std::move(expressions)));
     }
 
 }

@@ -10,6 +10,7 @@ int b;
 int a = 33;
 bool z = true;
 
+/*
 def int my_func_3() {
     int a  = 4;
     a = 3;
@@ -27,13 +28,18 @@ def int my_func(float c, char d) {
 }
 
 int l = 9 * 7 + 94;
-
+*/
 
 
 def float my_func2(string ml) {
     if (z) {
-        b = 77 * my_func_3();
+        b = 77;
+    } else if (true) {
+       b = 4;
+    } else {
+        b = 33;
     }
+    
     return 44.7;
 }
 
