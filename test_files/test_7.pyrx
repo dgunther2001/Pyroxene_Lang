@@ -9,8 +9,9 @@ If LICENSE.md is not included, this version of the source code is provided in br
 int b;
 int a = 33;
 bool z = true;
+bool y = true;
 
-/*
+
 def int my_func_3() {
     int a  = 4;
     a = 3;
@@ -28,7 +29,7 @@ def int my_func(float c, char d) {
 }
 
 int l = 9 * 7 + 94;
-*/
+
 
 
 def float my_func2(string ml) {
@@ -36,8 +37,10 @@ def float my_func2(string ml) {
         b = 77;
     } else if (true) {
        b = 4;
-    } else {
+    } else if (y) {
         b = 33;
+    } else {
+        b = 9;
     }
     
     return 44.7;

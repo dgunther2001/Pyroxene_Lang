@@ -653,9 +653,13 @@ namespace ast {
         llvm::Value* codegen() override;
     };
 
+    /**
+     * TODO: docs
+     */
     class else_expr : public top_level_expr {
     private:
         std::vector<std::unique_ptr<top_level_expr>> expressions;
+        llvm::BasicBlock* merge_block;
     
     public:
         else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions) :
@@ -665,6 +669,8 @@ namespace ast {
         std::string get_ast_class() const override { return "else"; }
         void debug_output();
         llvm::Value* codegen() override;
+        void set_merge_block(llvm::BasicBlock* new_merge_block) { merge_block = new_merge_block; }
+        llvm::BasicBlock* get_merge_block() { return merge_block; }
     };
 
     /**

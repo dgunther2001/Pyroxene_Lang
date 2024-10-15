@@ -747,42 +747,35 @@ namespace ast {
      @endcode
      */
     llvm::Value* ast::if_expr::codegen() {
-        llvm::Value* cond_codegen = condition->codegen();
+        llvm::Value* condition_value = condition->codegen();
+        condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__", parent_function);
+        llvm::BasicBlock* else_blk = else_stmt ? 
+            llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__", parent_function) 
+            : nullptr;
 
-        llvm::BasicBlock* else_blk = nullptr;
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
+        llvm::BasicBlock* merge_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__", parent_function);
 
-        if (else_stmt != nullptr) {
-            else_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else_do__", parent_function);
-        }
-
-        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
-
-        if (else_blk != nullptr) {
-            codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, else_blk);
-        } else {
-            codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
-        }
+        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_blk);
 
         codegen::IR_Builder->SetInsertPoint(then_blk);
         scope::create_scope();
-
-        llvm::Value* current_expr = nullptr;
         for (auto const& expression : expressions) {
-            current_expr = expression->codegen();
+            expression->codegen();
         }
 
         scope::exit_scope();
-        codegen::IR_Builder->CreateBr(merge_to_func_blk);
+        codegen::IR_Builder->CreateBr(merge_blk);
 
         if (else_stmt != nullptr) {
+
             codegen::IR_Builder->SetInsertPoint(else_blk);
             else_stmt->codegen();
-            codegen::IR_Builder->CreateBr(merge_to_func_blk);
+            codegen::IR_Builder->CreateBr(merge_blk);            
         }
 
-        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
+        codegen::IR_Builder->SetInsertPoint(merge_blk);
 
         return nullptr;
     }
