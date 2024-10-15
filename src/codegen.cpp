@@ -774,9 +774,9 @@ namespace ast {
                 elif_node->set_merge_block(merge_block);
                 elif_node->codegen(); 
             } else {
-                else_stmt->codegen();          
+                else_stmt->codegen();
+                codegen::IR_Builder->CreateBr(merge_block);          
             }
-            codegen::IR_Builder->CreateBr(merge_block);
         } 
         
         codegen::IR_Builder->SetInsertPoint(merge_block);
