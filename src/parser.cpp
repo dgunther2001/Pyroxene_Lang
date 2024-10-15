@@ -1245,7 +1245,7 @@ namespace parser {
         if (current_token == lexer::tok_if) {
             std::vector<std::unique_ptr<ast::top_level_expr>> if_expression;
             if_expression.emplace_back(parse_if());
-            return std::move(std::make_unique<ast::else_expr>(std::move(if_expression)));
+            return std::make_unique<ast::else_expr>(std::move(if_expression), true);
         }
 
         if (current_token != lexer::tok_open_brack) {
@@ -1292,7 +1292,7 @@ namespace parser {
             utility::parser_error("Expected closing bracket", current_line);
         }
         get_next_token(); // consume the closing bracket
-        return std::move(std::make_unique<ast::else_expr>(std::move(expressions)));
+        return std::make_unique<ast::else_expr>(std::move(expressions), false);
     }
 
     /**

@@ -751,13 +751,12 @@ namespace ast {
         condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
         llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__", parent_function);
-        llvm::BasicBlock* else_blk = else_stmt ? 
-            llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__", parent_function) 
-            : nullptr;
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__", parent_function) : nullptr;
+        if (merge_block == nullptr) {
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__", parent_function);
+        }
 
-        llvm::BasicBlock* merge_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__", parent_function);
-
-        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_blk);
+        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
 
         codegen::IR_Builder->SetInsertPoint(then_blk);
         scope::create_scope();
@@ -766,16 +765,21 @@ namespace ast {
         }
 
         scope::exit_scope();
-        codegen::IR_Builder->CreateBr(merge_blk);
+        codegen::IR_Builder->CreateBr(merge_block);
 
         if (else_stmt != nullptr) {
-
             codegen::IR_Builder->SetInsertPoint(else_blk);
-            else_stmt->codegen();
-            codegen::IR_Builder->CreateBr(merge_blk);            
-        }
-
-        codegen::IR_Builder->SetInsertPoint(merge_blk);
+            if (else_stmt->is_elif()) {
+                auto elif_node = else_stmt->grab_else_if();
+                elif_node->set_merge_block(merge_block);
+                elif_node->codegen(); 
+            } else {
+                else_stmt->codegen();          
+            }
+            codegen::IR_Builder->CreateBr(merge_block);
+        } 
+        
+        codegen::IR_Builder->SetInsertPoint(merge_block);
 
         return nullptr;
     }
