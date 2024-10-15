@@ -46,6 +46,12 @@ namespace ast {
             }
 
             virtual void semantic_analysis() {}
+
+            virtual bool is_elif() { return false; }
+            virtual std::unique_ptr<top_level_expr> grab_else_if() { return nullptr; }
+
+            virtual llvm::BasicBlock* get_merge_block() { return nullptr; }
+            virtual void set_merge_block(llvm::BasicBlock* new_merge_block) {}
         };
      * @endcode
      */
@@ -69,6 +75,11 @@ namespace ast {
         }
 
         virtual void semantic_analysis() {}
+
+        virtual bool is_elif() { return false; }
+        virtual std::unique_ptr<top_level_expr> grab_else_if() { return nullptr; }
+        virtual llvm::BasicBlock* get_merge_block() { return nullptr; }
+        virtual void set_merge_block(llvm::BasicBlock* new_merge_block) {}
     };
 
     /**
@@ -640,6 +651,7 @@ namespace ast {
         std::unique_ptr<top_level_expr> condition;
         std::vector<std::unique_ptr<top_level_expr>> expressions;
         std::unique_ptr<top_level_expr> else_stmt;
+        llvm::BasicBlock* merge_block;
     
     public:
         if_expr(std::unique_ptr<top_level_expr> condition, std::vector<std::unique_ptr<top_level_expr>> expressions, std::unique_ptr<top_level_expr> else_stmt) :
@@ -651,20 +663,30 @@ namespace ast {
         std::string get_ast_class() const override { return "if"; }
         void debug_output();
         llvm::Value* codegen() override;
+        llvm::BasicBlock* get_merge_block() override { return merge_block; }
+        void set_merge_block(llvm::BasicBlock* new_merge_block) override { merge_block = new_merge_block; }
     };
 
+    /**
+     * TODO: docs
+     */
     class else_expr : public top_level_expr {
     private:
         std::vector<std::unique_ptr<top_level_expr>> expressions;
+        bool is_else_if;
     
     public:
-        else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions) :
-            expressions(std::move(expressions))
+        else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, bool is_else_if) :
+            expressions(std::move(expressions)),
+            is_else_if(is_else_if)
             {}
         void semantic_analysis() override;
         std::string get_ast_class() const override { return "else"; }
         void debug_output();
         llvm::Value* codegen() override;
+        bool is_elif() override { return is_else_if; }
+        std::unique_ptr<top_level_expr> grab_else_if() override { return std::move(expressions.at(0)); }
+
     };
 
     /**

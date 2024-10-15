@@ -747,42 +747,43 @@ namespace ast {
      @endcode
      */
     llvm::Value* ast::if_expr::codegen() {
-        llvm::Value* cond_codegen = condition->codegen();
+        static int counter = -1;
+        llvm::Value* condition_value = condition->codegen();
+        condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
-
-        llvm::BasicBlock* else_blk = nullptr;
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
-
-        if (else_stmt != nullptr) {
-            else_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else_do__", parent_function);
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++counter) + "__", parent_function);
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(counter) + "__", parent_function) : nullptr;
+        if (merge_block == nullptr) {
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(counter) + "__", parent_function);
         }
 
-        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
-
-        if (else_blk != nullptr) {
-            codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, else_blk);
-        } else {
-            codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
-        }
+        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
 
         codegen::IR_Builder->SetInsertPoint(then_blk);
         scope::create_scope();
-
-        llvm::Value* current_expr = nullptr;
         for (auto const& expression : expressions) {
-            current_expr = expression->codegen();
+            expression->codegen();
         }
 
         scope::exit_scope();
-        codegen::IR_Builder->CreateBr(merge_to_func_blk);
+        codegen::IR_Builder->CreateBr(merge_block);
 
         if (else_stmt != nullptr) {
             codegen::IR_Builder->SetInsertPoint(else_blk);
-            else_stmt->codegen();
-            codegen::IR_Builder->CreateBr(merge_to_func_blk);
+            if (else_stmt->is_elif()) {
+                auto elif_node = else_stmt->grab_else_if();
+                elif_node->set_merge_block(merge_block);
+                elif_node->codegen(); 
+            } else {
+                else_stmt->codegen();
+                codegen::IR_Builder->CreateBr(merge_block);          
+                parent_function->getBasicBlockList().splice(std::next(else_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+            }
+        } else {
+            parent_function->getBasicBlockList().splice(std::next(then_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
         }
-
-        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
+        
+        codegen::IR_Builder->SetInsertPoint(merge_block);
 
         return nullptr;
     }
