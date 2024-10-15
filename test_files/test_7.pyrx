@@ -51,6 +51,14 @@ def float my_func2(string ml) {
     
     if (pas) {
         mds = 'c';
+        if (z) {
+            mds = 'd';
+        } else {
+            mds = 'r';
+        }
+
+        mds = 'n';
+
     } else if (sap) {
         mds = 't';
     }

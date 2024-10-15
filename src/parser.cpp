@@ -1128,6 +1128,9 @@ namespace parser {
                     get_next_token();
                     current_expr = nullptr;
                     break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
+                    break;
                 default:
                     current_expr = parse_expression();
             }
@@ -1201,6 +1204,9 @@ namespace parser {
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;
+                    break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
                     break;
                 default:
                     current_expr = parse_expression();
