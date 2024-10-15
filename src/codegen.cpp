@@ -747,13 +747,14 @@ namespace ast {
      @endcode
      */
     llvm::Value* ast::if_expr::codegen() {
+        static int counter = -1;
         llvm::Value* condition_value = condition->codegen();
         condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__", parent_function);
-        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__", parent_function) : nullptr;
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++counter) + "__", parent_function);
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(counter) + "__", parent_function) : nullptr;
         if (merge_block == nullptr) {
-            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__", parent_function);
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(counter) + "__", parent_function);
         }
 
         codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
@@ -776,8 +777,11 @@ namespace ast {
             } else {
                 else_stmt->codegen();
                 codegen::IR_Builder->CreateBr(merge_block);          
+                parent_function->getBasicBlockList().splice(std::next(else_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
             }
-        } 
+        } else {
+            parent_function->getBasicBlockList().splice(std::next(then_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+        }
         
         codegen::IR_Builder->SetInsertPoint(merge_block);
 

@@ -44,6 +44,18 @@ def float my_func2(string ml) {
         b = 9;
     }
     
+    char mds = 'a';
+    bool pas = false;
+    bool sap = true;
+
+    
+    if (pas) {
+        mds = 'c';
+    } else if (sap) {
+        mds = 't';
+    }
+    
+
     return 44.7;
 }
 
