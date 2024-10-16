@@ -15,6 +15,7 @@ namespace codegen {
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
     llvm::BasicBlock* top_level_entry;
+    llvm::FunctionCallee print_f_function;
 
     /**
      * @par Helper function to return an llvm::Type* based on the type stored in the AST.
@@ -39,7 +40,7 @@ namespace codegen {
     llvm::Type* get_llvm_type(type_enum::types current_type) {
         switch (current_type) {
             case type_enum::int_type:
-                return llvm::Type::getInt64Ty(*codegen::LLVM_Context);
+                return llvm::Type::getInt32Ty(*codegen::LLVM_Context);
             case type_enum::float_type:
                 return llvm::Type::getDoubleTy(*codegen::LLVM_Context);
             case type_enum::char_type:
@@ -64,7 +65,7 @@ namespace ast {
      * @endcode
      */
     llvm::Value* ast::integer_expression::codegen() {
-        return llvm::ConstantInt::get(codegen::IR_Builder->getInt64Ty(), held_value, true);
+        return llvm::ConstantInt::get(codegen::IR_Builder->getInt32Ty(), held_value, true);
     }
 
     /**
@@ -449,7 +450,7 @@ namespace ast {
         }
 
         llvm::Constant* initializer = nullptr;
-        if (variable_type->isIntegerTy(64)) {
+        if (variable_type->isIntegerTy()) {
             initializer = llvm::ConstantInt::get(variable_type, 0);
         } else if (variable_type->isDoubleTy()) {
             initializer = llvm::ConstantFP::get(variable_type, 0.0);
@@ -840,6 +841,20 @@ namespace ast {
         }
 
         return codegen::IR_Builder->CreateCall(callee, llvm_arguments, "__" + func_name + "_call__");
+    }
+
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::print_expr::codegen() {
+        llvm::Value* expr_to_print = expression->codegen();
+        
+        llvm::Value* fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%d\n", "format_str", 0, codegen::LLVM_Module.get()); // FIX LATER
+
+        std::vector<llvm::Value*> printfArgs = {fmt_str, expr_to_print};
+
+        return codegen::IR_Builder->CreateCall(codegen::print_f_function, printfArgs, "__printfCall__");
+
     }
 
 

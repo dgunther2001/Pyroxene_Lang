@@ -18,7 +18,7 @@ namespace lexer {
     std::vector<int> line_count_vec;
 
     std::string identifier; 
-    int64_t integer_value; 
+    int integer_value; 
     float float_value; 
     bool bool_value; 
     char char_value; 
@@ -152,6 +152,10 @@ namespace lexer {
      *     identifier = previous_character; 
      *     while (isalnum(previous_character = input->get()) || (previous_character == '_')) { 
      *         identifier += previous_character; 
+     *     }
+     * 
+     *     if (identifier == "print") {
+     *         return tok_print;
      *     }
      * 
      *     if (identifier == "int") {
@@ -438,6 +442,10 @@ namespace lexer {
             identifier = previous_character; 
             while (isalnum(previous_character = input->get()) || (previous_character == '_')) { 
                 identifier += previous_character; 
+            }
+            
+            if (identifier == "print") {
+               return tok_print;
             }
 
             if (identifier == "int") {

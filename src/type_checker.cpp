@@ -432,4 +432,11 @@ namespace ast {
             current_param++;
         }
     }
+    
+    /**
+     * TODO: docs
+     */
+    void ast::print_expr::semantic_analysis() {
+        expression->semantic_analysis();
+    }
 }

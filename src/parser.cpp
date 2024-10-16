@@ -652,7 +652,7 @@ namespace parser {
         @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_int_expr(lexer::lexer_stored_values value) {
-        auto ast_node = std::make_unique<ast::integer_expression>(std::get<int64_t>(value));
+        auto ast_node = std::make_unique<ast::integer_expression>(std::get<int>(value));
         
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             ast_node->debug_output();
@@ -873,6 +873,9 @@ namespace parser {
                         expr = parse_expression();
                         break;
                     }
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;                    
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
@@ -1010,6 +1013,9 @@ namespace parser {
                         current_expr = parse_expression();
                         break;
                     }
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;                    
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
@@ -1124,6 +1130,9 @@ namespace parser {
                         current_expr = parse_expression();
                         break;
                     }
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;
                 case lexer::tok_semicolon:
                     get_next_token();
                     current_expr = nullptr;
@@ -1205,6 +1214,9 @@ namespace parser {
                     get_next_token();
                     current_expr = nullptr;
                     break;
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
@@ -1285,6 +1297,9 @@ namespace parser {
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;
                 default:
                     current_expr = parse_expression();
             }
@@ -1299,6 +1314,33 @@ namespace parser {
         }
         get_next_token(); // consume the closing bracket
         return std::make_unique<ast::else_expr>(std::move(expressions), false);
+    }
+
+    /**
+     * TODO: docs
+     */
+    std::unique_ptr<ast::top_level_expr> parse_print() {
+        if (current_token != lexer::tok_print) {
+            utility::parser_error("Expected print keyword", current_line);
+        }
+
+        get_next_token(); // consume the print keyword
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '('", current_line);
+        }
+
+        get_next_token(); // consume the '('
+
+        auto expression = parse_expression();
+
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')'", current_line);
+        }
+
+        get_next_token(); // consume the closing ')'
+
+        return std::make_unique<ast::print_expr>(std::move(expression));
     }
 
     /**
