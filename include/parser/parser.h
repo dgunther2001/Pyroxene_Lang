@@ -81,6 +81,8 @@ namespace parser {
     std::unique_ptr<ast::top_level_expr> parse_if();
     std::unique_ptr<ast::top_level_expr> parse_else();
 
+    std::unique_ptr<ast::top_level_expr> parse_print();
+
     //std::vector<std::unique_ptr<ast::top_level_expr>> parse_block();
 }
 

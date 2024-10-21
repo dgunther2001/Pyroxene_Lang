@@ -111,11 +111,12 @@ Inheritance diagram for ast::top_level_expr:</div>
 <area href="classast_1_1identifier__expr.html" alt="ast::identifier_expr" shape="rect" coords="160,392,310,416"/>
 <area href="classast_1_1if__expr.html" alt="ast::if_expr" shape="rect" coords="160,448,310,472"/>
 <area href="classast_1_1integer__expression.html" alt="ast::integer_expression" shape="rect" coords="160,504,310,528"/>
-<area href="classast_1_1return__expr.html" alt="ast::return_expr" shape="rect" coords="160,560,310,584"/>
-<area href="classast_1_1string__expression.html" alt="ast::string_expression" shape="rect" coords="160,616,310,640"/>
-<area href="classast_1_1variable__assignment.html" alt="ast::variable_assignment" shape="rect" coords="160,672,310,696"/>
-<area href="classast_1_1variable__declaration.html" alt="ast::variable_declaration" shape="rect" coords="160,728,310,752"/>
-<area href="classast_1_1variable__definition.html" alt="ast::variable_definition" shape="rect" coords="160,784,310,808"/>
+<area href="classast_1_1print__expr.html" alt="ast::print_expr" shape="rect" coords="160,560,310,584"/>
+<area href="classast_1_1return__expr.html" alt="ast::return_expr" shape="rect" coords="160,616,310,640"/>
+<area href="classast_1_1string__expression.html" alt="ast::string_expression" shape="rect" coords="160,672,310,696"/>
+<area href="classast_1_1variable__assignment.html" alt="ast::variable_assignment" shape="rect" coords="160,728,310,752"/>
+<area href="classast_1_1variable__declaration.html" alt="ast::variable_declaration" shape="rect" coords="160,784,310,808"/>
+<area href="classast_1_1variable__definition.html" alt="ast::variable_definition" shape="rect" coords="160,840,310,864"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -135,6 +136,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a890040cc8ec1ed0bc8f7d1ff7802555b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a374b3a0999fd8ca026da623966fb5e9f" id="r_a374b3a0999fd8ca026da623966fb5e9f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a374b3a0999fd8ca026da623966fb5e9f">semantic_analysis</a> ()</td></tr>
 <tr class="separator:a374b3a0999fd8ca026da623966fb5e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3b494584b401676ab059509753166df" id="r_aa3b494584b401676ab059509753166df"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3b494584b401676ab059509753166df">is_elif</a> ()</td></tr>
+<tr class="separator:aa3b494584b401676ab059509753166df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac17734231b45c798f8543d1acb9e5191" id="r_ac17734231b45c798f8543d1acb9e5191"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac17734231b45c798f8543d1acb9e5191">grab_else_if</a> ()</td></tr>
+<tr class="separator:ac17734231b45c798f8543d1acb9e5191"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afab60adcd58e8d9ff1e9b97ca8f8e6cd" id="r_afab60adcd58e8d9ff1e9b97ca8f8e6cd"><td class="memItemLeft" align="right" valign="top">virtual llvm::BasicBlock *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afab60adcd58e8d9ff1e9b97ca8f8e6cd">get_merge_block</a> ()</td></tr>
+<tr class="separator:afab60adcd58e8d9ff1e9b97ca8f8e6cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6816a9a84cb7128fc53090f248c5f18f" id="r_a6816a9a84cb7128fc53090f248c5f18f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6816a9a84cb7128fc53090f248c5f18f">set_merge_block</a> (llvm::BasicBlock *new_merge_block)</td></tr>
+<tr class="separator:a6816a9a84cb7128fc53090f248c5f18f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section user"><dt>This is an abstract class that all expression type AST nodes fall under.</dt><dd><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="classast_1_1top__level__expr.html">top_level_expr</a> {</div>
@@ -155,8 +164,14 @@ Public Member Functions</h2></td></tr>
 <div class="line">    }</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> semantic_analysis() {}</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> is_elif() { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> std::unique_ptr&lt;top_level_expr&gt; grab_else_if() { <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">virtual</span> llvm::BasicBlock* get_merge_block() { <span class="keywordflow">return</span> <span class="keyword">nullptr</span>; }</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">void</span> set_merge_block(llvm::BasicBlock* new_merge_block) {}</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:52</div></div>
+<div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
 <div class="ttc" id="anamespacecodegen_html"><div class="ttname"><a href="namespacecodegen.html">codegen</a></div><div class="ttdef"><b>Definition</b> codegen.cpp:13</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> types.h:8</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63">type_enum::float_type</a></div><div class="ttdeci">@ float_type</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> types.h:10</div></div>
@@ -211,7 +226,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="classast_1_1binary__expr.html#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#ab1d8cecfa26c36bf1ea4626bac8851bb">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#a1c05a6f66df411e0e3aad2624b34b87d">ast::char_expression</a>, <a class="el" href="classast_1_1else__expr.html#a3e3b16c3aadaef5f1741b2727e403def">ast::else_expr</a>, <a class="el" href="classast_1_1float__expression.html#a6098c5599d2e9fcdf8bf5b69e9eb06cb">ast::float_expression</a>, <a class="el" href="classast_1_1func__call__expr.html#af3357c06ef9b736aff48e3efeefa34db">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a543793aa523839fd14545e637794416d">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#af769182521a67c74bf235580a9aa917a">ast::if_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression</a>, <a class="el" href="classast_1_1return__expr.html#a22c6aa02def110f97a02dfaee58e7852">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#a04e210534594e254a3f21b6b02e72738">ast::string_expression</a>, <a class="el" href="classast_1_1variable__assignment.html#ad72337194c16fa71dbc8189d1df0b9f3">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#ad5a16c85ca8b74d98d0abce0a01bcc80">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#a52de7d40d82d8e3354ea1723f6ece4b2">ast::variable_definition</a>.</p>
+<p>Implemented in <a class="el" href="classast_1_1binary__expr.html#a199170e86e3e23705bc4cdf54574fce3">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#ab1d8cecfa26c36bf1ea4626bac8851bb">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#a1c05a6f66df411e0e3aad2624b34b87d">ast::char_expression</a>, <a class="el" href="classast_1_1else__expr.html#a3e3b16c3aadaef5f1741b2727e403def">ast::else_expr</a>, <a class="el" href="classast_1_1float__expression.html#a6098c5599d2e9fcdf8bf5b69e9eb06cb">ast::float_expression</a>, <a class="el" href="classast_1_1func__call__expr.html#af3357c06ef9b736aff48e3efeefa34db">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a543793aa523839fd14545e637794416d">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#af769182521a67c74bf235580a9aa917a">ast::if_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a69c13e06a93b61e08ec6560eb2526707">ast::integer_expression</a>, <a class="el" href="classast_1_1print__expr.html#a46559520fee8fefa345af8e2e0892c05">ast::print_expr</a>, <a class="el" href="classast_1_1return__expr.html#a22c6aa02def110f97a02dfaee58e7852">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#a04e210534594e254a3f21b6b02e72738">ast::string_expression</a>, <a class="el" href="classast_1_1variable__assignment.html#ad72337194c16fa71dbc8189d1df0b9f3">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#ad5a16c85ca8b74d98d0abce0a01bcc80">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#a52de7d40d82d8e3354ea1723f6ece4b2">ast::variable_definition</a>.</p>
 
 </div>
 </div>
@@ -238,7 +253,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#aa369667002ee0f6554fb319778ddae60">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#acf51feda210d3b71ec4902481d0b797c">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#ad91903a36631187f30818ba0ac8b8144">ast::char_expression</a>, <a class="el" href="classast_1_1else__expr.html#a73e5a1f55f7ea917dc35d0b90d9c3a25">ast::else_expr</a>, <a class="el" href="classast_1_1float__expression.html#a2f548879258a4ca732c009da2e9f55f7">ast::float_expression</a>, <a class="el" href="classast_1_1func__call__expr.html#a2953a9997fd3e5f2d71b618659a24d46">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#acee8110ab6003fc68d557d7ad64445e2">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#ad4e600ed99c23a53b7469a6bc337beaf">ast::if_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a2194d1571ba609529d83441baababf9e">ast::integer_expression</a>, <a class="el" href="classast_1_1return__expr.html#a686cf9378ab651c7b2f06c9f69c69cc1">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#aeb80dfc5791405858d730248672dd0de">ast::string_expression</a>, <a class="el" href="classast_1_1variable__assignment.html#a340420adc7fa24427337f57c50e158a7">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#a0377c59a98e5e71d7d95babca4000511">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#adc0a91011d61a710c83bf420aee4878d">ast::variable_definition</a>.</p>
+<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#aa369667002ee0f6554fb319778ddae60">ast::binary_expr</a>, <a class="el" href="classast_1_1bool__expression.html#acf51feda210d3b71ec4902481d0b797c">ast::bool_expression</a>, <a class="el" href="classast_1_1char__expression.html#ad91903a36631187f30818ba0ac8b8144">ast::char_expression</a>, <a class="el" href="classast_1_1else__expr.html#a73e5a1f55f7ea917dc35d0b90d9c3a25">ast::else_expr</a>, <a class="el" href="classast_1_1float__expression.html#a2f548879258a4ca732c009da2e9f55f7">ast::float_expression</a>, <a class="el" href="classast_1_1func__call__expr.html#a2953a9997fd3e5f2d71b618659a24d46">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#acee8110ab6003fc68d557d7ad64445e2">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#ad4e600ed99c23a53b7469a6bc337beaf">ast::if_expr</a>, <a class="el" href="classast_1_1integer__expression.html#a2194d1571ba609529d83441baababf9e">ast::integer_expression</a>, <a class="el" href="classast_1_1print__expr.html#ac13b9061ee5f55ec94c62f13e22b74f0">ast::print_expr</a>, <a class="el" href="classast_1_1return__expr.html#a686cf9378ab651c7b2f06c9f69c69cc1">ast::return_expr</a>, <a class="el" href="classast_1_1string__expression.html#aeb80dfc5791405858d730248672dd0de">ast::string_expression</a>, <a class="el" href="classast_1_1variable__assignment.html#a340420adc7fa24427337f57c50e158a7">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#a0377c59a98e5e71d7d95babca4000511">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#adc0a91011d61a710c83bf420aee4878d">ast::variable_definition</a>.</p>
 
 </div>
 </div>
@@ -269,6 +284,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afab60adcd58e8d9ff1e9b97ca8f8e6cd" name="afab60adcd58e8d9ff1e9b97ca8f8e6cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afab60adcd58e8d9ff1e9b97ca8f8e6cd">&#9670;&#160;</a></span>get_merge_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual llvm::BasicBlock * ast::top_level_expr::get_merge_block </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classast_1_1if__expr.html#a6346eb03d314a132fe1431ae1c0c323a">ast::if_expr</a>.</p>
+
+</div>
+</div>
 <a id="a890040cc8ec1ed0bc8f7d1ff7802555b" name="a890040cc8ec1ed0bc8f7d1ff7802555b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a890040cc8ec1ed0bc8f7d1ff7802555b">&#9670;&#160;</a></span>get_name()</h2>
 
@@ -296,6 +338,60 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac17734231b45c798f8543d1acb9e5191" name="ac17734231b45c798f8543d1acb9e5191"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac17734231b45c798f8543d1acb9e5191">&#9670;&#160;</a></span>grab_else_if()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">top_level_expr</a> &gt; ast::top_level_expr::grab_else_if </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classast_1_1else__expr.html#a06fb3643da479bc449b980ba6698622f">ast::else_expr</a>.</p>
+
+</div>
+</div>
+<a id="aa3b494584b401676ab059509753166df" name="aa3b494584b401676ab059509753166df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3b494584b401676ab059509753166df">&#9670;&#160;</a></span>is_elif()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool ast::top_level_expr::is_elif </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classast_1_1else__expr.html#aa71b4b5152eef55a8f3dd042191421de">ast::else_expr</a>.</p>
+
+</div>
+</div>
 <a id="a374b3a0999fd8ca026da623966fb5e9f" name="a374b3a0999fd8ca026da623966fb5e9f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a374b3a0999fd8ca026da623966fb5e9f">&#9670;&#160;</a></span>semantic_analysis()</h2>
 
@@ -319,7 +415,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr</a>, <a class="el" href="classast_1_1else__expr.html#aa087137908fa1db52f4617e59c079876">ast::else_expr</a>, <a class="el" href="classast_1_1func__call__expr.html#a0de0163a435dd3a6fb4db5a9f1c4c5d4">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a3b470954692f6bc55be0df692c75a922">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#ae6e8c5f5345e01f596ae9fd6bf43a839">ast::if_expr</a>, <a class="el" href="classast_1_1return__expr.html#ac8518077fa6bbf3ab166b04468051bd7">ast::return_expr</a>, <a class="el" href="classast_1_1variable__assignment.html#ae8de91acd4a332190d79750a961d57be">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#aa544a6ff728e7049d6834738810311a2">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#aad1e785066e3107491d85dc303390248">ast::variable_definition</a>.</p>
+<p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a2b506e23c2abce36b5f88775df5d4de4">ast::binary_expr</a>, <a class="el" href="classast_1_1else__expr.html#aa087137908fa1db52f4617e59c079876">ast::else_expr</a>, <a class="el" href="classast_1_1func__call__expr.html#a0de0163a435dd3a6fb4db5a9f1c4c5d4">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#a3b470954692f6bc55be0df692c75a922">ast::identifier_expr</a>, <a class="el" href="classast_1_1if__expr.html#ae6e8c5f5345e01f596ae9fd6bf43a839">ast::if_expr</a>, <a class="el" href="classast_1_1print__expr.html#a1681ecd08c1c67c1085007d29b7207ce">ast::print_expr</a>, <a class="el" href="classast_1_1return__expr.html#ac8518077fa6bbf3ab166b04468051bd7">ast::return_expr</a>, <a class="el" href="classast_1_1variable__assignment.html#ae8de91acd4a332190d79750a961d57be">ast::variable_assignment</a>, <a class="el" href="classast_1_1variable__declaration.html#aa544a6ff728e7049d6834738810311a2">ast::variable_declaration</a>, and <a class="el" href="classast_1_1variable__definition.html#aad1e785066e3107491d85dc303390248">ast::variable_definition</a>.</p>
 
 </div>
 </div>
@@ -347,6 +443,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Reimplemented in <a class="el" href="classast_1_1binary__expr.html#a2a80451deabeacde556b80e5dcd7af80">ast::binary_expr</a>, <a class="el" href="classast_1_1func__call__expr.html#ab3adee022c4e1a4037a26c3eb145308f">ast::func_call_expr</a>, <a class="el" href="classast_1_1identifier__expr.html#aac9dfaae7c879ec13932ead7f1580e90">ast::identifier_expr</a>, and <a class="el" href="classast_1_1return__expr.html#ae29f0ebe19b0e397e667b70d70314ec3">ast::return_expr</a>.</p>
+
+</div>
+</div>
+<a id="a6816a9a84cb7128fc53090f248c5f18f" name="a6816a9a84cb7128fc53090f248c5f18f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6816a9a84cb7128fc53090f248c5f18f">&#9670;&#160;</a></span>set_merge_block()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void ast::top_level_expr::set_merge_block </td>
+          <td>(</td>
+          <td class="paramtype">llvm::BasicBlock *</td>          <td class="paramname"><span class="paramname"><em>new_merge_block</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classast_1_1if__expr.html#aa57ef3cdd4369756e07017bedd09e082">ast::if_expr</a>.</p>
 
 </div>
 </div>

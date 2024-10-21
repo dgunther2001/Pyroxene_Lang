@@ -61,6 +61,7 @@ namespace lexer {
         tok_assignment = -100, ///< Assignment operator
         tok_class = -110,      ///< Class keyword
         tok_graph = -120,      ///< Graph keyword
+        tok_print = -125,      ///< Print keyword
         tok_return = -130      ///< Return statement
     };
 
@@ -68,7 +69,7 @@ namespace lexer {
      * 
      * @par A type definition using std::variant to store different values associated with tokens, that can store strings, integers, floats, characters, or booleans.
      */
-    typedef std::variant<std::string, int64_t, float, char, bool> lexer_stored_values;
+    typedef std::variant<std::string, int, float, char, bool> lexer_stored_values;
 
     /**
      * @par A vector that stores tokens lexed from the input stream.
@@ -93,7 +94,7 @@ namespace lexer {
     /**
      * @par Stores the current integer value from the input stream if applicable.
      */
-    extern int64_t integer_value;
+    extern int integer_value;
 
     /**
      * @par Stores the current float value from the input stream if applicable.

@@ -117,13 +117,18 @@ namespace ast {
         std::set<std::string> function_symbol_table;
         std::vector<std::unique_ptr<top_level_expr>>parameters;
     public:
-        func_defn(type_enum::types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<top_level_expr>> parameters) :
+        func_defn(type_enum::types return_type, 
+            std::string name, 
+            std::vector<std::unique_ptr<top_level_expr>> expressions, 
+            std::set<std::string> var_names, 
+            std::vector<std::unique_ptr<top_level_expr>> parameters
+        ) :
             return_type(return_type),
             func_name(name),
             expressions(std::move(expressions)),
             function_symbol_table(std::move(var_names)),
             parameters(std::move(parameters))
-            {}
+        {}
 
         void semantic_analysis();
         ~func_defn() = default;
@@ -272,13 +277,13 @@ namespace ast {
      * @code
         class integer_expression : public top_level_expr {
         private:
-            int64_t held_value;
+            int held_value;
             type_enum::types type = type_enum::int_type;
 
         public:
-            integer_expression(int64_t held_value) : held_value(held_value) {}
+            integer_expression(int held_value) : held_value(held_value) {}
             std::string get_ast_class() const override { return "int"; }
-            const int64_t get_value() const {return held_value;}
+            const int get_value() const {return held_value;}
             void debug_output();
             type_enum::types get_expr_type() const override {return type;}
             llvm::Value* codegen() override;
@@ -287,13 +292,13 @@ namespace ast {
      */
     class integer_expression : public top_level_expr {
     private:
-        int64_t held_value;
+        int held_value;
         type_enum::types type = type_enum::int_type;
 
     public:
-        integer_expression(int64_t held_value) : held_value(held_value) {}
+        integer_expression(int held_value) : held_value(held_value) {}
         std::string get_ast_class() const override { return "int"; }
-        const int64_t get_value() const {return held_value;}
+        const int get_value() const {return held_value;}
         void debug_output();
         type_enum::types get_expr_type() const override {return type;}
         llvm::Value* codegen() override;
@@ -668,7 +673,27 @@ namespace ast {
     };
 
     /**
-     * TODO: docs
+     * @par Contains data related to else expressions (can be elifs).
+     * @code
+        class else_expr : public top_level_expr {
+        private:
+            std::vector<std::unique_ptr<top_level_expr>> expressions;
+            bool is_else_if;
+        
+        public:
+            else_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, bool is_else_if) :
+                expressions(std::move(expressions)),
+                is_else_if(is_else_if)
+                {}
+            void semantic_analysis() override;
+            std::string get_ast_class() const override { return "else"; }
+            void debug_output();
+            llvm::Value* codegen() override;
+            bool is_elif() override { return is_else_if; }
+            std::unique_ptr<top_level_expr> grab_else_if() override { return std::move(expressions.at(0)); }
+
+        };
+     * @endcode
      */
     class else_expr : public top_level_expr {
     private:
@@ -690,7 +715,28 @@ namespace ast {
     };
 
     /**
-     * TODO: docs
+     * @par Holds all data in a function call.
+     * @code
+        class func_call_expr : public top_level_expr {
+        private:
+            std::string func_name;
+            std::vector<std::unique_ptr<top_level_expr>> arguments;
+            type_enum::types type;
+
+        public:
+            func_call_expr(std::string func_name, std::vector<std::unique_ptr<top_level_expr>> args) :
+                func_name(func_name),
+                arguments(std::move(args))
+                {}
+            void semantic_analysis() override;
+            type_enum::types get_expr_type() const override {return type;}
+            void set_expr_type(type_enum::types new_type) override { type = new_type; }
+            std::string get_ast_class() const override { return "func_call"; }
+            void debug_output();
+            llvm::Value* codegen() override;
+
+        };
+     * @endcode
      */
     class func_call_expr : public top_level_expr {
     private:
@@ -710,6 +756,39 @@ namespace ast {
         void debug_output();
         llvm::Value* codegen() override;
 
+    };
+
+    /**
+     * @par Holds data related to print expressions.
+     * 
+     * @code
+        class print_expr : public top_level_expr {
+        private:
+            std::unique_ptr<top_level_expr> expression;
+
+        public:
+            print_expr(std::unique_ptr<top_level_expr> expression) :
+                expression(std::move(expression))
+                {}
+            void semantic_analysis() override; 
+            std::string get_ast_class() const override { return "print"; }
+            //void debug_output();
+            llvm::Value* codegen() override;
+        };
+     * @endcode
+     */
+    class print_expr : public top_level_expr {
+    private:
+        std::unique_ptr<top_level_expr> expression;
+
+    public:
+        print_expr(std::unique_ptr<top_level_expr> expression) :
+            expression(std::move(expression))
+            {}
+        void semantic_analysis() override; 
+        std::string get_ast_class() const override { return "print"; }
+        //void debug_output();
+        llvm::Value* codegen() override;
     };
     
     

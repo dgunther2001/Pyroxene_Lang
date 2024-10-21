@@ -140,12 +140,19 @@ namespace utility {
     }
 
     /**
-     * @par This is where we setup the LLVM Context, Modulem, and IR Builder.
+     * @par This is where we setup the LLVM Context, Modulem, and IR Builder. Also initialize printf function.
      * 
      * @code
      *  codegen::LLVM_Context = std::make_unique<llvm::LLVMContext>();
         codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
         codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
+
+        llvm::FunctionType* printfType = llvm::FunctionType::get(
+            llvm::IntegerType::getInt32Ty(*codegen::LLVM_Context), 
+            llvm::PointerType::get(llvm::Type::getInt8Ty(*codegen::LLVM_Context), 0), 
+            true 
+        );
+        codegen::print_f_function = llvm::Function::Create(printfType, llvm::Function::ExternalLinkage, "printf", codegen::LLVM_Module.get());
      * @endcode
      * 
      */
@@ -153,6 +160,16 @@ namespace utility {
         codegen::LLVM_Context = std::make_unique<llvm::LLVMContext>();
         codegen::LLVM_Module = std::make_unique<llvm::Module>("__top_level_module__", *codegen::LLVM_Context);
         codegen::IR_Builder = std::make_unique<llvm::IRBuilder<>>(*codegen::LLVM_Context);
+
+        
+        llvm::FunctionType* printfType = llvm::FunctionType::get(
+            llvm::IntegerType::getInt32Ty(*codegen::LLVM_Context), 
+            llvm::PointerType::get(llvm::Type::getInt8Ty(*codegen::LLVM_Context), 0), 
+            true 
+        );
+
+        codegen::print_f_function = llvm::Function::Create(printfType, llvm::Function::ExternalLinkage, "printf", codegen::LLVM_Module.get());
+        
     }
 
 
@@ -324,6 +341,10 @@ namespace utility {
                     break;
                 case lexer::tok_if:
                     expr = parser::parse_if();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;
+                case lexer::tok_print:
+                    expr = parser::parse_print();
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                     break;
                 default:

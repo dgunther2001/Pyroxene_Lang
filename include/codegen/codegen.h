@@ -38,6 +38,11 @@ namespace codegen {
      */
     extern llvm::BasicBlock* top_level_entry;
 
+    /**
+     * The printf function definition
+     */
+    extern llvm::FunctionCallee print_f_function;
+
     extern llvm::Type* get_llvm_type(type_enum::types current_type);
 }
 namespace ast {

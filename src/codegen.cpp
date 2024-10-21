@@ -15,6 +15,7 @@ namespace codegen {
     std::unique_ptr<llvm::Module> LLVM_Module;
     std::unique_ptr<llvm::IRBuilder<>> IR_Builder;
     llvm::BasicBlock* top_level_entry;
+    llvm::FunctionCallee print_f_function;
 
     /**
      * @par Helper function to return an llvm::Type* based on the type stored in the AST.
@@ -39,7 +40,7 @@ namespace codegen {
     llvm::Type* get_llvm_type(type_enum::types current_type) {
         switch (current_type) {
             case type_enum::int_type:
-                return llvm::Type::getInt64Ty(*codegen::LLVM_Context);
+                return llvm::Type::getInt32Ty(*codegen::LLVM_Context);
             case type_enum::float_type:
                 return llvm::Type::getDoubleTy(*codegen::LLVM_Context);
             case type_enum::char_type:
@@ -64,7 +65,7 @@ namespace ast {
      * @endcode
      */
     llvm::Value* ast::integer_expression::codegen() {
-        return llvm::ConstantInt::get(codegen::IR_Builder->getInt64Ty(), held_value, true);
+        return llvm::ConstantInt::get(codegen::IR_Builder->getInt32Ty(), held_value, true);
     }
 
     /**
@@ -449,7 +450,7 @@ namespace ast {
         }
 
         llvm::Constant* initializer = nullptr;
-        if (variable_type->isIntegerTy(64)) {
+        if (variable_type->isIntegerTy()) {
             initializer = llvm::ConstantInt::get(variable_type, 0);
         } else if (variable_type->isDoubleTy()) {
             initializer = llvm::ConstantFP::get(variable_type, 0.0);
@@ -701,60 +702,97 @@ namespace ast {
 
     /**
      * @fn ast::if_expr::codegen()
-     * @par Code generation for if expressions (currently does not contain else blocks)
+     * @par Code generation for if expressions.
      * 
-     * @par Create a scope, evaluate the condition, and set the parent function to the current function.
-     * 
+     * @par Initialize a static local variable that serves as a the naming convention for LLVM labels
      * @code
-        scope::create_scope();
-        llvm::Value* cond_codegen = condition->codegen();
-        llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent(); 
+        static int block_name_counter = -1;
      * @endcode
 
-     @par Create blocks for the then block and the merge point back into the function.
+       @par Evaluate the condition to an LLVM Value*, and convert it tp am integer comparison.
+       @code
+        llvm::Value* condition_value = condition->codegen();
+        condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
+       @endcode
 
-     @code
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
-        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
-     @endcode
+       @par Grab the parent function, and create a then block (will contain expressions in the if block).
+       @code
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++block_name_counter) + "__", parent_function);
+       @endcode
 
-     @par Create a conditional branch instruction based on the boolean condition, and set the IR insertion point to the then block (inside of the if statement).
+       @par If an else statement exists in our if expression, create a new llvm block for it, otherwise set it to nullptr.
+       @code
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(block_name_counter) + "__", parent_function) : nullptr;
+       @endcode
 
-     @code
-        codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
-        codegen::IR_Builder->SetInsertPoint(then_blk);
-     @endcode
-
-     @par Iterate over each expression in the AST within the if block, and generate IR for it.
-
-     @code
-        llvm::Value* current_expr = nullptr;
-        for (auto const& expression : expressions) {
-            current_expr = expression->codegen();
+       @par If the merge block of the if expression is not yet set (not an elif), create a new basic block, and assign it to the if expression.
+       @code
+        if (merge_block == nullptr) {
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(block_name_counter) + "__", parent_function);
         }
-     @endcode
+       @endcode
 
-     @par Create an unconditional branch back to the merge block and set the IR insertion point to the merge point.
-     @code
-        codegen::IR_Builder->CreateBr(merge_to_func_blk);
-        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
-     @endcode
+       @par Create a conditional branch based on the integer comparison condition to either the else block if the else block is non-null, or the merge block if it is.
+       @code
+        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
+       @endcode
 
-     @par Exit the current scope, and return a placeholder null value.
-     @code
+       @par Set the insertion point to the then block, create a scope, and generate IR for all of the contained expressions.
+       @par Then exit the scope, and create an unconditional branch to the merge point.
+       @code
+        codegen::IR_Builder->SetInsertPoint(then_blk);
+        scope::create_scope();
+        for (auto const& expression : expressions) {
+            expression->codegen();
+        }
         scope::exit_scope();
+        codegen::IR_Builder->CreateBr(merge_block);
+       @endcode
+
+       @par If the else statement is non-null, set the insertion point to the else block
+       @code
+        if (else_stmt != nullptr) {
+            codegen::IR_Builder->SetInsertPoint(else_blk);
+       @endcode
+
+       @par If the else statement is an elif, grab the if expression from the else block, and set its merge point to the common merge point, then call codegen on the nested if expr.
+       @code
+        if (else_stmt->is_elif()) {
+            auto elif_node = else_stmt->grab_else_if();
+            elif_node->set_merge_block(merge_block);
+            elif_node->codegen();
+        }
+       @endcode
+
+       @par If the else statement is not a nested else if, and just a raw else, generate IR, and create an unconditional branch to the merge point.
+       @par Then place the else block before the merge block to avoid spagetti code.
+       @code
+        parent_function->getBasicBlockList().splice(std::next(else_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+       @endcode
+
+       @par If thesres is no else statement to speak of, then place the then block before the merge block.
+       @code
+        else {
+            parent_function->getBasicBlockList().splice(std::next(then_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+        }
+       @endcode
+
+       @par Then set the insertion point to the merge block, and proceed with code generation
+       @code
+        codegen::IR_Builder->SetInsertPoint(merge_block);
         return nullptr;
-     @endcode
+       @endcode
+
      */
     llvm::Value* ast::if_expr::codegen() {
-        static int counter = -1;
+        static int block_name_counter = -1;
         llvm::Value* condition_value = condition->codegen();
         condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++counter) + "__", parent_function);
-        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(counter) + "__", parent_function) : nullptr;
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++block_name_counter) + "__", parent_function);
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(block_name_counter) + "__", parent_function) : nullptr;
         if (merge_block == nullptr) {
-            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(counter) + "__", parent_function);
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(block_name_counter) + "__", parent_function);
         }
 
         codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
@@ -764,7 +802,6 @@ namespace ast {
         for (auto const& expression : expressions) {
             expression->codegen();
         }
-
         scope::exit_scope();
         codegen::IR_Builder->CreateBr(merge_block);
 
@@ -789,7 +826,23 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::else_expr::codegen()
+     * 
+     * @par Generate a scope, and initialize an LLVM Value* for the current expression as nullptr.
+     * @code
+        scope::create_scope();
+        llvm::Value* current_expr = nullptr;
+     * @endcode
+
+       @par Generate IR for each expression in the esle block, and exit scope.
+       @code
+        llvm::Value* current_expr = nullptr;
+        for (auto const& expression : expressions) {
+            current_expr = expression->codegen();
+        }
+        scope::exit_scope();
+        return nullptr;
+       @endcode
      */
     llvm::Value* ast::else_expr::codegen() {
         scope::create_scope();
@@ -840,6 +893,20 @@ namespace ast {
         }
 
         return codegen::IR_Builder->CreateCall(callee, llvm_arguments, "__" + func_name + "_call__");
+    }
+
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::print_expr::codegen() {
+        llvm::Value* expr_to_print = expression->codegen();
+        
+        llvm::Value* fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%d\n", "format_str", 0, codegen::LLVM_Module.get()); // FIX LATER
+
+        std::vector<llvm::Value*> printfArgs = {fmt_str, expr_to_print};
+
+        return codegen::IR_Builder->CreateCall(codegen::print_f_function, printfArgs, "__printfCall__");
+
     }
 
 
