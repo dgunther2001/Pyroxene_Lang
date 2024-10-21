@@ -112,7 +112,8 @@ int main(int argc, char** argv) {
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
-    /*
+    
+        /*
         llvm::orc::ThreadSafeContext TSCtx(std::make_unique<llvm::LLVMContext>());
         llvm::orc::ThreadSafeModule TSM(std::move(codegen::LLVM_Module), TSCtx);
 
@@ -120,9 +121,9 @@ int main(int argc, char** argv) {
         (*JIT)->addIRModule(std::move(TSM));
         auto MainSymbol = (*JIT)->lookup("main");
 
-        auto *MainFn = (int64_t (*)())(intptr_t)MainSymbol->getAddress();
-        int64_t Result = MainFn();
-    */
+        auto *MainFn = (int (*)())(intptr_t)MainSymbol->getAddress();
+        int Result = MainFn();
+        */
         file.close();
 
     #else

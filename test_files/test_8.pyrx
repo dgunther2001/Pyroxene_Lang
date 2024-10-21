@@ -8,6 +8,5 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 def int main() {
     int a = 66;
-    print(33);
-    return 0;
+    return 10;
 }   

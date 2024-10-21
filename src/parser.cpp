@@ -1050,6 +1050,9 @@ namespace parser {
      * 
      * @code
      *  get_next_token();
+     *  if (current_token == lexer::tok_semicolon) {
+            return(std::move(std::make_unique<ast::return_expr>(nullptr)));
+        }
         auto expr_node = parse_expression();
 
         if (auto* binary_expr_node = dynamic_cast<ast::binary_expr*>(expr_node.get())) {
@@ -1062,6 +1065,9 @@ namespace parser {
      */
     std::unique_ptr<ast::top_level_expr> parse_return() {
         get_next_token();
+        if (current_token == lexer::tok_semicolon) { // deal with void return types
+            return(std::move(std::make_unique<ast::return_expr>(nullptr)));
+        }
         auto expr_node = parse_expression();
 
         auto ast_node = std::make_unique<ast::return_expr>(std::move(expr_node));
@@ -1252,7 +1258,63 @@ namespace parser {
     }
     
     /**
-     * TODO: docs
+     * @par Parses else expressions
+     * 
+     * @par Handle else if statements.
+     * @code
+     *  if (current_token == lexer::tok_if) {
+            std::vector<std::unique_ptr<ast::top_level_expr>> if_expression;
+            if_expression.emplace_back(parse_if());
+            return std::make_unique<ast::else_expr>(std::move(if_expression), true);
+        }
+     * @endcode
+
+       @par Otherwise we are in a raw else expression, so handle that case.
+
+       @par Parse expressions until we encounter a closing bracket.
+       @code
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        std::unique_ptr<ast::top_level_expr> current_expr;
+        while (current_token != lexer::tok_close_brack) {
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                    current_expr = parse_var_decl_defn();
+                    break;
+                case lexer::tok_return: 
+                    current_expr = parse_return();
+                    break;
+                case lexer::tok_identifier:
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
+                        break;
+                    } else{
+                        current_expr = parse_expression();
+                        break;
+                    }
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    current_expr = nullptr;
+                    break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
+                    break;
+                case lexer::tok_print:
+                    current_expr = parser::parse_print();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            if (current_expr != nullptr) {
+                expressions.emplace_back(std::move(current_expr));
+            }
+        }
+       @endcode
+
+       @par Generate an else expression AST node.
+       @code
+        return std::make_unique<ast::else_expr>(std::move(expressions), false);
+       @endcode
      */
     std::unique_ptr<ast::top_level_expr> parse_else() {
         if (current_token != lexer::tok_else) {
@@ -1317,7 +1379,24 @@ namespace parser {
     }
 
     /**
-     * TODO: docs
+     * @par Handle print expressions by parsing an internal expression to the print statement.
+     * @code
+        if (current_token != lexer::tok_print) {
+            utility::parser_error("Expected print keyword", current_line);
+        }
+        get_next_token(); 
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '('", current_line);
+        }
+        get_next_token(); 
+        auto expression = parse_expression();
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')'", current_line);
+        }
+        get_next_token(); 
+        return std::make_unique<ast::print_expr>(std::move(expression));
+     * @endcode
+     * 
      */
     std::unique_ptr<ast::top_level_expr> parse_print() {
         if (current_token != lexer::tok_print) {

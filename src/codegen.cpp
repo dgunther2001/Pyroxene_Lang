@@ -702,60 +702,97 @@ namespace ast {
 
     /**
      * @fn ast::if_expr::codegen()
-     * @par Code generation for if expressions (currently does not contain else blocks)
+     * @par Code generation for if expressions.
      * 
-     * @par Create a scope, evaluate the condition, and set the parent function to the current function.
-     * 
+     * @par Initialize a static local variable that serves as a the naming convention for LLVM labels
      * @code
-        scope::create_scope();
-        llvm::Value* cond_codegen = condition->codegen();
-        llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent(); 
+        static int block_name_counter = -1;
      * @endcode
 
-     @par Create blocks for the then block and the merge point back into the function.
+       @par Evaluate the condition to an LLVM Value*, and convert it tp am integer comparison.
+       @code
+        llvm::Value* condition_value = condition->codegen();
+        condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
+       @endcode
 
-     @code
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then_do__", parent_function);
-        llvm::BasicBlock* merge_to_func_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge_back_to_func__", parent_function);
-     @endcode
+       @par Grab the parent function, and create a then block (will contain expressions in the if block).
+       @code
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++block_name_counter) + "__", parent_function);
+       @endcode
 
-     @par Create a conditional branch instruction based on the boolean condition, and set the IR insertion point to the then block (inside of the if statement).
+       @par If an else statement exists in our if expression, create a new llvm block for it, otherwise set it to nullptr.
+       @code
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(block_name_counter) + "__", parent_function) : nullptr;
+       @endcode
 
-     @code
-        codegen::IR_Builder->CreateCondBr(cond_codegen, then_blk, merge_to_func_blk);
-        codegen::IR_Builder->SetInsertPoint(then_blk);
-     @endcode
-
-     @par Iterate over each expression in the AST within the if block, and generate IR for it.
-
-     @code
-        llvm::Value* current_expr = nullptr;
-        for (auto const& expression : expressions) {
-            current_expr = expression->codegen();
+       @par If the merge block of the if expression is not yet set (not an elif), create a new basic block, and assign it to the if expression.
+       @code
+        if (merge_block == nullptr) {
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(block_name_counter) + "__", parent_function);
         }
-     @endcode
+       @endcode
 
-     @par Create an unconditional branch back to the merge block and set the IR insertion point to the merge point.
-     @code
-        codegen::IR_Builder->CreateBr(merge_to_func_blk);
-        codegen::IR_Builder->SetInsertPoint(merge_to_func_blk);
-     @endcode
+       @par Create a conditional branch based on the integer comparison condition to either the else block if the else block is non-null, or the merge block if it is.
+       @code
+        codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
+       @endcode
 
-     @par Exit the current scope, and return a placeholder null value.
-     @code
+       @par Set the insertion point to the then block, create a scope, and generate IR for all of the contained expressions.
+       @par Then exit the scope, and create an unconditional branch to the merge point.
+       @code
+        codegen::IR_Builder->SetInsertPoint(then_blk);
+        scope::create_scope();
+        for (auto const& expression : expressions) {
+            expression->codegen();
+        }
         scope::exit_scope();
+        codegen::IR_Builder->CreateBr(merge_block);
+       @endcode
+
+       @par If the else statement is non-null, set the insertion point to the else block
+       @code
+        if (else_stmt != nullptr) {
+            codegen::IR_Builder->SetInsertPoint(else_blk);
+       @endcode
+
+       @par If the else statement is an elif, grab the if expression from the else block, and set its merge point to the common merge point, then call codegen on the nested if expr.
+       @code
+        if (else_stmt->is_elif()) {
+            auto elif_node = else_stmt->grab_else_if();
+            elif_node->set_merge_block(merge_block);
+            elif_node->codegen();
+        }
+       @endcode
+
+       @par If the else statement is not a nested else if, and just a raw else, generate IR, and create an unconditional branch to the merge point.
+       @par Then place the else block before the merge block to avoid spagetti code.
+       @code
+        parent_function->getBasicBlockList().splice(std::next(else_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+       @endcode
+
+       @par If thesres is no else statement to speak of, then place the then block before the merge block.
+       @code
+        else {
+            parent_function->getBasicBlockList().splice(std::next(then_blk->getIterator()), parent_function->getBasicBlockList(), merge_block->getIterator());
+        }
+       @endcode
+
+       @par Then set the insertion point to the merge block, and proceed with code generation
+       @code
+        codegen::IR_Builder->SetInsertPoint(merge_block);
         return nullptr;
-     @endcode
+       @endcode
+
      */
     llvm::Value* ast::if_expr::codegen() {
-        static int counter = -1;
+        static int block_name_counter = -1;
         llvm::Value* condition_value = condition->codegen();
         condition_value = codegen::IR_Builder->CreateICmpNE(condition_value, llvm::ConstantInt::get(*codegen::LLVM_Context, llvm::APInt(1, 0)), "__if_cond__");
         llvm::Function* parent_function = codegen::IR_Builder->GetInsertBlock()->getParent();
-        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++counter) + "__", parent_function);
-        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(counter) + "__", parent_function) : nullptr;
+        llvm::BasicBlock* then_blk = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__then__" + std::to_string(++block_name_counter) + "__", parent_function);
+        llvm::BasicBlock* else_blk = else_stmt ? llvm::BasicBlock::Create(*codegen::LLVM_Context, "__else__" + std::to_string(block_name_counter) + "__", parent_function) : nullptr;
         if (merge_block == nullptr) {
-            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(counter) + "__", parent_function);
+            merge_block = llvm::BasicBlock::Create(*codegen::LLVM_Context, "__merge__" + std::to_string(block_name_counter) + "__", parent_function);
         }
 
         codegen::IR_Builder->CreateCondBr(condition_value, then_blk, else_blk ? else_blk : merge_block);
@@ -765,7 +802,6 @@ namespace ast {
         for (auto const& expression : expressions) {
             expression->codegen();
         }
-
         scope::exit_scope();
         codegen::IR_Builder->CreateBr(merge_block);
 
@@ -790,7 +826,23 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::else_expr::codegen()
+     * 
+     * @par Generate a scope, and initialize an LLVM Value* for the current expression as nullptr.
+     * @code
+        scope::create_scope();
+        llvm::Value* current_expr = nullptr;
+     * @endcode
+
+       @par Generate IR for each expression in the esle block, and exit scope.
+       @code
+        llvm::Value* current_expr = nullptr;
+        for (auto const& expression : expressions) {
+            current_expr = expression->codegen();
+        }
+        scope::exit_scope();
+        return nullptr;
+       @endcode
      */
     llvm::Value* ast::else_expr::codegen() {
         scope::create_scope();

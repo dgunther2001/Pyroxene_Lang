@@ -211,6 +211,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::if_expr::semantic_analysis() 
      * @par Semantically analyze if expressions.
      * 
      * @par Validate we are not in the global scope, and create a new scope.
@@ -260,7 +261,17 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::if_expr::semantic_analysis() 
+     * @par Semantically analyze else expressions.
+     * 
+     * @par Create a scope, semantically analyze each expression in the else expression, and then exit the scope.
+     * @code
+        sem_analysis_scope::create_scope();
+        for (auto const& ast_node : expressions) {
+            ast_node->semantic_analysis();
+        }
+        sem_analysis_scope::exit_scope();
+     * @endcode
      */
     void ast::else_expr::semantic_analysis() {
         sem_analysis_scope::create_scope();
@@ -434,7 +445,10 @@ namespace ast {
     }
     
     /**
-     * TODO: docs
+     * @par Semantically analyze print exressions.
+     * @code
+     *  expression->semantic_analysis();
+     * @endcode
      */
     void ast::print_expr::semantic_analysis() {
         expression->semantic_analysis();
