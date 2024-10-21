@@ -875,7 +875,7 @@ namespace parser {
                     }
                 case lexer::tok_print:
                     current_expr = parser::parse_print();
-                    break;                    
+                    break;                  
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
@@ -1015,7 +1015,7 @@ namespace parser {
                     }
                 case lexer::tok_print:
                     current_expr = parser::parse_print();
-                    break;                    
+                    break;                  
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
@@ -1375,7 +1375,14 @@ namespace parser {
             utility::parser_error("Expected closing bracket", current_line);
         }
         get_next_token(); // consume the closing bracket
-        return std::make_unique<ast::else_expr>(std::move(expressions), false);
+
+        auto ast_node = std::make_unique<ast::else_expr>(std::move(expressions), false);
+       
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return std::move(ast_node);
     }
 
     /**
@@ -1466,5 +1473,87 @@ namespace parser {
 
     }
     */
+
+    /**
+     * @par Parses graph declarations.
+     * 
+     * @par Resolve the type.
+     * @code
+        type_enum::types type;
+        switch (current_token) {
+            case lexer::tok_int:
+                type = type_enum::int_type;
+                break;
+            case lexer::tok_float:
+                type = type_enum::float_type;
+                break;
+            case lexer::tok_char:
+                type = type_enum::char_type;
+                break;
+            case lexer::tok_string:
+                type = type_enum::string_type;
+                break;
+            case lexer::tok_bool:
+                type = type_enum::bool_type;
+                break;
+            default:
+                utility::parser_error("Unsupported type for graphs", current_line);
+        }
+     * @endcode
+
+     @par Grab the name.
+     @code
+        std::string graph_name = std::get<std::string>(current_value.value());
+     @endcode
+
+     @par Create the AST Node and return it.
+     @code
+        auto ast_node = std::make_unique<ast::graph_decl_expr>(type, graph_name);
+        return ast_node;
+     @endcode
+
+     */
+    std::unique_ptr<ast::top_level_expr> parse_graph_decl() {
+        if (current_token != lexer::tok_graph) {
+            utility::parser_error("Expected token graph", current_line);
+        }
+
+        get_next_token(); // consume the 'graph' keyword
+        
+        type_enum::types type;
+        switch (current_token) {
+            case lexer::tok_int:
+                type = type_enum::int_type;
+                break;
+            case lexer::tok_float:
+                type = type_enum::float_type;
+                break;
+            case lexer::tok_char:
+                type = type_enum::char_type;
+                break;
+            case lexer::tok_string:
+                type = type_enum::string_type;
+                break;
+            case lexer::tok_bool:
+                type = type_enum::bool_type;
+                break;
+            default:
+                utility::parser_error("Unsupported type for graphs", current_line);
+        }
+
+        get_next_token(); // consume the type
+
+        std::string graph_name = std::get<std::string>(current_value.value()); // grab the name
+
+        get_next_token(); // consume the name
+
+        auto ast_node = std::make_unique<ast::graph_decl_expr>(type, graph_name);
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return ast_node;
+    }
 
 }

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['print_5fexpr_0',['print_expr',['../classast_1_1print__expr.html',1,'ast']]]
+  ['llvm_5fvar_5finfo_0',['llvm_var_info',['../structscope_1_1llvm__var__info.html',1,'scope']]]
 ];

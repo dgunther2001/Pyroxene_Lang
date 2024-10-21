@@ -453,4 +453,11 @@ namespace ast {
     void ast::print_expr::semantic_analysis() {
         expression->semantic_analysis();
     }
+
+    /**
+     * TODO: docs
+     */
+    void ast::graph_decl_expr::semantic_analysis() {
+        
+    }
 }

@@ -6,6 +6,8 @@ For the full license text, see the LICENSE.md file in the root directory.
 If LICENSE.md is not included, this version of the source code is provided in breach of this license.
 */
 
+graph int my_graph;
+
 def int main() {
     int a = 66;
     return 10;
