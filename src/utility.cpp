@@ -239,6 +239,10 @@ namespace utility {
                     func = parser::parse_function();
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
                     break;
+                case lexer::tok_graph:
+                    expr = parser::parse_graph_decl();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;    
                 case lexer::tok_return:
                     expr = parser::parse_return();
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
@@ -335,6 +339,10 @@ namespace utility {
                     func = parser::parse_function();
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
                     break;
+                case lexer::tok_graph:
+                    expr = parser::parse_graph_decl();
+                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                    break;      
                 case lexer::tok_return:
                     expr = parser::parse_return();
                     parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));

@@ -790,6 +790,42 @@ namespace ast {
         //void debug_output();
         llvm::Value* codegen() override;
     };
+
+    /**
+     * @par Holds data related to a graph expression.
+     * @code
+        class graph_decl_expr : public top_level_expr {
+        private:
+            type_enum::types type;
+            std::string graph_name;
+
+        public:
+            else_expr(type_enum::types type, std::string graph_name) :
+                type(type),
+                name(name)
+                {}
+            void semantic_analysis() override;
+            std::string get_ast_class() const override { return "graph_decl"; }
+            void debug_output();
+            llvm::Value* codegen() override;
+        };
+     * @endcode
+     */
+    class graph_decl_expr : public top_level_expr {
+    private:
+        type_enum::types type;
+        std::string graph_name;
+
+    public:
+        graph_decl_expr(type_enum::types type, std::string graph_name) :
+            type(type),
+            graph_name(graph_name)
+            {}
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "graph_decl"; }
+        void debug_output();
+        llvm::Value* codegen() override;
+    };
     
     
     extern std::string get_type_as_string(type_enum::types type);

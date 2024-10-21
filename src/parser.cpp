@@ -875,7 +875,7 @@ namespace parser {
                     }
                 case lexer::tok_print:
                     current_expr = parser::parse_print();
-                    break;                    
+                    break;                  
                 case lexer::tok_return:
                     current_expr = parse_return();
                     break;
@@ -1015,7 +1015,7 @@ namespace parser {
                     }
                 case lexer::tok_print:
                     current_expr = parser::parse_print();
-                    break;                    
+                    break;                  
                 case lexer::tok_if:
                     current_expr = parse_if();
                     break;
@@ -1375,7 +1375,14 @@ namespace parser {
             utility::parser_error("Expected closing bracket", current_line);
         }
         get_next_token(); // consume the closing bracket
-        return std::make_unique<ast::else_expr>(std::move(expressions), false);
+
+        auto ast_node = std::make_unique<ast::else_expr>(std::move(expressions), false);
+       
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return std::move(ast_node);
     }
 
     /**
@@ -1466,5 +1473,17 @@ namespace parser {
 
     }
     */
+
+    /**
+     * TODO: Docs
+     */
+    std::unique_ptr<ast::top_level_expr> parse_graph_decl() {
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+        
+        return nullptr;
+    }
 
 }

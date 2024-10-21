@@ -910,4 +910,9 @@ namespace ast {
     }
 
 
+    llvm::Value* ast::graph_decl_expr::codegen() {
+        return nullptr;
+    }
+
+
 }

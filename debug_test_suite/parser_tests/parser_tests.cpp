@@ -163,5 +163,15 @@ namespace ast {
      void ast::func_call_expr::debug_output() {
           std::cout << "Parsed function call (" << func_name << ")\n";
      }
+
+     /**
+      * @fn ast::fgraph_decl_expr::debug_output()
+      * @code
+      *  std::cout << "Parsing graph declaration (" << graph_name << ") of type " << type << "\n";
+      * @endcode
+      */     
+     void ast::graph_decl_expr::debug_output() {
+          std::cout << "Parsing graph declaration (" << graph_name << ") of type " << type << "\n";
+     }
 }
 

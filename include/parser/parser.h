@@ -83,6 +83,8 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_print();
 
+    std::unique_ptr<ast::top_level_expr> parse_graph_decl();
+
     //std::vector<std::unique_ptr<ast::top_level_expr>> parse_block();
 }
 
