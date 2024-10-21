@@ -808,6 +808,7 @@ namespace ast {
             std::string get_ast_class() const override { return "graph_decl"; }
             void debug_output();
             llvm::Value* codegen() override;
+            type_enum::types get_expr_type() const override {return type;}
         };
      * @endcode
      */
@@ -825,6 +826,7 @@ namespace ast {
         std::string get_ast_class() const override { return "graph_decl"; }
         void debug_output();
         llvm::Value* codegen() override;
+        type_enum::types get_expr_type() const override {return type;}
     };
     
     
