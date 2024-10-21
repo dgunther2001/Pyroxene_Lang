@@ -133,6 +133,8 @@ Functions</h2></td></tr>
 <tr class="separator:a20afff1098c7150cbcc22cdf3335c1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52052a3f4ee771f4aec1190b52e5b9ee" id="r_a52052a3f4ee771f4aec1190b52e5b9ee"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52052a3f4ee771f4aec1190b52e5b9ee">parse_print</a> ()</td></tr>
 <tr class="separator:a52052a3f4ee771f4aec1190b52e5b9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdfcdf0db14620c371456e8aadbccea7" id="r_afdfcdf0db14620c371456e8aadbccea7"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdfcdf0db14620c371456e8aadbccea7">parse_graph_decl</a> ()</td></tr>
+<tr class="separator:afdfcdf0db14620c371456e8aadbccea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -375,7 +377,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
 <div class="ttc" id="anamespacelexer_html_ac61160966632ce4c33ea19a44f4c748d"><div class="ttname"><a href="namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d">lexer::peek_token</a></div><div class="ttdeci">Token_Type peek_token(int token_number)</div><div class="ttdef"><b>Definition</b> lexer.cpp:696</div></div>
 <div class="ttc" id="anamespaceparser_html_a1f767dfcc1be892fc82b040af56dbcfb"><div class="ttname"><a href="#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_return()</div><div class="ttdef"><b>Definition</b> parser.cpp:1066</div></div>
-<div class="ttc" id="anamespaceparser_html_a52052a3f4ee771f4aec1190b52e5b9ee"><div class="ttname"><a href="#a52052a3f4ee771f4aec1190b52e5b9ee">parser::parse_print</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_print()</div><div class="ttdef"><b>Definition</b> parser.cpp:1401</div></div>
+<div class="ttc" id="anamespaceparser_html_a52052a3f4ee771f4aec1190b52e5b9ee"><div class="ttname"><a href="#a52052a3f4ee771f4aec1190b52e5b9ee">parser::parse_print</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_print()</div><div class="ttdef"><b>Definition</b> parser.cpp:1408</div></div>
 <div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:148</div></div>
 <div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:347</div></div>
 <div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:479</div></div>
@@ -677,7 +679,7 @@ Variables</h2></td></tr>
 <div class="line">            }</div>
 <div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a8ba5bde8443d531959dd32d12ec87b11">lexer::tok_print</a>:</div>
 <div class="line">            current_expr = <a class="code hl_function" href="#a52052a3f4ee771f4aec1190b52e5b9ee">parser::parse_print</a>();</div>
-<div class="line">            <span class="keywordflow">break</span>;                    </div>
+<div class="line">            <span class="keywordflow">break</span>;                  </div>
 <div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">lexer::tok_return</a>:</div>
 <div class="line">            current_expr = <a class="code hl_function" href="#a1f767dfcc1be892fc82b040af56dbcfb">parse_return</a>();</div>
 <div class="line">            <span class="keywordflow">break</span>;</div>
@@ -701,6 +703,51 @@ Variables</h2></td></tr>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Construct the function definition node, and return it.</dt><dd><div class="fragment"><div class="line"><span class="keyword">auto</span> func_definition = std::make_unique&lt;ast::func_defn&gt;(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));</div>
 <div class="line"><span class="keywordflow">return</span> func_definition;</div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="afdfcdf0db14620c371456e8aadbccea7" name="afdfcdf0db14620c371456e8aadbccea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdfcdf0db14620c371456e8aadbccea7">&#9670;&#160;</a></span>parse_graph_decl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt; parser::parse_graph_decl </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO: docs </p><dl class="section user"><dt>Parses graph declarations.</dt><dd></dd></dl>
+<dl class="section user"><dt>Resolve the type.</dt><dd><div class="fragment"><div class="line"><a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type;</div>
+<div class="line"><span class="keywordflow">switch</span> (<a class="code hl_variable" href="#a656c2bbdea7bed8ee50f04451666a17e">current_token</a>) {</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a>:</div>
+<div class="line">        type = <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab">type_enum::int_type</a>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a>:</div>
+<div class="line">        type = <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a9e13467005f6bd12af4b399ff1a01b63">type_enum::float_type</a>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a>:</div>
+<div class="line">        type = <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa27f56d15ea0ee09d3f9fe1c10fe994e">type_enum::char_type</a>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a>:</div>
+<div class="line">        type = <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7">type_enum::string_type</a>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a>:</div>
+<div class="line">        type = <a class="code hl_enumvalue" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum::bool_type</a>;</div>
+<div class="line">        <span class="keywordflow">break</span>;</div>
+<div class="line">    <span class="keywordflow">default</span>:</div>
+<div class="line">        <a class="code hl_function" href="namespaceutility.html#a9268449c45b475023dde39f4010b698a">utility::parser_error</a>(<span class="stringliteral">&quot;Unsupported type for graphs&quot;</span>, <a class="code hl_variable" href="#a617812bda535490f07f50ab1aab0da4d">current_line</a>);</div>
+<div class="line">}</div>
+<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> types.h:13</div></div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Grab the name.</dt><dd><div class="fragment"><div class="line">std::string graph_name = std::get&lt;std::string&gt;(<a class="code hl_variable" href="#a9d43579e90ab162c772408c1c7292f14">current_value</a>.value());</div>
+</div><!-- fragment --></dd></dl>
+<dl class="section user"><dt>Create the AST Node and return it.</dt><dd><div class="fragment"><div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::graph_decl_expr&gt;(type, graph_name);</div>
+<div class="line"><span class="keywordflow">return</span> ast_node;</div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -1126,7 +1173,6 @@ Variables</h2></td></tr>
 <div class="line">}    </div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="#a5ae126257d31d8a2193a9505a63c3cb3">get_next_token</a>();</div>
-<div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum::bool_type</a></div><div class="ttdeci">@ bool_type</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> types.h:13</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>We then store the identifier, and put it in the type map.</dt><dd></dd></dl>
 <div class="fragment"><div class="line">std::optional&lt;lexer::lexer_stored_values&gt; value = <a class="code hl_variable" href="#a9d43579e90ab162c772408c1c7292f14">current_value</a>;;</div>
