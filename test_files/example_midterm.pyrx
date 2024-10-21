@@ -1,0 +1,6 @@
+int a = 49;
+
+def int main() {
+    float b = 33.3 + 44.4;
+    return 0;
+}
