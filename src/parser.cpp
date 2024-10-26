@@ -1167,72 +1167,136 @@ namespace parser {
     }
 
 
-    /**
-     * TODO: docs
-     */
-    std::vector<std::unique_ptr<ast::top_level_expr>> parse_block() {
-        std::unique_ptr<ast::top_level_expr> current_expr;
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: // validate we are in a function here
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
+    namespace {
+        /**
+         * @par Parses a block within a scope that exists above the global scope (different from the utility level parsing dispatcher).
+         * @code
+            std::unique_ptr<ast::top_level_expr> current_expr;
+            std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+            while (current_token != lexer::tok_close_brack) {
+                switch (current_token) {
+                    case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                        current_expr = parse_var_decl_defn();
                         break;
-                    } else {
+                    case lexer::tok_return: // validate we are in a function here
+                        current_expr = parse_return();
+                        break;
+                    case lexer::tok_identifier:
+                        if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                            current_expr = parse_var_assign();
+                            break;
+                        } else {
+                            current_expr = parse_expression();
+                            break;
+                        }
+                    case lexer::tok_semicolon:
+                        get_next_token();
+                        current_expr = nullptr;
+                        break;
+                    case lexer::tok_if:
+                        current_expr = parse_if();
+                        break;
+                    default:
                         current_expr = parse_expression();
+                }
+
+                if (current_expr != nullptr) {
+                    expressions.push_back(std::move(current_expr));
+                }
+            }
+
+            return std::move(expressions);
+         * @endcode
+         */
+        std::vector<std::unique_ptr<ast::top_level_expr>> parse_block() {
+            std::unique_ptr<ast::top_level_expr> current_expr;
+            std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+            while (current_token != lexer::tok_close_brack) {
+                switch (current_token) {
+                    case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                        current_expr = parse_var_decl_defn();
                         break;
-                    }
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
+                    case lexer::tok_return: // validate we are in a function here
+                        current_expr = parse_return();
+                        break;
+                    case lexer::tok_identifier:
+                        if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                            current_expr = parse_var_assign();
+                            break;
+                        } else {
+                            current_expr = parse_expression();
+                            break;
+                        }
+                    case lexer::tok_semicolon:
+                        get_next_token();
+                        current_expr = nullptr;
+                        break;
+                    case lexer::tok_if:
+                        current_expr = parse_if();
+                        break;
+                    default:
+                        current_expr = parse_expression();
+                }
+
+                if (current_expr != nullptr) {
+                    expressions.push_back(std::move(current_expr));
+                }
+            }
+
+            return std::move(expressions);
+        }
+
+        /**
+         * @par Dispatched when we expect to extract a type from a particular token keyword.
+         * @code
+            type_enum::types type;
+            switch (current_token) {
+                case lexer::tok_int:
+                    type = type_enum::int_type;
                     break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
+                case lexer::tok_float:
+                    type = type_enum::float_type;
+                    break;
+                case lexer::tok_char:
+                    type = type_enum::char_type;
+                    break;
+                case lexer::tok_string:
+                    type = type_enum::string_type;
+                    break;
+                case lexer::tok_bool:
+                    type = type_enum::bool_type;
                     break;
                 default:
-                    current_expr = parse_expression();
+                    utility::parser_error("Unsupported type for graphs", current_line);
             }
 
-            if (current_expr != nullptr) {
-                expressions.push_back(std::move(current_expr));
+            return type;
+         * @endcode
+         */
+        type_enum::types parse_type() {
+            type_enum::types type;
+            switch (current_token) {
+                case lexer::tok_int:
+                    type = type_enum::int_type;
+                    break;
+                case lexer::tok_float:
+                    type = type_enum::float_type;
+                    break;
+                case lexer::tok_char:
+                    type = type_enum::char_type;
+                    break;
+                case lexer::tok_string:
+                    type = type_enum::string_type;
+                    break;
+                case lexer::tok_bool:
+                    type = type_enum::bool_type;
+                    break;
+                default:
+                    utility::parser_error("Unsupported type for graphs", current_line);
             }
+
+            return type;
         }
 
-        return std::move(expressions);
-    }
-
-    /**
-     * TODO: docs
-     */
-    type_enum::types parse_type() {
-        type_enum::types type;
-        switch (current_token) {
-            case lexer::tok_int:
-                type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                type = type_enum::bool_type;
-                break;
-            default:
-                utility::parser_error("Unsupported type for graphs", current_line);
-        }
-
-        return type;
     }
 }
