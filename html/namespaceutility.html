@@ -363,123 +363,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>This is called in both drivers (entrypoints), that takes in the current token stored in <code>parser::current_token</code>, and calls the correct parsing function and codegen if applicable.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_function" href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a>();</div>
+<div class="fragment"><div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a>();</div>
 <div class="line"><a class="code hl_function" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a>();</div>
 <div class="line"> </div>
-<div class="line">std::vector&lt;std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;&gt; parsing_output;</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line">    </div>
-<div class="line"> </div>
-<div class="line"><span class="preprocessor">    #if (DEBUG_MODE == 1 &amp;&amp; PARSER_PRINT_UTIL == 1)</span></div>
-<div class="line">        <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> != <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a> &amp;&amp; <a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> != <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a> &amp;&amp; <a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> != <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">lexer::tok_def</a>) {</div>
-<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\033[32m\nParsing New Statement:\033[0m\n&quot;</span>;</div>
-<div class="line">        } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a> == <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">lexer::tok_def</a>) {</div>
-<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;\033[32m\nParsing New Function:\033[0m\n&quot;</span>;</div>
-<div class="line">        }</div>
-<div class="line"><span class="preprocessor">    #endif</span></div>
-<div class="line">    </div>
-<div class="line">    std::unique_ptr&lt;ast::top_level_expr&gt; expr = <span class="keyword">nullptr</span>;  </div>
-<div class="line">    std::unique_ptr&lt;ast::func_defn&gt; func = <span class="keyword">nullptr</span>;  </div>
-<div class="line"> </div>
-<div class="line">    <span class="keywordflow">switch</span>(<a class="code hl_variable" href="namespaceparser.html#a656c2bbdea7bed8ee50f04451666a17e">parser::current_token</a>) {</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a>: <span class="comment">// if its the end of the file, exit the loop</span></div>
-<div class="line">            <span class="keywordflow">return</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a>:</div>
-<div class="line">            <a class="code hl_function" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a>(); <span class="comment">// ignore semicolons and get the next token...</span></div>
-<div class="line">            <span class="keywordflow">break</span>; </div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a>: <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a>:</div>
-<div class="line">            expr = <a class="code hl_function" href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a>: </div>
-<div class="line">            <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d">lexer::peek_token</a>(<a class="code hl_variable" href="namespaceparser.html#a609514eca432c41bf023f4f23443a68c">parser::current_token_index</a>) == <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a>) {</div>
-<div class="line">                expr = <a class="code hl_function" href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a>();</div>
-<div class="line">                parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">                <span class="keywordflow">break</span>;</div>
-<div class="line">            } <span class="keywordflow">else</span>{</div>
-<div class="line">                expr = <a class="code hl_function" href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a>();</div>
-<div class="line">                parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">                <span class="keywordflow">break</span>;</div>
-<div class="line">            }</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">lexer::tok_def</a>:</div>
-<div class="line">            func = <a class="code hl_function" href="namespaceparser.html#a691c692362f5d306ae67c563c0c05ccb">parser::parse_function</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(func)));</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ac541b282216dcd593a8a0413fcb1dc15">lexer::tok_graph</a>:</div>
-<div class="line">            expr = <a class="code hl_function" href="namespaceparser.html#afdfcdf0db14620c371456e8aadbccea7">parser::parse_graph_decl</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">            <span class="keywordflow">break</span>;    </div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">lexer::tok_return</a>:</div>
-<div class="line">            expr = <a class="code hl_function" href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a081e78700069633b4c101abd3a2c61c1">lexer::tok_if</a>:</div>
-<div class="line">            expr = <a class="code hl_function" href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser::parse_if</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">default</span>:</div>
-<div class="line">            expr = <a class="code hl_function" href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a>();</div>
-<div class="line">            parsing_output.push_back(std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;(std::move(expr)));</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">    }</div>
-<div class="line">}</div>
+<div class="line">std::vector&lt;std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;&gt; parsing_output = parse_top_level();</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; ast_node : parsing_output) {</div>
-<div class="line">    <span class="keywordflow">if</span> (std::holds_alternative&lt;std::unique_ptr&lt;ast::top_level_expr&gt;&gt;(ast_node)) {</div>
-<div class="line">        <span class="keywordflow">if</span> (std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;int&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;float&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;char&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;string&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;bool&quot;</span>) </div>
-<div class="line">        {</div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;semantic_analysis();</div>
-<div class="line">        }</div>
-<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;std::unique_ptr&lt;ast::func_defn&gt;&gt;(ast_node)) {</div>
-<div class="line">        std::get&lt;1&gt;(ast_node)-&gt;semantic_analysis();</div>
-<div class="line">    }</div>
+<div class="line">    call_sem_analysis(ast_node);</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a>();</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; ast_node : parsing_output) {</div>
-<div class="line">    <span class="keywordflow">if</span> (std::holds_alternative&lt;std::unique_ptr&lt;ast::top_level_expr&gt;&gt;(ast_node)) {</div>
-<div class="line">        <span class="keywordflow">if</span> (std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;int&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;float&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;char&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;string&quot;</span> &amp;&amp; </div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;get_ast_class() != <span class="stringliteral">&quot;bool&quot;</span>)</div>
-<div class="line">        {</div>
-<div class="line">            std::get&lt;0&gt;(ast_node)-&gt;codegen();</div>
-<div class="line">        }</div>
-<div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (std::holds_alternative&lt;std::unique_ptr&lt;ast::func_defn&gt;&gt;(ast_node)) {</div>
-<div class="line">        std::get&lt;1&gt;(ast_node)-&gt;codegen();</div>
-<div class="line">    }</div>
+<div class="line">    call_codegen(ast_node);</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer::tok_identifier</a></div><div class="ttdeci">@ tok_identifier</div><div class="ttdoc">Identifier.</div><div class="ttdef"><b>Definition</b> lexer.h:46</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a081e78700069633b4c101abd3a2c61c1"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a081e78700069633b4c101abd3a2c61c1">lexer::tok_if</a></div><div class="ttdeci">@ tok_if</div><div class="ttdoc">If keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:39</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdoc">Semicolon.</div><div class="ttdef"><b>Definition</b> lexer.h:47</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a></div><div class="ttdeci">@ tok_int</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> lexer.h:33</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">lexer::tok_return</a></div><div class="ttdeci">@ tok_return</div><div class="ttdoc">Return statement.</div><div class="ttdef"><b>Definition</b> lexer.h:65</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a></div><div class="ttdeci">@ tok_assignment</div><div class="ttdoc">Assignment operator.</div><div class="ttdef"><b>Definition</b> lexer.h:61</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a></div><div class="ttdeci">@ tok_char</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> lexer.h:37</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">lexer::tok_def</a></div><div class="ttdeci">@ tok_def</div><div class="ttdoc">Function definition keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:38</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab7f26c2c8a141179e892713310fc383f">lexer::tok_string</a></div><div class="ttdeci">@ tok_string</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> lexer.h:41</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ab92a760491658ea756139432473cc68a">lexer::tok_bool</a></div><div class="ttdeci">@ tok_bool</div><div class="ttdoc">Boolean type.</div><div class="ttdef"><b>Definition</b> lexer.h:35</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ac541b282216dcd593a8a0413fcb1dc15"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ac541b282216dcd593a8a0413fcb1dc15">lexer::tok_graph</a></div><div class="ttdeci">@ tok_graph</div><div class="ttdoc">Graph keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:63</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
-<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">lexer::tok_eof</a></div><div class="ttdeci">@ tok_eof</div><div class="ttdoc">End of file.</div><div class="ttdef"><b>Definition</b> lexer.h:29</div></div>
-<div class="ttc" id="anamespacelexer_html_ac61160966632ce4c33ea19a44f4c748d"><div class="ttname"><a href="namespacelexer.html#ac61160966632ce4c33ea19a44f4c748d">lexer::peek_token</a></div><div class="ttdeci">Token_Type peek_token(int token_number)</div><div class="ttdef"><b>Definition</b> lexer.cpp:696</div></div>
-<div class="ttc" id="anamespaceparser_html_a1f767dfcc1be892fc82b040af56dbcfb"><div class="ttname"><a href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser::parse_return</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_return()</div><div class="ttdef"><b>Definition</b> parser.cpp:1066</div></div>
 <div class="ttc" id="anamespaceparser_html_a5ae126257d31d8a2193a9505a63c3cb3"><div class="ttname"><a href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a></div><div class="ttdeci">int get_next_token()</div><div class="ttdef"><b>Definition</b> parser.cpp:49</div></div>
-<div class="ttc" id="anamespaceparser_html_a691c692362f5d306ae67c563c0c05ccb"><div class="ttname"><a href="namespaceparser.html#a691c692362f5d306ae67c563c0c05ccb">parser::parse_function</a></div><div class="ttdeci">std::unique_ptr&lt; ast::func_defn &gt; parse_function()</div><div class="ttdef"><b>Definition</b> parser.cpp:907</div></div>
-<div class="ttc" id="anamespaceparser_html_a75ea25852e3dec21a092b48f469249c2"><div class="ttname"><a href="namespaceparser.html#a75ea25852e3dec21a092b48f469249c2">parser::parse_expression</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_expression()</div><div class="ttdef"><b>Definition</b> parser.cpp:148</div></div>
-<div class="ttc" id="anamespaceparser_html_a7eeca2f9f97404df5ef4e2e2250c8989"><div class="ttname"><a href="namespaceparser.html#a7eeca2f9f97404df5ef4e2e2250c8989">parser::parse_var_decl_defn</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_decl_defn()</div><div class="ttdef"><b>Definition</b> parser.cpp:347</div></div>
-<div class="ttc" id="anamespaceparser_html_abdebb66c3ede67cb231a31a1ba7f7fcb"><div class="ttname"><a href="namespaceparser.html#abdebb66c3ede67cb231a31a1ba7f7fcb">parser::parse_var_assign</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_var_assign()</div><div class="ttdef"><b>Definition</b> parser.cpp:479</div></div>
-<div class="ttc" id="anamespaceparser_html_ad38bbdbfcfa59d1beb97bfddc5f7a719"><div class="ttname"><a href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser::parse_if</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_if()</div><div class="ttdef"><b>Definition</b> parser.cpp:1177</div></div>
-<div class="ttc" id="anamespaceparser_html_afdfcdf0db14620c371456e8aadbccea7"><div class="ttname"><a href="namespaceparser.html#afdfcdf0db14620c371456e8aadbccea7">parser::parse_graph_decl</a></div><div class="ttdeci">std::unique_ptr&lt; ast::top_level_expr &gt; parse_graph_decl()</div><div class="ttdef"><b>Definition</b> parser.cpp:1516</div></div>
-<div class="ttc" id="anamespacescope_html_a1a6b7d5eedb10b30e8db49c791b917d5"><div class="ttname"><a href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:12</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:139</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aabe35ff7d69e8dcbf3d0b3e9b5c003af"><div class="ttname"><a href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:125</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
