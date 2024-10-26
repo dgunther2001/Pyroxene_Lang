@@ -196,98 +196,19 @@ namespace utility {
      * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
      * 
      * @code
-        scope::create_scope();
+        sem_analysis_scope::create_scope();
         parser::get_next_token();
 
-        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
-
-        while (true) {
-            
-
-            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
-                } else if (parser::current_token == lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
-                }
-            #endif
-            
-            std::unique_ptr<ast::top_level_expr> expr = nullptr;  
-            std::unique_ptr<ast::func_defn> func = nullptr;  
-
-            switch(parser::current_token) {
-                case lexer::tok_eof: // if its the end of the file, exit the loop
-                    return;
-                case lexer::tok_semicolon:
-                    parser::get_next_token(); // ignore semicolons and get the next token...
-                    break; 
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
-                    expr = parser::parse_var_decl_defn();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                case lexer::tok_identifier: 
-                    if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
-                        expr = parser::parse_var_assign();
-                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;
-                    } else{
-                        expr = parser::parse_expression();
-                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;
-                    }
-                case lexer::tok_def:
-                    func = parser::parse_function();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
-                    break;
-                case lexer::tok_graph:
-                    expr = parser::parse_graph_decl();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;    
-                case lexer::tok_return:
-                    expr = parser::parse_return();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                case lexer::tok_if:
-                    expr = parser::parse_if();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                default:
-                    expr = parser::parse_expression();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-            }
-        }
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output = parse_top_level();
 
         for (auto const& ast_node : parsing_output) {
-            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
-                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
-                    std::get<0>(ast_node)->get_ast_class() != "float" && 
-                    std::get<0>(ast_node)->get_ast_class() != "char" && 
-                    std::get<0>(ast_node)->get_ast_class() != "string" && 
-                    std::get<0>(ast_node)->get_ast_class() != "bool") 
-                {
-                    std::get<0>(ast_node)->semantic_analysis();
-                }
-            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
-                std::get<1>(ast_node)->semantic_analysis();
-            }
+            call_sem_analysis(ast_node);
         }
 
         sem_analysis_scope::exit_scope();
 
         for (auto const& ast_node : parsing_output) {
-            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
-                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
-                    std::get<0>(ast_node)->get_ast_class() != "float" && 
-                    std::get<0>(ast_node)->get_ast_class() != "char" && 
-                    std::get<0>(ast_node)->get_ast_class() != "string" && 
-                    std::get<0>(ast_node)->get_ast_class() != "bool")
-                {
-                    std::get<0>(ast_node)->codegen();
-                }
-            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
-                std::get<1>(ast_node)->codegen();
-            }
+            call_codegen(ast_node);
         }
      * @endcode
      */
@@ -296,73 +217,176 @@ namespace utility {
         sem_analysis_scope::create_scope();
         parser::get_next_token();
 
-        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output = parse_top_level();
 
-        bool not_eof = true;
+        for (auto const& ast_node : parsing_output) {
+            call_sem_analysis(ast_node);
+        }
 
-        while (not_eof) {
-            
+        sem_analysis_scope::exit_scope();
 
-            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-                if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
-                } else if (parser::current_token == lexer::tok_def) {
-                    std::cout << "\033[32m\nParsing New Function:\033[0m\n";
-                }
-            #endif
-            
-            std::unique_ptr<ast::top_level_expr> expr = nullptr;  
-            std::unique_ptr<ast::func_defn> func = nullptr;  
+        for (auto const& ast_node : parsing_output) {
+            call_codegen(ast_node);
+        }
+    }
 
-            switch(parser::current_token) {
-                case lexer::tok_eof: // if its the end of the file, exit the loop
-                    not_eof = false;
-                    break;
-                case lexer::tok_semicolon:
-                    parser::get_next_token(); // ignore semicolons and get the next token...
-                    break; 
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
-                    expr = parser::parse_var_decl_defn();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                case lexer::tok_identifier: 
-                    if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
-                        expr = parser::parse_var_assign();
+    namespace {
+
+        /**
+         * @par Primary parsing loop for the program that returns a vector of AST nodes in variant form to allow for multiple types.
+         * @code
+            bool not_eof = true;
+            std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
+            while (not_eof) {
+                
+                #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                    if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
+                        std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                    } else if (parser::current_token == lexer::tok_def) {
+                        std::cout << "\033[32m\nParsing New Function:\033[0m\n";
+                    }
+                #endif
+                
+                std::unique_ptr<ast::top_level_expr> expr = nullptr;  
+                std::unique_ptr<ast::func_defn> func = nullptr;  
+
+                switch(parser::current_token) {
+                    case lexer::tok_eof: // if its the end of the file, exit the loop
+                        not_eof = false;
+                        break;
+                    case lexer::tok_semicolon:
+                        parser::get_next_token(); // ignore semicolons and get the next token...
+                        break; 
+                    case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
+                        expr = parser::parse_var_decl_defn();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
-                    } else{
+                    case lexer::tok_identifier: 
+                        if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
+                            expr = parser::parse_var_assign();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
+                        } else{
+                            expr = parser::parse_expression();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
+                        }
+                    case lexer::tok_def:
+                        func = parser::parse_function();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
+                        break;
+                    case lexer::tok_graph:
+                        expr = parser::parse_graph_decl();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;      
+                    case lexer::tok_return:
+                        expr = parser::parse_return();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_if:
+                        expr = parser::parse_if();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_print:
+                        expr = parser::parse_print();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    default:
                         expr = parser::parse_expression();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
-                    }
-                case lexer::tok_def:
-                    func = parser::parse_function();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
-                    break;
-                case lexer::tok_graph:
-                    expr = parser::parse_graph_decl();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;      
-                case lexer::tok_return:
-                    expr = parser::parse_return();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                case lexer::tok_if:
-                    expr = parser::parse_if();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                case lexer::tok_print:
-                    expr = parser::parse_print();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
-                default:
-                    expr = parser::parse_expression();
-                    parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                    break;
+                }
             }
+
+            return std::move(parsing_output);
+         * @endcode
+         */
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parse_top_level() {
+            bool not_eof = true;
+            std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output;
+            while (not_eof) {
+                
+                #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                    if (parser::current_token != lexer::tok_eof && parser::current_token != lexer::tok_semicolon && parser::current_token != lexer::tok_def) {
+                        std::cout << "\033[32m\nParsing New Statement:\033[0m\n";
+                    } else if (parser::current_token == lexer::tok_def) {
+                        std::cout << "\033[32m\nParsing New Function:\033[0m\n";
+                    }
+                #endif
+                
+                std::unique_ptr<ast::top_level_expr> expr = nullptr;  
+                std::unique_ptr<ast::func_defn> func = nullptr;  
+
+                switch(parser::current_token) {
+                    case lexer::tok_eof: // if its the end of the file, exit the loop
+                        not_eof = false;
+                        break;
+                    case lexer::tok_semicolon:
+                        parser::get_next_token(); // ignore semicolons and get the next token...
+                        break; 
+                    case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool:
+                        expr = parser::parse_var_decl_defn();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_identifier: 
+                        if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
+                            expr = parser::parse_var_assign();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
+                        } else{
+                            expr = parser::parse_expression();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
+                        }
+                    case lexer::tok_def:
+                        func = parser::parse_function();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
+                        break;
+                    case lexer::tok_graph:
+                        expr = parser::parse_graph_decl();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;      
+                    case lexer::tok_return:
+                        expr = parser::parse_return();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_if:
+                        expr = parser::parse_if();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_print:
+                        expr = parser::parse_print();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    default:
+                        expr = parser::parse_expression();
+                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                }
+            }
+
+            return std::move(parsing_output);
         }
 
-        for (auto const& ast_node : parsing_output) {
+        /**
+         * @par Extracts the correct AST node type, and calls the respective semantic analysis function.
+         * @param ast_node A reference to an AST node.
+         * @code
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool") 
+                {
+                    std::get<0>(ast_node)->semantic_analysis();
+                }
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->semantic_analysis();
+            }
+         * @endcode
+         */
+        void call_sem_analysis(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node) {
             if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
                 if (std::get<0>(ast_node)->get_ast_class() != "int" && 
                     std::get<0>(ast_node)->get_ast_class() != "float" && 
@@ -377,9 +401,10 @@ namespace utility {
             }
         }
 
-        sem_analysis_scope::exit_scope();
-
-        for (auto const& ast_node : parsing_output) {
+        /**
+         * @par Extracts the variant type in the reference, and calls the correct codegen method.
+         * @param ast_node A reference to an AST node.
+         * @code
             if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
                 if (std::get<0>(ast_node)->get_ast_class() != "int" && 
                     std::get<0>(ast_node)->get_ast_class() != "float" && 
@@ -391,10 +416,24 @@ namespace utility {
                 }
             } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
                 std::get<1>(ast_node)->codegen();
-            }
+            }    
+         * @endcode
+         */
+        void call_codegen(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node) {
+            if (std::holds_alternative<std::unique_ptr<ast::top_level_expr>>(ast_node)) {
+                if (std::get<0>(ast_node)->get_ast_class() != "int" && 
+                    std::get<0>(ast_node)->get_ast_class() != "float" && 
+                    std::get<0>(ast_node)->get_ast_class() != "char" && 
+                    std::get<0>(ast_node)->get_ast_class() != "string" && 
+                    std::get<0>(ast_node)->get_ast_class() != "bool")
+                {
+                    std::get<0>(ast_node)->codegen();
+                }
+            } else if (std::holds_alternative<std::unique_ptr<ast::func_defn>>(ast_node)) {
+                std::get<1>(ast_node)->codegen();
+            }       
         }
 
-        
     }
 
 }

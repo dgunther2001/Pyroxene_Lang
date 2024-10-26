@@ -63,7 +63,7 @@ def float my_func2(string ml) {
         mds = 't';
     }
     
-
+    int hh = 33;
     return 44.7;
 }
 
