@@ -289,27 +289,8 @@ namespace parser {
     * 
     * @par First we check the type
     * @code
-    *   type_enum::types type;
+    *   type_enum::types type = parse_type();
         std::string identifier;
-        switch (current_token) {
-            case lexer::tok_int:
-                type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                type = type_enum::bool_type;
-                break;
-            default:
-                utility::parser_error("Invalid type specified", current_line); 
-        }    
 
         get_next_token();
     * @endcode
@@ -345,27 +326,8 @@ namespace parser {
       @endcode
     */
     std::unique_ptr<ast::top_level_expr> parse_var_decl_defn() {
-        type_enum::types type;
+        type_enum::types type = parse_type();
         std::string identifier;
-        switch (current_token) {
-            case lexer::tok_int:
-                type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                type = type_enum::bool_type;
-                break;
-            default:
-                utility::parser_error("Invalid type specified", current_line); 
-        }    
         get_next_token(); // consume the type
 
         std::optional<lexer::lexer_stored_values> value = current_value;
@@ -787,30 +749,7 @@ namespace parser {
      * @code
      *   get_next_token();
 
-        type_enum::types ret_type;
-        switch (current_token) {
-            case lexer::tok_int:
-                ret_type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                ret_type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                ret_type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                ret_type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                ret_type = type_enum:::bool_type;
-                break;
-            case lexer::tok_void:
-                ret_type = type_enum::void_type;
-                break;
-            default:
-                utility::parser_error("Invalid return type provided to function", current_line);
-        }
-
+        type_enum::types ret_type = parse_type();
         get_next_token(); 
 
         std::string func_name = std::get<std::string>(lexer::stored_values.at(current_token_index - 1).value()); // grab the function name
@@ -854,53 +793,14 @@ namespace parser {
 
        @par Parse expressions and store them in a vector until we reach a closing bracket.
        @code
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        std::set<std::string> var_names;
-        while (current_token != lexer::tok_close_brack) {
-            std::unique_ptr<ast::top_level_expr> current_expr;
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
-                    current_expr = parse_var_decl_defn();
-                    std::string var_name;
-                    var_names.insert(var_name);
-                    break;
-                }
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        expr = parse_var_assign();
-                        break;
-                    } else{
-                        expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;                  
-                case lexer::tok_return:
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
 
         get_next_token(); 
        @endcode
 
        @par Construct the function definition node, and return it.
        @code
-        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
+        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(parameters));
         return func_definition;
        @endcode
      */
@@ -921,29 +821,7 @@ namespace parser {
 
         get_next_token(); // eat def
 
-        type_enum::types ret_type;
-        switch (current_token) {
-            case lexer::tok_int:
-                ret_type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                ret_type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                ret_type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                ret_type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                ret_type = type_enum::bool_type;
-                break;
-            case lexer::tok_void:
-                ret_type = type_enum::void_type;
-                break;
-            default:
-                utility::parser_error("Invalid return type provided to function", current_line);
-        }
+        type_enum::types ret_type = parse_type();
 
         get_next_token(); // consume the type
 
@@ -985,56 +863,12 @@ namespace parser {
         }
         get_next_token(); // consume the bracket
 
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        std::set<std::string> var_names;
-        while (current_token != lexer::tok_close_brack) {
-            // parse expressions and add them to a vector
-            // consume semicolons as we go
-            std::unique_ptr<ast::top_level_expr> current_expr;
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: {
-                    current_expr = parse_var_decl_defn();
-                    std::string var_name;
-                    var_names.insert(var_name);
-                    break;
-                }
-                case lexer::tok_return:
-                    current_expr = parse_return(); // validate within a function control flow block
-                    break;
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;                  
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-
-
-            // add error handling here
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
 
         get_next_token(); // consume the '}'
 
         // instantiate the ast node and return it
-        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(var_names), std::move(parameters));
+        auto func_definition = std::make_unique<ast::func_defn>(ret_type, func_name, std::move(expressions), std::move(parameters));
 
         #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
             func_definition->debug_output();
@@ -1118,42 +952,7 @@ namespace parser {
 
        @par Parse through all expressions contained within the if block, and store them.
        @code
-        std::unique_ptr<ast::top_level_expr> current_expr;
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: 
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
 
         if (current_token != lexer::tok_close_brack) {
             utility::parser_error("Expected closing bracket for if expression", current_line);
@@ -1198,43 +997,7 @@ namespace parser {
 
         get_next_token(); // consume the {
 
-        std::unique_ptr<ast::top_level_expr> current_expr;
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: // validate we are in a function here
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
 
         if (current_token != lexer::tok_close_brack) {
             utility::parser_error("Expected closing bracket for if expression", current_line);
@@ -1273,42 +1036,7 @@ namespace parser {
 
        @par Parse expressions until we encounter a closing bracket.
        @code
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        std::unique_ptr<ast::top_level_expr> current_expr;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: 
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
        @endcode
 
        @par Generate an else expression AST node.
@@ -1334,42 +1062,7 @@ namespace parser {
 
         get_next_token(); // consume the '{'
 
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        std::unique_ptr<ast::top_level_expr> current_expr;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: 
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                case lexer::tok_print:
-                    current_expr = parser::parse_print();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.emplace_back(std::move(current_expr));
-            }
-        }
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
 
         if (current_token != lexer::tok_close_brack) {
             utility::parser_error("Expected closing bracket", current_line);
@@ -1428,77 +1121,13 @@ namespace parser {
 
         return std::make_unique<ast::print_expr>(std::move(expression));
     }
-
-    /**
-     * TODO: docs
-     */
-    /*
-    std::vector<std::unique_ptr<ast::top_level_expr>> parse_block() {
-        std::unique_ptr<ast::top_level_expr>> current_expr;
-        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
-        while (current_token != lexer::tok_close_brack) {
-            switch (current_token) {
-                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
-                    current_expr = parse_var_decl_defn();
-                    break;
-                case lexer::tok_return: // validate we are in a function here
-                    current_expr = parse_return();
-                    break;
-                case lexer::tok_identifier:
-                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
-                        current_expr = parse_var_assign();
-                        break;
-                    } else{
-                        current_expr = parse_expression();
-                        break;
-                    }
-                case lexer::tok_semicolon:
-                    get_next_token();
-                    current_expr = nullptr;
-                    break;
-                case lexer::tok_if:
-                    current_expr = parse_if();
-                    break;
-                default:
-                    current_expr = parse_expression();
-            }
-
-            if (current_expr != nullptr) {
-                expressions.push_back(std::move(current_expr));
-            }
-
-        }
-
-        return std::move(expressions);
-
-    }
-    */
-
+    
     /**
      * @par Parses graph declarations.
      * 
      * @par Resolve the type.
      * @code
-        type_enum::types type;
-        switch (current_token) {
-            case lexer::tok_int:
-                type = type_enum::int_type;
-                break;
-            case lexer::tok_float:
-                type = type_enum::float_type;
-                break;
-            case lexer::tok_char:
-                type = type_enum::char_type;
-                break;
-            case lexer::tok_string:
-                type = type_enum::string_type;
-                break;
-            case lexer::tok_bool:
-                type = type_enum::bool_type;
-                break;
-            default:
-                utility::parser_error("Unsupported type for graphs", current_line);
-        }
+        type_enum::types type = pares_type();
      * @endcode
 
      @par Grab the name.
@@ -1520,6 +1149,69 @@ namespace parser {
 
         get_next_token(); // consume the 'graph' keyword
         
+        type_enum::types type = parse_type();
+
+        get_next_token(); // consume the type
+
+        std::string graph_name = std::get<std::string>(current_value.value()); // grab the name
+
+        get_next_token(); // consume the name
+
+        auto ast_node = std::make_unique<ast::graph_decl_expr>(type, graph_name);
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return ast_node;
+    }
+
+
+    /**
+     * TODO: docs
+     */
+    std::vector<std::unique_ptr<ast::top_level_expr>> parse_block() {
+        std::unique_ptr<ast::top_level_expr> current_expr;
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions;
+        while (current_token != lexer::tok_close_brack) {
+            switch (current_token) {
+                case lexer::tok_int: case lexer::tok_float: case lexer::tok_char: case lexer::tok_string: case lexer::tok_bool: 
+                    current_expr = parse_var_decl_defn();
+                    break;
+                case lexer::tok_return: // validate we are in a function here
+                    current_expr = parse_return();
+                    break;
+                case lexer::tok_identifier:
+                    if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
+                        current_expr = parse_var_assign();
+                        break;
+                    } else {
+                        current_expr = parse_expression();
+                        break;
+                    }
+                case lexer::tok_semicolon:
+                    get_next_token();
+                    current_expr = nullptr;
+                    break;
+                case lexer::tok_if:
+                    current_expr = parse_if();
+                    break;
+                default:
+                    current_expr = parse_expression();
+            }
+
+            if (current_expr != nullptr) {
+                expressions.push_back(std::move(current_expr));
+            }
+        }
+
+        return std::move(expressions);
+    }
+
+    /**
+     * TODO: docs
+     */
+    type_enum::types parse_type() {
         type_enum::types type;
         switch (current_token) {
             case lexer::tok_int:
@@ -1541,19 +1233,6 @@ namespace parser {
                 utility::parser_error("Unsupported type for graphs", current_line);
         }
 
-        get_next_token(); // consume the type
-
-        std::string graph_name = std::get<std::string>(current_value.value()); // grab the name
-
-        get_next_token(); // consume the name
-
-        auto ast_node = std::make_unique<ast::graph_decl_expr>(type, graph_name);
-
-        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-            ast_node->debug_output();
-        #endif
-
-        return ast_node;
+        return type;
     }
-
 }

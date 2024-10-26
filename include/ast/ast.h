@@ -90,14 +90,12 @@ namespace ast {
             type_enum::types return_type;
             std::string func_name;
             std::vector<std::unique_ptr<top_level_expr>> expressions;
-            std::set<std::string> function_symbol_table;
             std::vector<std::unique_ptr<top_level_expr>>parameters;
         public:
-            func_defn(type_enum::types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::set<std::string> var_names, std::vector<std::unique_ptr<top_level_expr>> parameters) :
+            func_defn(type_enum::types return_type, std::string name, std::vector<std::unique_ptr<top_level_expr>> expressions, std::vector<std::unique_ptr<top_level_expr>> parameters) :
                 return_type(return_type),
                 func_name(name),
                 expressions(std::move(expressions)),
-                function_symbol_table(std::move(var_names)),
                 parameters(std::move(parameters))
                 {}
 
@@ -114,19 +112,16 @@ namespace ast {
         type_enum::types return_type;
         std::string func_name;
         std::vector<std::unique_ptr<top_level_expr>> expressions;
-        std::set<std::string> function_symbol_table;
         std::vector<std::unique_ptr<top_level_expr>>parameters;
     public:
         func_defn(type_enum::types return_type, 
             std::string name, 
             std::vector<std::unique_ptr<top_level_expr>> expressions, 
-            std::set<std::string> var_names, 
             std::vector<std::unique_ptr<top_level_expr>> parameters
         ) :
             return_type(return_type),
             func_name(name),
             expressions(std::move(expressions)),
-            function_symbol_table(std::move(var_names)),
             parameters(std::move(parameters))
         {}
 
