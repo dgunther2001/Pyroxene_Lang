@@ -37,6 +37,12 @@ namespace utility {
     extern void init_parser();
     extern void primary_driver_loop();
 
+    namespace {
+        std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parse_top_level();
+        void call_sem_analysis(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node);
+        void call_codegen(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node);
+    }
+
 }
 
 #endif
