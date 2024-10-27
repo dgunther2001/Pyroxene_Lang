@@ -15,6 +15,8 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 namespace utility {
 
+    std::set<std::string> library_and_include;
+
     /**
      * @par Gets called to abort if input file does not have a .pyrx extension.
      * 
@@ -196,6 +198,8 @@ namespace utility {
      * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
      * 
      * @code
+     *  process_includes();
+     * 
         sem_analysis_scope::create_scope();
         parser::get_next_token();
 
@@ -214,8 +218,10 @@ namespace utility {
      */
 
     void primary_driver_loop() {
-        sem_analysis_scope::create_scope();
         parser::get_next_token();
+        process_includes();
+
+        sem_analysis_scope::create_scope();
 
         std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output = parse_top_level();
 
@@ -231,6 +237,33 @@ namespace utility {
     }
 
     namespace {
+
+        /**
+         * TODO: docs
+         */
+        void process_includes() {
+            while (parser::current_token == lexer::tok_include) {
+                std::string include_statement = parser::parse_include();
+                library_and_include.insert(include_statement);
+            }
+
+            for (const std::string& include_item : library_and_include) {
+                compile_include_ir(include_item);;
+            }
+        }
+
+        /**
+         * TODO: docs
+         */
+        void compile_include_ir(const std::string& item) {
+            if (item == "list") {
+                std::system("echo Emitting IR For List Module.");
+                std::system("chmod u+x ../pyroxene_slib/list/build_module/build.sh");
+                std::system("../pyroxene_slib/list/build_module/build.sh");
+                return;
+            }
+            std::abort();
+        }
 
         /**
          * @par Primary parsing loop for the program that returns a vector of AST nodes in variant form to allow for multiple types.

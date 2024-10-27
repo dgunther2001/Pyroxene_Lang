@@ -12,6 +12,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <string>
 #include <iostream>
 #include <variant>
+#include <set>
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../ast/ast.h"
@@ -21,6 +22,11 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #define PARSER_PRINT_UTIL 0
 
 namespace utility {
+
+    /**
+     * @par A list of all include statements.
+     */
+    extern std::set<std::string> library_and_include;
 
     extern void driver_extension_error(const std::string& message, const std::string& file_name);
     extern void driver_args_error(const int num_args);
@@ -38,6 +44,8 @@ namespace utility {
     extern void primary_driver_loop();
 
     namespace {
+        void process_includes();
+        void compile_include_ir(const std::string& item);
         std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parse_top_level();
         void call_sem_analysis(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node);
         void call_codegen(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node);

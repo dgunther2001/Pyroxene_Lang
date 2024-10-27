@@ -1166,6 +1166,23 @@ namespace parser {
         return ast_node;
     }
 
+    /**
+     * TODO: docs
+     */
+    std::string parse_include() {
+        if (current_token != lexer::tok_include) {
+            utility::parser_error("Expected include directive", current_line);
+        }
+        get_next_token(); // consume the include directive
+        switch (current_token) {
+            case (lexer::tok_list):
+                get_next_token();
+                return "list";
+            default:
+                utility::parser_error("Invalid item included", current_line);
+        }
+    }
+
 
     namespace {
         /**

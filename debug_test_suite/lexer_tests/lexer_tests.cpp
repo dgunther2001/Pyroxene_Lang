@@ -112,6 +112,12 @@ static void print_individual_token(int token, const std::optional<lexer::lexer_s
         case lexer::tok_def:
             std::cout << "Token def\n";
             break;
+        case lexer::tok_include:
+            std::cout << "Token include\n";
+            break;
+        case lexer::tok_list:
+            std::cout << "Token list\n";
+            break;
         default: 
             std::cout << "Unknown Token\n";
             break;
