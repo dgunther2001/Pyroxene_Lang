@@ -222,6 +222,14 @@ namespace lexer {
      *         return tok_def;
      *     }
      * 
+     *      if (identifier == "include") {
+                return tok_include;
+            }
+
+            if (identifier == "list") {
+                return tok_list;
+            }
+     * 
      *     return tok_identifier;
      * }
      * @endcode
@@ -512,6 +520,14 @@ namespace lexer {
 
             if (identifier == "def") {
                 return tok_def;
+            }
+
+            if (identifier == "include") {
+                return tok_include;
+            }
+
+            if (identifier == "list") {
+                return tok_list;
             }
 
             return tok_identifier;
