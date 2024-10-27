@@ -15,6 +15,8 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 namespace utility {
 
+    std::set<std::string> library_and_include;
+
     /**
      * @par Gets called to abort if input file does not have a .pyrx extension.
      * 
@@ -196,6 +198,8 @@ namespace utility {
      * @par This is called in both drivers (entrypoints), that takes in the current token stored in `parser::current_token`, and calls the correct parsing function and codegen if applicable.
      * 
      * @code
+     *  process_includes();
+     * 
         sem_analysis_scope::create_scope();
         parser::get_next_token();
 
@@ -214,8 +218,10 @@ namespace utility {
      */
 
     void primary_driver_loop() {
-        sem_analysis_scope::create_scope();
         parser::get_next_token();
+        process_includes();
+
+        sem_analysis_scope::create_scope();
 
         std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parsing_output = parse_top_level();
 
@@ -225,12 +231,70 @@ namespace utility {
 
         sem_analysis_scope::exit_scope();
 
+        link_bc_module();
+
         for (auto const& ast_node : parsing_output) {
             call_codegen(ast_node);
         }
     }
 
     namespace {
+
+        /**
+         * TODO: docs
+         */
+        void link_bc_module() {
+            llvm::SMDiagnostic error;
+            for (const std::string& include_item : library_and_include) {
+                std::string bc_path;
+                if (include_item == "list") {
+                    bc_path = "../pyroxene_slib/llvm_modules/list.bc";
+                    //std::system("[ -e ./pyroxene_slib/llvm_modules/list.bc ] && echo 'here'");
+                    
+                    std::unique_ptr<llvm::Module> list_mod = llvm::parseIRFile(bc_path, error, *codegen::LLVM_Context);
+
+                    if (list_mod == nullptr) {
+                        error.print("link_bc_module", llvm::errs());
+                        std::abort();
+                    }
+
+                    
+                    bool failed = llvm::Linker::linkModules(*codegen::LLVM_Module, std::move(list_mod));
+                    if (failed) {
+                        llvm::errs() << "Error linking module: " << bc_path << "\n";
+                        std::abort();
+                    }
+                    
+                }
+            }
+        }
+
+        /**
+         * TODO: docs
+         */
+        void process_includes() {
+            while (parser::current_token == lexer::tok_include) {
+                std::string include_statement = parser::parse_include();
+                library_and_include.insert(include_statement);
+            }
+
+            for (const std::string& include_item : library_and_include) {
+                compile_include_ir(include_item);;
+            }
+        }
+
+        /**
+         * TODO: docs
+         */
+        void compile_include_ir(const std::string& item) {
+            if (item == "list") {
+                std::system("echo Emitting IR For List Module.");
+                std::system("chmod u+x ../pyroxene_slib/list/build_module/build.sh");
+                std::system("../pyroxene_slib/list/build_module/build.sh");
+                return;
+            }
+            std::abort();
+        }
 
         /**
          * @par Primary parsing loop for the program that returns a vector of AST nodes in variant form to allow for multiple types.
@@ -290,6 +354,9 @@ namespace utility {
                     case lexer::tok_print:
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_list:
+                        current_expr = parser::parse_list_decl();
                         break;
                     default:
                         expr = parser::parse_expression();
@@ -357,6 +424,9 @@ namespace utility {
                     case lexer::tok_print:
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_list:
+                        expr = parser::parse_list_decl();
                         break;
                     default:
                         expr = parser::parse_expression();

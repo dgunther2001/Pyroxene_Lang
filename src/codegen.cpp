@@ -909,10 +909,50 @@ namespace ast {
 
     }
 
-
+    /**
+     * TODO: docs
+     */
     llvm::Value* ast::graph_decl_expr::codegen() {
         return nullptr;
     }
 
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::list_decl::codegen() {
+        
+        llvm::Type* list_type = codegen::get_llvm_type(get_expr_type());
+        llvm::StructType* struct_slib_list_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_list");
+
+        llvm::Value* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
+
+        llvm::Function* constructor = nullptr;
+
+        switch (get_expr_type()) {
+            case (type_enum::int_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIiEC2Ev");
+                break;
+            case (type_enum::float_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIfEC2Ev");
+                break;
+            case (type_enum::char_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIcEC2Ev");
+                break;
+            case (type_enum::bool_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIbEC2Ev");
+                break;
+            default:
+                utility::codegen_error("Invalid type passed to list", parser::current_line);
+        }
+
+        codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
+
+        return instantiated_object;
+    
+        // int @_ZN9slib_listIiEC1Ev
+        // float @_ZN9slib_listIfEC2Ev
+        // char @_ZN9slib_listIcEC2Ev
+        // bool @_ZN9slib_listIbEC2Ev
+    }
 
 }

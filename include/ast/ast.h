@@ -823,6 +823,26 @@ namespace ast {
         llvm::Value* codegen() override;
         type_enum::types get_expr_type() const override {return type;}
     };
+
+    /**
+     * TODO: docs
+     */
+    class list_decl : public top_level_expr {
+    private:
+        type_enum::types type;
+        std::string name;
+    
+    public:
+        list_decl(type_enum::types type, std::string name) :
+            type(type),
+            name(name)
+            {}
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "list_decl"; }
+        void debug_output();
+        llvm::Value* codegen() override;
+        type_enum::types get_expr_type() const override {return type;}
+    };
     
     
     extern std::string get_type_as_string(type_enum::types type);

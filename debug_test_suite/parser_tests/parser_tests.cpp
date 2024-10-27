@@ -165,13 +165,23 @@ namespace ast {
      }
 
      /**
-      * @fn ast::fgraph_decl_expr::debug_output()
+      * @fn ast::graph_decl_expr::debug_output()
       * @code
       *  std::cout << "Parsing graph declaration (" << graph_name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
       * @endcode
       */     
      void ast::graph_decl_expr::debug_output() {
           std::cout << "Parsing graph declaration (" << graph_name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+     }
+
+     /**
+      * @fn ast::list_decl::debug_output()
+      * @code
+      *  std::cout << "Parsing list declaration (" << name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
+      * @endcode
+      */
+     void ast::list_decl::debug_output() {
+          std::cout << "Parsing list declaration (" << name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
 }
 

@@ -1,0 +1,1 @@
+clang++ -std=c++17 -O0 -emit-llvm -S ../list/cpp/list.cpp -o list.ll

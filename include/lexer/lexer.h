@@ -62,7 +62,9 @@ namespace lexer {
         tok_class = -110,      ///< Class keyword
         tok_graph = -120,      ///< Graph keyword
         tok_print = -125,      ///< Print keyword
-        tok_return = -130      ///< Return statement
+        tok_return = -130,     ///< Return statement
+        tok_include = -200,     ///< Include directive
+        tok_list = -220        ///< List directive and keyword
     };
 
     /**

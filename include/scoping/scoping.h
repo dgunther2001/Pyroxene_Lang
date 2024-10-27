@@ -99,4 +99,8 @@ namespace sem_analysis_scope {
         extern int get_scope_stack_size();
 }
 
+namespace complex_dt_scope {
+
+}
+
 #endif
