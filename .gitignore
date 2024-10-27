@@ -14,3 +14,5 @@ docs
 emitting_ir
 asm_experimentation
 .devcontainer
+
+pyroxene_slib/list/list.ll
