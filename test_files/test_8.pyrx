@@ -9,9 +9,11 @@ include list
 
 graph int my_graph;
 
-list float my_list;
-
 def int main() {
+    list float my_list;
+    list int my_list_2;
+    list char my_list_3;
+    list bool my_list_4;
     int a = 66;
     return 10;
 }   
