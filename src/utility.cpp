@@ -231,12 +231,43 @@ namespace utility {
 
         sem_analysis_scope::exit_scope();
 
+        link_bc_module();
+
         for (auto const& ast_node : parsing_output) {
             call_codegen(ast_node);
         }
     }
 
     namespace {
+
+        /**
+         * TODO: docs
+         */
+        void link_bc_module() {
+            llvm::SMDiagnostic error;
+            for (const std::string& include_item : library_and_include) {
+                std::string bc_path;
+                if (include_item == "list") {
+                    bc_path = "../pyroxene_slib/llvm_modules/list.bc";
+                    //std::system("[ -e ./pyroxene_slib/llvm_modules/list.bc ] && echo 'here'");
+                    
+                    std::unique_ptr<llvm::Module> list_mod = llvm::parseIRFile(bc_path, error, *codegen::LLVM_Context);
+
+                    if (list_mod == nullptr) {
+                        error.print("link_bc_module", llvm::errs());
+                        std::abort();
+                    }
+
+                    
+                    bool failed = llvm::Linker::linkModules(*codegen::LLVM_Module, std::move(list_mod));
+                    if (failed) {
+                        llvm::errs() << "Error linking module: " << bc_path << "\n";
+                        std::abort();
+                    }
+                    
+                }
+            }
+        }
 
         /**
          * TODO: docs

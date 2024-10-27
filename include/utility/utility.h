@@ -13,6 +13,10 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <iostream>
 #include <variant>
 #include <set>
+#include <llvm/Linker/Linker.h>
+#include <llvm/IRReader/IRReader.h>
+#include <llvm/Support/SourceMgr.h>
+
 #include "../parser/parser.h"
 #include "../lexer/lexer.h"
 #include "../ast/ast.h"
@@ -44,6 +48,7 @@ namespace utility {
     extern void primary_driver_loop();
 
     namespace {
+        void link_bc_module();
         void process_includes();
         void compile_include_ir(const std::string& item);
         std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parse_top_level();

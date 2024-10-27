@@ -109,6 +109,8 @@ int main(int argc, char** argv) {
 
         utility::init_parser();
 
+        
+
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
