@@ -1,1 +1,1 @@
-clang -std=c++17 -S -O0 -emit-llvm ../list/cpp/list.cpp -o list.ll
+clang++ -std=c++17 -O0 -emit-llvm -S cpp/list.cpp -o list.ll -target x86_64-unknown-none-elf -nostdlib++
