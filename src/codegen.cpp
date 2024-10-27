@@ -909,10 +909,18 @@ namespace ast {
 
     }
 
-
+    /**
+     * TODO: docs
+     */
     llvm::Value* ast::graph_decl_expr::codegen() {
         return nullptr;
     }
 
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::list_decl::codegen() {
+        return nullptr;
+    }
 
 }

@@ -324,6 +324,9 @@ namespace utility {
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                         break;
+                    case lexer::tok_list:
+                        current_expr = parser::parse_list_decl();
+                        break;
                     default:
                         expr = parser::parse_expression();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
@@ -390,6 +393,9 @@ namespace utility {
                     case lexer::tok_print:
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                        break;
+                    case lexer::tok_list:
+                        expr = parser::parse_list_decl();
                         break;
                     default:
                         expr = parser::parse_expression();

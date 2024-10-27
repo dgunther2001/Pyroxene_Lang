@@ -9,6 +9,8 @@ include list
 
 graph int my_graph;
 
+list float my_list;
+
 def int main() {
     int a = 66;
     return 10;

@@ -1169,6 +1169,37 @@ namespace parser {
     /**
      * TODO: docs
      */
+    std::unique_ptr<ast::top_level_expr> parse_list_decl() {
+        if (utility::library_and_include.find("list") == utility::library_and_include.end()) {
+            utility::parser_error("Attempting to use list without include directive", current_line);
+        }
+
+        if (current_token != lexer::tok_list) {
+            utility::parser_error("Expected list keyword", current_line);
+        }
+
+        get_next_token(); // consume the list keyword
+
+        type_enum::types type = parse_type();
+
+        get_next_token(); // consume the type
+
+        std::string list_name = std::get<std::string>(current_value.value());
+
+        get_next_token(); // consume the name
+
+        auto ast_node = std::make_unique<ast::list_decl>(type, list_name);
+
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return ast_node;
+    }
+
+    /**
+     * TODO: docs
+     */
     std::string parse_include() {
         if (current_token != lexer::tok_include) {
             utility::parser_error("Expected include directive", current_line);
@@ -1213,6 +1244,9 @@ namespace parser {
                     case lexer::tok_if:
                         current_expr = parse_if();
                         break;
+                    case lexer::tok_list:
+                        current_expr = parse_list_decl();
+                        break;
                     default:
                         current_expr = parse_expression();
                 }
@@ -1250,6 +1284,9 @@ namespace parser {
                         break;
                     case lexer::tok_if:
                         current_expr = parse_if();
+                        break;
+                    case lexer::tok_list:
+                        current_expr = parse_list_decl();
                         break;
                     default:
                         current_expr = parse_expression();

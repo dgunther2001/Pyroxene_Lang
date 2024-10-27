@@ -460,4 +460,11 @@ namespace ast {
     void ast::graph_decl_expr::semantic_analysis() {
         
     }
+
+    /**
+     * TODO: docs
+     */
+    void ast::list_decl::semantic_analysis() {
+
+    }
 }
