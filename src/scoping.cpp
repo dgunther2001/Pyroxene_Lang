@@ -430,4 +430,19 @@ namespace sem_analysis_scope {
     int get_scope_stack_size() {
         return sem_analysis_stack.size();
     }
+
+    /** 
+    typedef enum {
+        GRAPH,
+        LIST
+    } slib_dt;
+
+    typedef struct {
+        slib_dt data_type;
+        types::type contained_type;
+    } slib_data_info;
+
+    std::vector<std::map<std::string, slib_data_info>> sem_analysis_stack;
+    */
+
 }
