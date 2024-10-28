@@ -1199,16 +1199,56 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_method_dot_call() {
 
-        std::string item_name = "";
-        std::string called = "";
-        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
-        auto ast_node = std::make_unique<ast::method_dot_call>(item_name, called, false, std::move(arguments));
+        std::string item_name = std::get<std::string>(current_value.value());
+        get_next_token(); 
 
-        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
-            ast_node->debug_output();
-        #endif
+        if (current_token != lexer::tok_dot) {
+            utility::parser_error("Expected a dot call", current_line);
+        }
 
-        return ast_node;
+        get_next_token(); // consume the dot
+
+
+        std::string called = dot_call_method_helper();
+
+        get_next_token();
+
+        if (current_token == lexer::tok_semicolon) {
+            auto ast_node = std::make_unique<ast::dot_call_var>(item_name, called);   
+            
+            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                ast_node->debug_output();
+            #endif
+
+            return ast_node;
+        } else if (current_token == lexer::tok_open_paren) {
+            get_next_token(); // consume the opening parenthesis
+
+            std::vector<std::unique_ptr<ast::top_level_expr>> arguments;      
+
+            while (true) {
+                auto current_expr = parse_expression();
+                arguments.emplace_back(std::move(current_expr));
+
+                
+                if (current_token == lexer::tok_comma) {
+                    get_next_token();
+                } else if (current_token == lexer::tok_close_paren) {
+                    get_next_token();
+                    break;
+                } else {
+                    utility::parser_error("Expected ',' or ')'", current_line);
+                }
+            }
+            auto ast_node = std::make_unique<ast::method_dot_call>(item_name, called, std::move(arguments));  
+            #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+                ast_node->debug_output();
+            #endif
+
+            return ast_node;
+        } else {
+            utility::parser_error("Expected ; or '(' on dot call", current_line);
+        }
     }
 
     /**
@@ -1230,6 +1270,27 @@ namespace parser {
 
 
     namespace {
+
+        /**
+         * TODO: docs
+         */
+        std::string dot_call_method_helper() {
+            switch(current_token) {
+                case lexer::tok_at:
+                    return "at";
+                case lexer::tok_add:
+                    return "add";
+                case lexer::tok_remove:
+                    return "remove";
+                default:
+                    if (current_value.has_value() && std::holds_alternative<std::string>(current_value.value())) {
+                        return std::get<std::string>(current_value.value());
+                    } else {
+                        utility::parser_error("Expected identifiable dot call", current_line);
+                    }
+            }
+        }
+
         /**
          * @par Parses a block within a scope that exists above the global scope (different from the utility level parsing dispatcher).
          * @code

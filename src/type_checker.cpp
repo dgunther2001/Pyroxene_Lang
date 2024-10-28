@@ -474,4 +474,11 @@ namespace ast {
     void ast::method_dot_call::semantic_analysis() {
 
     }
+
+    /**
+     * TODO: docs
+     */
+    void ast::dot_call_var::semantic_analysis() {
+        
+    }
 }

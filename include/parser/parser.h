@@ -93,6 +93,7 @@ namespace parser {
 
 
     namespace {
+        std::string dot_call_method_helper();
         std::vector<std::unique_ptr<ast::top_level_expr>> parse_block();
         type_enum::types parse_type();
     }

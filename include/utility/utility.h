@@ -23,7 +23,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "../codegen/codegen.h"
 #include "../scoping/scoping.h"
 
-#define PARSER_PRINT_UTIL 0
+#define PARSER_PRINT_UTIL 1
 
 namespace utility {
 

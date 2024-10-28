@@ -191,7 +191,21 @@ namespace ast {
       * @endcode
       */
      void ast::method_dot_call::debug_output() {
-          std::cout << "Parsing dot call on " << item_name << "\n";
+          std::string arg_string = "";
+          for (auto const& arg : args) {
+               arg_string = arg_string + arg->get_ast_class() + " ";
+          }
+          std::cout << "Parsing method dot call (" << called << ") on " << item_name << " with arguments classes -> " << arg_string << "\n" ;
+     }
+
+     /**
+      * @fn ast::dot_call_var::debug_output()
+      * @code
+      *  std::cout << "Parsing variable dot call on " << item_name << "\n";
+      * @endcode
+      */
+     void ast::dot_call_var::debug_output() {
+          std::cout << "Parsing variable dot call (" << called << ") on " << item_name << "\n";
      }
 }
 

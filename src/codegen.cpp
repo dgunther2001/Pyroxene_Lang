@@ -963,4 +963,11 @@ namespace ast {
         return nullptr;
     }
 
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::dot_call_var::codegen() {
+        return nullptr;
+    }
+
 }
