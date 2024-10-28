@@ -1199,8 +1199,16 @@ namespace parser {
 
     std::unique_ptr<ast::top_level_expr> parse_method_dot_call() {
 
+        std::string item_name = "";
+        std::string called = "";
+        std::vector<std::unique_ptr<ast::top_level_expr>> arguments;
+        auto ast_node = std::make_unique<ast::method_dot_call>(item_name, called, false, std::move(arguments));
 
-        return nullptr;
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return ast_node;
     }
 
     /**

@@ -955,4 +955,12 @@ namespace ast {
         // bool @_ZN9slib_listIbEC2Ev
     }
 
+
+    /**
+     * TODO: docs
+     */
+    llvm::Value* ast::method_dot_call::codegen() {
+        return nullptr;
+    }
+
 }

@@ -541,8 +541,8 @@ namespace lexer {
             if (identifier == "list") {
                 return tok_list;
             }
-
-            if (identidier == "at") {
+            
+            if (identifier == "at") {
                 return tok_at;
             }
 

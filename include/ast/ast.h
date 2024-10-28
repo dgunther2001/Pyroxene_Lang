@@ -850,17 +850,17 @@ namespace ast {
      */
     class method_dot_call : public top_level_expr {
     private:
-        std::string list_name;
-        std::string func_call_name;
+        std::string item_name;
+        std::string called;
         type_enum::types type;
         bool is_class;
         bool is_function_call;
         std::vector<std::unique_ptr<top_level_expr>> args;
 
     public:
-        list_func_call(std::string list_name, std::string func_call_name, bool is_function_call, std::vector<std::unique_ptr<top_level_expr>> args   d) :
-            list_name(list_name),
-            func_call_name(func_call_name),
+        method_dot_call(std::string item_name, std::string called, bool is_function_call, std::vector<std::unique_ptr<top_level_expr>> args) :
+            item_name(item_name),
+            called(called),
             is_function_call(is_function_call),
             args(std::move(args))
             {}
@@ -874,7 +874,7 @@ namespace ast {
         llvm::Value* codegen() override;
         type_enum::types get_expr_type() const override {return type;}       
 
-    }
+    };
     
     extern std::string get_type_as_string(type_enum::types type);
 

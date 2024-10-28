@@ -183,5 +183,15 @@ namespace ast {
      void ast::list_decl::debug_output() {
           std::cout << "Parsing list declaration (" << name << ") of type " << ast::get_type_as_string(get_expr_type()) << "\n";
      }
+
+     /**
+      * @fn ast::method_dot_call::debug_output()
+      * @code
+      *  std::cout << "Parsing dot call on " << item_name << "\n";
+      * @endcode
+      */
+     void ast::method_dot_call::debug_output() {
+          std::cout << "Parsing dot call on " << item_name << "\n";
+     }
 }
 

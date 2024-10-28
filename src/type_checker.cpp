@@ -467,4 +467,11 @@ namespace ast {
     void ast::list_decl::semantic_analysis() {
 
     }
+
+    /**
+     * TODO: docs
+     */
+    void ast::method_dot_call::semantic_analysis() {
+
+    }
 }
