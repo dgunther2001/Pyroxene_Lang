@@ -229,6 +229,18 @@ namespace lexer {
             if (identifier == "list") {
                 return tok_list;
             }
+
+            if (identidier == "at") {
+                return tok_at;
+            }
+
+            if (identifier == "add") {
+                return tok_add;
+            }
+
+            if (identifier == "remove") {
+                return tok_remove;
+            }
      * 
      *     return tok_identifier;
      * }
@@ -528,6 +540,18 @@ namespace lexer {
 
             if (identifier == "list") {
                 return tok_list;
+            }
+
+            if (identidier == "at") {
+                return tok_at;
+            }
+
+            if (identifier == "add") {
+                return tok_add;
+            }
+
+            if (identifier == "remove") {
+                return tok_remove;
             }
 
             return tok_identifier;
