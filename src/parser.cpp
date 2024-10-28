@@ -1197,6 +1197,12 @@ namespace parser {
         return ast_node;
     }
 
+    std::unique_ptr<ast::top_level_expr> parse_method_dot_call() {
+
+
+        return nullptr;
+    }
+
     /**
      * TODO: docs
      */
@@ -1273,6 +1279,9 @@ namespace parser {
                     case lexer::tok_identifier:
                         if (lexer::peek_token(current_token_index) == lexer::tok_assignment) {
                             current_expr = parse_var_assign();
+                            break;
+                        } else if (lexer::peek_token(current_token_index) == lexer::tok_dot) {
+                            current_expr = parse_method_dot_call();
                             break;
                         } else {
                             current_expr = parse_expression();

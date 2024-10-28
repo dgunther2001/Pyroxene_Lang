@@ -844,6 +844,37 @@ namespace ast {
         type_enum::types get_expr_type() const override {return type;}
     };
     
+
+    /**
+     * TODO: docs
+     */
+    class method_dot_call : public top_level_expr {
+    private:
+        std::string list_name;
+        std::string func_call_name;
+        type_enum::types type;
+        bool is_class;
+        bool is_function_call;
+        std::vector<std::unique_ptr<top_level_expr>> args;
+
+    public:
+        list_func_call(std::string list_name, std::string func_call_name, bool is_function_call, std::vector<std::unique_ptr<top_level_expr>> args   d) :
+            list_name(list_name),
+            func_call_name(func_call_name),
+            is_function_call(is_function_call),
+            args(std::move(args))
+            {}
+
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "method_dot_call"; }
+        void debug_output();
+        void set_is_class(bool is_class) { is_class = is_class; }
+        bool get_is_class() { return is_class; }
+        bool get_is_function_call() { return is_function_call; }
+        llvm::Value* codegen() override;
+        type_enum::types get_expr_type() const override {return type;}       
+
+    }
     
     extern std::string get_type_as_string(type_enum::types type);
 

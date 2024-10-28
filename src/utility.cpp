@@ -330,6 +330,10 @@ namespace utility {
                             expr = parser::parse_var_assign();
                             parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                             break;
+                        } else if (lexer::peek_token(parser::current_token_index) == lexer::tok_dot) {
+                            expr = parser::parse_method_dot_call();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
                         } else{
                             expr = parser::parse_expression();
                             parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
@@ -398,6 +402,10 @@ namespace utility {
                     case lexer::tok_identifier: 
                         if (lexer::peek_token(parser::current_token_index) == lexer::tok_assignment) {
                             expr = parser::parse_var_assign();
+                            parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
+                            break;
+                        } else if (lexer::peek_token(parser::current_token_index) == lexer::tok_dot) {
+                            expr = parser::parse_method_dot_call();
                             parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
                             break;
                         } else{
