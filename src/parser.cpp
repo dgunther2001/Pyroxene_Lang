@@ -1275,19 +1275,10 @@ namespace parser {
          * TODO: docs
          */
         std::string dot_call_method_helper() {
-            switch(current_token) {
-                case lexer::tok_at:
-                    return "at";
-                case lexer::tok_add:
-                    return "add";
-                case lexer::tok_remove:
-                    return "remove";
-                default:
-                    if (current_value.has_value() && std::holds_alternative<std::string>(current_value.value())) {
-                        return std::get<std::string>(current_value.value());
-                    } else {
-                        utility::parser_error("Expected identifiable dot call", current_line);
-                    }
+            if (current_value.has_value() && std::holds_alternative<std::string>(current_value.value())) {
+                return std::get<std::string>(current_value.value());
+            } else {
+                utility::parser_error("Expected identifiable dot call", current_line);
             }
         }
 
