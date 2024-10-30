@@ -462,10 +462,19 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @par Simply adds a list declaration to the current semantic analysis scope.
+     * @code
+        if (sem_analysis_scope::variable_exists_in_current_scope(identifier_name)) {
+            utility::sem_analysis_error("List defined as another identifier in the current scope", parser::current_line);
+        }   
+        sem_analysis_scope::add_var_to_current_scope(name, type, true, "list");
+     * @endcode
      */
     void ast::list_decl::semantic_analysis() {
-
+        if (sem_analysis_scope::variable_exists_in_current_scope(name)) {
+            utility::sem_analysis_error("List defined as another identifier in the current scope", parser::current_line);
+        }   
+        sem_analysis_scope::add_var_to_current_scope(name, type, true, "list");
     }
 
     /**
