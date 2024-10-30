@@ -959,8 +959,54 @@ namespace ast {
     /**
      * TODO: docs
      */
+    /*
     llvm::Value* ast::method_dot_call::codegen() {
+        std::string aggregate_type = "list"; // need to resolve later...
+        // hard code in lists for now...
+        if (called == "at") {
+            //list_at_handler();
+        } else if (called == "add") {
+            llvm::Function* insert_function = nullptr;
+            switch (get_expr_type()) {
+                case (type_enum::int_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
+                    break;
+                case (type_enum::float_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6insertEii");
+                    break;
+                case (type_enum::char_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6insertEii");
+                    break;
+                case (type_enum::bool_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6insertEii");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            }   
+            //odegen::IR_Builder->CreateCall(insert_function, {list_object, element, index});            
+            //list_add_handler();
+        } else if (called == "remove") {
+            //list_remove_handler();
+        }
+
         return nullptr;
+
+    }
+    */
+
+    
+    namespace {
+        llvm::Value* list_at_handler() {
+            return nullptr;
+        }
+
+        llvm::Value* list_add_handler() {
+            return nullptr;
+        }
+
+        llvm::Value* list_remove_handler() {
+            return nullptr;
+        }
     }
 
     /**

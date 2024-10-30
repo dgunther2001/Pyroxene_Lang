@@ -3,6 +3,8 @@
 namespace scope {
     std::vector<std::map<std::string, llvm_var_info>> scoping_stack;
 
+    std::vector<std::map<std::string, std::set<std::string>>> valid_dot_calls;
+
     /**
      * @par Simply adds a new scope to the scope stack
      * @code
@@ -115,6 +117,7 @@ namespace scope {
 namespace sem_analysis_scope {
     std::map<std::string, std::pair<type_enum::types /* return type */, std::map<int /* arg number */, type_enum::types /* arg type */>>> defined_functions;
     std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
+    std::map<std::string, std::set<std::string>> valid_dot_calls;
 
     /**
      * @par Generates a new scope (crreates and adds a new hashmap) to the semantic analysis stack.
@@ -430,6 +433,32 @@ namespace sem_analysis_scope {
      */
     int get_scope_stack_size() {
         return sem_analysis_stack.size();
+    }
+
+    /**
+     * TODO: docs
+     */
+    void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method) {
+        // find the correct map if it exists
+        if (valid_dot_calls.find(aggregate_type) != valid_dot_calls.end()) {
+            valid_dot_calls[aggregate_type].insert(method);
+            return;
+        }
+
+        std::set<std::string> methods;
+        methods.insert(method);
+        valid_dot_calls.insert({aggregate_type, methods});
+        return;
+        // if it exists...
+            // grab the correct map
+            // add a particular method to the set of valid dot calls
+
+        // if it doesnt exist...
+            // instantiate a set with the valid method signiature of the new method
+            // create a new corresponding map, and add the set
+            // add a new map to the back of the vector  
+
+        
     }
 
     /** 

@@ -855,6 +855,7 @@ namespace ast {
         type_enum::types type;
         bool is_class;
         std::vector<std::unique_ptr<top_level_expr>> args;
+        std::string aggregate_type;
 
     public:
         method_dot_call(std::string item_name, std::string called, std::vector<std::unique_ptr<top_level_expr>> args) :
@@ -868,6 +869,8 @@ namespace ast {
         void debug_output();
         void set_is_class(bool is_class) { is_class = is_class; }
         bool get_is_class() { return is_class; }
+        void set_aggregate_type(const std::string &ag_type) { aggregate_type = ag_type; }
+        const std::string& get_ag_type() { return aggregate_type; }
         llvm::Value* codegen() override;
         type_enum::types get_expr_type() const override {return type;}       
 

@@ -84,6 +84,11 @@ namespace sem_analysis_scope {
          */
         extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
 
+        /**
+         * @par Contains information about valid method calls on complex data types.
+         */
+        extern std::map<std::string, std::set<std::string>> valid_dot_calls;
+
 
         extern void create_scope();
         extern void exit_scope();
@@ -101,6 +106,9 @@ namespace sem_analysis_scope {
         extern void set_var_init(const std::string& name);
         extern int get_var_scope_level(const std::string& name);
         extern int get_scope_stack_size();
+
+
+        extern void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method);
 }
 
 namespace complex_dt_scope {
