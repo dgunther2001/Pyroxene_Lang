@@ -287,18 +287,19 @@ namespace sem_analysis_scope {
      * @param name The name of the new variable.
      * @param type The type of the variable.
      * @param is_init Has the variable just been declared or defined.
+     * @param complex_dt Stores the name of the complex data type.
      * @code
-     *  if (sem_analysis_stack.empty()) {
-            utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
-        }
-        sem_analysis_stack.back()[name] = {type, is_init};
-     * @endcode
-     */
-    void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init) {
         if (sem_analysis_stack.empty()) {
             utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
         }
-        sem_analysis_stack.back()[name] = {type, is_init};
+        sem_analysis_stack.back()[name] = {type, complex_dt, is_init};
+     * @endcode
+     */
+    void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init, const std::string &complex_dt) {
+        if (sem_analysis_stack.empty()) {
+            utility::scoping_error("Semantic analysis scope stack is empty", parser::current_line);
+        }
+        sem_analysis_stack.back()[name] = {type, complex_dt, is_init};
     }
 
     /**

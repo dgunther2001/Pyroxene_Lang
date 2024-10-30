@@ -97,7 +97,7 @@ namespace ast {
      *  if (sem_analysis_scope::variable_exists_in_current_scope(identifier_name)) {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
-        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false, "base_literal");
         if (sem_analysis_scope::get_scope_stack_size() == 1) {
             set_is_global(true);
         } else {
@@ -109,7 +109,7 @@ namespace ast {
         if (sem_analysis_scope::variable_exists_in_current_scope(identifier_name)) {
             utility::sem_analysis_error("Variable already declared or defined in the current scope", parser::current_line);
         }
-        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false);
+        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, false, "base_literal");
         if (sem_analysis_scope::get_scope_stack_size() == 1) {
             set_is_global(true);
         } else {
@@ -133,7 +133,7 @@ namespace ast {
             utility::sem_analysis_error("Invalid value provided to variable definition", parser::current_line);
         }   
 
-        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true, "base_literal");
         if (sem_analysis_scope::get_scope_stack_size() == 1) {
             set_is_global(true);
         } else {
@@ -154,7 +154,7 @@ namespace ast {
             utility::sem_analysis_error("Invalid value provided to variable definition", parser::current_line);
         }   
 
-        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true);
+        sem_analysis_scope::add_var_to_current_scope(identifier_name, type, true, "base_literal");
         if (sem_analysis_scope::get_scope_stack_size() == 1) {
             set_is_global(true);
         } else {
@@ -319,7 +319,7 @@ namespace ast {
                 utility::sem_analysis_error("Parameter already exists in current scope", parser::current_line);
             }
             arg_types.emplace_back(paramter->get_expr_type());
-            sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true);
+            sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true, "base_literal");
         }
 
         sem_analysis_scope::add_function_defn(func_name, return_type, arg_types);
@@ -350,7 +350,7 @@ namespace ast {
                 utility::sem_analysis_error("Parameter already exists in current scope", parser::current_line);
             }
             arg_types.emplace_back(paramter->get_expr_type());
-            sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true);
+            sem_analysis_scope::add_var_to_current_scope(paramter->get_name(), paramter->get_expr_type(), true, "base_literal");
         }
 
         sem_analysis_scope::add_function_defn(func_name, return_type, arg_types);
