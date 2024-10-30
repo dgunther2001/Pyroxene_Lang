@@ -44,6 +44,14 @@ namespace codegen {
     extern llvm::FunctionCallee print_f_function;
 
     extern llvm::Type* get_llvm_type(type_enum::types current_type);
+
+    namespace {
+        llvm::Value* list_at_handler();
+
+        llvm::Value* list_add_handler();
+
+        llvm::Value* list_remove_handler();
+    }
 }
 namespace ast {
 }

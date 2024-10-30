@@ -62,11 +62,15 @@ namespace sem_analysis_scope {
          * @var type
          * The type of the variable.
          * 
+         * @var complex_dt
+         * Stores information about the type complexity.
+         * 
          * @var is_init
          * Indicates whether the variable has been assigned a value.
          */
         typedef struct {
             type_enum::types type;
+            std::string complex_dt;
             bool is_init;
         } sem_analysis_info;
 
@@ -80,10 +84,15 @@ namespace sem_analysis_scope {
          */
         extern std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
 
+        /**
+         * @par Contains information about valid method calls on complex data types.
+         */
+        extern std::map<std::string, std::set<std::string>> valid_dot_calls;
+
 
         extern void create_scope();
         extern void exit_scope();
-        extern void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init);
+        extern void add_var_to_current_scope(const std::string &name, type_enum::types type, bool is_init, const std::string &complex_dt);
         extern type_enum::types get_var_type(const std::string &name);
         extern void add_function_defn(std::string name, type_enum::types ret_type, std::vector<type_enum::types> argument_types);
         extern type_enum::types get_func_ret_type(const std::string& name);
@@ -97,6 +106,9 @@ namespace sem_analysis_scope {
         extern void set_var_init(const std::string& name);
         extern int get_var_scope_level(const std::string& name);
         extern int get_scope_stack_size();
+
+
+        extern void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method);
 }
 
 namespace complex_dt_scope {

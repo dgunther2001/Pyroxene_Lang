@@ -844,6 +844,61 @@ namespace ast {
         type_enum::types get_expr_type() const override {return type;}
     };
     
+
+    /**
+     * TODO: docs
+     */
+    class method_dot_call : public top_level_expr {
+    private:
+        std::string item_name;
+        std::string called;
+        type_enum::types type;
+        bool is_class;
+        std::vector<std::unique_ptr<top_level_expr>> args;
+        std::string aggregate_type;
+
+    public:
+        method_dot_call(std::string item_name, std::string called, std::vector<std::unique_ptr<top_level_expr>> args) :
+            item_name(item_name),
+            called(called),
+            args(std::move(args))
+            {}
+
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "function_dot_call"; }
+        void debug_output();
+        void set_is_class(bool is_class) { is_class = is_class; }
+        bool get_is_class() { return is_class; }
+        void set_aggregate_type(const std::string &ag_type) { aggregate_type = ag_type; }
+        const std::string& get_ag_type() { return aggregate_type; }
+        llvm::Value* codegen() override;
+        type_enum::types get_expr_type() const override {return type;}       
+
+    };
+
+    /**
+     * TODO: docs
+     */
+    class dot_call_var : public top_level_expr {
+        std::string item_name;
+        std::string called;
+        type_enum::types type;
+        bool is_class;
+
+    public:
+        dot_call_var(std::string item_name, std::string called) :
+            item_name(item_name),
+            called(called)
+            {}
+
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "dot_call_var"; }
+        void debug_output();
+        void set_is_class(bool is_class) { is_class = is_class; }
+        bool get_is_class() { return is_class; }
+        llvm::Value* codegen() override;
+        type_enum::types get_expr_type() const override {return type;}   
+    };
     
     extern std::string get_type_as_string(type_enum::types type);
 
