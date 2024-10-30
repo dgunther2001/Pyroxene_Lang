@@ -924,7 +924,7 @@ namespace ast {
         llvm::Type* list_type = codegen::get_llvm_type(get_expr_type());
         llvm::StructType* struct_slib_list_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_list");
 
-        llvm::Value* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
+        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
 
         llvm::Function* constructor = nullptr;
 
@@ -944,8 +944,9 @@ namespace ast {
             default:
                 utility::codegen_error("Invalid type passed to list", parser::current_line);
         }
-
         codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
+
+        scope::add_var_to_current_scope(name, instantiated_object, codegen::get_llvm_type(type), true);
 
         return instantiated_object;
     
@@ -959,14 +960,15 @@ namespace ast {
     /**
      * TODO: docs
      */
-    /*
     llvm::Value* ast::method_dot_call::codegen() {
         std::string aggregate_type = "list"; // need to resolve later...
+        llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
+        type = type_enum::int_type;
+        llvm::Function* insert_function = nullptr;
         // hard code in lists for now...
         if (called == "at") {
             //list_at_handler();
         } else if (called == "add") {
-            llvm::Function* insert_function = nullptr;
             switch (get_expr_type()) {
                 case (type_enum::int_type):
                     insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
@@ -983,7 +985,9 @@ namespace ast {
                 default:
                     utility::codegen_error("Invalid type passed to list", parser::current_line);
             }   
-            //odegen::IR_Builder->CreateCall(insert_function, {list_object, element, index});            
+            llvm::Value* element = args.at(0)->codegen();  
+            llvm::Value* index = args.at(1)->codegen();
+            codegen::IR_Builder->CreateCall(insert_function, {object, element, index});            
             //list_add_handler();
         } else if (called == "remove") {
             //list_remove_handler();
@@ -992,7 +996,6 @@ namespace ast {
         return nullptr;
 
     }
-    */
 
     
     namespace {

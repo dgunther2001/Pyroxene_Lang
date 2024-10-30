@@ -15,7 +15,7 @@ def int main() {
     list char my_list_3;
     list bool my_list_4;
 
-    my_list.add(1, 0);
+    my_list_2.add(1, 0);
     int a = 66;
     return 10;
 }   
