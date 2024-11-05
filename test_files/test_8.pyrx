@@ -7,7 +7,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 */
 include list
 
-graph int my_graph;
+//graph int my_graph;
 
 def int main() {
     list float my_list;

@@ -1,6 +1,18 @@
 int a = 49;
 
+def int my_func() {
+    return 4;
+}
+
 def int main() {
+    print(a);
     float b = 33.3 + 44.4;
+    int c = 32;
+    print(a + c);
+    print(a*c);
+    print(a-c);
+    print(c-a);
+    print(my_func() + c * a);
     return 0;
 }
+

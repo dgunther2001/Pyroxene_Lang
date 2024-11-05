@@ -1313,6 +1313,9 @@ namespace parser {
                     case lexer::tok_list:
                         current_expr = parse_list_decl();
                         break;
+                    case lexer::tok_print:
+                        current_expr = parse_print();
+                        break;
                     default:
                         current_expr = parse_expression();
                 }
@@ -1356,6 +1359,9 @@ namespace parser {
                         break;
                     case lexer::tok_list:
                         current_expr = parse_list_decl();
+                        break;
+                    case lexer::tok_print:
+                        current_expr = parse_print();
                         break;
                     default:
                         current_expr = parse_expression();
