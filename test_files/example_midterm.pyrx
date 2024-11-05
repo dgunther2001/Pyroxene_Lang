@@ -6,13 +6,19 @@ def int my_func() {
 
 def int main() {
     print(a);
-    float b = 33.3 + 44.4;
+    float b = 33.3;// + 44.4;
+    char d = 'c';
     int c = 32;
     print(a + c);
     print(a*c);
     print(a-c);
     print(c-a);
     print(my_func() + c * a);
+    print(true);
+    print(d);
+    //b = 33.7;
+    print(b);
+    
     return 0;
 }
 

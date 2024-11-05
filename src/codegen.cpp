@@ -901,7 +901,25 @@ namespace ast {
     llvm::Value* ast::print_expr::codegen() {
         llvm::Value* expr_to_print = expression->codegen();
         
-        llvm::Value* fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%d\n", "format_str", 0, codegen::LLVM_Module.get()); // FIX LATER
+        llvm::Value* fmt_str;
+        switch(expression->get_expr_type()) {
+            case (type_enum::int_type): case (type_enum::bool_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%d\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            /*
+            case (type_enum::string_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%s\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            */
+            case (type_enum::float_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%f\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            case (type_enum::char_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%c\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            default:
+                utility::codegen_error("Printing requested on invalid type", parser::current_line);
+        }
 
         std::vector<llvm::Value*> printfArgs = {fmt_str, expr_to_print};
 
