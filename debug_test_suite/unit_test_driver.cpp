@@ -13,8 +13,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/TargetSelect.h"
-#include "llvm/ExecutionEngine/Orc/LLJIT.h"
-
+#include <llvm/ExecutionEngine/Orc/LLJIT.h>
 
 #include <iostream>
 #include <fstream>
@@ -109,23 +108,26 @@ int main(int argc, char** argv) {
 
         utility::init_parser();
 
-        
-
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
-    
-        /*
-        llvm::orc::ThreadSafeContext TSCtx(std::make_unique<llvm::LLVMContext>());
-        llvm::orc::ThreadSafeModule TSM(std::move(codegen::LLVM_Module), TSCtx);
 
         auto JIT = llvm::orc::LLJITBuilder().create();
-        (*JIT)->addIRModule(std::move(TSM));
-        auto MainSymbol = (*JIT)->lookup("main");
+        auto& jit = *JIT;
 
-        auto *MainFn = (int (*)())(intptr_t)MainSymbol->getAddress();
-        int Result = MainFn();
-        */
+        codegen::LLVM_Module->setDataLayout(jit->getDataLayout());
+
+        auto added_ir_module = jit->addIRModule(llvm::orc::ThreadSafeModule(std::move(codegen::LLVM_Module), std::move(codegen::LLVM_Context)));
+        JIT->get()->getMainJITDylib().addGenerator(llvm::cantFail(llvm::orc::DynamicLibrarySearchGenerator::GetForCurrentProcess(JIT->get()->getDataLayout().getGlobalPrefix())));
+        auto main_symbol = jit->lookup("main");
+        if(!main_symbol) {
+            std::cout << "Expected main function in module.\n";
+            std::exit(1);
+        }
+
+        auto main_function_entry_pt = (int(*)())main_symbol->getAddress();
+        main_function_entry_pt();
+ 
         file.close();
 
     #else
