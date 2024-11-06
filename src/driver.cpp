@@ -17,6 +17,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/TargetSelect.h"
 #include "llvm/ExecutionEngine/Orc/LLJIT.h"
+#include <llvm/IR/Verifier.h>
 
 #include <iostream>
 #include <fstream>
@@ -63,6 +64,11 @@ int main(int argc, char** argv) {
     utility::init_parser();
 
     utility::primary_driver_loop();
+
+    if (llvm::verifyModule(*codegen::LLVM_Module, &llvm::errs())) {
+        llvm::errs() << "Error: Module verification failed.\n";
+        exit(1);
+    }
 
     auto JIT = llvm::orc::LLJITBuilder().create();
     auto& jit = *JIT;

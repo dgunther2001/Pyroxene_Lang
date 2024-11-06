@@ -1,4 +1,5 @@
 int a = 49;
+float m = 33.9 + 11000.3;
 
 def int my_func() {
     return 4;
@@ -6,7 +7,7 @@ def int my_func() {
 
 def int main() {
     print(a);
-    float b = 33.3;// + 44.4;
+    float b = 33.3 + 44.4;
     char d = 'c';
     int c = 32;
     print(a + c);
@@ -18,7 +19,7 @@ def int main() {
     print(d);
     //b = 33.7;
     print(b);
-    
+    print(m);
     return 0;
 }
 
