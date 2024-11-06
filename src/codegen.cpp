@@ -345,7 +345,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-
+                    return llvm::ConstantExpr::getFAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -355,7 +355,7 @@ namespace codegen {
             case type_enum::int_type:
                 return codegen::IR_Builder->CreateAdd(left, right, "addtmp");
             case type_enum::float_type:
-
+                return codegen::IR_Builder->CreateFAdd(left, right, "addtmp");
             default:
                 utility::codegen_error("Unsupported type in binary expression", parser::current_line);
         }
@@ -367,7 +367,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-
+                    return llvm::ConstantExpr::getFSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -377,7 +377,7 @@ namespace codegen {
             case type_enum::int_type:
                 return codegen::IR_Builder->CreateSub(left, right, "subtmp");
             case type_enum::float_type:
-
+                return codegen::IR_Builder->CreateFSub(left, right, "subtmp");
             default:
                 utility::codegen_error("Unsupported type in binary expression", parser::current_line);
         }
@@ -389,7 +389,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-
+                    return llvm::ConstantExpr::getFMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -399,7 +399,7 @@ namespace codegen {
             case type_enum::int_type:
                 return codegen::IR_Builder->CreateMul(left, right, "multmp");
             case type_enum::float_type:
-
+                return codegen::IR_Builder->CreateFMul(left, right, "multmp");
             default:
                 utility::codegen_error("Unsupported type in binary expression", parser::current_line);
         }
@@ -411,7 +411,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getSDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-
+                    return llvm::ConstantExpr::getFDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -421,7 +421,7 @@ namespace codegen {
             case type_enum::int_type:
                 return codegen::IR_Builder->CreateSDiv(left, right, "divtmp"); 
             case type_enum::float_type:
-
+                return codegen::IR_Builder->CreateFDiv(left, right, "divtmp"); 
             default:
                 utility::codegen_error("Unsupported type in binary expression", parser::current_line);
         }
