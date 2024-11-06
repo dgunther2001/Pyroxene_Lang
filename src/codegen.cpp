@@ -274,6 +274,23 @@ namespace ast {
        @endcode
      */
     llvm::Value* ast::binary_expr::codegen() {
+        llvm::Value* left_value = left->codegen();
+        llvm::Value* right_value = right->codegen();
+
+        switch (op) {
+            case lexer::tok_plus:
+                return codegen::binary_local_helper_plus(left_value, right_value, scope::is_llvm_scope_global(), type);
+            case lexer::tok_minus:
+                return codegen::binary_local_helper_minus(left_value, right_value, scope::is_llvm_scope_global(), type);
+            case lexer::tok_mult:
+                return codegen::binary_local_helper_mult(left_value, right_value, scope::is_llvm_scope_global(), type);
+            case lexer::tok_div:
+                return codegen::binary_local_helper_div(left_value, right_value, scope::is_llvm_scope_global(), type);
+            default:
+                utility::codegen_error("Unsupported operator in global var init.", parser::current_line);
+        }
+
+/*
         if (scope::is_llvm_scope_global()) {
             llvm::Constant* left_const = llvm::dyn_cast<llvm::Constant>(left->codegen());
             llvm::Constant* right_const = llvm::dyn_cast<llvm::Constant>(right->codegen());
@@ -298,24 +315,120 @@ namespace ast {
         llvm::Function* currentFunction = codegen::IR_Builder->GetInsertBlock()->getParent();
 
         switch (op) {
-        case lexer::tok_plus:  
-            return codegen::IR_Builder->CreateAdd(left_value, right_value, "addtmp");
-        case lexer::tok_minus:  
-            return codegen::IR_Builder->CreateSub(left_value, right_value, "subtmp");
-        case lexer::tok_mult:  
-            return codegen::IR_Builder->CreateMul(left_value, right_value, "multmp");
-        case lexer::tok_div:  
-            return codegen::IR_Builder->CreateSDiv(left_value, right_value, "divtmp"); 
-            /*
-        case '%':  
-            return codegen::IR_Builder->CreateSRem(left_value, right_value, "modtmp"); 
-            */
-        default:
-            return nullptr;
+            case lexer::tok_plus:  
+                return codegen::IR_Builder->CreateAdd(left_value, right_value, "addtmp");
+            case lexer::tok_minus:  
+                return codegen::IR_Builder->CreateSub(left_value, right_value, "subtmp");
+            case lexer::tok_mult:  
+                return codegen::IR_Builder->CreateMul(left_value, right_value, "multmp");
+            case lexer::tok_div:  
+                return codegen::IR_Builder->CreateSDiv(left_value, right_value, "divtmp"); 
+                
+            // case '%':  
+            //     return codegen::IR_Builder->CreateSRem(left_value, right_value, "modtmp"); 
+                
+            default:
+                return nullptr;
         }
+        */
 
     }
+}
 
+namespace codegen {
+    /**
+     * TODO: docs
+     */
+    llvm::Value* binary_local_helper_plus(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type) {
+        if (is_global) {
+            switch (type) {
+                case type_enum::int_type:
+                    return llvm::ConstantExpr::getAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                case type_enum::float_type:
+
+                default:
+                    utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+            }
+        }
+
+        switch (type) {
+            case type_enum::int_type:
+                return codegen::IR_Builder->CreateAdd(left, right, "addtmp");
+            case type_enum::float_type:
+
+            default:
+                utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+        }
+    }
+
+    llvm::Value* binary_local_helper_minus(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type) {
+        if (is_global) {
+            switch (type) {
+                case type_enum::int_type:
+                    return llvm::ConstantExpr::getSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                case type_enum::float_type:
+
+                default:
+                    utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+            }
+        }
+
+        switch (type) {
+            case type_enum::int_type:
+                return codegen::IR_Builder->CreateSub(left, right, "subtmp");
+            case type_enum::float_type:
+
+            default:
+                utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+        }
+    }     
+
+    llvm::Value* binary_local_helper_mult(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type) {
+        if (is_global) {
+            switch (type) {
+                case type_enum::int_type:
+                    return llvm::ConstantExpr::getMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                case type_enum::float_type:
+
+                default:
+                    utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+            }
+        }
+
+        switch (type) {
+            case type_enum::int_type:
+                return codegen::IR_Builder->CreateMul(left, right, "multmp");
+            case type_enum::float_type:
+
+            default:
+                utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+        }
+    }    
+
+    llvm::Value* binary_local_helper_div(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type) {
+        if (is_global) {
+            switch (type) {
+                case type_enum::int_type:
+                    return llvm::ConstantExpr::getSDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                case type_enum::float_type:
+
+                default:
+                    utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+            }
+        }
+
+        switch (type) {
+            case type_enum::int_type:
+                return codegen::IR_Builder->CreateSDiv(left, right, "divtmp"); 
+            case type_enum::float_type:
+
+            default:
+                utility::codegen_error("Unsupported type in binary expression", parser::current_line);
+        }
+    } 
+}
+
+namespace ast {
     /**
      * @fn ast::variable_assignment::codegen()
      * @par Generates IR for reassignment of variables.
