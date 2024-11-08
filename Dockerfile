@@ -29,9 +29,9 @@ libc++-dev \
 libc++abi-dev \
 cmake \
 llvm \
-llvm-14-tools \
-llvm-14-dev \
-libllvm14 \
+llvm-15-tools \
+llvm-15-dev \
+libllvm15 \
 zlib1g-dev \
 valgrind \
 gdb \

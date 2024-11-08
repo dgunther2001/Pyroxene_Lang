@@ -12,7 +12,7 @@ project(pyroxene_lang)
 set(CMAKE_CXX_STANDARD 17)
 
 # Find and configure LLVM
-find_package(LLVM 14 REQUIRED CONFIG)
+find_package(LLVM REQUIRED CONFIG)
 include_directories(${LLVM_INCLUDE_DIRS})
 add_definitions(${LLVM_DEFINITIONS})
 

@@ -13,14 +13,14 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 #include "llvm/Support/raw_ostream.h"
 #include "llvm/Support/TargetSelect.h"
-#include "llvm/ExecutionEngine/Orc/LLJIT.h"
-
+#include <llvm/ExecutionEngine/Orc/LLJIT.h>
+#include <llvm/IR/Verifier.h>
 
 #include <iostream>
 #include <fstream>
 #include <csignal>
 
-#define DEBUG_OPTION 5
+#define DEBUG_OPTION 6
 
 
 int main(int argc, char** argv) {
@@ -109,25 +109,48 @@ int main(int argc, char** argv) {
 
         utility::init_parser();
 
-        
+        utility::primary_driver_loop();
+
+        codegen::LLVM_Module->print(llvm::outs(), nullptr);
+
+        if (llvm::verifyModule(*codegen::LLVM_Module, &llvm::errs())) {
+            llvm::errs() << "Error: Module verification failed.\n";
+            exit(1);
+        }
+
+        auto JIT = llvm::orc::LLJITBuilder().create();
+        auto& jit = *JIT;
+
+        codegen::LLVM_Module->setDataLayout(jit->getDataLayout());
+
+        auto added_ir_module = jit->addIRModule(llvm::orc::ThreadSafeModule(std::move(codegen::LLVM_Module), std::move(codegen::LLVM_Context)));
+        JIT->get()->getMainJITDylib().addGenerator(llvm::cantFail(llvm::orc::DynamicLibrarySearchGenerator::GetForCurrentProcess(JIT->get()->getDataLayout().getGlobalPrefix())));
+        auto main_symbol = jit->lookup("main");
+        if(!main_symbol) {
+            std::cout << "Expected main function in module.\n";
+            std::exit(1);
+        }
+
+        auto main_function_entry_pt = (int(*)())main_symbol->getAddress();
+        main_function_entry_pt();
+ 
+        file.close();
+    #elif (DEBUG_OPTION ==6)
+        lexer::tokenize_file();
+
+        utility::initialize_operator_precendence();
+
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmPrinter();
+        llvm::InitializeNativeTargetAsmParser();
+
+        utility::init_llvm_mods();
+
+        utility::init_parser();
 
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
-    
-        /*
-        llvm::orc::ThreadSafeContext TSCtx(std::make_unique<llvm::LLVMContext>());
-        llvm::orc::ThreadSafeModule TSM(std::move(codegen::LLVM_Module), TSCtx);
-
-        auto JIT = llvm::orc::LLJITBuilder().create();
-        (*JIT)->addIRModule(std::move(TSM));
-        auto MainSymbol = (*JIT)->lookup("main");
-
-        auto *MainFn = (int (*)())(intptr_t)MainSymbol->getAddress();
-        int Result = MainFn();
-        */
-        file.close();
-
     #else
         lexer::tokenize_file();
 

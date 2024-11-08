@@ -1,8 +1,14 @@
 #ifndef PYROXENE_SLIB_LIST
 #define PYROXENE_SLIB_LIST
 
-#include "../../util/slib_util.h"
 #include <vector>
+#include <iostream>
+
+void list_error(const std::string& message) {
+        std::cout <<"\033[1;31m";
+        std::cout << "List error: " + message + ".\n";
+        exit(1);
+}
 
 template <typename T>
 class slib_list {
@@ -14,7 +20,7 @@ public:
 
     void insert(T item, int index) {
         if (index < 0) {
-            slib_util::list_error("Insertion index less than 0");
+            list_error("Insertion index less than 0");
         }
         if (index > list.size()) {
             list.push_back(item);
@@ -25,7 +31,7 @@ public:
 
     T remove(int index) {
         if (index < 0 || index >= list.size()) {
-            slib_util::list_error("Index out of range");
+            list_error("Index out of range");
         }
         T item = list.at(index);
         list.erase(list.begin() + index);
@@ -35,7 +41,7 @@ public:
 
     T at(int index) {
         if (index < 0 || index >= list.size()) {
-            slib_util::list_error("Index out of range");
+            list_error("Index out of range");
         }
         return list.at(index);
     }
