@@ -338,6 +338,7 @@ namespace utility {
             std::abort();
         }
 
+
         /**
          * @par Primary parsing loop for the program that returns a vector of AST nodes in variant form to allow for multiple types.
          * @code

@@ -4,6 +4,7 @@ include list
 def int main() {
     int i = 0;
     graph int my_graph;
-    list int my_list;
+    graph float my_graph_2;
+    //list int my_list;
     return 0;
 }

@@ -50,6 +50,8 @@ namespace utility {
     namespace {
         void link_bc_module();
         void process_includes();
+        void declare_graph_functions();
+        void declare_list_functions();
         void compile_include_ir(const std::string& item);
         std::vector<std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>> parse_top_level();
         void call_sem_analysis(const std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>& ast_node);

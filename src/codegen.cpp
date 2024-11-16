@@ -1044,10 +1044,10 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::graph_decl_expr::codegen() {
-        llvm::Type* graph_type = codegen::get_llvm_type(get_expr_type());
-        llvm::StructType* struct_slib_graph_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_graph");
+        //llvm::Type* graph_type = codegen::get_llvm_type(get_expr_type());
+        //llvm::StructType* struct_slib_graph_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_graph");
 
-        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_graph_type, nullptr, "slib_graph_obj");
+        //llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_graph_type, nullptr, "slib_graph_obj");
 
         llvm::Function* constructor = nullptr;
 
@@ -1067,9 +1067,14 @@ namespace ast {
                 break;
             default:
                 utility::codegen_error("Invalid type passed to list", parser::current_line);
+                
         }
-        codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
 
+        llvm::Type* graph_type = constructor->getFunctionType()->getParamType(0);
+        llvm::PointerType* pointer_type = llvm::dyn_cast<llvm::PointerType>(graph_type);
+        llvm::StructType* struct_slib_graph_type = llvm::dyn_cast<llvm::StructType>(pointer_type->getElementType());
+        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_graph_type, nullptr, "slib_graph_obj");
+        codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
         scope::add_var_to_current_scope(graph_name, instantiated_object, codegen::get_llvm_type(type), true);
 
         return instantiated_object;
@@ -1120,6 +1125,7 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::method_dot_call::codegen() {
+        
         std::string aggregate_type = "list"; // need to resolve later...
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
         type = type_enum::int_type;
