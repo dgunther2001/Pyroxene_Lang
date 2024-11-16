@@ -16,6 +16,8 @@ private:
     std::set<std::pair<T, T> > edges;
 
 public:
+    slib_graph() {}
+
     void insert(T new_node) {
         if (nodes.find(new_node) != nodes.end()) {
             graph_error("Node found in graph");
@@ -107,6 +109,15 @@ public:
         return BFS;
     }
 
+    void print_BFS(T start_node) {
+        slib_list<T> bfs = BFS(start_node);
+        std::cout << "[";
+        for (int i = 0; i < bfs.size() - 1; i++) {
+            std::cout << bfs.at(i) << ", ";
+        }
+        std::cout << bfs.at(bfs.size() - 1) << "]\n";
+    }
+
     slib_list<T> DFS(T start_node) {
         if (nodes.find(start_node) == nodes.end()) {
             graph_error("Starting node not found in graph (DFS)");
@@ -137,6 +148,15 @@ public:
         }
 
         return DFS;
+    }
+
+    void print_DFS(T start_node) {
+        slib_list<T> dfs = DFS(start_node);
+        std::cout << "[";
+        for (int i = 0; i < dfs.size() - 1; i++) {
+            std::cout << dfs.at(i) << ", ";
+        }
+        std::cout << dfs.at(dfs.size() - 1) << "]\n";
     }
 
 

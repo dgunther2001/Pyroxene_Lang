@@ -12,7 +12,7 @@ private:
     std::vector<T> list;
 
 public:
-    //slib_list() : {}
+    slib_list() {}
 
     void insert(T item, int index) {
         if (index < 0) {
