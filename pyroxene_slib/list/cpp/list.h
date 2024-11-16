@@ -4,11 +4,7 @@
 #include <vector>
 #include <iostream>
 
-void list_error(const std::string& message) {
-        std::cout <<"\033[1;31m";
-        std::cout << "List error: " + message + ".\n";
-        exit(1);
-}
+void list_error(const std::string& message);
 
 template <typename T>
 class slib_list {
@@ -16,7 +12,7 @@ private:
     std::vector<T> list;
 
 public:
-    slib_list() : list() {}
+    //slib_list() : {}
 
     void insert(T item, int index) {
         if (index < 0) {
@@ -27,6 +23,10 @@ public:
         } else {
             list.insert(list.begin() + index, item);
         }
+    }
+
+    void push(T item) {
+        list.push_back(item);
     }
 
     T remove(int index) {

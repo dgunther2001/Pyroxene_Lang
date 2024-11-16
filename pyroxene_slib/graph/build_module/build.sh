@@ -1,0 +1,1 @@
+clang++ -std=c++17 -O0 -emit-llvm -S ../pyroxene_slib/graph/cpp/graph.cpp -o ../pyroxene_slib/llvm_modules/graph.bc
