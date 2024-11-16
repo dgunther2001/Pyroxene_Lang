@@ -1044,7 +1044,35 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::graph_decl_expr::codegen() {
-        return nullptr;
+        llvm::Type* graph_type = codegen::get_llvm_type(get_expr_type());
+        llvm::StructType* struct_slib_graph_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_graph");
+
+        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_graph_type, nullptr, "slib_graph_obj");
+
+        llvm::Function* constructor = nullptr;
+
+        switch (get_expr_type()) {
+            case (type_enum::int_type):
+            // _ZN10slib_graphIiEC2Ev
+                constructor = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiEC2Ev");
+                break;
+            case (type_enum::float_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfEC2Ev");
+                break;
+            case (type_enum::char_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcEC2Ev");
+                break;
+            case (type_enum::bool_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbEC2Ev");
+                break;
+            default:
+                utility::codegen_error("Invalid type passed to list", parser::current_line);
+        }
+        codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
+
+        scope::add_var_to_current_scope(graph_name, instantiated_object, codegen::get_llvm_type(type), true);
+
+        return instantiated_object;
     }
 
     /**
