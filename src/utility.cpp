@@ -248,6 +248,9 @@ namespace utility {
             for (const std::string& include_item : library_and_include) {
                 std::string bc_path;
                 if (include_item == "list") {
+                    if (library_and_include.find("graph") != library_and_include.end()) {
+                        return;
+                    }
                     bc_path = "../pyroxene_slib/llvm_modules/list.bc";
                     //std::system("[ -e ./pyroxene_slib/llvm_modules/list.bc ] && echo 'here'");
                     
@@ -268,6 +271,33 @@ namespace utility {
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "add");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "at");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "remove");
+                }
+                if (include_item == "graph") {
+                    bc_path = "../pyroxene_slib/llvm_modules/graph.bc";
+                    //std::system("[ -e ./pyroxene_slib/llvm_modules/list.bc ] && echo 'here'");
+                    
+                    std::unique_ptr<llvm::Module> graph_mod = llvm::parseIRFile(bc_path, error, *codegen::LLVM_Context);
+
+                    if (graph_mod == nullptr) {
+                        error.print("link_bc_module", llvm::errs());
+                        std::abort(); // add actually dedicated error function
+                    }
+
+                    
+                    bool failed = llvm::Linker::linkModules(*codegen::LLVM_Module, std::move(graph_mod));
+                    if (failed) {
+                        llvm::errs() << "Error linking module: " << bc_path << "\n";
+                        std::abort();
+                    }
+
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addNode");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addEdge");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeNode");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeEdge");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "BFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printBFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "DFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printDFS");
                 }
             }
         }
@@ -291,9 +321,18 @@ namespace utility {
          */
         void compile_include_ir(const std::string& item) {
             if (item == "list") {
+                if (library_and_include.find("graph") != library_and_include.end()) {
+                    return;
+                }
                 std::system("echo Emitting IR For List Module.");
                 std::system("chmod u+x ../pyroxene_slib/list/build_module/build.sh");
                 std::system("../pyroxene_slib/list/build_module/build.sh");
+                return;
+            }
+            if (item == "graph") {
+                std::system("echo Emitting IR For Graph Module.");
+                std::system("chmod u+x ../pyroxene_slib/graph/build_module/build.sh");
+                std::system("../pyroxene_slib/graph/build_module/build.sh");
                 return;
             }
             std::abort();
