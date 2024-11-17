@@ -172,6 +172,7 @@ namespace parser {
                 utility::parser_error("Expected infix operator in expression", current_line);
             }
 
+
             operators.push_back(current_token_as_token);
 
             get_next_token(); // consume the operator
@@ -256,6 +257,10 @@ namespace parser {
             if (lexer::peek_token(current_token_index) == lexer::tok_open_paren) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
+            if (lexer::peek_token(current_token_index) == lexer::tok_dot) {
+                return std::move(parse_method_dot_call());
+            }
+
             return std::move(parse_identifier_expr(value)); 
         }
         
