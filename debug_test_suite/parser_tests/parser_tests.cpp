@@ -211,5 +211,15 @@ namespace ast {
      void ast::dot_call_var::debug_output() {
           std::cout << "Parsing variable dot call (" << called << ") on " << item_name << "\n";
      }
+
+     /**
+      * @fn ast::print_expr::debug_output()
+      * @code
+      *  std::cout << "Parsing print statement\n";
+      * @endcode
+      */
+     void ast::print_expr::debug_output() {
+          std::cout << "Parsing print statement\n";
+     }
 }
 
