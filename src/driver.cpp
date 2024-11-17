@@ -83,7 +83,7 @@ int main(int argc, char** argv) {
         std::exit(1);
     }
 
-    auto main_function_entry_pt = (int(*)())main_symbol->getAddress();
+    auto main_function_entry_pt = (int (*)())(main_symbol->getValue());
     main_function_entry_pt();
 
 
