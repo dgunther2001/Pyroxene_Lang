@@ -345,7 +345,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-                    return llvm::ConstantExpr::getFAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                    return llvm::BinaryOperator::CreateFAdd(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -367,7 +367,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-                    return llvm::ConstantExpr::getFSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                    return llvm::BinaryOperator::CreateFSub(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -389,7 +389,7 @@ namespace codegen {
                 case type_enum::int_type:
                     return llvm::ConstantExpr::getMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-                    return llvm::ConstantExpr::getFMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                    return llvm::BinaryOperator::CreateFMul(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -409,9 +409,9 @@ namespace codegen {
         if (is_global) {
             switch (type) {
                 case type_enum::int_type:
-                    return llvm::ConstantExpr::getSDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                    return llvm::BinaryOperator::CreateSDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 case type_enum::float_type:
-                    return llvm::ConstantExpr::getFDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
+                    return llvm::BinaryOperator::CreateFDiv(llvm::dyn_cast<llvm::Constant>(left), llvm::dyn_cast<llvm::Constant>(right));
                 default:
                     utility::codegen_error("Unsupported type in binary expression", parser::current_line);
             }
@@ -1013,6 +1013,10 @@ namespace ast {
      */
     llvm::Value* ast::print_expr::codegen() {
         llvm::Value* expr_to_print = expression->codegen();
+
+        if (!expr_to_print) {
+            utility::codegen_error("Failed to generate value for print expression", parser::current_line);
+        }
         
         llvm::Value* fmt_str;
         switch(expression->get_expr_type()) {
@@ -1044,6 +1048,7 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::graph_decl_expr::codegen() {
+        /*
         //llvm::Type* graph_type = codegen::get_llvm_type(get_expr_type());
         //llvm::StructType* struct_slib_graph_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_graph");
 
@@ -1078,17 +1083,14 @@ namespace ast {
         scope::add_var_to_current_scope(graph_name, instantiated_object, codegen::get_llvm_type(type), true);
 
         return instantiated_object;
+        */
+       return nullptr;
     }
 
     /**
      * TODO: docs
      */
     llvm::Value* ast::list_decl::codegen() {
-        
-        llvm::Type* list_type = codegen::get_llvm_type(get_expr_type());
-        llvm::StructType* struct_slib_list_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_list");
-
-        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
 
         llvm::Function* constructor = nullptr;
 
@@ -1108,16 +1110,15 @@ namespace ast {
             default:
                 utility::codegen_error("Invalid type passed to list", parser::current_line);
         }
+
+        llvm::StructType* struct_slib_list_type = llvm::StructType::getTypeByName(*codegen::LLVM_Context, "class.slib_list");
+        llvm::PointerType* pointer_type = llvm::PointerType::get(struct_slib_list_type, 0);
+        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
         codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
 
         scope::add_var_to_current_scope(name, instantiated_object, codegen::get_llvm_type(type), true);
 
         return instantiated_object;
-    
-        // int @_ZN9slib_listIiEC1Ev
-        // float @_ZN9slib_listIfEC2Ev
-        // char @_ZN9slib_listIcEC2Ev
-        // bool @_ZN9slib_listIbEC2Ev
     }
 
 
@@ -1128,36 +1129,71 @@ namespace ast {
         
         std::string aggregate_type = "list"; // need to resolve later...
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
-        type = type_enum::int_type;
-        llvm::Function* insert_function = nullptr;
+        type = type_enum::int_type; // RESOLVE LATER
         // hard code in lists for now...
         if (called == "at") {
-            //list_at_handler();
+            
+            llvm::Function* at_function = nullptr;
+            switch (get_expr_type()) {
+                case (type_enum::int_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE2atEi");
+                    break;
+                case (type_enum::float_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE2atEi");
+                    break;
+                case (type_enum::char_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE2atEi");
+                    break;
+                case (type_enum::bool_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE2atEi");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+                    
+            }   
+            if (!at_function) {
+                utility::codegen_error("Insert function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* index = args.at(0)->codegen(); 
+
+            return codegen::IR_Builder->CreateCall(at_function, {slib_obj, index});    
+            
         } else if (called == "add") {
+            llvm::Function* insert_function = nullptr;
             switch (get_expr_type()) {
                 case (type_enum::int_type):
                     insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
                     break;
                 case (type_enum::float_type):
-                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6insertEii");
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6insertEfi");
                     break;
                 case (type_enum::char_type):
-                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6insertEii");
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6insertEci");
                     break;
                 case (type_enum::bool_type):
-                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6insertEii");
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6insertEbi");
                     break;
                 default:
                     utility::codegen_error("Invalid type passed to list", parser::current_line);
             }   
-            llvm::Value* element = args.at(0)->codegen();  
-            llvm::Value* index = args.at(1)->codegen();
-            codegen::IR_Builder->CreateCall(insert_function, {object, element, index});            
+
+            if (!insert_function) {
+                utility::codegen_error("Insert function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* element = args.at(0)->codegen();
+            llvm::Value* index = args.at(1)->codegen();      
+
+            codegen::IR_Builder->CreateCall(insert_function, {slib_obj, element, index});    
             //list_add_handler();
         } else if (called == "remove") {
             //list_remove_handler();
+            
         }
-
+        
         return nullptr;
 
     }
