@@ -1135,12 +1135,32 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::method_dot_call::codegen() {
-        
-        std::string aggregate_type = "list"; // need to resolve later...
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
-        type = type_enum::int_type; // RESOLVE LATER
-        if (called == "at") {
-            
+
+        // LISTS
+        if (aggregate_type == "list") {
+            if (called == "at") {
+                return codegen::list_handlers::list_at_handler(type, item_name, args);
+            } else if (called == "add") {
+                return codegen::list_handlers::list_add_handler(type, item_name, args);
+            } else if (called == "remove") {
+                return codegen::list_handlers::list_remove_handler(type, item_name, args);
+            } else if (called == "size") {
+                return codegen::list_handlers::list_size_handler(type, item_name, args);
+            }
+        }
+        
+        return nullptr;
+
+    }
+}
+    
+namespace codegen {
+    namespace list_handlers {
+        /**
+         * TODO: docs
+         */
+        llvm::Value* list_at_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* at_function = nullptr;
             switch (type) {
                 case (type_enum::int_type):
@@ -1166,9 +1186,13 @@ namespace ast {
             llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
             llvm::Value* index = args.at(0)->codegen(); 
 
-            return codegen::IR_Builder->CreateCall(at_function, {slib_obj, index});    
-            
-        } else if (called == "add") {
+            return codegen::IR_Builder->CreateCall(at_function, {slib_obj, index});   
+        }
+
+        /**
+         * TODO: docs
+         */
+        llvm::Value* list_add_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* insert_function = nullptr;
             switch (type) {
                 case (type_enum::int_type):
@@ -1195,9 +1219,14 @@ namespace ast {
             llvm::Value* element = args.at(0)->codegen();
             llvm::Value* index = args.at(1)->codegen();      
 
-            codegen::IR_Builder->CreateCall(insert_function, {slib_obj, element, index});    
-            //list_add_handler();
-        } else if (called == "remove") {
+            codegen::IR_Builder->CreateCall(insert_function, {slib_obj, element, index});   
+            return nullptr; 
+        }
+
+        /**
+         * TODO: docs
+         */
+        llvm::Value* list_remove_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* rm_function = nullptr;
             switch (type) {
                 case (type_enum::int_type):
@@ -1223,8 +1252,12 @@ namespace ast {
             llvm::Value* index = args.at(0)->codegen(); 
 
             return codegen::IR_Builder->CreateCall(rm_function, {slib_obj, index});  
-            //list_remove_handler();
-        } else if (called == "size") {
+        }
+
+        /**
+         * TODO: docs
+         */
+        llvm::Value* list_size_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* size_function = nullptr;
             switch (type) {
                 case (type_enum::int_type):
@@ -1250,26 +1283,9 @@ namespace ast {
 
             return codegen::IR_Builder->CreateCall(size_function, {slib_obj}); 
         }
-        
-        return nullptr;
-
     }
-
-    
-    namespace {
-        llvm::Value* list_at_handler() {
-            return nullptr;
-        }
-
-        llvm::Value* list_add_handler() {
-            return nullptr;
-        }
-
-        llvm::Value* list_remove_handler() {
-            return nullptr;
-        }
-    }
-
+}
+namespace ast {
     /**
      * TODO: docs
      */
@@ -1278,3 +1294,4 @@ namespace ast {
     }
 
 }
+

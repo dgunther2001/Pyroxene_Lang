@@ -445,6 +445,7 @@ namespace ast {
     }
     
     /**
+     * @fn ast::print_expr::semantic_analysis()
      * @par Semantically analyze print exressions.
      * @code
      *  expression->semantic_analysis();
@@ -462,6 +463,7 @@ namespace ast {
     }
 
     /**
+     * @fn ast::list_decl::semantic_analysis()
      * @par Simply adds a list declaration to the current semantic analysis scope.
      * @code
         if (sem_analysis_scope::variable_exists_in_current_scope(identifier_name)) {
@@ -478,10 +480,32 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::method_dot_call::semantic_analysis()
+     * @par Semantically analyzes method dot calls to resolve type and make sure that they are valid by checking if the variable exists, and making sure that the method corresponds to the correct type.
+     * @code
+        if(!sem_analysis_scope::var_exists(item_name)) {
+            utility::sem_analysis_error("Complex variable not found in scope stack", parser::current_line);
+        }
+
+        aggregate_type = sem_analysis_scope::get_var_complex_dt(item_name);
+        type = sem_analysis_scope::get_var_type(item_name);
+        //std::cout << aggregate_type << " " << called << "\n";
+        if (!sem_analysis_scope::method_valid_dot_call(aggregate_type, called)) {
+            utility::sem_analysis_error("Invalid method called on type (" + aggregate_type + ")", parser::current_line);
+        }
+     * @endcode
      */
     void ast::method_dot_call::semantic_analysis() {
-        type = type_enum::int_type; // FIX LATER
+        if(!sem_analysis_scope::var_exists(item_name)) {
+            utility::sem_analysis_error("Complex variable not found in scope stack", parser::current_line);
+        }
+
+        aggregate_type = sem_analysis_scope::get_var_complex_dt(item_name);
+        type = sem_analysis_scope::get_var_type(item_name);
+        //std::cout << aggregate_type << " " << called << "\n";
+        if (!sem_analysis_scope::method_valid_dot_call(aggregate_type, called)) {
+            utility::sem_analysis_error("Invalid method called on type (" + aggregate_type + ")", parser::current_line);
+        }
     }
 
     /**

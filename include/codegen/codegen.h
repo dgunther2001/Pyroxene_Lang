@@ -51,12 +51,14 @@ namespace codegen {
     extern llvm::Value* binary_local_helper_div(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);    
 
     extern std::string get_llvm_type_as_string(llvm::Type* type);    
-    namespace {
-        llvm::Value* list_at_handler();
+    namespace list_handlers {
+        extern llvm::Value* list_at_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
 
-        llvm::Value* list_add_handler();
+        extern llvm::Value* list_add_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
 
-        llvm::Value* list_remove_handler();
+        extern llvm::Value* list_remove_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
+
+        extern llvm::Value* list_size_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
     }
 }
 namespace ast {

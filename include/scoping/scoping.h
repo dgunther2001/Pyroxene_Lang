@@ -106,9 +106,11 @@ namespace sem_analysis_scope {
         extern void set_var_init(const std::string& name);
         extern int get_var_scope_level(const std::string& name);
         extern int get_scope_stack_size();
+        extern std::string get_var_complex_dt(const std::string& name);
 
 
         extern void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method);
+        extern bool method_valid_dot_call(const std::string &aggregate_type, const std::string &method);
 }
 
 namespace complex_dt_scope {

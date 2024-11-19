@@ -306,6 +306,30 @@ namespace sem_analysis_scope {
     }
 
     /**
+     * @par Gets the complex data type of a variable on the stack.
+     * @param name The name of the variable.
+     * 
+     * @code
+     *  for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.complex_dt;
+            }
+        }      
+        utility::scoping_error("Complex data type not found on scope stack", parser::current_line);
+     * @endcode
+     */
+    std::string get_var_complex_dt(const std::string& name) {
+        for (auto it = sem_analysis_stack.rbegin(); it != sem_analysis_stack.rend(); ++it) {
+            auto variable = it->find(name);  
+            if (variable != it->end()) {
+                return variable->second.complex_dt;
+            }
+        }      
+        utility::scoping_error("Complex data type not found on scope stack", parser::current_line);
+    }
+
+    /**
      * @par Checks whether the variable has been declared in the current scope.
      * @param name The name of the variable.
      * @code
@@ -436,15 +460,28 @@ namespace sem_analysis_scope {
     }
 
     /**
-     * TODO: docs
+     * @par Adds methods to valid dot calls for complex data types for checking later.
+     * @code
+        if (valid_dot_calls.find(aggregate_type) != valid_dot_calls.end()) {
+            //std::cout << "Adding method " << method << "to type " << aggregate_type << "\n";
+            valid_dot_calls[aggregate_type].insert(method);
+            return;
+        }
+    
+        std::set<std::string> methods;
+        methods.insert(method);
+        valid_dot_calls.insert({aggregate_type, methods});
+        return;
+     * @endcode
      */
     void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method) {
         // find the correct map if it exists
         if (valid_dot_calls.find(aggregate_type) != valid_dot_calls.end()) {
+            //std::cout << "Adding method " << method << "to type " << aggregate_type << "\n";
             valid_dot_calls[aggregate_type].insert(method);
             return;
         }
-
+    
         std::set<std::string> methods;
         methods.insert(method);
         valid_dot_calls.insert({aggregate_type, methods});
@@ -459,6 +496,32 @@ namespace sem_analysis_scope {
             // add a new map to the back of the vector  
 
         
+    }
+
+    /**
+     * @par Checks if a method dot call is in fact valid.
+     * @code
+        if (valid_dot_calls.find(aggregate_type) == valid_dot_calls.end()) {
+            return false;
+        }
+
+        if (valid_dot_calls[aggregate_type].find(method) != valid_dot_calls[aggregate_type].end()) {
+            return true;
+        }
+
+        return false;
+     * @endcode
+     */
+    bool method_valid_dot_call(const std::string &aggregate_type, const std::string &method) {
+        if (valid_dot_calls.find(aggregate_type) == valid_dot_calls.end()) {
+            return false;
+        }
+
+        if (valid_dot_calls[aggregate_type].find(method) != valid_dot_calls[aggregate_type].end()) {
+            return true;
+        }
+
+        return false;
     }
 
     /** 
