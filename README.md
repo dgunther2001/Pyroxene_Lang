@@ -1,4 +1,4 @@
-![Lines of Code](https://tokei.rs/b1/github/dgunther2001/Pyroxene_Lang?category=code)
+![Lines of Code](https://tokei.rs/b1/github/dgunther2001/Pyroxene_Lang?category=code) 
 ![Lang](https://img.shields.io/github/languages/top/dgunther2001/Pyroxene_Lang)
 ![Size](https://img.shields.io/github/repo-size/dgunther2001/Pyroxene_Lang)
 ![Platform](https://img.shields.io/badge/platform-%20macOS%20|%20Linux-blue)
@@ -19,4 +19,3 @@
   Understand the inner workings of Pyroxene by looking at the extensive documentation provided for each step of the pipeline to LLVM and ARM. The license and start guide are also availible from this link.
 
 **Thank you for taking the time to explore this project! Feel free to make suggestions or use the project, as long as you adhere to the license agreement.**
-
