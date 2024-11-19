@@ -1239,20 +1239,20 @@ namespace parser {
 
             std::vector<std::unique_ptr<ast::top_level_expr>> arguments;      
 
-            while (true) {
+            while (current_token != lexer::tok_close_paren) {
                 auto current_expr = parse_expression();
                 arguments.emplace_back(std::move(current_expr));
 
-                
                 if (current_token == lexer::tok_comma) {
                     get_next_token();
                 } else if (current_token == lexer::tok_close_paren) {
-                    get_next_token();
                     break;
                 } else {
                     utility::parser_error("Expected ',' or ')'", current_line);
                 }
             }
+
+            get_next_token(); // consume the closing parenthesis
             auto ast_node = std::make_unique<ast::method_dot_call>(item_name, called, std::move(arguments));  
             #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
                 ast_node->debug_output();
