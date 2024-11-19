@@ -172,6 +172,7 @@ namespace parser {
                 utility::parser_error("Expected infix operator in expression", current_line);
             }
 
+
             operators.push_back(current_token_as_token);
 
             get_next_token(); // consume the operator
@@ -181,7 +182,7 @@ namespace parser {
             utility::parser_error("Number of parenthesis do not match", current_line);
         }
 
-        if (operators.size() != parsed_expressions.size() -1) {
+        if (operators.size() != parsed_expressions.size() - 1) {
             utility::parser_error("Number of infix operators does not match number of expressions", current_line);
         }
 
@@ -256,6 +257,10 @@ namespace parser {
             if (lexer::peek_token(current_token_index) == lexer::tok_open_paren) {
                 return std::move(parse_func_call(std::get<std::string>(value)));
             }
+            if (lexer::peek_token(current_token_index) == lexer::tok_dot) {
+                return std::move(parse_method_dot_call());
+            }
+
             return std::move(parse_identifier_expr(value)); 
         }
         
@@ -1143,6 +1148,14 @@ namespace parser {
 
      */
     std::unique_ptr<ast::top_level_expr> parse_graph_decl() {
+        if (utility::library_and_include.find("graph") == utility::library_and_include.end()) {
+            utility::parser_error("Attempting to use graph without include directive (graph)", current_line);
+        }
+        
+        if (utility::library_and_include.find("list") == utility::library_and_include.end()) {
+            utility::parser_error("Attempting to use graph without include directive (list)", current_line);
+        }
+
         if (current_token != lexer::tok_graph) {
             utility::parser_error("Expected token graph", current_line);
         }
@@ -1263,6 +1276,10 @@ namespace parser {
             case (lexer::tok_list):
                 get_next_token();
                 return "list";
+            case (lexer::tok_graph): {
+                get_next_token();
+                return "graph";
+            }
             default:
                 utility::parser_error("Invalid item included", current_line);
         }
@@ -1313,6 +1330,9 @@ namespace parser {
                     case lexer::tok_list:
                         current_expr = parse_list_decl();
                         break;
+                    case lexer::tok_graph:
+                        current_expr = parse_graph_decl();
+                        break;
                     case lexer::tok_print:
                         current_expr = parse_print();
                         break;
@@ -1356,6 +1376,9 @@ namespace parser {
                         break;
                     case lexer::tok_if:
                         current_expr = parse_if();
+                        break;
+                    case lexer::tok_graph:
+                        current_expr = parse_graph_decl();
                         break;
                     case lexer::tok_list:
                         current_expr = parse_list_decl();

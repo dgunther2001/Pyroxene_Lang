@@ -767,7 +767,7 @@ namespace ast {
                 {}
             void semantic_analysis() override; 
             std::string get_ast_class() const override { return "print"; }
-            //void debug_output();
+            void debug_output();
             llvm::Value* codegen() override;
         };
      * @endcode
@@ -782,7 +782,7 @@ namespace ast {
             {}
         void semantic_analysis() override; 
         std::string get_ast_class() const override { return "print"; }
-        //void debug_output();
+        void debug_output();
         llvm::Value* codegen() override;
     };
 

@@ -481,7 +481,7 @@ namespace ast {
      * TODO: docs
      */
     void ast::method_dot_call::semantic_analysis() {
-
+        type = type_enum::int_type; // FIX LATER
     }
 
     /**

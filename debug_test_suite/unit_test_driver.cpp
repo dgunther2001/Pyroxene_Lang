@@ -20,7 +20,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 #include <fstream>
 #include <csignal>
 
-#define DEBUG_OPTION 6
+#define DEBUG_OPTION 5
 
 
 int main(int argc, char** argv) {
@@ -131,7 +131,7 @@ int main(int argc, char** argv) {
             std::exit(1);
         }
 
-        auto main_function_entry_pt = (int(*)())main_symbol->getAddress();
+        auto main_function_entry_pt = (int (*)())(main_symbol->getValue());
         main_function_entry_pt();
  
         file.close();

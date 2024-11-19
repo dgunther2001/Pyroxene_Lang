@@ -1,0 +1,10 @@
+include graph
+include list
+
+def int main() {
+    int i = 0;
+    graph int my_graph;
+    graph float my_graph_2;
+    //list int my_list;
+    return 0;
+}
