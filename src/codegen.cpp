@@ -1138,14 +1138,16 @@ namespace ast {
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
 
         // LISTS
-        if (called == "at") {
-            return codegen::list_handlers::list_at_handler(type, item_name, args);
-        } else if (called == "add") {
-            return codegen::list_handlers::list_add_handler(type, item_name, args);
-        } else if (called == "remove") {
-            return codegen::list_handlers::list_remove_handler(type, item_name, args);
-        } else if (called == "size") {
-            return codegen::list_handlers::list_size_handler(type, item_name, args);
+        if (aggregate_type == "list") {
+            if (called == "at") {
+                return codegen::list_handlers::list_at_handler(type, item_name, args);
+            } else if (called == "add") {
+                return codegen::list_handlers::list_add_handler(type, item_name, args);
+            } else if (called == "remove") {
+                return codegen::list_handlers::list_remove_handler(type, item_name, args);
+            } else if (called == "size") {
+                return codegen::list_handlers::list_size_handler(type, item_name, args);
+            }
         }
         
         return nullptr;
