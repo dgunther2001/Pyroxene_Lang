@@ -220,6 +220,7 @@ namespace utility {
     void primary_driver_loop() {
         parser::get_next_token();
         process_includes();
+        link_bc_module();
 
         sem_analysis_scope::create_scope();
 
@@ -230,8 +231,6 @@ namespace utility {
         }
 
         sem_analysis_scope::exit_scope();
-
-        link_bc_module();
 
         for (auto const& ast_node : parsing_output) {
             call_codegen(ast_node);
@@ -248,6 +247,7 @@ namespace utility {
             for (const std::string& include_item : library_and_include) {
                 std::string bc_path;
                 if (include_item == "list") {
+                    
                     if (library_and_include.find("graph") != library_and_include.end()) {
                         return;
                     }
@@ -267,7 +267,7 @@ namespace utility {
                         llvm::errs() << "Error linking module: " << bc_path << "\n";
                         std::abort();
                     }
-
+                    
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "add");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "at");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "remove");

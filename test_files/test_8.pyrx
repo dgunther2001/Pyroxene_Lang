@@ -21,11 +21,11 @@ def int main() {
 
     //int my_int = my_list_2.at(0);
     //print(my_int);
-    print(my_list_2.at(0) * 5);
+    //print(my_list_2.at(0) * 5);
     //int my_int2 = my_list_2.remove(1);
     //print(my_int2);
 
-    my_list_2.add(1, 1);
+    //my_list_2.add(1, 1);
     
     print(my_list_2.size());
 
