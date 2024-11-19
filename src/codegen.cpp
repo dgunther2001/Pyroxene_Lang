@@ -1135,9 +1135,9 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::method_dot_call::codegen() {
-        
-        //std::string aggregate_type = "list"; // need to resolve later...
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
+
+        // LISTS
         if (called == "at") {
             return codegen::list_handlers::list_at_handler(type, item_name, args);
         } else if (called == "add") {
