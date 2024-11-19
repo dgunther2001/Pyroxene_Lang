@@ -1,0 +1,51 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+ARG TARGETPLATFORM
+
+ARG LLVM_ARCH="AArch64"
+
+RUN if [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
+        export LLVM_ARCH="X86"; \
+    elif [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
+        export LLVM_ARCH="AArch64"; \
+    else \
+        echo "Unsupported architecture: $TARGETPLATFORM"; exit 1; \
+    fi
+
+RUN apt-get update && apt-get install -y \
+build-essential \
+clang \
+libc++-dev \
+libc++abi-dev \
+cmake \
+llvm \
+llvm-15-tools \
+llvm-15-dev \
+libllvm15 \
+zlib1g-dev \
+valgrind \
+lldb \
+vim \
+git \
+&& rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /
+
+COPY . .
+
+RUN chmod -R +rx /test_files
+
+ARG DEBUG_MODE
+
+ARG FILE_PATH
+
+RUN mkdir build && cd build && \
+    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_DEBUG_DRIVER=0  -DCMAKE_BUILD_TYPE=Debug .. && \
+    make
+
+ENTRYPOINT [ "lldb", "./build/driver" ]
+
+CMD ["./test_files/test_1.pyrx"]
