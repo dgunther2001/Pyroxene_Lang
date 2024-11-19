@@ -26,7 +26,7 @@ llvm-15-dev \
 libllvm15 \
 zlib1g-dev \
 valgrind \
-gdb \
+lldb \
 vim \
 git \
 && rm -rf /var/lib/apt/lists/*
@@ -43,9 +43,9 @@ ARG DEBUG_MODE
 ARG FILE_PATH
 
 RUN mkdir build && cd build && \
-    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_DEBUG_DRIVER=${DEBUG_MODE} .. && \
+    cmake -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DBUILD_DEBUG_DRIVER=0  -DCMAKE_BUILD_TYPE=Debug .. && \
     make
 
-ENTRYPOINT ["./build/driver"]
+ENTRYPOINT [ "lldb", "./build/driver" ]
 
 CMD ["./test_files/test_1.pyrx"]
