@@ -17,6 +17,15 @@ namespace codegen {
     llvm::BasicBlock* top_level_entry;
     llvm::FunctionCallee print_f_function;
 
+    std::string get_llvm_type_as_string(llvm::Type* type) {
+        if (type->isIntegerTy(32)) {
+            return "int";
+        }
+        else {
+            utility::codegen_error("Unsupported llvm type to string conversion", parser::current_line);
+        }
+    }
+
     /**
      * @par Helper function to return an llvm::Type* based on the type stored in the AST.
      * 
@@ -1130,13 +1139,12 @@ namespace ast {
         std::string aggregate_type = "list"; // need to resolve later...
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
         type = type_enum::int_type; // RESOLVE LATER
-        // hard code in lists for now...
         if (called == "at") {
             
             llvm::Function* at_function = nullptr;
-            switch (get_expr_type()) {
+            switch (type) {
                 case (type_enum::int_type):
-                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE2atEi");
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE2atEi");
                     break;
                 case (type_enum::float_type):
                     at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE2atEi");
@@ -1162,7 +1170,7 @@ namespace ast {
             
         } else if (called == "add") {
             llvm::Function* insert_function = nullptr;
-            switch (get_expr_type()) {
+            switch (type) {
                 case (type_enum::int_type):
                     insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
                     break;
@@ -1190,8 +1198,57 @@ namespace ast {
             codegen::IR_Builder->CreateCall(insert_function, {slib_obj, element, index});    
             //list_add_handler();
         } else if (called == "remove") {
+            llvm::Function* rm_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6removeEi");
+                    break;
+                case (type_enum::float_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6removeEi");
+                    break;
+                case (type_enum::char_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6removeEi");
+                    break;
+                case (type_enum::bool_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6removeEi");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            }   
+            if (!rm_function) {
+                utility::codegen_error("Remove function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* index = args.at(0)->codegen(); 
+
+            return codegen::IR_Builder->CreateCall(rm_function, {slib_obj, index});  
             //list_remove_handler();
-            
+        } else if (called == "size") {
+            llvm::Function* size_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE4sizeEv");
+                    break;
+                case (type_enum::float_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE4sizeEv");
+                    break;
+                case (type_enum::char_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE4sizeEv");
+                    break;
+                case (type_enum::bool_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE4sizeEv");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            } 
+            if (!size_function) {
+                utility::codegen_error("Size function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+
+            return codegen::IR_Builder->CreateCall(size_function, {slib_obj}); 
         }
         
         return nullptr;

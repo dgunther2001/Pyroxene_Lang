@@ -182,7 +182,7 @@ namespace parser {
             utility::parser_error("Number of parenthesis do not match", current_line);
         }
 
-        if (operators.size() != parsed_expressions.size() -1) {
+        if (operators.size() != parsed_expressions.size() - 1) {
             utility::parser_error("Number of infix operators does not match number of expressions", current_line);
         }
 

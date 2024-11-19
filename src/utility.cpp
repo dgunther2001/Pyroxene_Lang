@@ -271,6 +271,7 @@ namespace utility {
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "add");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "at");
                     sem_analysis_scope::add_method_to_valid_dot_calls("list", "remove");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "size");
                 }
                 if (include_item == "graph") {
                     bc_path = "../pyroxene_slib/llvm_modules/graph.bc";
@@ -385,11 +386,7 @@ namespace utility {
                     case lexer::tok_def:
                         func = parser::parse_function();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
-                        break;
-                    case lexer::tok_graph:
-                        expr = parser::parse_graph_decl();
-                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;      
+                        break;   
                     case lexer::tok_return:
                         expr = parser::parse_return();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
@@ -401,9 +398,6 @@ namespace utility {
                     case lexer::tok_print:
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;
-                    case lexer::tok_list:
-                        current_expr = parser::parse_list_decl();
                         break;
                     default:
                         expr = parser::parse_expression();
@@ -459,11 +453,7 @@ namespace utility {
                     case lexer::tok_def:
                         func = parser::parse_function();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(func)));
-                        break;
-                    case lexer::tok_graph:
-                        expr = parser::parse_graph_decl();
-                        parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;      
+                        break;     
                     case lexer::tok_return:
                         expr = parser::parse_return();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
@@ -475,9 +465,6 @@ namespace utility {
                     case lexer::tok_print:
                         expr = parser::parse_print();
                         parsing_output.push_back(std::variant<std::unique_ptr<ast::top_level_expr>, std::unique_ptr<ast::func_defn>>(std::move(expr)));
-                        break;
-                    case lexer::tok_list:
-                        expr = parser::parse_list_decl();
                         break;
                     default:
                         expr = parser::parse_expression();

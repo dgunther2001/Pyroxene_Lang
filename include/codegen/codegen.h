@@ -48,7 +48,9 @@ namespace codegen {
     extern llvm::Value* binary_local_helper_plus(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);
     extern llvm::Value* binary_local_helper_minus(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);     
     extern llvm::Value* binary_local_helper_mult(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);    
-    extern llvm::Value* binary_local_helper_div(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);        
+    extern llvm::Value* binary_local_helper_div(llvm::Value* left, llvm::Value* right, bool is_global, type_enum::types type);    
+
+    extern std::string get_llvm_type_as_string(llvm::Type* type);    
     namespace {
         llvm::Value* list_at_handler();
 
