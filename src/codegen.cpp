@@ -1018,7 +1018,34 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::print_expr::codegen()
+     * @par Handles basic print expressions and makes the correct syscalls to printf in the c stdlib.
+     * @code
+        llvm::Value* expr_to_print = expression->codegen();
+
+        if (!expr_to_print) {
+            utility::codegen_error("Failed to generate value for print expression", parser::current_line);
+        }
+        
+        llvm::Value* fmt_str;
+        switch(expression->get_expr_type()) {
+            case (type_enum::int_type): case (type_enum::bool_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%d\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            case (type_enum::float_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%f\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            case (type_enum::char_type):
+                fmt_str = codegen::IR_Builder->CreateGlobalStringPtr("%c\n", "format_str", 0, codegen::LLVM_Module.get());
+                break;
+            default:
+                utility::codegen_error("Printing requested on invalid type", parser::current_line);
+        }
+
+        std::vector<llvm::Value*> printfArgs = {fmt_str, expr_to_print};
+
+        return codegen::IR_Builder->CreateCall(codegen::print_f_function, printfArgs, "__printfCall__");
+     * @endcode
      */
     llvm::Value* ast::print_expr::codegen() {
         llvm::Value* expr_to_print = expression->codegen();
@@ -1097,7 +1124,47 @@ namespace ast {
     }
 
     /**
-     * TODO: docs
+     * @fn ast::list_decl::codegen()
+     * @par Handles list declarations by making the correct call to the list constructor linked from the dynamically compiled list module.
+     * @par Find the correct constructor based on the type.
+     * @code
+        llvm::Function* constructor = nullptr;
+
+        switch (get_expr_type()) {
+            case (type_enum::int_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIiEC2Ev");
+                break;
+            case (type_enum::float_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIfEC2Ev");
+                break;
+            case (type_enum::char_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIcEC2Ev");
+                break;
+            case (type_enum::bool_type):
+                constructor = codegen::LLVM_Module->getFunction("_ZN9slib_listIbEC2Ev");
+                break;
+            default:
+                utility::codegen_error("Invalid type passed to list", parser::current_line);
+        }
+     * @endcode
+
+       @par Grab the struct type from the llvm context, and grab a pointer type to an slib_list struct type.
+       @code 
+        llvm::StructType* struct_slib_list_type = llvm::StructType::getTypeByName(*codegen::LLVM_Context, "class.slib_list");
+        llvm::PointerType* pointer_type = llvm::PointerType::get(struct_slib_list_type, 0);
+       @endcode
+
+       @par Allocate memory for the new object and create a call to it's constructor
+       @code
+        llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_list_type, nullptr, "slib_list_obj");
+        codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
+       @endcode
+
+       @par Add the variable to the current scope to be found later, and return a pointer to the instantiated object allocation.
+       @code
+        scope::add_var_to_current_scope(name, instantiated_object, codegen::get_llvm_type(type), true);
+        return instantiated_object;
+       @endcode
      */
     llvm::Value* ast::list_decl::codegen() {
 
@@ -1132,7 +1199,31 @@ namespace ast {
 
 
     /**
-     * TODO: docs
+     * @fn ast::method_dot_call::codegen()
+     * @par Lookup the variable in the current scope, and retrieve its allcoation.
+     * @code
+     *  llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
+     * @endcode
+     * 
+     * @par If the aggregate type is a list type, call the correct handler for that function, which deals with calling the correct function based on the type.
+     * @code
+        if (aggregate_type == "list") {
+            if (called == "at") {
+                return codegen::list_handlers::list_at_handler(type, item_name, args);
+            } else if (called == "add") {
+                return codegen::list_handlers::list_add_handler(type, item_name, args);
+            } else if (called == "remove") {
+                return codegen::list_handlers::list_remove_handler(type, item_name, args);
+            } else if (called == "size") {
+                return codegen::list_handlers::list_size_handler(type, item_name, args);
+            }
+        }
+     * @endcode
+
+       @par Return a nullptr if the object is not found to suppress warnings, but in reality, the semantic analyzer will catch this bug.
+       @code
+        return nullptr;
+       @endcode
      */
     llvm::Value* ast::method_dot_call::codegen() {
         llvm::AllocaInst* object = llvm::dyn_cast<llvm::AllocaInst>(scope::variable_lookup(item_name)->allocation);
@@ -1158,7 +1249,35 @@ namespace ast {
 namespace codegen {
     namespace list_handlers {
         /**
-         * TODO: docs
+         * @par Call the correct method in the module based on the type, and make a call to it.
+         * @code
+            llvm::Function* at_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE2atEi");
+                    break;
+                case (type_enum::float_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE2atEi");
+                    break;
+                case (type_enum::char_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE2atEi");
+                    break;
+                case (type_enum::bool_type):
+                    at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE2atEi");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+                    
+            }   
+            if (!at_function) {
+                utility::codegen_error("Insert function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* index = args.at(0)->codegen(); 
+
+            return codegen::IR_Builder->CreateCall(at_function, {slib_obj, index});  
+         * @endcode
          */
         llvm::Value* list_at_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* at_function = nullptr;
@@ -1190,7 +1309,37 @@ namespace codegen {
         }
 
         /**
-         * TODO: docs
+         * @par Call the correct method in the module based on the type, and make a call to it.
+         * @code
+            llvm::Function* insert_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
+                    break;
+                case (type_enum::float_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6insertEfi");
+                    break;
+                case (type_enum::char_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6insertEci");
+                    break;
+                case (type_enum::bool_type):
+                    insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6insertEbi");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            }   
+
+            if (!insert_function) {
+                utility::codegen_error("Insert function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* element = args.at(0)->codegen();
+            llvm::Value* index = args.at(1)->codegen();      
+
+            codegen::IR_Builder->CreateCall(insert_function, {slib_obj, element, index});   
+            return nullptr;  
+         * @endcode
          */
         llvm::Value* list_add_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* insert_function = nullptr;
@@ -1224,7 +1373,34 @@ namespace codegen {
         }
 
         /**
-         * TODO: docs
+         * @par Call the correct method in the module based on the type, and make a call to it.
+         * @code
+         *             llvm::Function* rm_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6removeEi");
+                    break;
+                case (type_enum::float_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE6removeEi");
+                    break;
+                case (type_enum::char_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE6removeEi");
+                    break;
+                case (type_enum::bool_type):
+                    rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE6removeEi");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            }   
+            if (!rm_function) {
+                utility::codegen_error("Remove function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* index = args.at(0)->codegen(); 
+
+            return codegen::IR_Builder->CreateCall(rm_function, {slib_obj, index});  
+           @endcode
          */
         llvm::Value* list_remove_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* rm_function = nullptr;
@@ -1255,7 +1431,33 @@ namespace codegen {
         }
 
         /**
-         * TODO: docs
+         * @par Call the correct method in the module based on the type, and make a call to it.
+         * @code
+            llvm::Function* size_function = nullptr;
+            switch (type) {
+                case (type_enum::int_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE4sizeEv");
+                    break;
+                case (type_enum::float_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIfE4sizeEv");
+                    break;
+                case (type_enum::char_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIcE4sizeEv");
+                    break;
+                case (type_enum::bool_type):
+                    size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIbE4sizeEv");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to list", parser::current_line);
+            } 
+            if (!size_function) {
+                utility::codegen_error("Size function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+
+            return codegen::IR_Builder->CreateCall(size_function, {slib_obj}); 
+         * @endcode
          */
         llvm::Value* list_size_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* size_function = nullptr;

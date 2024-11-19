@@ -158,7 +158,7 @@ Public Member Functions</h2></td></tr>
 <div class="ttc" id="aclassast_1_1else__expr_html"><div class="ttname"><a href="classast_1_1else__expr.html">ast::else_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:693</div></div>
 <div class="ttc" id="aclassast_1_1else__expr_html_a06fb3643da479bc449b980ba6698622f"><div class="ttname"><a href="#a06fb3643da479bc449b980ba6698622f">ast::else_expr::grab_else_if</a></div><div class="ttdeci">std::unique_ptr&lt; top_level_expr &gt; grab_else_if() override</div><div class="ttdef"><b>Definition</b> ast.h:708</div></div>
 <div class="ttc" id="aclassast_1_1else__expr_html_a1b09094c04900dec7280c9d3cc6c51d3"><div class="ttname"><a href="#a1b09094c04900dec7280c9d3cc6c51d3">ast::else_expr::else_expr</a></div><div class="ttdeci">else_expr(std::vector&lt; std::unique_ptr&lt; top_level_expr &gt; &gt; expressions, bool is_else_if)</div><div class="ttdef"><b>Definition</b> ast.h:699</div></div>
-<div class="ttc" id="aclassast_1_1else__expr_html_a3e3b16c3aadaef5f1741b2727e403def"><div class="ttname"><a href="#a3e3b16c3aadaef5f1741b2727e403def">ast::else_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:847</div></div>
+<div class="ttc" id="aclassast_1_1else__expr_html_a3e3b16c3aadaef5f1741b2727e403def"><div class="ttname"><a href="#a3e3b16c3aadaef5f1741b2727e403def">ast::else_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:969</div></div>
 <div class="ttc" id="aclassast_1_1else__expr_html_a3fefe2fee2167d7a61772c4e9c2bbf50"><div class="ttname"><a href="#a3fefe2fee2167d7a61772c4e9c2bbf50">ast::else_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
 <div class="ttc" id="aclassast_1_1else__expr_html_a73e5a1f55f7ea917dc35d0b90d9c3a25"><div class="ttname"><a href="#a73e5a1f55f7ea917dc35d0b90d9c3a25">ast::else_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:704</div></div>
 <div class="ttc" id="aclassast_1_1else__expr_html_aa087137908fa1db52f4617e59c079876"><div class="ttname"><a href="#aa087137908fa1db52f4617e59c079876">ast::else_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div><div class="ttdef"><b>Definition</b> type_checker.cpp:276</div></div>
@@ -220,7 +220,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section user"><dt>Generate a scope, and initialize an LLVM Value* for the current expression as nullptr.</dt><dd><div class="fragment"><div class="line"><a class="code hl_function" href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a>();</div>
 <div class="line">llvm::Value* current_expr = <span class="keyword">nullptr</span>;</div>
-<div class="ttc" id="anamespacescope_html_a1a6b7d5eedb10b30e8db49c791b917d5"><div class="ttname"><a href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:12</div></div>
+<div class="ttc" id="anamespacescope_html_a1a6b7d5eedb10b30e8db49c791b917d5"><div class="ttname"><a href="namespacescope.html#a1a6b7d5eedb10b30e8db49c791b917d5">scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:14</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Generate IR for each expression in the esle block, and exit scope.</dt><dd><div class="fragment"><div class="line">llvm::Value* current_expr = <span class="keyword">nullptr</span>;</div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; expression : expressions) {</div>
@@ -228,7 +228,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="line"><a class="code hl_function" href="namespacescope.html#a21cdb44f51a06d33c6537c7167270879">scope::exit_scope</a>();</div>
 <div class="line"><span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
-<div class="ttc" id="anamespacescope_html_a21cdb44f51a06d33c6537c7167270879"><div class="ttname"><a href="namespacescope.html#a21cdb44f51a06d33c6537c7167270879">scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:26</div></div>
+<div class="ttc" id="anamespacescope_html_a21cdb44f51a06d33c6537c7167270879"><div class="ttname"><a href="namespacescope.html#a21cdb44f51a06d33c6537c7167270879">scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:28</div></div>
 </div><!-- fragment --> </dd></dl>
 
 <p>Implements <a class="el" href="classast_1_1top__level__expr.html#a3430477e06c9b7de405decf1466d8cc3">ast::top_level_expr</a>.</p>

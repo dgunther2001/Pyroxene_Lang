@@ -85,16 +85,32 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">codegen Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecodegen_1_1list__handlers.html">list_handlers</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a270db300d0c26287411a684916d00ea6" id="r_a270db300d0c26287411a684916d00ea6"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a270db300d0c26287411a684916d00ea6">get_llvm_type_as_string</a> (llvm::Type *type)</td></tr>
+<tr class="separator:a270db300d0c26287411a684916d00ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2c4cffdc7944921419d9b7d59a25aed" id="r_ad2c4cffdc7944921419d9b7d59a25aed"><td class="memItemLeft" align="right" valign="top">llvm::Type *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2c4cffdc7944921419d9b7d59a25aed">get_llvm_type</a> (<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> current_type)</td></tr>
 <tr class="separator:ad2c4cffdc7944921419d9b7d59a25aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad634fdcf1fe73e2d6960ec12aef50016" id="r_ad634fdcf1fe73e2d6960ec12aef50016"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad634fdcf1fe73e2d6960ec12aef50016">binary_local_helper_plus</a> (llvm::Value *left, llvm::Value *right, bool is_global, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:ad634fdcf1fe73e2d6960ec12aef50016"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add997fc6bfdb1d3ffe3faa42c276d752" id="r_add997fc6bfdb1d3ffe3faa42c276d752"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add997fc6bfdb1d3ffe3faa42c276d752">binary_local_helper_minus</a> (llvm::Value *left, llvm::Value *right, bool is_global, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:add997fc6bfdb1d3ffe3faa42c276d752"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a745a170bf04eab90e5af527c777e481a" id="r_a745a170bf04eab90e5af527c777e481a"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a745a170bf04eab90e5af527c777e481a">binary_local_helper_mult</a> (llvm::Value *left, llvm::Value *right, bool is_global, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:a745a170bf04eab90e5af527c777e481a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4235b968bac538b3076d143e37f92b66" id="r_a4235b968bac538b3076d143e37f92b66"><td class="memItemLeft" align="right" valign="top">llvm::Value *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4235b968bac538b3076d143e37f92b66">binary_local_helper_div</a> (llvm::Value *left, llvm::Value *right, bool is_global, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:a4235b968bac538b3076d143e37f92b66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -110,6 +126,131 @@ Variables</h2></td></tr>
 <tr class="separator:a06cab5f2b8c46af498d8f3f17fd365f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a4235b968bac538b3076d143e37f92b66" name="a4235b968bac538b3076d143e37f92b66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4235b968bac538b3076d143e37f92b66">&#9670;&#160;</a></span>binary_local_helper_div()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * codegen::binary_local_helper_div </td>
+          <td>(</td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_global</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="add997fc6bfdb1d3ffe3faa42c276d752" name="add997fc6bfdb1d3ffe3faa42c276d752"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add997fc6bfdb1d3ffe3faa42c276d752">&#9670;&#160;</a></span>binary_local_helper_minus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * codegen::binary_local_helper_minus </td>
+          <td>(</td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_global</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a745a170bf04eab90e5af527c777e481a" name="a745a170bf04eab90e5af527c777e481a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a745a170bf04eab90e5af527c777e481a">&#9670;&#160;</a></span>binary_local_helper_mult()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * codegen::binary_local_helper_mult </td>
+          <td>(</td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_global</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad634fdcf1fe73e2d6960ec12aef50016" name="ad634fdcf1fe73e2d6960ec12aef50016"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad634fdcf1fe73e2d6960ec12aef50016">&#9670;&#160;</a></span>binary_local_helper_plus()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">llvm::Value * codegen::binary_local_helper_plus </td>
+          <td>(</td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">llvm::Value *</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_global</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO: docs </p>
+
+</div>
+</div>
 <a id="ad2c4cffdc7944921419d9b7d59a25aed" name="ad2c4cffdc7944921419d9b7d59a25aed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad2c4cffdc7944921419d9b7d59a25aed">&#9670;&#160;</a></span>get_llvm_type()</h2>
 
@@ -146,6 +287,23 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67aa8232e38c660137cdf6cec3eb60564b7">type_enum::string_type</a></div><div class="ttdeci">@ string_type</div><div class="ttdoc">String type.</div><div class="ttdef"><b>Definition</b> types.h:12</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67adf065e69da124ea82a179b9b801e3fab">type_enum::int_type</a></div><div class="ttdeci">@ int_type</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> types.h:9</div></div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="a270db300d0c26287411a684916d00ea6" name="a270db300d0c26287411a684916d00ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a270db300d0c26287411a684916d00ea6">&#9670;&#160;</a></span>get_llvm_type_as_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string codegen::get_llvm_type_as_string </td>
+          <td>(</td>
+          <td class="paramtype">llvm::Type *</td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>

@@ -85,7 +85,8 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">utility Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -116,6 +117,11 @@ Functions</h2></td></tr>
 <tr class="separator:a1da3aeaa9534d9336040ec8f21bdcd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afbb30e890b50ac29a9d9dbf1226bf39b" id="r_afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afbb30e890b50ac29a9d9dbf1226bf39b">primary_driver_loop</a> ()</td></tr>
 <tr class="separator:afbb30e890b50ac29a9d9dbf1226bf39b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:af7c1907d56118423318afd90e05f754b" id="r_af7c1907d56118423318afd90e05f754b"><td class="memItemLeft" align="right" valign="top">std::set&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7c1907d56118423318afd90e05f754b">library_and_include</a></td></tr>
+<tr class="separator:af7c1907d56118423318afd90e05f754b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="aa5b0ff65b17cd9e070c16f1a9348c71b" name="aa5b0ff65b17cd9e070c16f1a9348c71b"></a>
@@ -363,7 +369,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>This is called in both drivers (entrypoints), that takes in the current token stored in <code>parser::current_token</code>, and calls the correct parsing function and codegen if applicable.</dt><dd></dd></dl>
-<div class="fragment"><div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a>();</div>
+<div class="fragment"><div class="line">process_includes();</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a>();</div>
 <div class="line"><a class="code hl_function" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a>();</div>
 <div class="line"> </div>
 <div class="line">std::vector&lt;std::variant&lt;std::unique_ptr&lt;ast::top_level_expr&gt;, std::unique_ptr&lt;ast::func_defn&gt;&gt;&gt; parsing_output = parse_top_level();</div>
@@ -378,8 +386,8 @@ Functions</h2></td></tr>
 <div class="line">    call_codegen(ast_node);</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a5ae126257d31d8a2193a9505a63c3cb3"><div class="ttname"><a href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser::get_next_token</a></div><div class="ttdeci">int get_next_token()</div><div class="ttdef"><b>Definition</b> parser.cpp:49</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:139</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_aabe35ff7d69e8dcbf3d0b3e9b5c003af"><div class="ttname"><a href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:125</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a743a1ef9b6ec895e1bdc779e84eefae8"><div class="ttname"><a href="namespacesem__analysis__scope.html#a743a1ef9b6ec895e1bdc779e84eefae8">sem_analysis_scope::exit_scope</a></div><div class="ttdeci">void exit_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:142</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_aabe35ff7d69e8dcbf3d0b3e9b5c003af"><div class="ttname"><a href="namespacesem__analysis__scope.html#aabe35ff7d69e8dcbf3d0b3e9b5c003af">sem_analysis_scope::create_scope</a></div><div class="ttdeci">void create_scope()</div><div class="ttdef"><b>Definition</b> scoping.cpp:128</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -426,6 +434,22 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="af7c1907d56118423318afd90e05f754b" name="af7c1907d56118423318afd90e05f754b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7c1907d56118423318afd90e05f754b">&#9670;&#160;</a></span>library_and_include</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::set&lt; std::string &gt; utility::library_and_include</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>A list of all include statements.</dt><dd></dd></dl>
 
 </div>
 </div>

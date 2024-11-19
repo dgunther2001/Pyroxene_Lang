@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['llvm_5fvar_5finfo_0',['llvm_var_info',['../structscope_1_1llvm__var__info.html',1,'scope']]]
+  ['identifier_5fexpr_0',['identifier_expr',['../classast_1_1identifier__expr.html',1,'ast']]],
+  ['if_5fexpr_1',['if_expr',['../classast_1_1if__expr.html',1,'ast']]],
+  ['integer_5fexpression_2',['integer_expression',['../classast_1_1integer__expression.html',1,'ast']]]
 ];

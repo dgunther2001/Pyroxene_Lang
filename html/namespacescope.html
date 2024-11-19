@@ -126,6 +126,8 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a905f50d938f068b4696811a1868875d5" id="r_a905f50d938f068b4696811a1868875d5"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::map&lt; std::string, <a class="el" href="structscope_1_1llvm__var__info.html">llvm_var_info</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a905f50d938f068b4696811a1868875d5">scoping_stack</a></td></tr>
 <tr class="separator:a905f50d938f068b4696811a1868875d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fb57a51481a9f20bd3a5d3919866078" id="r_a4fb57a51481a9f20bd3a5d3919866078"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::map&lt; std::string, std::set&lt; std::string &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fb57a51481a9f20bd3a5d3919866078">valid_dot_calls</a></td></tr>
+<tr class="separator:a4fb57a51481a9f20bd3a5d3919866078"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="ad04e3e2e2a5006b56b242b47bcca40cf" name="ad04e3e2e2a5006b56b242b47bcca40cf"></a>
@@ -270,7 +272,7 @@ Variables</h2></td></tr>
 <div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Attempted to exit scope when no scopes exist&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
-<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:102</div></div>
+<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:104</div></div>
 </div><!-- fragment --> </dd></dl>
 
 </div>
@@ -368,6 +370,20 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>Thus holds all of the information related to scope. It will also allow for variable shadowing</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a4fb57a51481a9f20bd3a5d3919866078" name="a4fb57a51481a9f20bd3a5d3919866078"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fb57a51481a9f20bd3a5d3919866078">&#9670;&#160;</a></span>valid_dot_calls</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::map&lt;std::string, std::set&lt;std::string&gt; &gt; &gt; scope::valid_dot_calls</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
