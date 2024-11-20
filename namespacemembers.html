@@ -88,12 +88,17 @@ $(function(){ initResizable(false); });
 
 <h3><a id="index_a" name="index_a"></a>- a -</h3><ul>
 <li>add_function_defn()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#ab08cb83520e1470258f73ed9fbf40a48">sem_analysis_scope</a></li>
-<li>add_var_to_current_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a41c16319bb03f7679d147493ef074514">scope</a>, <a class="el" href="namespacesem__analysis__scope.html#a55b9d658ead7918240f330911400ab8b">sem_analysis_scope</a></li>
+<li>add_method_to_valid_dot_calls()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a840149a09a97889bd25cc938d28eab29">sem_analysis_scope</a></li>
+<li>add_var_to_current_scope()&#160;:&#160;<a class="el" href="namespacescope.html#a41c16319bb03f7679d147493ef074514">scope</a>, <a class="el" href="namespacesem__analysis__scope.html#ab705d9c82e7e6b3a0b09bd7a2a0b5154">sem_analysis_scope</a></li>
 <li>Argument&#160;:&#160;<a class="el" href="namespacescope.html#ad04e3e2e2a5006b56b242b47bcca40cfaa68211fb3850b556a06d04250af3ea62">scope</a></li>
 </ul>
 
 
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
+<li>binary_local_helper_div()&#160;:&#160;<a class="el" href="namespacecodegen.html#a4235b968bac538b3076d143e37f92b66">codegen</a></li>
+<li>binary_local_helper_minus()&#160;:&#160;<a class="el" href="namespacecodegen.html#add997fc6bfdb1d3ffe3faa42c276d752">codegen</a></li>
+<li>binary_local_helper_mult()&#160;:&#160;<a class="el" href="namespacecodegen.html#a745a170bf04eab90e5af527c777e481a">codegen</a></li>
+<li>binary_local_helper_plus()&#160;:&#160;<a class="el" href="namespacecodegen.html#ad634fdcf1fe73e2d6960ec12aef50016">codegen</a></li>
 <li>bool_type&#160;:&#160;<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a5e7c2dad432f01acfb54c338f6160df6">type_enum</a></li>
 <li>bool_value&#160;:&#160;<a class="el" href="namespacelexer.html#a3641e322519806f9d1a524ce349c4cca">lexer</a></li>
 </ul>
@@ -132,17 +137,29 @@ $(function(){ initResizable(false); });
 
 <h3><a id="index_g" name="index_g"></a>- g -</h3><ul>
 <li>get_arg_type_map()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a956c2ae24551b0fd555b8e36cd01d819">sem_analysis_scope</a></li>
+<li>get_dot_call_type()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#adf90f3433fb21c3fea597191bb5e4dba">sem_analysis_scope</a></li>
 <li>get_func_ret_type()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a4821c01f78f92c043b74d1291ac86faf">sem_analysis_scope</a></li>
 <li>get_llvm_type()&#160;:&#160;<a class="el" href="namespacecodegen.html#ad2c4cffdc7944921419d9b7d59a25aed">codegen</a></li>
+<li>get_llvm_type_as_string()&#160;:&#160;<a class="el" href="namespacecodegen.html#a270db300d0c26287411a684916d00ea6">codegen</a></li>
 <li>get_next_token()&#160;:&#160;<a class="el" href="namespaceparser.html#a5ae126257d31d8a2193a9505a63c3cb3">parser</a></li>
 <li>get_num_params()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope</a></li>
 <li>get_param_type()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#acbda4c46c9f48bcf5c17c0e28c7f0e12">sem_analysis_scope</a></li>
 <li>get_scope_stack_size()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a98b8a938b9d4e92e3ccc2c4bfe261758">sem_analysis_scope</a></li>
 <li>get_token()&#160;:&#160;<a class="el" href="namespacelexer.html#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer</a></li>
 <li>get_type_as_string()&#160;:&#160;<a class="el" href="namespaceast.html#a610cf906847e77d535becf6e18a5ea05">ast</a></li>
+<li>get_var_complex_dt()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#aa9711f66355fbb21acd1dae701ecd0b0">sem_analysis_scope</a></li>
 <li>get_var_scope_level()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a7ba557c2f1fb62bee9241626d80bfd53">sem_analysis_scope</a></li>
 <li>get_var_type()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope</a></li>
 <li>global_contains_func_defn()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#aab208518ea2ad4c6733d64a91fa42e15">sem_analysis_scope</a></li>
+<li>graph_add_edge_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#af51c079d346ee7ae37044ae943dbbbdb">codegen::graph_handlers</a></li>
+<li>graph_add_node_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#adc510b328dc2dad6bd96735429dfd0c7">codegen::graph_handlers</a></li>
+<li>graph_BFS_printer_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#af5f088f3a770d0b834c080c9e69c327b">codegen::graph_handlers</a></li>
+<li>graph_contains_node_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#accc8b2d708218072f77a0d43109c38a1">codegen::graph_handlers</a></li>
+<li>graph_DFS_printer_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#ad9fa7928aea8dcbbc62260c3e02fe7a1">codegen::graph_handlers</a></li>
+<li>graph_num_edge_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#af23116e746121f981aa3f21e608d692b">codegen::graph_handlers</a></li>
+<li>graph_remove_edge_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#a29a856700f577c3d4e083c157b809779">codegen::graph_handlers</a></li>
+<li>graph_remove_node_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#a90fa058f6402b119db99e32e67e6fa8e">codegen::graph_handlers</a></li>
+<li>graph_size_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1graph__handlers.html#a33ccdce5527f69f0f2104b8c13bdf482">codegen::graph_handlers</a></li>
 </ul>
 
 
@@ -163,14 +180,25 @@ $(function(){ initResizable(false); });
 <h3><a id="index_l" name="index_l"></a>- l -</h3><ul>
 <li>lexer_error()&#160;:&#160;<a class="el" href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility</a></li>
 <li>lexer_stored_values&#160;:&#160;<a class="el" href="namespacelexer.html#a3d7207f2064a87952ff770b412d9180a">lexer</a></li>
+<li>library_and_include&#160;:&#160;<a class="el" href="namespaceutility.html#af7c1907d56118423318afd90e05f754b">utility</a></li>
 <li>line_count&#160;:&#160;<a class="el" href="namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0">lexer</a></li>
 <li>line_count_vec&#160;:&#160;<a class="el" href="namespacelexer.html#a2236b4d9e5656f41e63b6a6aaf59a796">lexer</a></li>
+<li>list_add_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1list__handlers.html#ae76dbb367af2950062f123071f840acc">codegen::list_handlers</a></li>
+<li>list_at_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1list__handlers.html#ad6bc906813141beaa330925f50ef7ba4">codegen::list_handlers</a></li>
+<li>list_remove_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1list__handlers.html#a524d7d2c26a22ef20f12436ca7dcebce">codegen::list_handlers</a></li>
+<li>list_size_handler()&#160;:&#160;<a class="el" href="namespacecodegen_1_1list__handlers.html#adc8fc366ba523cb2dddcc317390796ba">codegen::list_handlers</a></li>
 <li>LLVM_Context&#160;:&#160;<a class="el" href="namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a">codegen</a></li>
 <li>LLVM_Module&#160;:&#160;<a class="el" href="namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe">codegen</a></li>
 </ul>
 
 
+<h3><a id="index_m" name="index_m"></a>- m -</h3><ul>
+<li>method_valid_dot_call()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a63d3317879727943601b75c1fbbf7c41">sem_analysis_scope</a></li>
+</ul>
+
+
 <h3><a id="index_o" name="index_o"></a>- o -</h3><ul>
+<li>obj_type&#160;:&#160;<a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67a056fbaa02c8259cb8dcdc5e8365611ac">type_enum</a></li>
 <li>operator_precedence&#160;:&#160;<a class="el" href="namespaceparser.html#a6b1de9e4409d45df3d8af98be9ec4572">parser</a></li>
 <li>output_current_token()&#160;:&#160;<a class="el" href="namespaceutility.html#a9a9bb4b8fecdcdc3959e007c2f94b125">utility</a></li>
 </ul>
@@ -188,7 +216,10 @@ $(function(){ initResizable(false); });
 <li>parse_graph_decl()&#160;:&#160;<a class="el" href="namespaceparser.html#afdfcdf0db14620c371456e8aadbccea7">parser</a></li>
 <li>parse_identifier_expr()&#160;:&#160;<a class="el" href="namespaceparser.html#a027ef210d08eb14a111c26a2a4e3ec2c">parser</a></li>
 <li>parse_if()&#160;:&#160;<a class="el" href="namespaceparser.html#ad38bbdbfcfa59d1beb97bfddc5f7a719">parser</a></li>
+<li>parse_include()&#160;:&#160;<a class="el" href="namespaceparser.html#a92072c8c311d46112aa6342d1f12ab40">parser</a></li>
 <li>parse_int_expr()&#160;:&#160;<a class="el" href="namespaceparser.html#afe16561ef0cd4a230fa9ab189341b52a">parser</a></li>
+<li>parse_list_decl()&#160;:&#160;<a class="el" href="namespaceparser.html#a4c3b9a9f328ca2757bbe95c2d5e496c4">parser</a></li>
+<li>parse_method_dot_call()&#160;:&#160;<a class="el" href="namespaceparser.html#a9ba5f6d8430efdb794c118ed2d53a6b7">parser</a></li>
 <li>parse_primary_expression()&#160;:&#160;<a class="el" href="namespaceparser.html#a0f6081c1270cf306cc196573d2ab23c6">parser</a></li>
 <li>parse_print()&#160;:&#160;<a class="el" href="namespaceparser.html#a52052a3f4ee771f4aec1190b52e5b9ee">parser</a></li>
 <li>parse_return()&#160;:&#160;<a class="el" href="namespaceparser.html#a1f767dfcc1be892fc82b040af56dbcfb">parser</a></li>
@@ -238,8 +269,10 @@ $(function(){ initResizable(false); });
 <li>tok_graph&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ac541b282216dcd593a8a0413fcb1dc15">lexer</a></li>
 <li>tok_identifier&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">lexer</a></li>
 <li>tok_if&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a081e78700069633b4c101abd3a2c61c1">lexer</a></li>
+<li>tok_include&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651">lexer</a></li>
 <li>tok_int&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer</a></li>
 <li>tok_int_val&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ad65783d460f52df01fa3247768c91b5a">lexer</a></li>
+<li>tok_list&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">lexer</a></li>
 <li>tok_minus&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">lexer</a></li>
 <li>tok_mult&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer</a></li>
 <li>tok_open_arr&#160;:&#160;<a class="el" href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175aca12b24718190a96d6a946c7bcc76cde">lexer</a></li>
@@ -264,6 +297,7 @@ $(function(){ initResizable(false); });
 
 
 <h3><a id="index_v" name="index_v"></a>- v -</h3><ul>
+<li>valid_dot_calls&#160;:&#160;<a class="el" href="namespacescope.html#a4fb57a51481a9f20bd3a5d3919866078">scope</a>, <a class="el" href="namespacesem__analysis__scope.html#af3652ca2e5ba6ddaa59b01bc5067d787">sem_analysis_scope</a></li>
 <li>var_exists()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a2f4d2a09e7b557af2e1b57bc751e119f">sem_analysis_scope</a></li>
 <li>var_initialized()&#160;:&#160;<a class="el" href="namespacesem__analysis__scope.html#a1852a7f003144fbeff909d6e0027f491">sem_analysis_scope</a></li>
 <li>var_or_arg&#160;:&#160;<a class="el" href="namespacescope.html#ad04e3e2e2a5006b56b242b47bcca40cf">scope</a></li>

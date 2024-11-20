@@ -147,6 +147,8 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#aba56b799cc10ddbcfff462adbb721175a8ba5bde8443d531959dd32d12ec87b11">tok_print</a> = -125
 , <br />
 &#160;&#160;<a class="el" href="#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">tok_return</a> = -130
+, <a class="el" href="#aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651">tok_include</a> = -200
+, <a class="el" href="#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">tok_list</a> = -220
 <br />
  }</td></tr>
 <tr class="separator:aba56b799cc10ddbcfff462adbb721175"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -291,6 +293,10 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56" name="aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56"></a>tok_return&#160;</td><td class="fielddoc"><p>Return statement. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651" name="aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651"></a>tok_include&#160;</td><td class="fielddoc"><p>Include directive. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826" name="aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826"></a>tok_list&#160;</td><td class="fielddoc"><p>List directive and keyword. </p>
+</td></tr>
 </table>
 
 </div>
@@ -431,9 +437,9 @@ Variables</h2></td></tr>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a>(); </div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:318</div></div>
+<div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:327</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:59</div></div>
-<div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:57</div></div>
+<div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:59</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Keywords and Identifiers</dt><dd>Handles parsing alphanumeric input into keyword and identifier tokens: <div class="fragment"><div class="line"><span class="keywordflow">if</span> (isalpha(previous_character) || previous_character == <span class="charliteral">&#39;_&#39;</span>) { </div>
 <div class="line">    <a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> = previous_character; </div>
@@ -509,6 +515,15 @@ Variables</h2></td></tr>
 <div class="line">        <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a78bedf61b41dcdad5b08d1a80572b356">tok_def</a>;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">     <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> == <span class="stringliteral">&quot;include&quot;</span>) {</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651">tok_include</a>;</div>
+<div class="line">     }</div>
+<div class="line"> </div>
+<div class="line">     <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> == <span class="stringliteral">&quot;list&quot;</span>) {</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">tok_list</a>;</div>
+<div class="line">     }</div>
+<div class="line"> </div>
+<div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a06dcc144b2351441a94abe7197adad0c">tok_identifier</a>;</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_a0586f976980cc76c5600f1867c16c903"><div class="ttname"><a href="#a0586f976980cc76c5600f1867c16c903">lexer::identifier</a></div><div class="ttdeci">std::string identifier</div><div class="ttdef"><b>Definition</b> lexer.cpp:20</div></div>
@@ -517,6 +532,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a27732469c0547e2a1b684f546b794627">lexer::tok_int</a></div><div class="ttdeci">@ tok_int</div><div class="ttdoc">Integer type.</div><div class="ttdef"><b>Definition</b> lexer.h:33</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">lexer::tok_return</a></div><div class="ttdeci">@ tok_return</div><div class="ttdoc">Return statement.</div><div class="ttdef"><b>Definition</b> lexer.h:65</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a37f8a1898b24ae41d937f0871e7c1f20"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a37f8a1898b24ae41d937f0871e7c1f20">lexer::tok_false</a></div><div class="ttdeci">@ tok_false</div><div class="ttdoc">Boolean false.</div><div class="ttdef"><b>Definition</b> lexer.h:32</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651">lexer::tok_include</a></div><div class="ttdeci">@ tok_include</div><div class="ttdoc">Include directive.</div><div class="ttdef"><b>Definition</b> lexer.h:66</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a54aae1022596a2a3bd10676c53388ac9">lexer::tok_char</a></div><div class="ttdeci">@ tok_char</div><div class="ttdoc">Character type.</div><div class="ttdef"><b>Definition</b> lexer.h:37</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a6a1c8231ab9c7f336c1a48f21ff1bf2f"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a6a1c8231ab9c7f336c1a48f21ff1bf2f">lexer::tok_for</a></div><div class="ttdeci">@ tok_for</div><div class="ttdoc">For loop keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:55</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a71a61a8cea0f39066af085f497210e25"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a71a61a8cea0f39066af085f497210e25">lexer::tok_true</a></div><div class="ttdeci">@ tok_true</div><div class="ttdoc">Boolean true.</div><div class="ttdef"><b>Definition</b> lexer.h:31</div></div>
@@ -529,6 +545,7 @@ Variables</h2></td></tr>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175adb176523f43a9ce5365848f29d5dc443"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175adb176523f43a9ce5365848f29d5dc443">lexer::tok_void</a></div><div class="ttdeci">@ tok_void</div><div class="ttdoc">Void type.</div><div class="ttdef"><b>Definition</b> lexer.h:36</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ae3914d09e1adf56216c446bb70b472e3"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175ae3914d09e1adf56216c446bb70b472e3">lexer::tok_while</a></div><div class="ttdeci">@ tok_while</div><div class="ttdoc">While loop keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:60</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ae6bea6dbfc181c48b8f28ac59b60f93a"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175ae6bea6dbfc181c48b8f28ac59b60f93a">lexer::tok_else</a></div><div class="ttdeci">@ tok_else</div><div class="ttdoc">Else keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:40</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">lexer::tok_list</a></div><div class="ttdeci">@ tok_list</div><div class="ttdoc">List directive and keyword.</div><div class="ttdef"><b>Definition</b> lexer.h:67</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175af5ff64ad0cc599a134cb67be148dbd86">lexer::tok_float</a></div><div class="ttdeci">@ tok_float</div><div class="ttdoc">Float type.</div><div class="ttdef"><b>Definition</b> lexer.h:34</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Integers and Floats</dt><dd>Deals with integer and floating point literals: <div class="fragment"><div class="line"><span class="keywordflow">if</span> (isdigit(previous_character)) { </div>
