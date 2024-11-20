@@ -1084,7 +1084,7 @@ namespace ast {
      * TODO: docs
      */
     llvm::Value* ast::graph_decl_expr::codegen() {
-        /*
+        
         //llvm::Type* graph_type = codegen::get_llvm_type(get_expr_type());
         //llvm::StructType* struct_slib_graph_type = llvm::StructType::create(*codegen::LLVM_Context, "class_slib_graph");
 
@@ -1111,15 +1111,15 @@ namespace ast {
                 
         }
 
-        llvm::Type* graph_type = constructor->getFunctionType()->getParamType(0);
-        llvm::PointerType* pointer_type = llvm::dyn_cast<llvm::PointerType>(graph_type);
-        llvm::StructType* struct_slib_graph_type = llvm::dyn_cast<llvm::StructType>(pointer_type->getElementType());
+
+        llvm::StructType* struct_slib_graph_type = llvm::StructType::getTypeByName(*codegen::LLVM_Context, "class.slib_graph");
+        llvm::PointerType* pointer_type = llvm::PointerType::get(struct_slib_graph_type, 0);
         llvm::AllocaInst* instantiated_object = codegen::IR_Builder->CreateAlloca(struct_slib_graph_type, nullptr, "slib_graph_obj");
         codegen::IR_Builder->CreateCall(constructor, {instantiated_object});
         scope::add_var_to_current_scope(graph_name, instantiated_object, codegen::get_llvm_type(type), true);
 
         return instantiated_object;
-        */
+        
        return nullptr;
     }
 
@@ -1231,13 +1231,19 @@ namespace ast {
         // LISTS
         if (aggregate_type == "list") {
             if (called == "at") {
-                return codegen::list_handlers::list_at_handler(type, item_name, args);
+                return codegen::list_handlers::list_at_handler(obj_type, item_name, args);
             } else if (called == "add") {
-                return codegen::list_handlers::list_add_handler(type, item_name, args);
+                return codegen::list_handlers::list_add_handler(obj_type, item_name, args);
             } else if (called == "remove") {
-                return codegen::list_handlers::list_remove_handler(type, item_name, args);
+                return codegen::list_handlers::list_remove_handler(obj_type, item_name, args);
             } else if (called == "size") {
-                return codegen::list_handlers::list_size_handler(type, item_name, args);
+                return codegen::list_handlers::list_size_handler(obj_type, item_name, args);
+            }
+        } else if (aggregate_type == "graph") {
+            if (called == "addNode") {
+                return codegen::graph_handlers::graph_add_node_handler(obj_type, item_name, args);
+            } else if (called == "containsNode") {
+                return codegen::graph_handlers::graph_contains_node_handler(obj_type, item_name, args);
             }
         }
         
@@ -1247,6 +1253,74 @@ namespace ast {
 }
     
 namespace codegen {
+    namespace graph_handlers {
+        /**
+         * TODO: docs
+         */
+        llvm::Value* graph_add_node_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* add_node_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    add_node_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE6insertEi");
+                    break;
+                case (type_enum::float_type):
+                    add_node_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE6insertEf");
+                    break;
+                case (type_enum::char_type):
+                    add_node_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE6insertEc");
+                    break;
+                case (type_enum::bool_type):
+                    add_node_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE6insertEb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!add_node_function) {
+                utility::codegen_error("Add node function not found in module", parser::current_line);
+            }
+
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* new_node = args.at(0)->codegen(); 
+
+            codegen::IR_Builder->CreateCall(add_node_function, {slib_obj, new_node});  
+            return nullptr;
+        }
+
+        /**
+         * TODO: docs
+         */
+        llvm::Value* graph_contains_node_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE13contains_nodeEi");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE13contains_nodeEf");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE13contains_nodeEc");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE13contains_nodeEb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("Add node function not found in module", parser::current_line);
+            }
+
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* checked_node = args.at(0)->codegen(); 
+
+            return codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, checked_node});  
+        }
+    }
     namespace list_handlers {
         /**
          * @par Call the correct method in the module based on the type, and make a call to it.
@@ -1279,9 +1353,9 @@ namespace codegen {
             return codegen::IR_Builder->CreateCall(at_function, {slib_obj, index});  
          * @endcode
          */
-        llvm::Value* list_at_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+        llvm::Value* list_at_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* at_function = nullptr;
-            switch (type) {
+            switch (obj_type) {
                 case (type_enum::int_type):
                     at_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE2atEi");
                     break;
@@ -1341,9 +1415,9 @@ namespace codegen {
             return nullptr;  
          * @endcode
          */
-        llvm::Value* list_add_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+        llvm::Value* list_add_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* insert_function = nullptr;
-            switch (type) {
+            switch (obj_type) {
                 case (type_enum::int_type):
                     insert_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6insertEii");
                     break;
@@ -1402,9 +1476,9 @@ namespace codegen {
             return codegen::IR_Builder->CreateCall(rm_function, {slib_obj, index});  
            @endcode
          */
-        llvm::Value* list_remove_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+        llvm::Value* list_remove_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* rm_function = nullptr;
-            switch (type) {
+            switch (obj_type) {
                 case (type_enum::int_type):
                     rm_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE6removeEi");
                     break;
@@ -1459,9 +1533,9 @@ namespace codegen {
             return codegen::IR_Builder->CreateCall(size_function, {slib_obj}); 
          * @endcode
          */
-        llvm::Value* list_size_handler(type_enum::types type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+        llvm::Value* list_size_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
             llvm::Function* size_function = nullptr;
-            switch (type) {
+            switch (obj_type) {
                 case (type_enum::int_type):
                     size_function = codegen::LLVM_Module->getFunction("_ZN9slib_listIiE4sizeEv");
                     break;
