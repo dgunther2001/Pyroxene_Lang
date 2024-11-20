@@ -1248,6 +1248,12 @@ namespace ast {
                 return codegen::graph_handlers::graph_remove_node_handler(obj_type, item_name, args);
             } else if (called == "size") {
                 return codegen::graph_handlers::graph_size_handler(obj_type, item_name, args);
+            } else if (called == "addEdge") {
+                return codegen::graph_handlers::graph_add_edge_handler(obj_type, item_name, args);
+            } else if (called  == "removeEdge") {
+                return codegen::graph_handlers::graph_remove_edge_handler(obj_type, item_name, args);
+            } else if (called  == "numEdges") {
+                return codegen::graph_handlers::graph_num_edge_handler(obj_type, item_name, args);
             }
         }
         
@@ -1378,6 +1384,100 @@ namespace codegen {
             llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
 
             return codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj});            
+        }
+
+        llvm::Value* graph_add_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE8add_edgeEii");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE8add_edgeEff");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE8add_edgeEcc");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE8add_edgeEbb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("Add edge function not found in module", parser::current_line);
+            }
+
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* from_node = args.at(0)->codegen(); 
+            llvm::Value* to_node = args.at(1)->codegen(); 
+
+            codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, from_node, to_node});  
+
+            return nullptr;                 
+        }
+
+        llvm::Value* graph_remove_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE11remove_edgeEii");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE11remove_edgeEff");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE11remove_edgeEcc");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE11remove_edgeEbb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("Remove edge function not found in module", parser::current_line);
+            }
+
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* from_node = args.at(0)->codegen(); 
+            llvm::Value* to_node = args.at(1)->codegen(); 
+
+            codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, from_node, to_node});  
+
+            return nullptr;            
+        }
+
+        llvm::Value* graph_num_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE9num_edgesEv");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE9num_edgesEv");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE9num_edgesEv");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE9num_edgesEv");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("Number of edges function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+
+            return codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj});                              
         }
     }
     namespace list_handlers {

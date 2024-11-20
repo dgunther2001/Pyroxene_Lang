@@ -17,7 +17,7 @@ def int main() {
 
     my_list_2.add(2, 0);
     my_list_2.add(1, 1);
-    my_list_2.at(1);
+    my_list_2.at(2);
 
     //int my_int = my_list_2.at(0);
     //print(my_int);

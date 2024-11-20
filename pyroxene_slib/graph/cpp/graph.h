@@ -77,6 +77,10 @@ public:
         }
     }
 
+    int num_edges() {
+        return edges.size();
+    }
+
     slib_list<T> BFS(T start_node) {
         if (nodes.find(start_node) == nodes.end()) {
             graph_error("Starting node not found in graph (BFS)");

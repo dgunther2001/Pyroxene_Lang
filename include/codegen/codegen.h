@@ -57,6 +57,9 @@ namespace codegen {
         extern llvm::Value* graph_contains_node_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
         extern llvm::Value* graph_remove_node_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
         extern llvm::Value* graph_size_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
+        extern llvm::Value* graph_add_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
+        extern llvm::Value* graph_remove_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
+        extern llvm::Value* graph_num_edge_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
     }
     namespace list_handlers {
         extern llvm::Value* list_at_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args);
