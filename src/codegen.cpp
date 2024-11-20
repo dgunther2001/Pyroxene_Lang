@@ -1254,6 +1254,10 @@ namespace ast {
                 return codegen::graph_handlers::graph_remove_edge_handler(obj_type, item_name, args);
             } else if (called  == "numEdges") {
                 return codegen::graph_handlers::graph_num_edge_handler(obj_type, item_name, args);
+            } else if (called == "printBFS") {
+                return codegen::graph_handlers::graph_BFS_printer_handler(obj_type, item_name, args);
+            } else if (called == "printDFS") {
+                return codegen::graph_handlers::graph_DFS_printer_handler(obj_type, item_name, args);
             }
         }
         
@@ -1478,6 +1482,66 @@ namespace codegen {
             llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
 
             return codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj});                              
+        }
+
+        llvm::Value* graph_BFS_printer_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE9print_BFSEi");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE9print_BFSEf");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE9print_BFSEc");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE9print_BFSEb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("PrintBFS function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* start_node = args.at(0)->codegen(); 
+            codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, start_node});  
+
+            return nullptr;     
+        }
+
+        llvm::Value* graph_DFS_printer_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE9print_DFSEi");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE9print_DFSEf");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE9print_DFSEc");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE9print_DFSEb");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("PrintBFS function not found in module", parser::current_line);
+            }
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+            llvm::Value* start_node = args.at(0)->codegen(); 
+            codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, start_node});  
+
+            return nullptr;  
         }
     }
     namespace list_handlers {

@@ -114,7 +114,7 @@ public:
     }
 
     void print_BFS(T start_node) {
-        if (!(std::is_same<T, int>::value && std::is_same<T, float>::value && std::is_same<T, char>::value && std::is_same<T, bool>::value)) {
+        if (!(std::is_same<T, int>::value) && !(std::is_same<T, float>::value) && !(std::is_same<T, char>::value) && !(std::is_same<T, bool>::value)) {
             graph_error("Invalid type requested to print BFS.");
         }
 
@@ -159,7 +159,7 @@ public:
     }
 
     void print_DFS(T start_node) {
-        if (!(std::is_same<T, int>::value && std::is_same<T, float>::value && std::is_same<T, char>::value && std::is_same<T, bool>::value)) {
+        if (!(std::is_same<T, int>::value) && !(std::is_same<T, float>::value) && !(std::is_same<T, char>::value) && !(std::is_same<T, bool>::value)) {
             graph_error("Invalid type requested to print DFS.");
         }
         slib_list<T> dfs = DFS(start_node);
