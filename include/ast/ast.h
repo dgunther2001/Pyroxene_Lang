@@ -80,6 +80,7 @@ namespace ast {
         virtual std::unique_ptr<top_level_expr> grab_else_if() { return nullptr; }
         virtual llvm::BasicBlock* get_merge_block() { return nullptr; }
         virtual void set_merge_block(llvm::BasicBlock* new_merge_block) {}
+        virtual type_enum::types get_obj_type() const { return type_enum::float_type; }
     };
 
     /**
@@ -852,6 +853,7 @@ namespace ast {
     private:
         std::string item_name;
         std::string called;
+        type_enum::types obj_type;
         type_enum::types type;
         bool is_class;
         std::vector<std::unique_ptr<top_level_expr>> args;
@@ -872,7 +874,8 @@ namespace ast {
         void set_aggregate_type(const std::string &ag_type) { aggregate_type = ag_type; }
         const std::string& get_ag_type() { return aggregate_type; }
         llvm::Value* codegen() override;
-        type_enum::types get_expr_type() const override {return type;}       
+        type_enum::types get_expr_type() const override {return type;}   
+        type_enum::types get_obj_type() const override { return obj_type; }    
 
     };
 

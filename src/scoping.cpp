@@ -117,7 +117,7 @@ namespace scope {
 namespace sem_analysis_scope {
     std::map<std::string, std::pair<type_enum::types /* return type */, std::map<int /* arg number */, type_enum::types /* arg type */>>> defined_functions;
     std::vector<std::map<std::string, sem_analysis_info>> sem_analysis_stack;
-    std::map<std::string, std::set<std::string>> valid_dot_calls;
+    std::map<std::string, std::set<std::pair<std::string, type_enum::types>>> valid_dot_calls;
 
     /**
      * @par Generates a new scope (crreates and adds a new hashmap) to the semantic analysis stack.
@@ -464,26 +464,26 @@ namespace sem_analysis_scope {
      * @code
         if (valid_dot_calls.find(aggregate_type) != valid_dot_calls.end()) {
             //std::cout << "Adding method " << method << "to type " << aggregate_type << "\n";
-            valid_dot_calls[aggregate_type].insert(method);
+            valid_dot_calls[aggregate_type].insert({method, type});
             return;
         }
     
         std::set<std::string> methods;
-        methods.insert(method);
+        methods.insert({method, type});
         valid_dot_calls.insert({aggregate_type, methods});
         return;
      * @endcode
      */
-    void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method) {
+    void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method, const type_enum::types type) {
         // find the correct map if it exists
         if (valid_dot_calls.find(aggregate_type) != valid_dot_calls.end()) {
             //std::cout << "Adding method " << method << "to type " << aggregate_type << "\n";
-            valid_dot_calls[aggregate_type].insert(method);
+            valid_dot_calls[aggregate_type].insert({method, type});
             return;
         }
     
-        std::set<std::string> methods;
-        methods.insert(method);
+        std::set<std::pair<std::string, type_enum::types>> methods;
+        methods.insert({method, type});
         valid_dot_calls.insert({aggregate_type, methods});
         return;
         // if it exists...
@@ -505,8 +505,11 @@ namespace sem_analysis_scope {
             return false;
         }
 
-        if (valid_dot_calls[aggregate_type].find(method) != valid_dot_calls[aggregate_type].end()) {
-            return true;
+        const auto& methods = valid_dot_calls[aggregate_type];
+        for (const auto &methods_and_returns : methods) {
+            if (methods_and_returns.first == method) {
+                return true;
+            }
         }
 
         return false;
@@ -517,11 +520,34 @@ namespace sem_analysis_scope {
             return false;
         }
 
-        if (valid_dot_calls[aggregate_type].find(method) != valid_dot_calls[aggregate_type].end()) {
-            return true;
+        const auto& methods = valid_dot_calls[aggregate_type];
+        for (const auto &methods_and_returns : methods) {
+            if (methods_and_returns.first == method) {
+                return true;
+            }
         }
 
         return false;
+    }
+
+    /**
+     * @par Gives back the return type of a method dot call.
+     * @code
+     *  const auto& methods = valid_dot_calls[aggregate_type];
+        for (const auto &methods_and_returns : methods) {
+            if (methods_and_returns.first == method) {
+                return methods_and_returns.second;
+            }
+        }
+     * @endcode
+     */
+    type_enum::types get_dot_call_type(const std::string &aggregate_type, const std::string &method) {
+        const auto& methods = valid_dot_calls[aggregate_type];
+        for (const auto &methods_and_returns : methods) {
+            if (methods_and_returns.first == method) {
+                return methods_and_returns.second;
+            }
+        }
     }
 
     /** 

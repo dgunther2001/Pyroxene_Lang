@@ -1,0 +1,24 @@
+include graph
+include list
+
+def int main() {
+    graph int my_graph;
+    my_graph.addNode(10);
+    my_graph.addNode(25);
+    my_graph.addNode(30);
+    my_graph.addNode(40);
+    my_graph.addEdge(10, 25);
+    my_graph.addEdge(10, 30);
+    my_graph.addEdge(30, 40);
+    
+    my_graph.printBFS(10);
+    my_graph.printDFS(10);
+
+    //print(my_graph.numEdges());
+   // my_graph.removeEdge(10, 25);
+    //print(my_graph.numEdges());
+    //print(my_graph.containsNode(10));
+
+    //print(my_graph.containsNode(10));
+    return 0;
+}

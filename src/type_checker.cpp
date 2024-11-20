@@ -459,7 +459,10 @@ namespace ast {
      * TODO: docs
      */
     void ast::graph_decl_expr::semantic_analysis() {
-        
+        if (sem_analysis_scope::variable_exists_in_current_scope(graph_name)) {
+            utility::sem_analysis_error("Graph defined as another identifier in the current scope", parser::current_line);
+        }   
+        sem_analysis_scope::add_var_to_current_scope(graph_name, type, true, "graph");
     }
 
     /**
@@ -499,9 +502,16 @@ namespace ast {
         if(!sem_analysis_scope::var_exists(item_name)) {
             utility::sem_analysis_error("Complex variable not found in scope stack", parser::current_line);
         }
-
         aggregate_type = sem_analysis_scope::get_var_complex_dt(item_name);
-        type = sem_analysis_scope::get_var_type(item_name);
+
+        type_enum::types intermediate_type = sem_analysis_scope::get_dot_call_type(aggregate_type, called);
+        if (intermediate_type == type_enum::obj_type) {
+            type = sem_analysis_scope::get_var_type(item_name);
+        } else {
+            type = intermediate_type;
+        }
+
+        obj_type = sem_analysis_scope::get_var_type(item_name);
         //std::cout << aggregate_type << " " << called << "\n";
         if (!sem_analysis_scope::method_valid_dot_call(aggregate_type, called)) {
             utility::sem_analysis_error("Invalid method called on type (" + aggregate_type + ")", parser::current_line);

@@ -11,7 +11,8 @@ namespace type_enum{
         char_type = -3, ///< Character type
         string_type = -4, ///< String type
         bool_type = -5, ///< Boolean type
-        void_type = -6 ///< Void type 
+        void_type = -6, ///< Void type 
+        obj_type = -7 ///< Type of the object in question
     } types;
 
 }

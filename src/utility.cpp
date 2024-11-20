@@ -268,10 +268,10 @@ namespace utility {
                         std::abort();
                     }
                     
-                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "add");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "at");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "remove");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "size");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "add", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "at", type_enum::obj_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "remove", type_enum::obj_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("list", "size", type_enum::int_type);
                 }
                 if (include_item == "graph") {
                     bc_path = "../pyroxene_slib/llvm_modules/graph.bc";
@@ -291,14 +291,17 @@ namespace utility {
                         std::abort();
                     }
 
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addNode");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addEdge");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeNode");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeEdge");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "BFS");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printBFS");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "DFS");
-                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printDFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addNode", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addEdge", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeNode", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeEdge", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "numEdges", type_enum::int_type);
+                    //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "BFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printBFS", type_enum::void_type);
+                    //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "DFS");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printDFS", type_enum::void_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "size", type_enum::int_type);
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "containsNode", type_enum::bool_type);
                 }
             }
         }

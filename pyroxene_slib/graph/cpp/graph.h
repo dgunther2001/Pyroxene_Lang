@@ -77,6 +77,10 @@ public:
         }
     }
 
+    int num_edges() {
+        return edges.size();
+    }
+
     slib_list<T> BFS(T start_node) {
         if (nodes.find(start_node) == nodes.end()) {
             graph_error("Starting node not found in graph (BFS)");
@@ -110,7 +114,7 @@ public:
     }
 
     void print_BFS(T start_node) {
-        if (!(std::is_same<T, int>::start_node && std::is_same<T, float>::start_node && std::is_same<T, char>::start_node && std::is_same<T, bool>::start_node)) {
+        if (!(std::is_same<T, int>::value) && !(std::is_same<T, float>::value) && !(std::is_same<T, char>::value) && !(std::is_same<T, bool>::value)) {
             graph_error("Invalid type requested to print BFS.");
         }
 
@@ -155,7 +159,7 @@ public:
     }
 
     void print_DFS(T start_node) {
-        if (!(std::is_same<T, int>::start_node && std::is_same<T, float>::start_node && std::is_same<T, char>::start_node && std::is_same<T, bool>::start_node)) {
+        if (!(std::is_same<T, int>::value) && !(std::is_same<T, float>::value) && !(std::is_same<T, char>::value) && !(std::is_same<T, bool>::value)) {
             graph_error("Invalid type requested to print DFS.");
         }
         slib_list<T> dfs = DFS(start_node);

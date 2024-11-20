@@ -117,8 +117,10 @@ Functions</h2></td></tr>
 <tr class="separator:a011895e572b72d22ac7c40d633ddfaa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba7cd957f36f78cbfdb7d5627d641a7c" id="r_aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba7cd957f36f78cbfdb7d5627d641a7c">get_var_type</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:aba7cd957f36f78cbfdb7d5627d641a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55b9d658ead7918240f330911400ab8b" id="r_a55b9d658ead7918240f330911400ab8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a55b9d658ead7918240f330911400ab8b">add_var_to_current_scope</a> (const std::string &amp;name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type, bool is_init)</td></tr>
-<tr class="separator:a55b9d658ead7918240f330911400ab8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab705d9c82e7e6b3a0b09bd7a2a0b5154" id="r_ab705d9c82e7e6b3a0b09bd7a2a0b5154"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab705d9c82e7e6b3a0b09bd7a2a0b5154">add_var_to_current_scope</a> (const std::string &amp;name, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type, bool is_init, const std::string &amp;complex_dt)</td></tr>
+<tr class="separator:ab705d9c82e7e6b3a0b09bd7a2a0b5154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9711f66355fbb21acd1dae701ecd0b0" id="r_aa9711f66355fbb21acd1dae701ecd0b0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa9711f66355fbb21acd1dae701ecd0b0">get_var_complex_dt</a> (const std::string &amp;name)</td></tr>
+<tr class="separator:aa9711f66355fbb21acd1dae701ecd0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af24c35dac3bfa5a509b7c2bc1611fbf7" id="r_af24c35dac3bfa5a509b7c2bc1611fbf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af24c35dac3bfa5a509b7c2bc1611fbf7">variable_exists_in_current_scope</a> (const std::string &amp;name)</td></tr>
 <tr class="separator:af24c35dac3bfa5a509b7c2bc1611fbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1852a7f003144fbeff909d6e0027f491" id="r_a1852a7f003144fbeff909d6e0027f491"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1852a7f003144fbeff909d6e0027f491">var_initialized</a> (const std::string &amp;name)</td></tr>
@@ -131,6 +133,12 @@ Functions</h2></td></tr>
 <tr class="separator:a7ba557c2f1fb62bee9241626d80bfd53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98b8a938b9d4e92e3ccc2c4bfe261758" id="r_a98b8a938b9d4e92e3ccc2c4bfe261758"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a98b8a938b9d4e92e3ccc2c4bfe261758">get_scope_stack_size</a> ()</td></tr>
 <tr class="separator:a98b8a938b9d4e92e3ccc2c4bfe261758"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840149a09a97889bd25cc938d28eab29" id="r_a840149a09a97889bd25cc938d28eab29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a840149a09a97889bd25cc938d28eab29">add_method_to_valid_dot_calls</a> (const std::string &amp;aggregate_type, const std::string &amp;method, const <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> type)</td></tr>
+<tr class="separator:a840149a09a97889bd25cc938d28eab29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63d3317879727943601b75c1fbbf7c41" id="r_a63d3317879727943601b75c1fbbf7c41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63d3317879727943601b75c1fbbf7c41">method_valid_dot_call</a> (const std::string &amp;aggregate_type, const std::string &amp;method)</td></tr>
+<tr class="separator:a63d3317879727943601b75c1fbbf7c41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf90f3433fb21c3fea597191bb5e4dba" id="r_adf90f3433fb21c3fea597191bb5e4dba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf90f3433fb21c3fea597191bb5e4dba">get_dot_call_type</a> (const std::string &amp;aggregate_type, const std::string &amp;method)</td></tr>
+<tr class="separator:adf90f3433fb21c3fea597191bb5e4dba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -138,6 +146,8 @@ Variables</h2></td></tr>
 <tr class="separator:a05ff6a16ce4549696bf9f15df37fd5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2c053af597be8788e4fbb82d2456073" id="r_ad2c053af597be8788e4fbb82d2456073"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::map&lt; std::string, <a class="el" href="structsem__analysis__scope_1_1sem__analysis__info.html">sem_analysis_info</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a></td></tr>
 <tr class="separator:ad2c053af597be8788e4fbb82d2456073"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3652ca2e5ba6ddaa59b01bc5067d787" id="r_af3652ca2e5ba6ddaa59b01bc5067d787"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::set&lt; std::pair&lt; std::string, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a></td></tr>
+<tr class="separator:af3652ca2e5ba6ddaa59b01bc5067d787"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ab08cb83520e1470258f73ed9fbf40a48" name="ab08cb83520e1470258f73ed9fbf40a48"></a>
@@ -174,7 +184,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name] = std::make_pair(ret_type, argument_type_map);</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a05ff6a16ce4549696bf9f15df37fd5dd"><div class="ttname"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, std::pair&lt; type_enum::types, std::map&lt; int, type_enum::types &gt; &gt; &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:116</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a05ff6a16ce4549696bf9f15df37fd5dd"><div class="ttname"><a href="#a05ff6a16ce4549696bf9f15df37fd5dd">sem_analysis_scope::defined_functions</a></div><div class="ttdeci">std::map&lt; std::string, std::pair&lt; type_enum::types, std::map&lt; int, type_enum::types &gt; &gt; &gt; defined_functions</div><div class="ttdef"><b>Definition</b> scoping.cpp:118</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -182,8 +192,46 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="a55b9d658ead7918240f330911400ab8b" name="a55b9d658ead7918240f330911400ab8b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55b9d658ead7918240f330911400ab8b">&#9670;&#160;</a></span>add_var_to_current_scope()</h2>
+<a id="a840149a09a97889bd25cc938d28eab29" name="a840149a09a97889bd25cc938d28eab29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840149a09a97889bd25cc938d28eab29">&#9670;&#160;</a></span>add_method_to_valid_dot_calls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sem_analysis_scope::add_method_to_valid_dot_calls </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>aggregate_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Adds methods to valid dot calls for complex data types for checking later.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>.find(aggregate_type) != <a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>.end()) {</div>
+<div class="line">    <span class="comment">//std::cout &lt;&lt; &quot;Adding method &quot; &lt;&lt; method &lt;&lt; &quot;to type &quot; &lt;&lt; aggregate_type &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line">    <a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>[aggregate_type].insert({method, type});</div>
+<div class="line">    <span class="keywordflow">return</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">std::set&lt;std::string&gt; methods;</div>
+<div class="line">methods.insert({method, type});</div>
+<div class="line"><a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>.insert({aggregate_type, methods});</div>
+<div class="line"><span class="keywordflow">return</span>;</div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_af3652ca2e5ba6ddaa59b01bc5067d787"><div class="ttname"><a href="#af3652ca2e5ba6ddaa59b01bc5067d787">sem_analysis_scope::valid_dot_calls</a></div><div class="ttdeci">std::map&lt; std::string, std::set&lt; std::pair&lt; std::string, type_enum::types &gt; &gt; &gt; valid_dot_calls</div><div class="ttdef"><b>Definition</b> scoping.cpp:120</div></div>
+</div><!-- fragment --> </dd></dl>
+
+</div>
+</div>
+<a id="ab705d9c82e7e6b3a0b09bd7a2a0b5154" name="ab705d9c82e7e6b3a0b09bd7a2a0b5154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab705d9c82e7e6b3a0b09bd7a2a0b5154">&#9670;&#160;</a></span>add_var_to_current_scope()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,7 +249,12 @@ Variables</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_init</em></span>&#160;)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>is_init</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>complex_dt</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -210,13 +263,14 @@ Variables</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">name</td><td>The name of the new variable. </td></tr>
     <tr><td class="paramname">type</td><td>The type of the variable. </td></tr>
-    <tr><td class="paramname">is_init</td><td>Has the variable just been declared or defined. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.empty()) {</div>
+    <tr><td class="paramname">is_init</td><td>Has the variable just been declared or defined. </td></tr>
+    <tr><td class="paramname">complex_dt</td><td>Stores the name of the complex data type. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.empty()) {</div>
 <div class="line">    <a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Semantic analysis scope stack is empty&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
 <div class="line">}</div>
-<div class="line"><a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.back()[name] = {type, is_init};</div>
+<div class="line"><a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.back()[name] = {type, complex_dt, is_init};</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_ad2c053af597be8788e4fbb82d2456073"><div class="ttname"><a href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_scope::sem_analysis_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, sem_analysis_info &gt; &gt; sem_analysis_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:117</div></div>
-<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:102</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_ad2c053af597be8788e4fbb82d2456073"><div class="ttname"><a href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_scope::sem_analysis_stack</a></div><div class="ttdeci">std::vector&lt; std::map&lt; std::string, sem_analysis_info &gt; &gt; sem_analysis_stack</div><div class="ttdef"><b>Definition</b> scoping.cpp:119</div></div>
+<div class="ttc" id="anamespaceutility_html_a6f96e9c6c20fb8355b098d78ed594ea7"><div class="ttname"><a href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a></div><div class="ttdeci">void scoping_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:104</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -291,6 +345,34 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="adf90f3433fb21c3fea597191bb5e4dba" name="adf90f3433fb21c3fea597191bb5e4dba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf90f3433fb21c3fea597191bb5e4dba">&#9670;&#160;</a></span>get_dot_call_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> sem_analysis_scope::get_dot_call_type </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>aggregate_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Gives back the return type of a method dot call.</dt><dd><div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span>&amp; methods = <a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>[aggregate_type];</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;methods_and_returns : methods) {</div>
+<div class="line">    <span class="keywordflow">if</span> (methods_and_returns.first == method) {</div>
+<div class="line">        <span class="keywordflow">return</span> methods_and_returns.second;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --> </dd></dl>
 
 </div>
 </div>
@@ -381,7 +463,7 @@ Variables</h2></td></tr>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#a05ff6a16ce4549696bf9f15df37fd5dd">defined_functions</a>[name].second[arg_number];</div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:255</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a011895e572b72d22ac7c40d633ddfaa7"><div class="ttname"><a href="#a011895e572b72d22ac7c40d633ddfaa7">sem_analysis_scope::get_num_params</a></div><div class="ttdeci">int get_num_params(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:258</div></div>
 </div><!-- fragment --> </td></tr>
   </table>
   </dd>
@@ -406,6 +488,37 @@ Variables</h2></td></tr>
 <dl class="section user"><dt>Returns the size of the scope stack. If the value is 0, we are currently operating in the global scope.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">return</span> <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.size();</div>
 </div><!-- fragment --> </dd></dl>
 
+</div>
+</div>
+<a id="aa9711f66355fbb21acd1dae701ecd0b0" name="aa9711f66355fbb21acd1dae701ecd0b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9711f66355fbb21acd1dae701ecd0b0">&#9670;&#160;</a></span>get_var_complex_dt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string sem_analysis_scope::get_var_complex_dt </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>name</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Gets the complex data type of a variable on the stack.</dt><dd></dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the variable.</td></tr>
+  </table>
+  </dd>
+</dl>
+<div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> it = <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.rbegin(); it != <a class="code hl_variable" href="#ad2c053af597be8788e4fbb82d2456073">sem_analysis_stack</a>.rend(); ++it) {</div>
+<div class="line">    <span class="keyword">auto</span> variable = it-&gt;find(name);  </div>
+<div class="line">    <span class="keywordflow">if</span> (variable != it-&gt;end()) {</div>
+<div class="line">        <span class="keywordflow">return</span> variable-&gt;second.complex_dt;</div>
+<div class="line">    }</div>
+<div class="line">}      </div>
+<div class="line"><a class="code hl_function" href="namespaceutility.html#a6f96e9c6c20fb8355b098d78ed594ea7">utility::scoping_error</a>(<span class="stringliteral">&quot;Complex data type not found on scope stack&quot;</span>, <a class="code hl_variable" href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a>);</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <a id="a7ba557c2f1fb62bee9241626d80bfd53" name="a7ba557c2f1fb62bee9241626d80bfd53"></a>
@@ -494,6 +607,40 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a63d3317879727943601b75c1fbbf7c41" name="a63d3317879727943601b75c1fbbf7c41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63d3317879727943601b75c1fbbf7c41">&#9670;&#160;</a></span>method_valid_dot_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sem_analysis_scope::method_valid_dot_call </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>aggregate_type</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>method</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Checks if a method dot call is in fact valid.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (<a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>.find(aggregate_type) == <a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>.end()) {</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span>&amp; methods = <a class="code hl_variable" href="#af3652ca2e5ba6ddaa59b01bc5067d787">valid_dot_calls</a>[aggregate_type];</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;methods_and_returns : methods) {</div>
+<div class="line">    <span class="keywordflow">if</span> (methods_and_returns.first == method) {</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+</div><!-- fragment --> </dd></dl>
 
 </div>
 </div>
@@ -650,6 +797,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section user"><dt>A stack of hashmaps, where each map indicates the current level of scope. The map is of identifier names and related type and initialization information.</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="af3652ca2e5ba6ddaa59b01bc5067d787" name="af3652ca2e5ba6ddaa59b01bc5067d787"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3652ca2e5ba6ddaa59b01bc5067d787">&#9670;&#160;</a></span>valid_dot_calls</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::map&lt; std::string, std::set&lt; std::pair&lt; std::string, <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> &gt; &gt; &gt; sem_analysis_scope::valid_dot_calls</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section user"><dt>Contains information about valid method calls on complex data types.</dt><dd></dd></dl>
 
 </div>
 </div>

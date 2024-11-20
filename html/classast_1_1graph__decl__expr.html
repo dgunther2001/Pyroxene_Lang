@@ -135,6 +135,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:afab60adcd58e8d9ff1e9b97ca8f8e6cd inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6816a9a84cb7128fc53090f248c5f18f inherit pub_methods_classast_1_1top__level__expr" id="r_a6816a9a84cb7128fc53090f248c5f18f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a6816a9a84cb7128fc53090f248c5f18f">set_merge_block</a> (llvm::BasicBlock *new_merge_block)</td></tr>
 <tr class="separator:a6816a9a84cb7128fc53090f248c5f18f inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1004ba95ee647a4ebbde380ad2f8961 inherit pub_methods_classast_1_1top__level__expr" id="r_af1004ba95ee647a4ebbde380ad2f8961"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#af1004ba95ee647a4ebbde380ad2f8961">get_obj_type</a> () const</td></tr>
+<tr class="separator:af1004ba95ee647a4ebbde380ad2f8961 inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section user"><dt>Holds data related to a graph expression.</dt><dd><div class="fragment"><div class="line"><span class="keyword">class </span><a class="code hl_class" href="classast_1_1graph__decl__expr.html">graph_decl_expr</a> : <span class="keyword">public</span> <a class="code hl_class" href="classast_1_1top__level__expr.html">top_level_expr</a> {</div>
@@ -153,13 +155,13 @@ Public Member Functions</h2></td></tr>
 <div class="line">    llvm::Value* <a class="code hl_function" href="#a163a766e5f667effe05642279f0be6fe">codegen</a>() <span class="keyword">override</span>;</div>
 <div class="line">    <a class="code hl_enumeration" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> <a class="code hl_function" href="#a005a61cb5c94411d12a80a6c9ca72a77">get_expr_type</a>()<span class="keyword"> const override </span>{<span class="keywordflow">return</span> type;}</div>
 <div class="line">};</div>
-<div class="ttc" id="aclassast_1_1else__expr_html"><div class="ttname"><a href="classast_1_1else__expr.html">ast::else_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:693</div></div>
-<div class="ttc" id="aclassast_1_1graph__decl__expr_html"><div class="ttname"><a href="classast_1_1graph__decl__expr.html">ast::graph_decl_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:810</div></div>
-<div class="ttc" id="aclassast_1_1graph__decl__expr_html_a005a61cb5c94411d12a80a6c9ca72a77"><div class="ttname"><a href="#a005a61cb5c94411d12a80a6c9ca72a77">ast::graph_decl_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:824</div></div>
-<div class="ttc" id="aclassast_1_1graph__decl__expr_html_a163a766e5f667effe05642279f0be6fe"><div class="ttname"><a href="#a163a766e5f667effe05642279f0be6fe">ast::graph_decl_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div><div class="ttdef"><b>Definition</b> codegen.cpp:913</div></div>
+<div class="ttc" id="aclassast_1_1else__expr_html"><div class="ttname"><a href="classast_1_1else__expr.html">ast::else_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:694</div></div>
+<div class="ttc" id="aclassast_1_1graph__decl__expr_html"><div class="ttname"><a href="classast_1_1graph__decl__expr.html">ast::graph_decl_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:811</div></div>
+<div class="ttc" id="aclassast_1_1graph__decl__expr_html_a005a61cb5c94411d12a80a6c9ca72a77"><div class="ttname"><a href="#a005a61cb5c94411d12a80a6c9ca72a77">ast::graph_decl_expr::get_expr_type</a></div><div class="ttdeci">type_enum::types get_expr_type() const override</div><div class="ttdef"><b>Definition</b> ast.h:825</div></div>
+<div class="ttc" id="aclassast_1_1graph__decl__expr_html_a163a766e5f667effe05642279f0be6fe"><div class="ttname"><a href="#a163a766e5f667effe05642279f0be6fe">ast::graph_decl_expr::codegen</a></div><div class="ttdeci">llvm::Value * codegen() override</div></div>
 <div class="ttc" id="aclassast_1_1graph__decl__expr_html_a380f0181af65904b93a0ac2b66c160cb"><div class="ttname"><a href="#a380f0181af65904b93a0ac2b66c160cb">ast::graph_decl_expr::semantic_analysis</a></div><div class="ttdeci">void semantic_analysis() override</div></div>
 <div class="ttc" id="aclassast_1_1graph__decl__expr_html_a6bc4490f87b318c492b1cc8c9bdcf90f"><div class="ttname"><a href="#a6bc4490f87b318c492b1cc8c9bdcf90f">ast::graph_decl_expr::debug_output</a></div><div class="ttdeci">void debug_output()</div></div>
-<div class="ttc" id="aclassast_1_1graph__decl__expr_html_abe5f517046d018c958cebd6255611c22"><div class="ttname"><a href="#abe5f517046d018c958cebd6255611c22">ast::graph_decl_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:821</div></div>
+<div class="ttc" id="aclassast_1_1graph__decl__expr_html_abe5f517046d018c958cebd6255611c22"><div class="ttname"><a href="#abe5f517046d018c958cebd6255611c22">ast::graph_decl_expr::get_ast_class</a></div><div class="ttdeci">std::string get_ast_class() const override</div><div class="ttdef"><b>Definition</b> ast.h:822</div></div>
 <div class="ttc" id="aclassast_1_1top__level__expr_html"><div class="ttname"><a href="classast_1_1top__level__expr.html">ast::top_level_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:58</div></div>
 <div class="ttc" id="anamespacetype__enum_html_a87266d8d965aff35e2d37a7793dafd67"><div class="ttname"><a href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a></div><div class="ttdeci">types</div><div class="ttdef"><b>Definition</b> types.h:8</div></div>
 </div><!-- fragment --> </dd></dl>
@@ -319,9 +321,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following files:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/ast/<a class="el" href="ast_8h_source.html">ast.h</a></li>
-<li>src/<a class="el" href="codegen_8cpp.html">codegen.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

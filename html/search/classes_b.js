@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['variable_5fassignment_0',['variable_assignment',['../classast_1_1variable__assignment.html',1,'ast']]],
-  ['variable_5fdeclaration_1',['variable_declaration',['../classast_1_1variable__declaration.html',1,'ast']]],
-  ['variable_5fdefinition_2',['variable_definition',['../classast_1_1variable__definition.html',1,'ast']]]
+  ['sem_5fanalysis_5finfo_0',['sem_analysis_info',['../structsem__analysis__scope_1_1sem__analysis__info.html',1,'sem_analysis_scope']]],
+  ['string_5fexpression_1',['string_expression',['../classast_1_1string__expression.html',1,'ast']]]
 ];
