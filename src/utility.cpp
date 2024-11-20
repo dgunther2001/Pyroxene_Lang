@@ -299,7 +299,7 @@ namespace utility {
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printBFS");
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "DFS");
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printDFS");
-                    //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "size");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "size", type_enum::int_type);
                     sem_analysis_scope::add_method_to_valid_dot_calls("graph", "containsNode", type_enum::bool_type);
                 }
             }

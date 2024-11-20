@@ -1246,6 +1246,8 @@ namespace ast {
                 return codegen::graph_handlers::graph_contains_node_handler(obj_type, item_name, args);
             } else if (called == "removeNode") {
                 return codegen::graph_handlers::graph_remove_node_handler(obj_type, item_name, args);
+            } else if (called == "size") {
+                return codegen::graph_handlers::graph_size_handler(obj_type, item_name, args);
             }
         }
         
@@ -1347,6 +1349,35 @@ namespace codegen {
             codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj, node_to_remove});  
 
             return nullptr;
+        }
+
+        llvm::Value* graph_size_handler(type_enum::types obj_type, const std::string& item_name, std::vector<std::unique_ptr<ast::top_level_expr>>& args) {
+            llvm::Function* graph_related_function = nullptr;
+            switch (obj_type) {
+                case (type_enum::int_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIiE4sizeEv");
+                    break;
+                case (type_enum::float_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIfE4sizeEv");
+                    break;
+                case (type_enum::char_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIcE4sizeEv");
+                    break;
+                case (type_enum::bool_type):
+                    graph_related_function = codegen::LLVM_Module->getFunction("_ZN10slib_graphIbE4sizeEv");
+                    break;
+                default:
+                    utility::codegen_error("Invalid type passed to graph", parser::current_line);
+                    
+            }   
+            if (!graph_related_function) {
+                utility::codegen_error("Size (graph) function not found in module", parser::current_line);
+            }
+
+
+            llvm::Value* slib_obj = scope::variable_lookup(item_name)->allocation;
+
+            return codegen::IR_Builder->CreateCall(graph_related_function, {slib_obj});            
         }
     }
     namespace list_handlers {
