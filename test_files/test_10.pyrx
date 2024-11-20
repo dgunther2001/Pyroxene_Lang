@@ -4,7 +4,8 @@ include list
 def int main() {
     graph int my_graph;
     my_graph.addNode(10);
-    print(my_graph.containsNode(5));
+    print(my_graph.containsNode(10));
+    my_graph.removeNode(10);
     print(my_graph.containsNode(10));
     return 0;
 }

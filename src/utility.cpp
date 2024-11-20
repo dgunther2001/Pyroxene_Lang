@@ -293,7 +293,7 @@ namespace utility {
 
                     sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addNode", type_enum::void_type);
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "addEdge");
-                    //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeNode");
+                    sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeNode", type_enum::void_type);
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "removeEdge");
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "BFS");
                     //sem_analysis_scope::add_method_to_valid_dot_calls("graph", "printBFS");
