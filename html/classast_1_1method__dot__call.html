@@ -128,6 +128,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a8fe5386569526966e8ef022818acd2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a866f3e14c5ca1bf9a6655f0007a9a8" id="r_a2a866f3e14c5ca1bf9a6655f0007a9a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a866f3e14c5ca1bf9a6655f0007a9a8">get_expr_type</a> () const override</td></tr>
 <tr class="separator:a2a866f3e14c5ca1bf9a6655f0007a9a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608f993acb6a6c42a97f6e58ce3c8bc4" id="r_a608f993acb6a6c42a97f6e58ce3c8bc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a608f993acb6a6c42a97f6e58ce3c8bc4">get_obj_type</a> () const override</td></tr>
+<tr class="separator:a608f993acb6a6c42a97f6e58ce3c8bc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classast_1_1top__level__expr"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classast_1_1top__level__expr')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a></td></tr>
 <tr class="memitem:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr" id="r_a8d58ff4331899fba8a326afdbf8fabfe"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classast_1_1top__level__expr.html#a8d58ff4331899fba8a326afdbf8fabfe">~top_level_expr</a> ()=default</td></tr>
 <tr class="separator:a8d58ff4331899fba8a326afdbf8fabfe inherit pub_methods_classast_1_1top__level__expr"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -209,19 +211,19 @@ Public Member Functions</h2></td></tr>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>If the aggregate type is a list type, call the correct handler for that function, which deals with calling the correct function based on the type.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">if</span> (aggregate_type == <span class="stringliteral">&quot;list&quot;</span>) {</div>
 <div class="line">    <span class="keywordflow">if</span> (called == <span class="stringliteral">&quot;at&quot;</span>) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#ac6973827fe92f3e5faf6edc1f4aaba13">codegen::list_handlers::list_at_handler</a>(type, item_name, args);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#ad6bc906813141beaa330925f50ef7ba4">codegen::list_handlers::list_at_handler</a>(type, item_name, args);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (called == <span class="stringliteral">&quot;add&quot;</span>) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#afd761cf12828da5f685b39424b6d4c22">codegen::list_handlers::list_add_handler</a>(type, item_name, args);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#ae76dbb367af2950062f123071f840acc">codegen::list_handlers::list_add_handler</a>(type, item_name, args);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (called == <span class="stringliteral">&quot;remove&quot;</span>) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#aff63c4bfa43f6daf156474fc20e12664">codegen::list_handlers::list_remove_handler</a>(type, item_name, args);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#a524d7d2c26a22ef20f12436ca7dcebce">codegen::list_handlers::list_remove_handler</a>(type, item_name, args);</div>
 <div class="line">    } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (called == <span class="stringliteral">&quot;size&quot;</span>) {</div>
-<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#a42c7d2be039430e98b286242ddb0eb62">codegen::list_handlers::list_size_handler</a>(type, item_name, args);</div>
+<div class="line">        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecodegen_1_1list__handlers.html#adc8fc366ba523cb2dddcc317390796ba">codegen::list_handlers::list_size_handler</a>(type, item_name, args);</div>
 <div class="line">    }</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_a42c7d2be039430e98b286242ddb0eb62"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#a42c7d2be039430e98b286242ddb0eb62">codegen::list_handlers::list_size_handler</a></div><div class="ttdeci">llvm::Value * list_size_handler(type_enum::types type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1462</div></div>
-<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_ac6973827fe92f3e5faf6edc1f4aaba13"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#ac6973827fe92f3e5faf6edc1f4aaba13">codegen::list_handlers::list_at_handler</a></div><div class="ttdeci">llvm::Value * list_at_handler(type_enum::types type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1282</div></div>
-<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_afd761cf12828da5f685b39424b6d4c22"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#afd761cf12828da5f685b39424b6d4c22">codegen::list_handlers::list_add_handler</a></div><div class="ttdeci">llvm::Value * list_add_handler(type_enum::types type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1344</div></div>
-<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_aff63c4bfa43f6daf156474fc20e12664"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#aff63c4bfa43f6daf156474fc20e12664">codegen::list_handlers::list_remove_handler</a></div><div class="ttdeci">llvm::Value * list_remove_handler(type_enum::types type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1405</div></div>
+<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_a524d7d2c26a22ef20f12436ca7dcebce"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#a524d7d2c26a22ef20f12436ca7dcebce">codegen::list_handlers::list_remove_handler</a></div><div class="ttdeci">llvm::Value * list_remove_handler(type_enum::types obj_type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1608</div></div>
+<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_ad6bc906813141beaa330925f50ef7ba4"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#ad6bc906813141beaa330925f50ef7ba4">codegen::list_handlers::list_at_handler</a></div><div class="ttdeci">llvm::Value * list_at_handler(type_enum::types obj_type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1548</div></div>
+<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_adc8fc366ba523cb2dddcc317390796ba"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#adc8fc366ba523cb2dddcc317390796ba">codegen::list_handlers::list_size_handler</a></div><div class="ttdeci">llvm::Value * list_size_handler(type_enum::types obj_type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1636</div></div>
+<div class="ttc" id="anamespacecodegen_1_1list__handlers_html_ae76dbb367af2950062f123071f840acc"><div class="ttname"><a href="namespacecodegen_1_1list__handlers.html#ae76dbb367af2950062f123071f840acc">codegen::list_handlers::list_add_handler</a></div><div class="ttdeci">llvm::Value * list_add_handler(type_enum::types obj_type, const std::string &amp;item_name, std::vector&lt; std::unique_ptr&lt; ast::top_level_expr &gt; &gt; &amp;args)</div><div class="ttdef"><b>Definition</b> codegen.cpp:1577</div></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section user"><dt>Return a nullptr if the object is not found to suppress warnings, but in reality, the semantic analyzer will catch this bug.</dt><dd><div class="fragment"><div class="line"><span class="keywordflow">return</span> <span class="keyword">nullptr</span>;</div>
 </div><!-- fragment --> </dd></dl>
@@ -351,6 +353,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a608f993acb6a6c42a97f6e58ce3c8bc4" name="a608f993acb6a6c42a97f6e58ce3c8bc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a608f993acb6a6c42a97f6e58ce3c8bc4">&#9670;&#160;</a></span>get_obj_type()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetype__enum.html#a87266d8d965aff35e2d37a7793dafd67">type_enum::types</a> ast::method_dot_call::get_obj_type </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classast_1_1top__level__expr.html#af1004ba95ee647a4ebbde380ad2f8961">ast::top_level_expr</a>.</p>
+
+</div>
+</div>
 <a id="aec3b9c0cc243dc68c198fa56cfe019dc" name="aec3b9c0cc243dc68c198fa56cfe019dc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aec3b9c0cc243dc68c198fa56cfe019dc">&#9670;&#160;</a></span>semantic_analysis()</h2>
 
@@ -385,7 +414,7 @@ Public Member Functions</h2></td></tr>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceparser_html_a617812bda535490f07f50ab1aab0da4d"><div class="ttname"><a href="namespaceparser.html#a617812bda535490f07f50ab1aab0da4d">parser::current_line</a></div><div class="ttdeci">int current_line</div><div class="ttdef"><b>Definition</b> parser.cpp:19</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_a2f4d2a09e7b557af2e1b57bc751e119f"><div class="ttname"><a href="namespacesem__analysis__scope.html#a2f4d2a09e7b557af2e1b57bc751e119f">sem_analysis_scope::var_exists</a></div><div class="ttdeci">bool var_exists(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:389</div></div>
-<div class="ttc" id="anamespacesem__analysis__scope_html_a63d3317879727943601b75c1fbbf7c41"><div class="ttname"><a href="namespacesem__analysis__scope.html#a63d3317879727943601b75c1fbbf7c41">sem_analysis_scope::method_valid_dot_call</a></div><div class="ttdeci">bool method_valid_dot_call(const std::string &amp;aggregate_type, const std::string &amp;method)</div><div class="ttdef"><b>Definition</b> scoping.cpp:515</div></div>
+<div class="ttc" id="anamespacesem__analysis__scope_html_a63d3317879727943601b75c1fbbf7c41"><div class="ttname"><a href="namespacesem__analysis__scope.html#a63d3317879727943601b75c1fbbf7c41">sem_analysis_scope::method_valid_dot_call</a></div><div class="ttdeci">bool method_valid_dot_call(const std::string &amp;aggregate_type, const std::string &amp;method)</div><div class="ttdef"><b>Definition</b> scoping.cpp:518</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_aa9711f66355fbb21acd1dae701ecd0b0"><div class="ttname"><a href="namespacesem__analysis__scope.html#aa9711f66355fbb21acd1dae701ecd0b0">sem_analysis_scope::get_var_complex_dt</a></div><div class="ttdeci">std::string get_var_complex_dt(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:322</div></div>
 <div class="ttc" id="anamespacesem__analysis__scope_html_aba7cd957f36f78cbfdb7d5627d641a7c"><div class="ttname"><a href="namespacesem__analysis__scope.html#aba7cd957f36f78cbfdb7d5627d641a7c">sem_analysis_scope::get_var_type</a></div><div class="ttdeci">type_enum::types get_var_type(const std::string &amp;name)</div><div class="ttdef"><b>Definition</b> scoping.cpp:278</div></div>
 <div class="ttc" id="anamespaceutility_html_a74c446b9b76a434629e0d79dff862a81"><div class="ttname"><a href="namespaceutility.html#a74c446b9b76a434629e0d79dff862a81">utility::sem_analysis_error</a></div><div class="ttdeci">void sem_analysis_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:110</div></div>
