@@ -87,7 +87,7 @@ namespace sem_analysis_scope {
         /**
          * @par Contains information about valid method calls on complex data types.
          */
-        extern std::map<std::string, std::set<std::string>> valid_dot_calls;
+        extern std::map<std::string, std::set<std::pair<std::string, type_enum::types>>> valid_dot_calls;
 
 
         extern void create_scope();
@@ -109,8 +109,9 @@ namespace sem_analysis_scope {
         extern std::string get_var_complex_dt(const std::string& name);
 
 
-        extern void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method);
+        extern void add_method_to_valid_dot_calls(const std::string &aggregate_type, const std::string &method, const type_enum::types type);
         extern bool method_valid_dot_call(const std::string &aggregate_type, const std::string &method);
+        extern type_enum::types get_dot_call_type(const std::string &aggregate_type, const std::string &method);
 }
 
 namespace complex_dt_scope {
