@@ -155,6 +155,16 @@ namespace ast {
      }
 
      /**
+      * @fn ast::for_expr::debug_output()
+      * @code
+      *  std::cout << "Parsed for loop expression\n";
+      * @endcode
+      */
+     void ast::for_expr::debug_output() {
+          std::cout << "Parsed for loop expression\n";
+     }
+
+     /**
       * @fn ast::func_call_expr::debug_output()
       * @code
       * std::cout << "Parsed function call (" << func_name << "\n";
@@ -221,5 +231,7 @@ namespace ast {
      void ast::print_expr::debug_output() {
           std::cout << "Parsing print statement\n";
      }
+
+
 }
 

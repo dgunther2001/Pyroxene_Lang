@@ -980,6 +980,23 @@ namespace ast {
     }
 
     /**
+     * TODO: docs
+     */
+    llvm::Value* ast::for_expr::codegen() {
+        /** 
+        llvm::Value* defn = variable_defn->codegen();
+        llvm::Value* condition = condition->codegen();
+        llvm::Value modification = modification->codegen();
+        llvm::Value* current_expr = nullptr;
+        for (auto const& expression : expressions) {
+            current_expr = expression->codegen();
+        }
+
+        return nullptr;
+        */
+    }
+
+    /**
      * @fn ast::func_call_expr::codegen()
      * @par Generates ir for function calls.
      * 

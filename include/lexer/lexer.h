@@ -64,7 +64,9 @@ namespace lexer {
         tok_print = -125,      ///< Print keyword
         tok_return = -130,     ///< Return statement
         tok_include = -200,    ///< Include directive
-        tok_list = -220        ///< List directive and keyword
+        tok_list = -220,       ///< List directive and keyword
+        tok_increment = -250,  ///< Increment operator
+        tok_decrement = -260   ///< Decrement operator
     };
 
     /**

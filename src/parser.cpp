@@ -1084,6 +1084,76 @@ namespace parser {
     }
 
     /**
+     * TODO: docs
+     */
+    std::unique_ptr<ast::top_level_expr> parse_for() {
+        if (current_token != lexer::tok_for) {
+            utility::parser_error("Expected for keyword", current_line);
+        }
+
+        get_next_token(); // consume the for keyword
+
+        if (current_token != lexer::tok_open_paren) {
+            utility::parser_error("Expected '(' at beginning of for loop declaration", current_line);
+        }
+
+        get_next_token(); // consume the '('
+
+        std::unique_ptr<ast::top_level_expr> defn = parse_var_decl_defn();
+
+        if (current_token != lexer::tok_semicolon) {
+            utility::parser_error("Expected ';' after definition in for loop", current_line);
+        }
+
+        get_next_token(); // consume the ';'
+
+        std::unique_ptr<ast::top_level_expr> condition = parse_expression();
+
+        if (current_token != lexer::tok_semicolon) {
+            utility::parser_error("Expected ';' after condition in for loop", current_line);
+        }
+
+        get_next_token(); // consume the ';'
+
+        std::unique_ptr<ast::top_level_expr> modification = parse_expression();
+
+        if (current_token != lexer::tok_close_paren) {
+            utility::parser_error("Expected ')' at end of for loop declaration", current_line);
+        }
+
+        get_next_token(); // consume the ')'
+
+        if (current_token != lexer::tok_open_brack) {
+            utility::parser_error("Expected '{' at beginning of for loop block", current_line);
+        }
+
+        get_next_token(); // consume the '{'
+
+        std::vector<std::unique_ptr<ast::top_level_expr>> expressions = parse_block();
+
+        if (current_token != lexer::tok_close_brack) {
+            utility::parser_error("Expected '}' at end of for loop block", current_line);
+        }
+
+        get_next_token(); // consume the '}'
+
+        auto ast_node = std::make_unique<ast::for_expr>(std::move(expressions), std::move(defn), std::move(condition), std::move(modification));
+       
+        #if (DEBUG_MODE == 1 && PARSER_PRINT_UTIL == 1)
+            ast_node->debug_output();
+        #endif
+
+        return std::move(ast_node);
+    }
+
+    /**
+     * TODO: docs
+     */
+    std::unique_ptr<ast::top_level_expr> parse_while() {
+        return nullptr;
+    }
+
+    /**
      * @par Handle print expressions by parsing an internal expression to the print statement.
      * @code
         if (current_token != lexer::tok_print) {
@@ -1327,6 +1397,12 @@ namespace parser {
                     case lexer::tok_if:
                         current_expr = parse_if();
                         break;
+                    case lexer::tok_for:
+                        current_expr = parse_for();
+                        break;
+                    case lexer::tok_while:
+                        current_expr = parse_while();
+                        break;
                     case lexer::tok_list:
                         current_expr = parse_list_decl();
                         break;
@@ -1376,6 +1452,12 @@ namespace parser {
                         break;
                     case lexer::tok_if:
                         current_expr = parse_if();
+                        break;
+                    case lexer::tok_for:
+                        current_expr = parse_for();
+                        break;
+                    case lexer::tok_while:
+                        current_expr = parse_while();
                         break;
                     case lexer::tok_graph:
                         current_expr = parse_graph_decl();

@@ -711,6 +711,56 @@ namespace ast {
     };
 
     /**
+     * @par For loops.
+     * @code
+        class for_expr : public top_level_expr {
+        private:
+            std::vector<std::unique_ptr<top_level_expr>> expressions;
+            std::unique_ptr<ast::top_level_expr> variable_defn;
+            std::unique_ptr<ast::top_level_expr> condition;
+            std::unique_ptr<ast::top_level_expr> var_modification;
+
+        public:
+            for_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, 
+                std::unique_ptr<ast::top_level_expr> variable_defn,
+                std::unique_ptr<ast::top_level_expr> condition,
+                std::unique_ptr<ast::top_level_expr> var_modification) :
+                expressions(std::move(expressions)),
+                variable_defn(std::move(variable_defn)),
+                condition(std::move(condition)),
+                var_modification(std::move(var_modification))
+                {}
+            void semantic_analysis() override;
+            std::string get_ast_class() const override { return "for"; }
+            void debug_output();
+            llvm::Value* codegen() override;
+        };
+     * @endcode
+     */
+    class for_expr : public top_level_expr {
+    private:
+        std::vector<std::unique_ptr<top_level_expr>> expressions;
+        std::unique_ptr<ast::top_level_expr> variable_defn;
+        std::unique_ptr<ast::top_level_expr> condition;
+        std::unique_ptr<ast::top_level_expr> var_modification;
+
+    public:
+        for_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, 
+            std::unique_ptr<ast::top_level_expr> variable_defn,
+            std::unique_ptr<ast::top_level_expr> condition,
+            std::unique_ptr<ast::top_level_expr> var_modification) :
+            expressions(std::move(expressions)),
+            variable_defn(std::move(variable_defn)),
+            condition(std::move(condition)),
+            var_modification(std::move(var_modification))
+            {}
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "for"; }
+        void debug_output();
+        llvm::Value* codegen() override;
+    };
+
+    /**
      * @par Holds all data in a function call.
      * @code
         class func_call_expr : public top_level_expr {
