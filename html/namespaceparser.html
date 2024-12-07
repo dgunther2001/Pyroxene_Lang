@@ -131,6 +131,10 @@ Functions</h2></td></tr>
 <tr class="separator:ad38bbdbfcfa59d1beb97bfddc5f7a719"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20afff1098c7150cbcc22cdf3335c1c8" id="r_a20afff1098c7150cbcc22cdf3335c1c8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20afff1098c7150cbcc22cdf3335c1c8">parse_else</a> ()</td></tr>
 <tr class="separator:a20afff1098c7150cbcc22cdf3335c1c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e17412c29d53a70265b310bd192ba76" id="r_a7e17412c29d53a70265b310bd192ba76"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e17412c29d53a70265b310bd192ba76">parse_for</a> ()</td></tr>
+<tr class="separator:a7e17412c29d53a70265b310bd192ba76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a639d8e029157a09ce4cb38cf9d5137cf" id="r_a639d8e029157a09ce4cb38cf9d5137cf"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a639d8e029157a09ce4cb38cf9d5137cf">parse_while</a> ()</td></tr>
+<tr class="separator:a639d8e029157a09ce4cb38cf9d5137cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52052a3f4ee771f4aec1190b52e5b9ee" id="r_a52052a3f4ee771f4aec1190b52e5b9ee"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52052a3f4ee771f4aec1190b52e5b9ee">parse_print</a> ()</td></tr>
 <tr class="separator:a52052a3f4ee771f4aec1190b52e5b9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdfcdf0db14620c371456e8aadbccea7" id="r_afdfcdf0db14620c371456e8aadbccea7"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afdfcdf0db14620c371456e8aadbccea7">parse_graph_decl</a> ()</td></tr>
@@ -384,7 +388,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line">    <a class="code hl_function" href="#a5ae126257d31d8a2193a9505a63c3cb3">get_next_token</a>(); </div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_a55efa985ab2b766427ec200696607cab"><div class="ttname"><a href="namespacelexer.html#a55efa985ab2b766427ec200696607cab">lexer::is_operator</a></div><div class="ttdeci">bool is_operator(Token_Type token)</div><div class="ttdef"><b>Definition</b> lexer.cpp:731</div></div>
+<div class="ttc" id="anamespacelexer_html_a55efa985ab2b766427ec200696607cab"><div class="ttname"><a href="namespacelexer.html#a55efa985ab2b766427ec200696607cab">lexer::is_operator</a></div><div class="ttdeci">bool is_operator(Token_Type token)</div><div class="ttdef"><b>Definition</b> lexer.cpp:763</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdoc">Semicolon.</div><div class="ttdef"><b>Definition</b> lexer.h:47</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a696ebaa9298ba18f24f7b57563e3215b"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175a696ebaa9298ba18f24f7b57563e3215b">lexer::tok_comma</a></div><div class="ttdeci">@ tok_comma</div><div class="ttdoc">Comma.</div><div class="ttdef"><b>Definition</b> lexer.h:54</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175ac225b1b25a5fbef2aeb8a0773f0ef35d"><div class="ttname"><a href="namespacelexer.html#aba56b799cc10ddbcfff462adbb721175ac225b1b25a5fbef2aeb8a0773f0ef35d">lexer::tok_close_paren</a></div><div class="ttdeci">@ tok_close_paren</div><div class="ttdoc">Close parenthesis.</div><div class="ttdef"><b>Definition</b> lexer.h:49</div></div>
@@ -462,6 +466,24 @@ Variables</h2></td></tr>
 <div class="line"><span class="keywordflow">return</span> std::move(ast_node);</div>
 <div class="ttc" id="anamespacelexer_html_af8a75e1bce3aa27acd59d6e6c4fd511c"><div class="ttname"><a href="namespacelexer.html#af8a75e1bce3aa27acd59d6e6c4fd511c">lexer::float_value</a></div><div class="ttdeci">float float_value</div><div class="ttdef"><b>Definition</b> lexer.cpp:22</div></div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="a7e17412c29d53a70265b310bd192ba76" name="a7e17412c29d53a70265b310bd192ba76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e17412c29d53a70265b310bd192ba76">&#9670;&#160;</a></span>parse_for()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt; parser::parse_for </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO: docs </p>
+
 </div>
 </div>
 <a id="a8b979bd3af7f09d84388cf4265cf9486" name="a8b979bd3af7f09d84388cf4265cf9486"></a>
@@ -919,7 +941,7 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::return_expr&gt;(std::move(expr_node));</div>
 <div class="line"><span class="keywordflow">return</span> std::move(ast_node);</div>
-<div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:180</div></div>
+<div class="ttc" id="aclassast_1_1binary__expr_html"><div class="ttname"><a href="classast_1_1binary__expr.html">ast::binary_expr</a></div><div class="ttdef"><b>Definition</b> ast.h:185</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -1099,6 +1121,24 @@ Variables</h2></td></tr>
 <div class="line"><span class="keyword">auto</span> ast_node = std::make_unique&lt;ast::variable_definition&gt;(type, identifier, std::move(assigned_expr));</div>
 <div class="line"><span class="keywordflow">return</span> std::move(ast_node);</div>
 </div><!-- fragment --> 
+</div>
+</div>
+<a id="a639d8e029157a09ce4cb38cf9d5137cf" name="a639d8e029157a09ce4cb38cf9d5137cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a639d8e029157a09ce4cb38cf9d5137cf">&#9670;&#160;</a></span>parse_while()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="classast_1_1top__level__expr.html">ast::top_level_expr</a> &gt; parser::parse_while </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>TODO: docs </p>
+
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
