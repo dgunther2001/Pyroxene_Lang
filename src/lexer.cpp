@@ -83,14 +83,23 @@ namespace lexer {
      * if (previous_character == EOF) { 
      *     return tok_eof; 
      * }
-     * if (previous_character == '+') {
-     *     previous_character = input->get();
-     *     return tok_plus;
-     * }
-     * if (previous_character == '-') {
-     *     previous_character = input->get();
-     *     return tok_minus;
-     * }
+        if (previous_character == '+') {
+            previous_character = input->get();
+            if (previous_character == '+') {
+                previous_character = input->get();
+                return tok_increment;
+            }
+            return tok_plus;
+        }
+
+        if (previous_character == '-') {
+            previous_character = input->get();
+            if (previous_character == '-') {
+                previous_character = input->get();
+                return tok_decrement;
+            }
+            return tok_minus;
+        }
      * if (previous_character == '*') {
      *     previous_character = input->get();
      *     return tok_mult;
@@ -228,6 +237,14 @@ namespace lexer {
 
             if (identifier == "list") {
                 return tok_list;
+            }
+
+            if (identifier == "for") {
+                return tok_for;
+            }
+
+            if (identifier == "while") {
+                return tok_while;
             }
 
      * 
@@ -391,11 +408,19 @@ namespace lexer {
 
         if (previous_character == '+') {
             previous_character = input->get();
+            if (previous_character == '+') {
+                previous_character = input->get();
+                return tok_increment;
+            }
             return tok_plus;
         }
 
         if (previous_character == '-') {
             previous_character = input->get();
+            if (previous_character == '-') {
+                previous_character = input->get();
+                return tok_decrement;
+            }
             return tok_minus;
         }
 
@@ -530,8 +555,15 @@ namespace lexer {
             if (identifier == "list") {
                 return tok_list;
             }
-        
 
+            if (identifier == "for") {
+                return tok_for;
+            }
+
+            if (identifier == "while") {
+                return tok_while;
+            }
+        
             return tok_identifier;
         }
 

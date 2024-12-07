@@ -9,7 +9,7 @@ If LICENSE.md is not included, this version of the source code is provided in br
 
 int b;
 int a = 33;
-bool z = true;
+bool z = false;
 bool y = true;
 bool x = false;
 
@@ -30,16 +30,17 @@ def int my_func(float c, char d) {
     return 12;
 }
 
-int l = 9 * 7 + 94;
+int l = 94 + 9 * 7;
 
 
 
-def float my_func2(string ml) {
+def float main(string ml) {
     if (z) {
         b = 77;
     } else if (x) {
        b = 4;
     } else if (y) {
+        print('Y');
         b = 33;
     } else {
         b = 9;

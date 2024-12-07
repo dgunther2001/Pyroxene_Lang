@@ -56,6 +56,9 @@ namespace ast {
      * @endcode
      */
     class top_level_expr {
+    private:
+        int line_number = 0;
+
     public:
         virtual ~top_level_expr() = default;
         //virtual void debug_output();
@@ -81,6 +84,8 @@ namespace ast {
         virtual llvm::BasicBlock* get_merge_block() { return nullptr; }
         virtual void set_merge_block(llvm::BasicBlock* new_merge_block) {}
         virtual type_enum::types get_obj_type() const { return type_enum::float_type; }
+        virtual void set_line_number(int line_num) { line_number = line_num; }
+        virtual int get_line_number() { return line_number; }
     };
 
     /**
@@ -708,6 +713,56 @@ namespace ast {
         bool is_elif() override { return is_else_if; }
         std::unique_ptr<top_level_expr> grab_else_if() override { return std::move(expressions.at(0)); }
 
+    };
+
+    /**
+     * @par For loops.
+     * @code
+        class for_expr : public top_level_expr {
+        private:
+            std::vector<std::unique_ptr<top_level_expr>> expressions;
+            std::unique_ptr<ast::top_level_expr> variable_defn;
+            std::unique_ptr<ast::top_level_expr> condition;
+            std::unique_ptr<ast::top_level_expr> var_modification;
+
+        public:
+            for_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, 
+                std::unique_ptr<ast::top_level_expr> variable_defn,
+                std::unique_ptr<ast::top_level_expr> condition,
+                std::unique_ptr<ast::top_level_expr> var_modification) :
+                expressions(std::move(expressions)),
+                variable_defn(std::move(variable_defn)),
+                condition(std::move(condition)),
+                var_modification(std::move(var_modification))
+                {}
+            void semantic_analysis() override;
+            std::string get_ast_class() const override { return "for"; }
+            void debug_output();
+            llvm::Value* codegen() override;
+        };
+     * @endcode
+     */
+    class for_expr : public top_level_expr {
+    private:
+        std::vector<std::unique_ptr<top_level_expr>> expressions;
+        std::unique_ptr<ast::top_level_expr> variable_defn;
+        std::unique_ptr<ast::top_level_expr> condition;
+        std::unique_ptr<ast::top_level_expr> var_modification;
+
+    public:
+        for_expr(std::vector<std::unique_ptr<top_level_expr>> expressions, 
+            std::unique_ptr<ast::top_level_expr> variable_defn,
+            std::unique_ptr<ast::top_level_expr> condition,
+            std::unique_ptr<ast::top_level_expr> var_modification) :
+            expressions(std::move(expressions)),
+            variable_defn(std::move(variable_defn)),
+            condition(std::move(condition)),
+            var_modification(std::move(var_modification))
+            {}
+        void semantic_analysis() override;
+        std::string get_ast_class() const override { return "for"; }
+        void debug_output();
+        llvm::Value* codegen() override;
     };
 
     /**

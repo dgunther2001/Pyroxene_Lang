@@ -1,0 +1,28 @@
+
+
+include graph
+include list
+
+def int main() {
+    graph char my_graph;
+    my_graph.addNode('A');
+    my_graph.addNode('B');
+    my_graph.addNode('C');
+
+    my_graph.addEdge('A', 'B');
+    my_graph.addEdge('A', 'C');
+    my_graph.addEdge('C', 'B');
+    
+    my_graph.printBFS('A');
+    my_graph.printDFS('A');
+    return 0;
+}
+
+
+
+
+
+
+
+
+

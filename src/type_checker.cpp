@@ -282,6 +282,13 @@ namespace ast {
     }
 
     /**
+     * TODO: docs
+     */
+    void ast::for_expr::semantic_analysis() {
+        
+    }
+
+    /**
      * @fn ast::return_expr::semantic_analysis()
      * @par Sets the type of the expression and recursively semantically analyzes the attached expression.
      * @code

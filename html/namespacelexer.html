@@ -149,6 +149,9 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="#aba56b799cc10ddbcfff462adbb721175a377be02b844a72991cb656985d701e56">tok_return</a> = -130
 , <a class="el" href="#aba56b799cc10ddbcfff462adbb721175a5115e3a677cd1f1bfb60f1dd67a0f651">tok_include</a> = -200
 , <a class="el" href="#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">tok_list</a> = -220
+, <a class="el" href="#aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81">tok_increment</a> = -250
+, <br />
+&#160;&#160;<a class="el" href="#aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c">tok_decrement</a> = -260
 <br />
  }</td></tr>
 <tr class="separator:aba56b799cc10ddbcfff462adbb721175"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -297,6 +300,10 @@ Variables</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826" name="aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826"></a>tok_list&#160;</td><td class="fielddoc"><p>List directive and keyword. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81" name="aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81"></a>tok_increment&#160;</td><td class="fielddoc"><p>Increment operator. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c" name="aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c"></a>tok_decrement&#160;</td><td class="fielddoc"><p>Decrement operator. </p>
+</td></tr>
 </table>
 
 </div>
@@ -367,20 +374,31 @@ Variables</h2></td></tr>
 <div class="line"><span class="keywordflow">if</span> (previous_character == EOF) { </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175afe2b97aa8f13c84650d9878dfc780a08">tok_eof</a>; </div>
 <div class="line">}</div>
-<div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;+&#39;</span>) {</div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">tok_plus</a>;</div>
-<div class="line">}</div>
-<div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;-&#39;</span>) {</div>
-<div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
-<div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">tok_minus</a>;</div>
-<div class="line">}</div>
+<div class="line"> <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;+&#39;</span>) {</div>
+<div class="line">     previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
+<div class="line">     <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;+&#39;</span>) {</div>
+<div class="line">         previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81">tok_increment</a>;</div>
+<div class="line">     }</div>
+<div class="line">     <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">tok_plus</a>;</div>
+<div class="line"> }</div>
+<div class="line"> </div>
+<div class="line"> <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;-&#39;</span>) {</div>
+<div class="line">     previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
+<div class="line">     <span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;-&#39;</span>) {</div>
+<div class="line">         previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c">tok_decrement</a>;</div>
+<div class="line">     }</div>
+<div class="line">     <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a80e9dbe95c1b8542af3b650a9109f31f">tok_minus</a>;</div>
+<div class="line"> }</div>
 <div class="line"><span class="keywordflow">if</span> (previous_character == <span class="charliteral">&#39;*&#39;</span>) {</div>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get();</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">tok_mult</a>;</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a0c685999fa6618d36d351f06d752bbb5">lexer::tok_semicolon</a></div><div class="ttdeci">@ tok_semicolon</div><div class="ttdoc">Semicolon.</div><div class="ttdef"><b>Definition</b> lexer.h:47</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a131ca657428af289eef7895606501e81">lexer::tok_increment</a></div><div class="ttdeci">@ tok_increment</div><div class="ttdoc">Increment operator.</div><div class="ttdef"><b>Definition</b> lexer.h:68</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a188a19f47705793ccfb062a2e36057a4">lexer::tok_plus</a></div><div class="ttdeci">@ tok_plus</div><div class="ttdoc">Plus operator.</div><div class="ttdef"><b>Definition</b> lexer.h:56</div></div>
+<div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a1ebcd334272e4dc51249b79a409f306c">lexer::tok_decrement</a></div><div class="ttdeci">@ tok_decrement</div><div class="ttdoc">Decrement operator.</div><div class="ttdef"><b>Definition</b> lexer.h:69</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a2de9d7b416862b135b4a0d49f0f73096"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a2de9d7b416862b135b4a0d49f0f73096">lexer::tok_dot</a></div><div class="ttdeci">@ tok_dot</div><div class="ttdoc">Dot character.</div><div class="ttdef"><b>Definition</b> lexer.h:30</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a4aa854280f5459a67a361a41d501ff90">lexer::tok_assignment</a></div><div class="ttdeci">@ tok_assignment</div><div class="ttdoc">Assignment operator.</div><div class="ttdef"><b>Definition</b> lexer.h:61</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175a628454d1f522564bbf6731b97ad58161">lexer::tok_mult</a></div><div class="ttdeci">@ tok_mult</div><div class="ttdoc">Multiplication operator.</div><div class="ttdef"><b>Definition</b> lexer.h:58</div></div>
@@ -437,7 +455,7 @@ Variables</h2></td></tr>
 <div class="line">    previous_character = <a class="code hl_variable" href="#a094bf53953e31c419b3e6558322d5ecc">input</a>-&gt;get(); </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="#a6eeb74841871266bc4c8f7e00e7c3a4d">get_token</a>(); </div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:327</div></div>
+<div class="ttc" id="anamespacelexer_html_a6eeb74841871266bc4c8f7e00e7c3a4d"><div class="ttname"><a href="#a6eeb74841871266bc4c8f7e00e7c3a4d">lexer::get_token</a></div><div class="ttdeci">Token_Type get_token()</div><div class="ttdef"><b>Definition</b> lexer.cpp:344</div></div>
 <div class="ttc" id="anamespacelexer_html_aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022"><div class="ttname"><a href="#aba56b799cc10ddbcfff462adbb721175aa7391bde6a89e122b8adf38109932022">lexer::tok_div</a></div><div class="ttdeci">@ tok_div</div><div class="ttdoc">Division operator.</div><div class="ttdef"><b>Definition</b> lexer.h:59</div></div>
 <div class="ttc" id="anamespaceutility_html_a85c1adcd9c6c271558ee8c36c8018748"><div class="ttname"><a href="namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748">utility::lexer_error</a></div><div class="ttdeci">void lexer_error(const std::string &amp;message, int line)</div><div class="ttdef"><b>Definition</b> utility.cpp:59</div></div>
 </div><!-- fragment --></dd></dl>
@@ -521,6 +539,14 @@ Variables</h2></td></tr>
 <div class="line"> </div>
 <div class="line">     <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> == <span class="stringliteral">&quot;list&quot;</span>) {</div>
 <div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175aec8e098365e0b10993868f284bf4a826">tok_list</a>;</div>
+<div class="line">     }</div>
+<div class="line"> </div>
+<div class="line">     <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> == <span class="stringliteral">&quot;for&quot;</span>) {</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175a6a1c8231ab9c7f336c1a48f21ff1bf2f">tok_for</a>;</div>
+<div class="line">     }</div>
+<div class="line"> </div>
+<div class="line">     <span class="keywordflow">if</span> (<a class="code hl_variable" href="#a0586f976980cc76c5600f1867c16c903">identifier</a> == <span class="stringliteral">&quot;while&quot;</span>) {</div>
+<div class="line">         <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="#aba56b799cc10ddbcfff462adbb721175ae3914d09e1adf56216c446bb70b472e3">tok_while</a>;</div>
 <div class="line">     }</div>
 <div class="line"> </div>
 <div class="line"> </div>

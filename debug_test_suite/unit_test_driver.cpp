@@ -151,6 +151,52 @@ int main(int argc, char** argv) {
         utility::primary_driver_loop();
 
         codegen::LLVM_Module->print(llvm::outs(), nullptr);
+
+    #elif (DEBUG_OPTION == 7)
+        auto start_time = std::chrono::high_resolution_clock::now();
+
+        lexer::tokenize_file();
+
+        utility::initialize_operator_precendence();
+
+        llvm::InitializeNativeTarget();
+        llvm::InitializeNativeTargetAsmPrinter();
+        llvm::InitializeNativeTargetAsmParser();
+
+        utility::init_llvm_mods();
+
+        utility::init_parser();
+
+        utility::primary_driver_loop();
+        if (llvm::verifyModule(*codegen::LLVM_Module, &llvm::errs())) {
+            llvm::errs() << "Error: Module verification failed.\n";
+            exit(1);
+        }
+
+        auto JIT = llvm::orc::LLJITBuilder().create();
+        auto& jit = *JIT;
+
+        codegen::LLVM_Module->setDataLayout(jit->getDataLayout());
+
+        auto added_ir_module = jit->addIRModule(llvm::orc::ThreadSafeModule(std::move(codegen::LLVM_Module), std::move(codegen::LLVM_Context)));
+        JIT->get()->getMainJITDylib().addGenerator(llvm::cantFail(llvm::orc::DynamicLibrarySearchGenerator::GetForCurrentProcess(JIT->get()->getDataLayout().getGlobalPrefix())));
+        auto main_symbol = jit->lookup("main");
+        if(!main_symbol) {
+            std::cout << "Expected main function in module.\n";
+            std::exit(1);
+        }
+
+        auto main_function_entry_pt = (int (*)())(main_symbol->getValue());
+        main_function_entry_pt();
+ 
+        file.close();
+
+        auto end_time = std::chrono::high_resolution_clock::now();
+
+        auto cumulative_time = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+
+        std::cout << "Cumulative Time For Current File: " << cumulative_time.count() << " ms\n";
+
     #else
         lexer::tokenize_file();
 

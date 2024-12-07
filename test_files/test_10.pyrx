@@ -2,23 +2,16 @@ include graph
 include list
 
 def int main() {
-    graph int my_graph;
-    my_graph.addNode(10);
-    my_graph.addNode(25);
-    my_graph.addNode(30);
-    my_graph.addNode(40);
-    my_graph.addEdge(10, 25);
-    my_graph.addEdge(10, 30);
-    my_graph.addEdge(30, 40);
+    graph char my_graph;
+    my_graph.addNode('A');
+    my_graph.addNode('B');
+    my_graph.addNode('C');
+
+    my_graph.addEdge('A', 'B');
+    my_graph.addEdge('A', 'C');
+    my_graph.addEdge('C', 'B');
     
-    my_graph.printBFS(10);
-    my_graph.printDFS(10);
-
-    //print(my_graph.numEdges());
-   // my_graph.removeEdge(10, 25);
-    //print(my_graph.numEdges());
-    //print(my_graph.containsNode(10));
-
-    //print(my_graph.containsNode(10));
+    my_graph.printBFS('A');
+    my_graph.printDFS('A');
     return 0;
 }
