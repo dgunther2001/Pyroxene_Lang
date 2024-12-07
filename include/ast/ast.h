@@ -56,6 +56,9 @@ namespace ast {
      * @endcode
      */
     class top_level_expr {
+    private:
+        int line_number = 0;
+
     public:
         virtual ~top_level_expr() = default;
         //virtual void debug_output();
@@ -81,6 +84,8 @@ namespace ast {
         virtual llvm::BasicBlock* get_merge_block() { return nullptr; }
         virtual void set_merge_block(llvm::BasicBlock* new_merge_block) {}
         virtual type_enum::types get_obj_type() const { return type_enum::float_type; }
+        virtual void set_line_number(int line_num) { line_number = line_num; }
+        virtual int get_line_number() { return line_number; }
     };
 
     /**
