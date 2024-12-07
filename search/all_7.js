@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['bash_20shells_0',['Zsh and Bash Shells',['../md_docs_2start.html#autotoc_md9',1,'']]],
+  ['bash_20shells_0',['Bash Shells',['../md_docs_2dev__guide.html#autotoc_md4',1,'Zsh and Bash Shells'],['../md_docs_2start.html#autotoc_md18',1,'Zsh and Bash Shells']]],
   ['binary_5fexpr_1',['binary_expr',['../classast_1_1binary__expr.html',1,'ast::binary_expr'],['../classast_1_1binary__expr.html#a1dbcaf1ae4ca7452a293dec8c0b045f1',1,'ast::binary_expr::binary_expr()']]],
   ['binary_5flocal_5fhelper_5fdiv_2',['binary_local_helper_div',['../namespacecodegen.html#a4235b968bac538b3076d143e37f92b66',1,'codegen']]],
   ['binary_5flocal_5fhelper_5fminus_3',['binary_local_helper_minus',['../namespacecodegen.html#add997fc6bfdb1d3ffe3faa42c276d752',1,'codegen']]],

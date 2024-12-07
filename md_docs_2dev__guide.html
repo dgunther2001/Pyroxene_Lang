@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Pyroxene: Start Guide</title>
+<title>Pyroxene: Developer Guide</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,17 +84,19 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div><div class="header">
-  <div class="headertitle"><div class="title">Start Guide</div></div>
+  <div class="headertitle"><div class="title">Developer Guide</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md14"></a></p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
+<p><b>Note</b> that additional developer specific instructions are located below. <br  />
+</p>
+<h3><a class="anchor" id="autotoc_md1"></a>
 Clone the repository</h3>
 <ul>
 <li><code>git clone <a href="https://github.com/dgunther2001/pyroxene_lang">https://github.com/dgunther2001/pyroxene_lang</a></code> <br  />
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md16"></a>
+<h3><a class="anchor" id="autotoc_md2"></a>
 Install and enable Docker and/or Docker Desktop</h3>
 <ul>
 <li><b>GUI:</b> <a href="https://www.docker.com/">Docker</a> <br  />
@@ -110,9 +112,9 @@ Install and enable Docker and/or Docker Desktop</h3>
  &emsp; &emsp; - <code>sudo systemctl enable docker</code> <br  />
 </li>
 </ul>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md3"></a>
 Execution</h3>
-<h4><a class="anchor" id="autotoc_md18"></a>
+<h4><a class="anchor" id="autotoc_md4"></a>
 Zsh and Bash Shells</h4>
 <ul>
 <li><b>Running Language Without Aliases:</b> <br  />
@@ -134,12 +136,42 @@ Zsh and Bash Shells</h4>
  &emsp; &emsp; <code>pyroxene-debug /path/to/your/pyroxene/file</code> <br  />
 </li>
 </ul>
-<h4><a class="anchor" id="autotoc_md19"></a>
+<h4><a class="anchor" id="autotoc_md5"></a>
 Windows</h4>
 <ul>
 <li>Instructions TBD <br  />
- </li>
+</li>
 </ul>
+<h3><a class="anchor" id="autotoc_md6"></a>
+Debug Mode</h3>
+<ul>
+<li><b>Running Through LLDB:</b> <br  />
+ &emsp; - <code>chmod u+x run_lldb.sh</code> <br  />
+ &emsp; - Add alias to shell config file: &lsquo;alias pyroxene-lldb=&rsquo;/Users/danielgunther/Developer/pyroxene_lang/run_lldb.sh'<code>\ilinebr&lt;br&gt; &amp;emsp; - **Bash:**</code>source ~/.bashrc<code>\ilinebr&lt;br&gt; &amp;emsp; - **Zsh:**</code>source ~/.zshrc<code>\ilinebr&lt;br&gt; &amp;emsp; -</code>pyroxene-lldb /path/to/your/pyroxene/file` <br  />
+</li>
+<li><b>Various Debug Modes in Debug Driver:</b> <br  />
+ &emsp; <b>Note</b> that these are modified via a macro at the top of /debug_test_suite/unit_test_driver.cpp called <code>DEBUG_OPTION</code> <br  />
+ &emsp; 1: Token Stream. <br  />
+ &emsp; 2: Various associated values storage array to validate that each row contains at most 1. <br  />
+ &emsp; 3: Print tokens and run primary driver loop. <br  />
+ &emsp; 4. Debug associated value lexer array. <br  />
+ &emsp; 5: Print LLVM Module and run it through the JIT. <br  />
+ &emsp; 6: Print the LLVM Module and don't execute it. <br  />
+ &emsp; 7: Performance output. <br  />
+ &emsp; <b>Note</b> that a parse tree can be printed by turnin the <code>PARSER_PRINT_UTIL</code> macro un /include/utility.h to 1. <br  />
+</li>
+<li><b>Running Through Valgrind:</b> <br  />
+ &emsp; <b>Note</b> that on segfault, the Valgrind Address Sanitizer will automatically be run. <br  />
+ &emsp; To force it to run and view the console output, go to the primary Dockerfile. <br  />
+ &emsp; Uncomment the bottom two lines indicating Valgrind, and comment out the current <code>CMD</code> abnd <code>ENTRYPOINT</code> lines.</li>
+</ul>
+<h3><a class="anchor" id="autotoc_md7"></a>
+Current Needs</h3>
+<p>&emsp; Resolve nested conditionals causing segmentation fault when nested with if, and if else if block within. <br  />
+ &emsp; Resolve thatdefined identifiers cause segfaults when added directly to graphs. <br  />
+ &emsp; Validate function arguments to graph and list functions similar to regular functions. <br  />
+ &emsp; Finish for loop intgration. <br  />
+ </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
