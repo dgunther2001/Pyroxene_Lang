@@ -1,4 +1,30 @@
 var searchData=
 [
-  ['needs_0',['Current Needs',['../md_docs_2dev__guide.html#autotoc_md7',1,'']]]
+  ['landing_2emd_0',['landing.md',['../landing_8md.html',1,'']]],
+  ['langauge_20implementation_20roadmap_3a_1',['Langauge Implementation Roadmap:',['../index.html#autotoc_md12',1,'']]],
+  ['language_20syntax_2',['Language Syntax',['../md_docs_2syntax.html',1,'']]],
+  ['lexed_20tokens_20and_20output_20a_20program_20abstract_20syntax_20tree_20ast_20ast_20that_20can_20each_20hold_20their_20own_20llvm_20ir_20codegen_20function_3',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md30',1,'']]],
+  ['lexer_4',['lexer',['../namespacelexer.html',1,'']]],
+  ['lexer_2ecpp_5',['lexer.cpp',['../lexer_8cpp.html',1,'']]],
+  ['lexer_2eh_6',['lexer.h',['../lexer_8h.html',1,'']]],
+  ['lexer_5ferror_7',['lexer_error',['../namespaceutility.html#a85c1adcd9c6c271558ee8c36c8018748',1,'utility']]],
+  ['lexer_5fstored_5fvalues_8',['lexer_stored_values',['../namespacelexer.html#a3d7207f2064a87952ff770b412d9180a',1,'lexer']]],
+  ['library_5fand_5finclude_9',['library_and_include',['../namespaceutility.html#af7c1907d56118423318afd90e05f754b',1,'utility']]],
+  ['license_10',['LICENSE',['../md__l_i_c_e_n_s_e.html',1,'']]],
+  ['license_20click_20ref_20users_20danielgunther_20developer_20pyroxene_5flang_20license_20md_20here_11',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md9',1,'']]],
+  ['license_20md_20here_12',['To view the License, click @ref &quot;/Users/danielgunther/Developer/pyroxene_lang/LICENSE.md&quot; &quot;here&quot;.',['../index.html#autotoc_md9',1,'']]],
+  ['license_2emd_13',['LICENSE.md',['../_l_i_c_e_n_s_e_8md.html',1,'']]],
+  ['line_5fcount_14',['line_count',['../namespacelexer.html#a3194f54b2efb03a1d7dd1c3071fc93e0',1,'lexer']]],
+  ['line_5fcount_5fvec_15',['line_count_vec',['../namespacelexer.html#a2236b4d9e5656f41e63b6a6aaf59a796',1,'lexer']]],
+  ['list_5fadd_5fhandler_16',['list_add_handler',['../namespacecodegen_1_1list__handlers.html#ae76dbb367af2950062f123071f840acc',1,'codegen::list_handlers']]],
+  ['list_5fat_5fhandler_17',['list_at_handler',['../namespacecodegen_1_1list__handlers.html#ad6bc906813141beaa330925f50ef7ba4',1,'codegen::list_handlers']]],
+  ['list_5fdecl_18',['list_decl',['../classast_1_1list__decl.html',1,'ast::list_decl'],['../classast_1_1list__decl.html#addbabd464039b41a784e20dd4aa6ad4f',1,'ast::list_decl::list_decl()']]],
+  ['list_5fremove_5fhandler_19',['list_remove_handler',['../namespacecodegen_1_1list__handlers.html#a524d7d2c26a22ef20f12436ca7dcebce',1,'codegen::list_handlers']]],
+  ['list_5fsize_5fhandler_20',['list_size_handler',['../namespacecodegen_1_1list__handlers.html#adc8fc366ba523cb2dddcc317390796ba',1,'codegen::list_handlers']]],
+  ['lists_21',['7. Lists',['../md_docs_2syntax.html#autotoc_md27',1,'']]],
+  ['llvm_20ir_20codegen_20function_22',['Objective: take an input of lexed tokens and output a program abstract syntax tree (AST/ast) that can each hold their own llvm ir codegen function',['../md_docs_2cfg.html#autotoc_md30',1,'']]],
+  ['llvm_5fcontext_23',['LLVM_Context',['../namespacecodegen.html#a2ed9460a080f3ccd65a6b8afa232595a',1,'codegen']]],
+  ['llvm_5fmodule_24',['LLVM_Module',['../namespacecodegen.html#a0c83a7aa3f52eaf082b779f3a81166fe',1,'codegen']]],
+  ['llvm_5fvar_5finfo_25',['llvm_var_info',['../structscope_1_1llvm__var__info.html',1,'scope']]],
+  ['loops_20not_20implemented_26',['5. Loops - Not Implemented',['../md_docs_2syntax.html#autotoc_md25',1,'']]]
 ];
